@@ -15,12 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
     Remaining.cpp \
     Return.cpp \
-    returnto.cpp
+    returnto.cpp \
+    translator.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Remaining.h \
     Return.h \
-    returnto.h
+    returnto.h \
+    IConst.h \
+    translator.h
 
 
 FORMS    += dialog.ui

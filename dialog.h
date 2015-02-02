@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "Inventory.h"
+#include "translator.h"
 #include <QListWidgetItem>
 #include <iostream>
 #include <QPrinter>
@@ -79,6 +80,7 @@ private slots:
     void slot1();
 
     void on_pushButton_3_clicked();
+    void changeLanguage();
 
 private:
     Ui::Dialog *ui;
@@ -91,6 +93,7 @@ private:
     QAction *exitAction;
     QAction *printAction;
     QAction *printAction2;
+    QAction *translateAction;
     QAction *newAction;
     QAction *saveAction;
     QAction *saveAsAction;
@@ -111,6 +114,7 @@ private:
     int needSave;
     QFont font;
     int refresh;
+    Translator mTranslator;
 };
 
 #endif // DIALOG_H

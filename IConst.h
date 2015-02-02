@@ -1,0 +1,10 @@
+#ifndef INVENTORYCONST
+#define INVENTORYCONST
+
+enum{
+    ENGLISH,
+    CHINESE
+};
+
+#endif // INVENTORYCONST
+

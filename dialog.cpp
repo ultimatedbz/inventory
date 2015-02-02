@@ -1,5 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include "IConst.h"
 #include <qlistwidget.h>
 #include <Qtcore>
 #include <QtGui>
@@ -28,6 +29,7 @@ Dialog::Dialog(QWidget *parent) :
     currentVege(NULL),
     needSave(0),
     font("Courier",-1,QFont::Bold,false)
+
 {
 
 
@@ -72,7 +74,8 @@ void Dialog::createMenu()
     fileMenu = new QMenu(tr("File"), this);
     editMenu = new QMenu(tr("Edit"), this);
 
-    newAction = fileMenu->addAction(tr("開新檔案"));
+    //newAction = fileMenu->addAction(tr("開新檔案"));
+    newAction = fileMenu->addAction(tr(mTranslator.translate("New File").c_str()));
     newAction->setShortcut(QKeySequence::New);
     loadAction = fileMenu->addAction(tr("開啟舊檔"));
     loadAction->setShortcut(QKeySequence::Open);
@@ -82,6 +85,8 @@ void Dialog::createMenu()
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     printAction = fileMenu->addAction(tr("印 Inventory"));
     printAction2 = fileMenu->addAction(tr("印 History"));
+    fileMenu->addSeparator();
+    translateAction = fileMenu->addAction(tr("Translate"));
 
     addPersonAction = editMenu->addAction(tr("加入新客戶"));
     addCompanyAction = editMenu->addAction(tr("加入新公司"));
@@ -106,6 +111,7 @@ void Dialog::createMenu()
     connect(addPersonAction, SIGNAL(triggered()), this, SLOT(addPerson()));
     connect(addCompanyAction, SIGNAL(triggered()), this, SLOT(addCompany()));
     connect(addUnitAction, SIGNAL(triggered()), this, SLOT(addUnit()));
+    connect(translateAction, SIGNAL(triggered()), this, SLOT(changeLanguage()));
 
     connect(removeVegetableAction, SIGNAL(triggered()), this, SLOT(removeVegetable()));
     connect(removePersonAction, SIGNAL(triggered()), this, SLOT(removePerson()));
@@ -244,7 +250,6 @@ void Dialog::on_Buy_clicked()
     }
 }
 
-
 void Dialog::on_Sell_clicked()
 {
     if(currentVege){
@@ -362,7 +367,6 @@ void Dialog::on_Sell_clicked()
         }
     }
 }
-
 
 void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString priceB  ){
     QDialog dialog(this);
@@ -551,7 +555,6 @@ void Dialog::addCompany(){
         needSave = 1;
 }
 
-
 void Dialog::addPerson(){
     bool ok;
     QString text = QInputDialog::getText(this, tr("加入新客戶"),
@@ -560,7 +563,6 @@ void Dialog::addPerson(){
         needSave = 1;
 }
 
-
 void Dialog::addUnit(){
     bool ok;
     QString text = QInputDialog::getText(this, tr("加入單位"),
@@ -568,7 +570,6 @@ void Dialog::addUnit(){
     inventory->addUnit(text.toUtf8().constData());
         needSave = 1;
 }
-
 
 void Dialog::removeCompany(){
     QDialog dialog(this);
@@ -635,7 +636,6 @@ void Dialog::removePerson(){
 
 }
 
-
 void Dialog::removeUnit(){
 
     QDialog dialog(this);
@@ -669,7 +669,6 @@ void Dialog::removeUnit(){
     }
 
 }
-
 
 void Dialog::removeVegetable(){
     QDialog dialog(this);
@@ -721,7 +720,6 @@ void Dialog::removeVegetable(){
 
 }
 
-
 void Dialog::printInventory(){
         QPrinter printer;
         QPrintPreviewDialog preview (&printer, this);
@@ -729,6 +727,7 @@ void Dialog::printInventory(){
         preview.exec();
 
 }
+
 void Dialog::printHistory(){
         QPrinter printer;
         QPrintPreviewDialog preview (&printer, this);
@@ -736,6 +735,7 @@ void Dialog::printHistory(){
         preview.exec();
 
 }
+
 void Dialog::printI(QPrinter* printer){
 
     int amount;
@@ -860,7 +860,6 @@ void Dialog::printI(QPrinter* printer){
    painter.end();
   }
 }
-
 
 int Dialog::compareCompany(const void * a, const void * b){
 
@@ -1224,8 +1223,6 @@ int Dialog::querySplits(){
     return 0;
 }
 
-
-
 void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QString priceB  ){
     QDialog dialog(this);
     dialog.setWindowTitle("聯合賣");
@@ -1407,7 +1404,6 @@ int Dialog:: sameDay(int i1, int i2, int i3, int i4){
             return 1;
     return 0;
 }
-
 
 void Dialog::saveAs(){
 
@@ -1816,7 +1812,6 @@ void Dialog::loadFile(){
     }
 }
 
-
 void Dialog::save(){
 
     if(!inventory->getFileName().compare("")){
@@ -2175,8 +2170,6 @@ void Dialog::save(){
     }
 }
 
-
-
 void Dialog::on_Memo_2_textChanged()
 {
     if(inventory->getVegNum())
@@ -2321,8 +2314,6 @@ void Dialog::on_Return_clicked()
     }
 }
 
-
-
 void Dialog::closeEvent(QCloseEvent *event) {
     event = NULL;
     if (needSave)
@@ -2339,8 +2330,6 @@ void Dialog:: askSave(){
     }
     needSave = 0;
 }
-
-
 
 void Dialog::on_pushButton_clicked()
 {
@@ -2424,8 +2413,6 @@ void Dialog::on_pushButton_clicked()
         on_vegeList_itemPressed(ui->vegeList->currentItem());
     }
 }
-
-
 
 void Dialog::on_pushButton_2_clicked()
 {
@@ -2523,7 +2510,6 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
         }
 
 }
-
 
 void Dialog:: deleteVege(){
     inventory->removeVegetable( ui->vegeList->currentItem()->text().toUtf8().constData());
@@ -2623,12 +2609,15 @@ void Dialog:: undoHistory(){
     }
 }
 
-
-
-
 void Dialog::on_pushButton_3_clicked()
 {
     //clear return
     ui->returnToFarm->clear();
     currentVege->clearTui();
 }
+
+void Dialog::changeLanguage(){
+
+
+}
+
