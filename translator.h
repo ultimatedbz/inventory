@@ -11,7 +11,9 @@ class Translator{
 public:
     Translator();
     ~Translator();
-    string translate(string input, int language);
+    string translate(string input);
+    void setLanguage();
+    void changeLanguage(int i);
 
 private:
     int currentLanguage;

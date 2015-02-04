@@ -32,7 +32,6 @@ Dialog::Dialog(QWidget *parent) :
 
 {
 
-
     ui->setupUi(this);
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -71,31 +70,32 @@ Dialog::~Dialog()
 void Dialog::createMenu()
 {
     menuBar = new QMenuBar(this);
-    fileMenu = new QMenu(tr("File"), this);
-    editMenu = new QMenu(tr("Edit"), this);
+    fileMenu = new QMenu("File", this);
+    editMenu = new QMenu("Edit", this);
 
-    //newAction = fileMenu->addAction(tr("開新檔案"));
-    newAction = fileMenu->addAction(tr(mTranslator.translate("New File").c_str()));
+    newAction = fileMenu->addAction(mTranslator.translate("New File").c_str());
     newAction->setShortcut(QKeySequence::New);
-    loadAction = fileMenu->addAction(tr("開啟舊檔"));
+    loadAction = fileMenu->addAction(mTranslator.translate("Load File").c_str());
     loadAction->setShortcut(QKeySequence::Open);
-    saveAction = fileMenu->addAction(tr("儲存檔案"));
+    saveAction =fileMenu->addAction(mTranslator.translate("Save").c_str());;
     saveAction->setShortcut(QKeySequence::Save);
-    saveAsAction = fileMenu->addAction(tr("另存新檔"));
+    saveAsAction = fileMenu->addAction(mTranslator.translate("Save As").c_str());
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     printAction = fileMenu->addAction(tr("印 Inventory"));
     printAction2 = fileMenu->addAction(tr("印 History"));
     fileMenu->addSeparator();
-    translateAction = fileMenu->addAction(tr("Translate"));
+    translateMenu = fileMenu->addMenu(tr("Translate"));
 
-    addPersonAction = editMenu->addAction(tr("加入新客戶"));
-    addCompanyAction = editMenu->addAction(tr("加入新公司"));
-    addVegetableAction = editMenu->addAction(tr("加入新的菜名"));
-    addUnitAction = editMenu->addAction(tr("加入單位"));
-    removePersonAction = editMenu->addAction(tr("刪除客戶"));
-    removeCompanyAction = editMenu->addAction(tr("刪除公司"));
-    removeVegetableAction = editMenu->addAction(tr("刪掉菜名"));
-    removeUnitAction = editMenu->addAction(tr("刪掉單位"));
+    addPersonAction = editMenu->addAction(mTranslator.translate("Add Customer").c_str());
+    addCompanyAction = editMenu->addAction(mTranslator.translate("Add Company").c_str());
+    addVegetableAction = editMenu->addAction(mTranslator.translate("Add Vegetable").c_str());
+    addUnitAction = editMenu->addAction(mTranslator.translate("Add Unit").c_str());
+    removePersonAction = editMenu->addAction(mTranslator.translate("Remove Customer").c_str());
+    removeCompanyAction = editMenu->addAction(mTranslator.translate("Remove Company").c_str());
+    removeVegetableAction = editMenu->addAction(mTranslator.translate("Remove Vegetable").c_str());
+    removeUnitAction = editMenu->addAction(mTranslator.translate("Remove Unit").c_str());
+    changeToEnglishAction = translateMenu->addAction("English");
+    changeToChineseAction = translateMenu->addAction("中文");
 
 
     menuBar->addMenu(fileMenu);
@@ -111,7 +111,8 @@ void Dialog::createMenu()
     connect(addPersonAction, SIGNAL(triggered()), this, SLOT(addPerson()));
     connect(addCompanyAction, SIGNAL(triggered()), this, SLOT(addCompany()));
     connect(addUnitAction, SIGNAL(triggered()), this, SLOT(addUnit()));
-    connect(translateAction, SIGNAL(triggered()), this, SLOT(changeLanguage()));
+    connect(changeToEnglishAction, SIGNAL(triggered()), this, SLOT(changeToEnglish()));
+    connect(changeToChineseAction, SIGNAL(triggered()), this, SLOT(changeToChinese()));
 
     connect(removeVegetableAction, SIGNAL(triggered()), this, SLOT(removeVegetable()));
     connect(removePersonAction, SIGNAL(triggered()), this, SLOT(removePerson()));
@@ -2616,8 +2617,51 @@ void Dialog::on_pushButton_3_clicked()
     currentVege->clearTui();
 }
 
-void Dialog::changeLanguage(){
-
-
+void Dialog::changeToEnglish(){
+    mTranslator.changeLanguage(ENGLISH);
+    changeMenuLanguage();
 }
+
+void Dialog::changeToChinese(){
+    mTranslator.changeLanguage(CHINESE);
+    changeMenuLanguage();
+}
+
+void Dialog::changeMenuLanguage(){
+    newAction->setText(mTranslator.translate("New File").c_str());
+    loadAction ->setText(mTranslator.translate("Load File").c_str());
+    saveAction ->setText(mTranslator.translate("Save").c_str());;
+    saveAsAction ->setText(mTranslator.translate("Save As").c_str());
+
+    addPersonAction->setText(mTranslator.translate("Add Customer").c_str());
+    addCompanyAction ->setText(mTranslator.translate("Add Company").c_str());
+    addVegetableAction ->setText(mTranslator.translate("Add Vegetable").c_str());
+    addUnitAction ->setText(mTranslator.translate("Add Unit").c_str());
+    removePersonAction ->setText(mTranslator.translate("Remove Customer").c_str());
+    removeCompanyAction ->setText(mTranslator.translate("Remove Company").c_str());
+    removeVegetableAction->setText(mTranslator.translate("Remove Vegetable").c_str());
+    removeUnitAction->setText(mTranslator.translate("Remove Unit").c_str());
+
+    ui->Buy->setText(mTranslator.translate("Buy").c_str());
+    ui->Sell->setText(mTranslator.translate("Sell").c_str());
+    ui->VegieList->setText(mTranslator.translate("Vegetables").c_str());
+    ui->Total->setText(mTranslator.translate("History").c_str());
+    ui->Inventory->setText(mTranslator.translate("Breakdown").c_str());
+    ui->Return->setText(mTranslator.translate("Return").c_str());
+    ui->dumpButton->setText(mTranslator.translate("Dump").c_str());
+    ui->pushButton_3->setText(mTranslator.translate("Clear Memo").c_str());
+    ui->pushButton_2->setText(mTranslator.translate("Clear History").c_str());
+    ui->tuiCheck->setText(mTranslator.translate("Return to Company").c_str());
+
+
+    ui->buyCheck->setText(mTranslator.translate("Buy").c_str());
+    ui->sellCheck->setText(mTranslator.translate("Sell").c_str());
+    ui->dumpCheck->setText(mTranslator.translate("Dump").c_str());
+    ui->returnCheck->setText(mTranslator.translate("Return").c_str());
+    ui->Returns->setText(mTranslator.translate("Returns").c_str());
+}
+
+
+
+
 

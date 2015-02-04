@@ -80,7 +80,10 @@ private slots:
     void slot1();
 
     void on_pushButton_3_clicked();
-    void changeLanguage();
+    void changeToEnglish();
+
+    void changeToChinese();
+    void changeMenuLanguage();
 
 private:
     Ui::Dialog *ui;
@@ -88,12 +91,12 @@ private:
     QMenuBar *menuBar;
     QMenu *fileMenu;
     QMenu *editMenu;
+    QMenu *translateMenu;
     QAction *undoAction;
     QAction *undoHistoryAction;
     QAction *exitAction;
     QAction *printAction;
     QAction *printAction2;
-    QAction *translateAction;
     QAction *newAction;
     QAction *saveAction;
     QAction *saveAsAction;
@@ -110,6 +113,8 @@ private:
     QAction *deleteHistoryAction;
     QAction *deleteRemainingAction;
     QAction *deleteReturnAction;
+    QAction *changeToChineseAction;
+    QAction *changeToEnglishAction;
     Vegetable *currentVege;
     int needSave;
     QFont font;
