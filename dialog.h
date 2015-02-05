@@ -61,7 +61,7 @@ private slots:
     static int compareCustomer(const void *a, const void *b);
     void on_Return_clicked();
 
-    void on_pushButton_clicked();
+
     void closeEvent(QCloseEvent *event);
     void askSave();
 
@@ -84,6 +84,8 @@ private slots:
 
     void changeToChinese();
     void changeMenuLanguage();
+
+    void on_dumpButton_clicked();
 
 private:
     Ui::Dialog *ui;

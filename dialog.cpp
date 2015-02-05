@@ -81,8 +81,9 @@ void Dialog::createMenu()
     saveAction->setShortcut(QKeySequence::Save);
     saveAsAction = fileMenu->addAction(mTranslator.translate("Save As").c_str());
     saveAsAction->setShortcut(QKeySequence::SaveAs);
-    printAction = fileMenu->addAction(tr("印 Inventory"));
-    printAction2 = fileMenu->addAction(tr("印 History"));
+    printAction = fileMenu->addAction(mTranslator.translate("Print Inventory").c_str());
+    printAction2 = fileMenu->addAction(mTranslator.translate("Print History").c_str());
+
     fileMenu->addSeparator();
     translateMenu = fileMenu->addMenu(tr("Translate"));
 
@@ -90,10 +91,10 @@ void Dialog::createMenu()
     addCompanyAction = editMenu->addAction(mTranslator.translate("Add Company").c_str());
     addVegetableAction = editMenu->addAction(mTranslator.translate("Add Vegetable").c_str());
     addUnitAction = editMenu->addAction(mTranslator.translate("Add Unit").c_str());
-    removePersonAction = editMenu->addAction(mTranslator.translate("Remove Customer").c_str());
-    removeCompanyAction = editMenu->addAction(mTranslator.translate("Remove Company").c_str());
-    removeVegetableAction = editMenu->addAction(mTranslator.translate("Remove Vegetable").c_str());
-    removeUnitAction = editMenu->addAction(mTranslator.translate("Remove Unit").c_str());
+    removePersonAction = editMenu->addAction(mTranslator.translate("Delete Customer").c_str());
+    removeCompanyAction = editMenu->addAction(mTranslator.translate("Delete Company").c_str());
+    removeVegetableAction = editMenu->addAction(mTranslator.translate("Delete Vegetable").c_str());
+    removeUnitAction = editMenu->addAction(mTranslator.translate("Delete Unit").c_str());
     changeToEnglishAction = translateMenu->addAction("English");
     changeToChineseAction = translateMenu->addAction("中文");
 
@@ -187,7 +188,7 @@ void Dialog::on_Buy_clicked()
     if(currentVege){
 
         QDialog dialog(this);
-        dialog.setWindowTitle("買");
+        dialog.setWindowTitle(mTranslator.translate("Buy").c_str());
         // Use a layout allowing to have a label next to each field
         QFormLayout form(&dialog);
 
@@ -487,12 +488,10 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
 
 void Dialog::addVegetable(){
     QDialog dialog(this);
-    dialog.setWindowTitle("加入新的菜名");
+    dialog.setWindowTitle(mTranslator.translate("Add Vegetable").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-
-    // Add some text above the fields
-    form.addRow(new QLabel("請輸入你要加的菜名"));
+    form.addRow(new QLabel(mTranslator.translate("Vegetable Name").c_str()));
 
     QLineEdit *lineEdit = new QLineEdit(&dialog);
 
@@ -517,7 +516,8 @@ void Dialog::addVegetable(){
         if(!inventory->getUnitNum()){
 
             QMessageBox messageBox;
-            messageBox.critical(0,"警告","沒單位!");
+            messageBox.critical(0,mTranslator.translate("Warning").c_str(),
+                                mTranslator.translate("No Units!").c_str());
             messageBox.setFixedSize(500,200);
         }else if(inventory->addVegetable(lineEdit->text().toUtf8().constData(),
                                    unitDrop->currentText().toUtf8().constData())){
@@ -550,43 +550,45 @@ void Dialog::slot1(){
 
 void Dialog::addCompany(){
     bool ok;
-    QString text = QInputDialog::getText(this, tr("加入新公司"),
-                      tr("請輸入你要加的新公司名字?"), QLineEdit::Normal,"", &ok);
-    inventory->addCompany(text.toUtf8().constData());
-        needSave = 1;
+    QString text = QInputDialog::getText(this, mTranslator.translate("Add Company").c_str(),
+                      mTranslator.translate("Company Name").c_str(), QLineEdit::Normal,"", &ok);
+    if(ok)
+        inventory->addCompany(text.toUtf8().constData());
+    needSave = 1;
 }
 
 void Dialog::addPerson(){
     bool ok;
-    QString text = QInputDialog::getText(this, tr("加入新客戶"),
-                      tr("請輸入你要加的新客戶名字?"), QLineEdit::Normal,"", &ok);
-    inventory->addPerson(text.toUtf8().constData());
+    QString text = QInputDialog::getText(this, mTranslator.translate("Add Person").c_str(),
+                      mTranslator.translate("Customer Name").c_str(), QLineEdit::Normal,"", &ok);
+    if(ok)
+        inventory->addPerson(text.toUtf8().constData());
         needSave = 1;
 }
 
 void Dialog::addUnit(){
     bool ok;
-    QString text = QInputDialog::getText(this, tr("加入單位"),
-                      tr("請輸入你要加的單位?"), QLineEdit::Normal,"", &ok);
-    inventory->addUnit(text.toUtf8().constData());
-        needSave = 1;
+    QString text = QInputDialog::getText(this, mTranslator.translate("Add Unit").c_str(),
+                      mTranslator.translate("Unit Name").c_str(), QLineEdit::Normal,"", &ok);
+    if(ok)
+        inventory->addUnit(text.toUtf8().constData());
+    needSave = 1;
 }
 
 void Dialog::removeCompany(){
+    if(!inventory->getCompanyNum())
+        return;
     QDialog dialog(this);
-    dialog.setWindowTitle("刪除公司");
+    dialog.setWindowTitle(mTranslator.translate("Delete Company").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-
-    // Add some text above the fields
-    dialog.setWindowTitle("刪除公司");
 
     QComboBox* companyDrop = new QComboBox(&dialog);
         for(int i=0; i< inventory->getCompanyNum(); i++){
             companyDrop->addItem(inventory->getCompany(i).c_str());
     }
     companyDrop->setFont(font);
-    form.addRow("你要刪掉哪一個公司？", companyDrop);
+    form.addRow(mTranslator.translate("Which Company?").c_str(), companyDrop);
 
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -605,13 +607,12 @@ void Dialog::removeCompany(){
 }
 
 void Dialog::removePerson(){
+    if(!inventory->getPersonNum())
+        return;
     QDialog dialog(this);
-    dialog.setWindowTitle("刪除客戶");
+    dialog.setWindowTitle(mTranslator.translate("Remove Customer").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-
-    // Add some text above the fields
-    dialog.setWindowTitle("刪除客戶");
 
     QComboBox* personDrop = new QComboBox(&dialog);
         for(int i=0; i< inventory->getPersonNum(); i++){
@@ -619,7 +620,7 @@ void Dialog::removePerson(){
     }
     personDrop->setFont(font);
 
-    form.addRow("你要刪掉哪一個客戶？", personDrop);
+    form.addRow(mTranslator.translate("Which Customer?").c_str(), personDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -638,14 +639,12 @@ void Dialog::removePerson(){
 }
 
 void Dialog::removeUnit(){
-
+    if(!inventory->getUnitNum())
+        return;
     QDialog dialog(this);
-    dialog.setWindowTitle("刪掉單位");
+    dialog.setWindowTitle(mTranslator.translate("Remove Unit").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-
-    // Add some text above the fields
-    dialog.setWindowTitle("刪掉單位");
 
     QComboBox* unitDrop = new QComboBox(&dialog);
         for(int i=0; i< inventory->getUnitNum(); i++){
@@ -653,7 +652,7 @@ void Dialog::removeUnit(){
     }
     unitDrop->setFont(font);
 
-    form.addRow("你要刪掉哪一個單位？", unitDrop);
+    form.addRow(mTranslator.translate("Which Unit?").c_str(), unitDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -672,13 +671,12 @@ void Dialog::removeUnit(){
 }
 
 void Dialog::removeVegetable(){
+    if(!inventory->getVegNum())
+        return;
     QDialog dialog(this);
-    dialog.setWindowTitle("刪掉菜名");
+    dialog.setWindowTitle(mTranslator.translate("Delete Vegetable");
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-
-    // Add some text above the fields
-    dialog.setWindowTitle("刪掉菜名");
 
     QComboBox* vegeDrop = new QComboBox(&dialog);
         for(int i=0; i< inventory->getVegNum(); i++){
@@ -686,7 +684,7 @@ void Dialog::removeVegetable(){
     }
     vegeDrop->setFont(font);
 
-    form.addRow("你要刪掉哪一個菜名？", vegeDrop);
+    form.addRow(mTranslator.translate("Which Vegetable?").c_str(), vegeDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -747,11 +745,11 @@ void Dialog::printI(QPrinter* printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle("列印資料");
+    dialog1.setWindowTitle(mTranslator.translate("Print Inventory").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString("請輸入字體大小");
+    QString label = QString(mTranslator.translate("Font Size").c_str());
     lineEdit -> setText("20");
     form.addRow(label, lineEdit);
 
@@ -896,16 +894,16 @@ void Dialog::printH(QPrinter * printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle("列印資料");
+    dialog1.setWindowTitle((mTranslator.translate("Print History").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *l2 = new QLineEdit(&dialog1);
-    QString label2 = QString("你要列印哪一天的日期?");
+    QString label2 = QString(mTranslator.translate("Print Which Day?").c_str());
     l2 -> setText(today.c_str());
     form.addRow(label2,l2);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString("請輸入字體大小");
+    QString label = QString(mTranslator.translate("Font Size").c_str());
     lineEdit -> setText("20");
     form.addRow(label, lineEdit);
 
@@ -2332,7 +2330,7 @@ void Dialog:: askSave(){
     needSave = 0;
 }
 
-void Dialog::on_pushButton_clicked()
+void Dialog::on_dumpButton_clicked()
 {
     if(currentVege){
 
@@ -2637,31 +2635,30 @@ void Dialog::changeMenuLanguage(){
     addCompanyAction ->setText(mTranslator.translate("Add Company").c_str());
     addVegetableAction ->setText(mTranslator.translate("Add Vegetable").c_str());
     addUnitAction ->setText(mTranslator.translate("Add Unit").c_str());
-    removePersonAction ->setText(mTranslator.translate("Remove Customer").c_str());
-    removeCompanyAction ->setText(mTranslator.translate("Remove Company").c_str());
-    removeVegetableAction->setText(mTranslator.translate("Remove Vegetable").c_str());
-    removeUnitAction->setText(mTranslator.translate("Remove Unit").c_str());
+    removePersonAction ->setText(mTranslator.translate("Delete Customer").c_str());
+    removeCompanyAction ->setText(mTranslator.translate("Delete Company").c_str());
+    removeVegetableAction->setText(mTranslator.translate("Delete Vegetable").c_str());
+    removeUnitAction->setText(mTranslator.translate("Delete Unit").c_str());
+    printAction->setText(mTranslator.translate("Print Inventory").c_str());
+    printAction2->setText(mTranslator.translate("Print History").c_str());
 
-    ui->Buy->setText(mTranslator.translate("Buy").c_str());
-    ui->Sell->setText(mTranslator.translate("Sell").c_str());
-    ui->VegieList->setText(mTranslator.translate("Vegetables").c_str());
-    ui->Total->setText(mTranslator.translate("History").c_str());
-    ui->Inventory->setText(mTranslator.translate("Breakdown").c_str());
+    ui->Buy->setText((mTranslator.translate("Buy")).c_str());
+    ui->Sell->setText((mTranslator.translate("Sell")).c_str());
+    ui->VegieList->setText((mTranslator.translate("Vegetables") + ":").c_str());
+    ui->Total->setText((mTranslator.translate("History") + ":").c_str());
+    ui->Inventory->setText((mTranslator.translate("Breakdown") + ":").c_str());
     ui->Return->setText(mTranslator.translate("Return").c_str());
     ui->dumpButton->setText(mTranslator.translate("Dump").c_str());
     ui->pushButton_3->setText(mTranslator.translate("Clear Memo").c_str());
     ui->pushButton_2->setText(mTranslator.translate("Clear History").c_str());
+    ui->Return->setText(mTranslator.translate("Return").c_str());
+
     ui->tuiCheck->setText(mTranslator.translate("Return to Company").c_str());
-
-
     ui->buyCheck->setText(mTranslator.translate("Buy").c_str());
     ui->sellCheck->setText(mTranslator.translate("Sell").c_str());
     ui->dumpCheck->setText(mTranslator.translate("Dump").c_str());
-    ui->returnCheck->setText(mTranslator.translate("Return").c_str());
-    ui->Returns->setText(mTranslator.translate("Returns").c_str());
+    ui->returnCheck->setText(mTranslator.translate("Return to Us").c_str());
+    ui->Returns->setText((mTranslator.translate("Returns") + ":").c_str());
 }
-
-
-
 
 
