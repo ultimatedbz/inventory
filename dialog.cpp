@@ -674,7 +674,7 @@ void Dialog::removeVegetable(){
     if(!inventory->getVegNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator.translate("Delete Vegetable");
+    dialog.setWindowTitle(mTranslator.translate("Delete Vegetable").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -894,7 +894,7 @@ void Dialog::printH(QPrinter * printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle((mTranslator.translate("Print History").c_str());
+    dialog1.setWindowTitle(mTranslator.translate("Print History").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *l2 = new QLineEdit(&dialog1);
