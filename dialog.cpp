@@ -2573,4 +2573,25 @@ void Dialog::changeLanguage(){
     ui->Returns->setText((mTranslator ->translate("Returns") + ":").c_str());
 }
 
+void Dialog::writeInt(int temp, fstream *fio){
+    fio->write((const char *) &(temp), sizeof(int));
+}
+
+void Dialog::writeString(string temp, fstream* fio){
+    char* a=new char[temp.size()+1];
+    a[temp.size()]=0;
+    int tempNum = temp.size();
+    fio->write((const char *) &(tempNum), sizeof(int));
+    memcpy(a,temp.c_str(),temp.size());
+    fio->write(a,strlen(a));
+}
+
+
+
+
+
+
+
+
+
 

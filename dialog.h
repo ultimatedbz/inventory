@@ -34,13 +34,6 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
-    Translator* mTranslator;
-
-public slots:
-
-    void on_Buy_clicked();
-    void on_Sell_clicked();
-
     void addVegetable();
     void addCompany();
     void addPerson();
@@ -51,6 +44,19 @@ public slots:
     void removeUnit();
     void printInventory();
     void printHistory();
+    void writeInt(int temp, fstream* fio);
+    void writeString(string temp, fstream* fio);
+    void readInt();
+    void readString();
+
+    Translator* mTranslator;
+
+public slots:
+
+    void on_Buy_clicked();
+    void on_Sell_clicked();
+
+
     void additionalSell(int amount, int cusIndex, QString dateB, QString priceB);
     int querySplits();
     void splitSell(int splits, int amount, int cusIndex, QString dateB, QString priceB);
