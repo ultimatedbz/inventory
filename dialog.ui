@@ -101,11 +101,8 @@
    </item>
    <item row="1" column="1">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <widget class="QListWidget" name="breakDown"/>
-     </item>
      <item row="0" column="0">
-      <widget class="QTreeView" name="treeView"/>
+      <widget class="QListWidget" name="breakDown"/>
      </item>
     </layout>
    </item>

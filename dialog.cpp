@@ -1341,10 +1341,11 @@ void Dialog::saveAs(){
     QWidget *activeWindow = QApplication::activeWindow();
     QString filename = QFileDialog::getSaveFileName(activeWindow,
         "Save File As", "", "Datafile files (*.datafile);;All files (*)");
-    string datafile1 = filename.toUtf8().constData();
-    const char* datafile = datafile1.c_str();
-    inventory->setFileName(datafile);
-    save();
+    string datafile = filename.toUtf8().constData();
+    if(datafile != ""){
+        inventory->setFileName(datafile.c_str());
+        save();
+    }
 }
 
 void Dialog:: newFile(){
@@ -1392,7 +1393,7 @@ void Dialog::loadFile(){
             ui->vegeList->setCurrentRow(0);
             on_vegeList_itemPressed(ui->vegeList->item(0));
         }
-        needSave=0;
+        needSave = 0;
     }
 }
 
