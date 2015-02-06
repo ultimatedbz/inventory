@@ -131,7 +131,7 @@
     </widget>
    </item>
    <item row="2" column="4">
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="clearReturnButton">
      <property name="text">
       <string>清掉退貨單</string>
      </property>
@@ -205,7 +205,7 @@
     </layout>
    </item>
    <item row="4" column="2">
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="clearHistoryButton">
      <property name="text">
       <string>清掉歷史</string>
      </property>

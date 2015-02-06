@@ -332,14 +332,9 @@ void Inventory::load(fstream* fio){
         vegeArray = new Vegetable[100];
     for(int i = 0; i < vegetableNum; i++){
         Vegetable temp;
-
-
         temp.load(fio);
-
         vegeArray[i] = temp;
-
     }
-
 }
 
 

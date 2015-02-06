@@ -34,10 +34,19 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
+
+    void newFile();
+    void loadFile();
+    void save();
+    void saveAs();
+    void changeToEnglish();
+    void changeToChinese();
+
     void addVegetable();
     void addCompany();
     void addPerson();
     void addUnit();
+    void deleteVege();
     void removeCompany();
     void removePerson();
     void removeVegetable();
@@ -46,8 +55,11 @@ public:
     void printHistory();
     void writeInt(int temp, fstream* fio);
     void writeString(string temp, fstream* fio);
-    void readInt();
-    void readString();
+
+
+    void changeLanguage();
+    void printI(QPrinter* printer);
+    void printH(QPrinter* printer);
 
     Translator* mTranslator;
 
@@ -61,14 +73,7 @@ public slots:
     int querySplits();
     void splitSell(int splits, int amount, int cusIndex, QString dateB, QString priceB);
     int sameDay(int i1, int i2, int i3, int i4);
-    void save();
-    void saveAs();
-    void newFile();
-    void loadFile();
-    void changeToEnglish();
-    void changeToChinese();
 
-    void deleteVege();
     void deleteHistory();
     void undoHistory();
 
@@ -79,10 +84,6 @@ public slots:
     void closeEvent(QCloseEvent *event);
     void askSave();
 
-    void on_pushButton_2_clicked();
-    void printI(QPrinter* printer);
-    void printH(QPrinter* printer);
-
     void on_vegeList_itemPressed(QListWidgetItem *item);
 
 
@@ -90,11 +91,12 @@ public slots:
 
 
     void slot1();
-
-    void on_pushButton_3_clicked();
-
-    void changeLanguage();
     void on_dumpButton_clicked();
+
+private slots:
+    void on_clearHistoryButton_clicked();
+
+    void on_clearReturnButton_clicked();
 
 private:
     Ui::Dialog *ui;

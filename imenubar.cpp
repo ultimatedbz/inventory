@@ -12,29 +12,29 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
 
     QMenu* editMenu = addMenu("Edit");
 
-    newAction = fileMenu->addAction(mTranslator ->translate("New File").c_str());
+    newAction = fileMenu->addAction(mTranslator ->translate("開新檔案").c_str());
     newAction->setShortcut(QKeySequence::New);
-    loadAction = fileMenu->addAction(mTranslator ->translate("Load File").c_str());
+    loadAction = fileMenu->addAction(mTranslator ->translate("開啟舊檔").c_str());
     loadAction->setShortcut(QKeySequence::Open);
-    saveAction =fileMenu->addAction(mTranslator ->translate("Save").c_str());;
+    saveAction =fileMenu->addAction(mTranslator ->translate("儲存檔案").c_str());;
     saveAction->setShortcut(QKeySequence::Save);
-    saveAsAction = fileMenu->addAction(mTranslator ->translate("Save As").c_str());
+    saveAsAction = fileMenu->addAction(mTranslator ->translate("另存新檔").c_str());
     saveAsAction->setShortcut(QKeySequence::SaveAs);
-    printAction = fileMenu->addAction(mTranslator ->translate("Print Inventory").c_str());
-    printAction2 = fileMenu->addAction(mTranslator ->translate("Print History").c_str());
+    printAction = fileMenu->addAction(mTranslator ->translate("印 Inventory").c_str());
+    printAction2 = fileMenu->addAction(mTranslator ->translate("印 History").c_str());
 
 
     fileMenu->addSeparator();
     QMenu* translateMenu = fileMenu->addMenu(tr("Translate"));
 
-    addPersonAction = editMenu->addAction(mTranslator ->translate("Add Customer").c_str());
-    addCompanyAction = editMenu->addAction(mTranslator ->translate("Add Company").c_str());
-    addVegetableAction = editMenu->addAction(mTranslator ->translate("Add Vegetable").c_str());
-    addUnitAction = editMenu->addAction(mTranslator ->translate("Add Unit").c_str());
-    removePersonAction = editMenu->addAction(mTranslator ->translate("Delete Customer").c_str());
-    removeCompanyAction = editMenu->addAction(mTranslator ->translate("Delete Company").c_str());
-    removeVegetableAction = editMenu->addAction(mTranslator ->translate("Delete Vegetable").c_str());
-    removeUnitAction = editMenu->addAction(mTranslator ->translate("Delete Unit").c_str());
+    addPersonAction = editMenu->addAction(mTranslator ->translate("加入新客戶").c_str());
+    addCompanyAction = editMenu->addAction(mTranslator ->translate("加入新公司").c_str());
+    addVegetableAction = editMenu->addAction(mTranslator ->translate("加入新的菜名").c_str());
+    addUnitAction = editMenu->addAction(mTranslator ->translate("加入單位").c_str());
+    removePersonAction = editMenu->addAction(mTranslator ->translate("刪除客戶").c_str());
+    removeCompanyAction = editMenu->addAction(mTranslator ->translate("刪除公司").c_str());
+    removeVegetableAction = editMenu->addAction(mTranslator ->translate("刪掉菜名").c_str());
+    removeUnitAction = editMenu->addAction(mTranslator ->translate("刪掉單位").c_str());
     changeToEnglishAction = translateMenu->addAction("English");
     changeToChineseAction = translateMenu->addAction("中文");
 
@@ -60,21 +60,20 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
 }
 
 void IMenuBar:: changeLanguage(){
-    newAction->setText(mTranslator ->translate("New File").c_str());
-    loadAction ->setText(mTranslator ->translate("Load File").c_str());
-    saveAction ->setText(mTranslator ->translate("Save").c_str());;
-    saveAsAction ->setText(mTranslator ->translate("Save As").c_str());
-
-    addPersonAction->setText(mTranslator ->translate("Add Customer").c_str());
-    addCompanyAction ->setText(mTranslator ->translate("Add Company").c_str());
-    addVegetableAction ->setText(mTranslator ->translate("Add Vegetable").c_str());
-    addUnitAction ->setText(mTranslator ->translate("Add Unit").c_str());
-    removePersonAction ->setText(mTranslator ->translate("Delete Customer").c_str());
-    removeCompanyAction ->setText(mTranslator ->translate("Delete Company").c_str());
-    removeVegetableAction->setText(mTranslator ->translate("Delete Vegetable").c_str());
-    removeUnitAction->setText(mTranslator ->translate("Delete Unit").c_str());
-    printAction->setText(mTranslator ->translate("Print Inventory").c_str());
-    printAction2->setText(mTranslator ->translate("Print History").c_str());
+    newAction->setText(mTranslator ->translate("開新檔案").c_str());
+    loadAction ->setText(mTranslator ->translate("開啟舊檔").c_str());
+    saveAction ->setText(mTranslator ->translate("儲存檔案").c_str());;
+    saveAsAction ->setText(mTranslator ->translate("另存新檔").c_str());
+    addPersonAction->setText(mTranslator ->translate("加入新客戶").c_str());
+    addCompanyAction ->setText(mTranslator ->translate("加入新公司").c_str());
+    addVegetableAction ->setText(mTranslator ->translate("加入新的菜名").c_str());
+    addUnitAction ->setText(mTranslator ->translate("加入單位").c_str());
+    removePersonAction ->setText(mTranslator ->translate("刪除客戶").c_str());
+    removeCompanyAction ->setText(mTranslator ->translate("刪除公司").c_str());
+    removeVegetableAction->setText(mTranslator ->translate("刪掉菜名").c_str());
+    removeUnitAction->setText(mTranslator ->translate("刪掉單位").c_str());
+    printAction->setText(mTranslator ->translate("印 Inventory").c_str());
+    printAction2->setText(mTranslator ->translate("印 History").c_str());
 }
 
 /* File */
