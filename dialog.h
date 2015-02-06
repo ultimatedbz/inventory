@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "Inventory.h"
 #include "translator.h"
+#include "imenubar.h"
 #include <QListWidgetItem>
 #include <iostream>
 #include <QPrinter>
@@ -33,11 +34,13 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
-    void createMenu();
-private slots:
+    Translator* mTranslator;
+
+public slots:
 
     void on_Buy_clicked();
     void on_Sell_clicked();
+
     void addVegetable();
     void addCompany();
     void addPerson();
@@ -56,12 +59,17 @@ private slots:
     void saveAs();
     void newFile();
     void loadFile();
+    void changeToEnglish();
+    void changeToChinese();
+
+    void deleteVege();
+    void deleteHistory();
+    void undoHistory();
+
     void on_Memo_2_textChanged();
     static int compareCompany(const void *a, const void *b);
     static int compareCustomer(const void *a, const void *b);
     void on_Return_clicked();
-
-
     void closeEvent(QCloseEvent *event);
     void askSave();
 
@@ -74,54 +82,23 @@ private slots:
 
     void ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditHint hint);
 
-    void deleteVege();
-    void deleteHistory();
-    void undoHistory();
+
     void slot1();
 
     void on_pushButton_3_clicked();
-    void changeToEnglish();
 
-    void changeToChinese();
-    void changeMenuLanguage();
-
+    void changeLanguage();
     void on_dumpButton_clicked();
 
 private:
     Ui::Dialog *ui;
     Inventory* inventory;
-    QMenuBar *menuBar;
-    QMenu *fileMenu;
-    QMenu *editMenu;
-    QMenu *translateMenu;
-    QAction *undoAction;
-    QAction *undoHistoryAction;
-    QAction *exitAction;
-    QAction *printAction;
-    QAction *printAction2;
-    QAction *newAction;
-    QAction *saveAction;
-    QAction *saveAsAction;
-    QAction *loadAction;
-    QAction *addPersonAction;
-    QAction *addCompanyAction;
-    QAction *addVegetableAction;
-    QAction *addUnitAction;
-    QAction *removePersonAction;
-    QAction *removeCompanyAction;
-    QAction *removeVegetableAction;
-    QAction *removeUnitAction;
-    QAction *deleteVegeAction;
-    QAction *deleteHistoryAction;
-    QAction *deleteRemainingAction;
-    QAction *deleteReturnAction;
-    QAction *changeToChineseAction;
-    QAction *changeToEnglishAction;
+    IMenuBar *menuBar;
     Vegetable *currentVege;
     int needSave;
     QFont font;
     int refresh;
-    Translator mTranslator;
+
 };
 
 #endif // DIALOG_H

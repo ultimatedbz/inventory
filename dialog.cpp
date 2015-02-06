@@ -37,23 +37,12 @@ Dialog::Dialog(QWidget *parent) :
     ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->breakDown->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->returnList->setContextMenuPolicy(Qt::ActionsContextMenu);
+
     connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
             this, SLOT(ListWidgetEditEnd(QWidget*, QAbstractItemDelegate::EndEditHint)));
     inventory = new Inventory();
-    createMenu();
-
-
-    deleteVegeAction = new QAction(tr("&Delete"),this);
-    connect(deleteVegeAction, SIGNAL(triggered()), this, SLOT(deleteVege()));
-    ui->vegeList->addAction(deleteVegeAction);
-
-    undoHistoryAction = new QAction(tr("&Undo"),this);
-    connect(undoHistoryAction, SIGNAL(triggered()), this, SLOT(undoHistory()));
-    ui->historyList->addAction(undoHistoryAction);
-
-    deleteHistoryAction = new QAction(tr("&delete"),this);
-    connect(deleteHistoryAction, SIGNAL(triggered()), this, SLOT(deleteHistory()));
-    ui->historyList->addAction(deleteHistoryAction);
+    mTranslator = new Translator();
+    menuBar = new IMenuBar(this, mTranslator);
 
     QFont vFont = font;
     vFont.setPixelSize(18);
@@ -63,63 +52,6 @@ Dialog::Dialog(QWidget *parent) :
 Dialog::~Dialog()
 {
     delete ui;
-}
-
-
-
-void Dialog::createMenu()
-{
-    menuBar = new QMenuBar(this);
-    fileMenu = new QMenu("File", this);
-    editMenu = new QMenu("Edit", this);
-
-    newAction = fileMenu->addAction(mTranslator.translate("New File").c_str());
-    newAction->setShortcut(QKeySequence::New);
-    loadAction = fileMenu->addAction(mTranslator.translate("Load File").c_str());
-    loadAction->setShortcut(QKeySequence::Open);
-    saveAction =fileMenu->addAction(mTranslator.translate("Save").c_str());;
-    saveAction->setShortcut(QKeySequence::Save);
-    saveAsAction = fileMenu->addAction(mTranslator.translate("Save As").c_str());
-    saveAsAction->setShortcut(QKeySequence::SaveAs);
-    printAction = fileMenu->addAction(mTranslator.translate("Print Inventory").c_str());
-    printAction2 = fileMenu->addAction(mTranslator.translate("Print History").c_str());
-
-    fileMenu->addSeparator();
-    translateMenu = fileMenu->addMenu(tr("Translate"));
-
-    addPersonAction = editMenu->addAction(mTranslator.translate("Add Customer").c_str());
-    addCompanyAction = editMenu->addAction(mTranslator.translate("Add Company").c_str());
-    addVegetableAction = editMenu->addAction(mTranslator.translate("Add Vegetable").c_str());
-    addUnitAction = editMenu->addAction(mTranslator.translate("Add Unit").c_str());
-    removePersonAction = editMenu->addAction(mTranslator.translate("Delete Customer").c_str());
-    removeCompanyAction = editMenu->addAction(mTranslator.translate("Delete Company").c_str());
-    removeVegetableAction = editMenu->addAction(mTranslator.translate("Delete Vegetable").c_str());
-    removeUnitAction = editMenu->addAction(mTranslator.translate("Delete Unit").c_str());
-    changeToEnglishAction = translateMenu->addAction("English");
-    changeToChineseAction = translateMenu->addAction("中文");
-
-
-    menuBar->addMenu(fileMenu);
-    menuBar->addMenu(editMenu);
-
-    connect(newAction, SIGNAL(triggered()), this, SLOT(newFile()));
-    connect(loadAction, SIGNAL(triggered()), this, SLOT(loadFile()));
-    connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
-    connect(saveAsAction, SIGNAL(triggered()), this, SLOT(saveAs()));
-    connect(printAction, SIGNAL(triggered()), this, SLOT(printInventory()));
-    connect(printAction2, SIGNAL(triggered()), this, SLOT(printHistory()));
-    connect(addVegetableAction, SIGNAL(triggered()), this, SLOT(addVegetable()));
-    connect(addPersonAction, SIGNAL(triggered()), this, SLOT(addPerson()));
-    connect(addCompanyAction, SIGNAL(triggered()), this, SLOT(addCompany()));
-    connect(addUnitAction, SIGNAL(triggered()), this, SLOT(addUnit()));
-    connect(changeToEnglishAction, SIGNAL(triggered()), this, SLOT(changeToEnglish()));
-    connect(changeToChineseAction, SIGNAL(triggered()), this, SLOT(changeToChinese()));
-
-    connect(removeVegetableAction, SIGNAL(triggered()), this, SLOT(removeVegetable()));
-    connect(removePersonAction, SIGNAL(triggered()), this, SLOT(removePerson()));
-    connect(removeCompanyAction, SIGNAL(triggered()), this, SLOT(removeCompany()));
-    connect(removeUnitAction, SIGNAL(triggered()), this, SLOT(removeUnit()));
-
 }
 
 void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
@@ -188,7 +120,7 @@ void Dialog::on_Buy_clicked()
     if(currentVege){
 
         QDialog dialog(this);
-        dialog.setWindowTitle(mTranslator.translate("Buy").c_str());
+        dialog.setWindowTitle(mTranslator ->translate("Buy").c_str());
         // Use a layout allowing to have a label next to each field
         QFormLayout form(&dialog);
 
@@ -488,10 +420,10 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
 
 void Dialog::addVegetable(){
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator.translate("Add Vegetable").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("Add Vegetable").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
-    form.addRow(new QLabel(mTranslator.translate("Vegetable Name").c_str()));
+    form.addRow(new QLabel(mTranslator ->translate("Vegetable Name").c_str()));
 
     QLineEdit *lineEdit = new QLineEdit(&dialog);
 
@@ -516,8 +448,8 @@ void Dialog::addVegetable(){
         if(!inventory->getUnitNum()){
 
             QMessageBox messageBox;
-            messageBox.critical(0,mTranslator.translate("Warning").c_str(),
-                                mTranslator.translate("No Units!").c_str());
+            messageBox.critical(0,mTranslator ->translate("Warning").c_str(),
+                                mTranslator ->translate("No Units!").c_str());
             messageBox.setFixedSize(500,200);
         }else if(inventory->addVegetable(lineEdit->text().toUtf8().constData(),
                                    unitDrop->currentText().toUtf8().constData())){
@@ -550,8 +482,8 @@ void Dialog::slot1(){
 
 void Dialog::addCompany(){
     bool ok;
-    QString text = QInputDialog::getText(this, mTranslator.translate("Add Company").c_str(),
-                      mTranslator.translate("Company Name").c_str(), QLineEdit::Normal,"", &ok);
+    QString text = QInputDialog::getText(this, mTranslator ->translate("Add Company").c_str(),
+                      mTranslator ->translate("Company Name").c_str(), QLineEdit::Normal,"", &ok);
     if(ok)
         inventory->addCompany(text.toUtf8().constData());
     needSave = 1;
@@ -559,8 +491,8 @@ void Dialog::addCompany(){
 
 void Dialog::addPerson(){
     bool ok;
-    QString text = QInputDialog::getText(this, mTranslator.translate("Add Person").c_str(),
-                      mTranslator.translate("Customer Name").c_str(), QLineEdit::Normal,"", &ok);
+    QString text = QInputDialog::getText(this, mTranslator ->translate("Add Person").c_str(),
+                      mTranslator ->translate("Customer Name").c_str(), QLineEdit::Normal,"", &ok);
     if(ok)
         inventory->addPerson(text.toUtf8().constData());
         needSave = 1;
@@ -568,8 +500,8 @@ void Dialog::addPerson(){
 
 void Dialog::addUnit(){
     bool ok;
-    QString text = QInputDialog::getText(this, mTranslator.translate("Add Unit").c_str(),
-                      mTranslator.translate("Unit Name").c_str(), QLineEdit::Normal,"", &ok);
+    QString text = QInputDialog::getText(this, mTranslator ->translate("Add Unit").c_str(),
+                      mTranslator ->translate("Unit Name").c_str(), QLineEdit::Normal,"", &ok);
     if(ok)
         inventory->addUnit(text.toUtf8().constData());
     needSave = 1;
@@ -579,7 +511,7 @@ void Dialog::removeCompany(){
     if(!inventory->getCompanyNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator.translate("Delete Company").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("Delete Company").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -588,7 +520,7 @@ void Dialog::removeCompany(){
             companyDrop->addItem(inventory->getCompany(i).c_str());
     }
     companyDrop->setFont(font);
-    form.addRow(mTranslator.translate("Which Company?").c_str(), companyDrop);
+    form.addRow(mTranslator ->translate("Which Company?").c_str(), companyDrop);
 
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -610,7 +542,7 @@ void Dialog::removePerson(){
     if(!inventory->getPersonNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator.translate("Remove Customer").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("Remove Customer").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -620,7 +552,7 @@ void Dialog::removePerson(){
     }
     personDrop->setFont(font);
 
-    form.addRow(mTranslator.translate("Which Customer?").c_str(), personDrop);
+    form.addRow(mTranslator ->translate("Which Customer?").c_str(), personDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -642,7 +574,7 @@ void Dialog::removeUnit(){
     if(!inventory->getUnitNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator.translate("Remove Unit").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("Remove Unit").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -652,7 +584,7 @@ void Dialog::removeUnit(){
     }
     unitDrop->setFont(font);
 
-    form.addRow(mTranslator.translate("Which Unit?").c_str(), unitDrop);
+    form.addRow(mTranslator ->translate("Which Unit?").c_str(), unitDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -674,7 +606,7 @@ void Dialog::removeVegetable(){
     if(!inventory->getVegNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator.translate("Delete Vegetable").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("Delete Vegetable").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -684,7 +616,7 @@ void Dialog::removeVegetable(){
     }
     vegeDrop->setFont(font);
 
-    form.addRow(mTranslator.translate("Which Vegetable?").c_str(), vegeDrop);
+    form.addRow(mTranslator ->translate("Which Vegetable?").c_str(), vegeDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -745,11 +677,11 @@ void Dialog::printI(QPrinter* printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle(mTranslator.translate("Print Inventory").c_str());
+    dialog1.setWindowTitle(mTranslator ->translate("Print Inventory").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString(mTranslator.translate("Font Size").c_str());
+    QString label = QString(mTranslator ->translate("Font Size").c_str());
     lineEdit -> setText("20");
     form.addRow(label, lineEdit);
 
@@ -894,16 +826,16 @@ void Dialog::printH(QPrinter * printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle(mTranslator.translate("Print History").c_str());
+    dialog1.setWindowTitle(mTranslator ->translate("Print History").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *l2 = new QLineEdit(&dialog1);
-    QString label2 = QString(mTranslator.translate("Print Which Day?").c_str());
+    QString label2 = QString(mTranslator ->translate("Print Which Day?").c_str());
     l2 -> setText(today.c_str());
     form.addRow(label2,l2);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString(mTranslator.translate("Font Size").c_str());
+    QString label = QString(mTranslator ->translate("Font Size").c_str());
     lineEdit -> setText("20");
     form.addRow(label, lineEdit);
 
@@ -1426,14 +1358,6 @@ void Dialog::saveAs(){
     fio->write((const char *) &(temp), sizeof(int));
     temp = inventory->getVegNum();
     fio->write((const char *) &(temp), sizeof(int));
-/*
-    string temp2 = inventory->getFileName();
-    char *a=new char[temp2.size()+1];
-    a[temp2.size()]=0;
-    int tempNum = temp2.size();
-    fio->write((const char *) &(tempNum), sizeof(int));
-    memcpy(a,temp2.c_str(),temp2.size());
-    fio->write(a,strlen(a));*/
 
 
     for(int i = 0; i < inventory->getCompanyNum() ; i++){
@@ -1764,6 +1688,7 @@ void Dialog::saveAs(){
 }
 
 void Dialog:: newFile(){
+
     if(needSave)
         askSave();
     //clear everything
@@ -2616,49 +2541,36 @@ void Dialog::on_pushButton_3_clicked()
 }
 
 void Dialog::changeToEnglish(){
-    mTranslator.changeLanguage(ENGLISH);
-    changeMenuLanguage();
+    mTranslator ->changeLanguage(ENGLISH);
+    changeLanguage();
 }
 
 void Dialog::changeToChinese(){
-    mTranslator.changeLanguage(CHINESE);
-    changeMenuLanguage();
+    mTranslator ->changeLanguage(CHINESE);
+    changeLanguage();
 }
 
-void Dialog::changeMenuLanguage(){
-    newAction->setText(mTranslator.translate("New File").c_str());
-    loadAction ->setText(mTranslator.translate("Load File").c_str());
-    saveAction ->setText(mTranslator.translate("Save").c_str());;
-    saveAsAction ->setText(mTranslator.translate("Save As").c_str());
+void Dialog::changeLanguage(){
 
-    addPersonAction->setText(mTranslator.translate("Add Customer").c_str());
-    addCompanyAction ->setText(mTranslator.translate("Add Company").c_str());
-    addVegetableAction ->setText(mTranslator.translate("Add Vegetable").c_str());
-    addUnitAction ->setText(mTranslator.translate("Add Unit").c_str());
-    removePersonAction ->setText(mTranslator.translate("Delete Customer").c_str());
-    removeCompanyAction ->setText(mTranslator.translate("Delete Company").c_str());
-    removeVegetableAction->setText(mTranslator.translate("Delete Vegetable").c_str());
-    removeUnitAction->setText(mTranslator.translate("Delete Unit").c_str());
-    printAction->setText(mTranslator.translate("Print Inventory").c_str());
-    printAction2->setText(mTranslator.translate("Print History").c_str());
+    menuBar->changeLanguage();
 
-    ui->Buy->setText((mTranslator.translate("Buy")).c_str());
-    ui->Sell->setText((mTranslator.translate("Sell")).c_str());
-    ui->VegieList->setText((mTranslator.translate("Vegetables") + ":").c_str());
-    ui->Total->setText((mTranslator.translate("History") + ":").c_str());
-    ui->Inventory->setText((mTranslator.translate("Breakdown") + ":").c_str());
-    ui->Return->setText(mTranslator.translate("Return").c_str());
-    ui->dumpButton->setText(mTranslator.translate("Dump").c_str());
-    ui->pushButton_3->setText(mTranslator.translate("Clear Memo").c_str());
-    ui->pushButton_2->setText(mTranslator.translate("Clear History").c_str());
-    ui->Return->setText(mTranslator.translate("Return").c_str());
+    ui->Buy->setText((mTranslator ->translate("Buy")).c_str());
+    ui->Sell->setText((mTranslator ->translate("Sell")).c_str());
+    ui->VegieList->setText((mTranslator ->translate("Vegetables") + ":").c_str());
+    ui->Total->setText((mTranslator ->translate("History") + ":").c_str());
+    ui->Inventory->setText((mTranslator ->translate("Breakdown") + ":").c_str());
+    ui->Return->setText(mTranslator ->translate("Return").c_str());
+    ui->dumpButton->setText(mTranslator ->translate("Dump").c_str());
+    ui->pushButton_3->setText(mTranslator ->translate("Clear Memo").c_str());
+    ui->pushButton_2->setText(mTranslator ->translate("Clear History").c_str());
+    ui->Return->setText(mTranslator ->translate("Return").c_str());
 
-    ui->tuiCheck->setText(mTranslator.translate("Return to Company").c_str());
-    ui->buyCheck->setText(mTranslator.translate("Buy").c_str());
-    ui->sellCheck->setText(mTranslator.translate("Sell").c_str());
-    ui->dumpCheck->setText(mTranslator.translate("Dump").c_str());
-    ui->returnCheck->setText(mTranslator.translate("Return to Us").c_str());
-    ui->Returns->setText((mTranslator.translate("Returns") + ":").c_str());
+    ui->tuiCheck->setText(mTranslator ->translate("Return to Company").c_str());
+    ui->buyCheck->setText(mTranslator ->translate("Buy").c_str());
+    ui->sellCheck->setText(mTranslator ->translate("Sell").c_str());
+    ui->dumpCheck->setText(mTranslator ->translate("Dump").c_str());
+    ui->returnCheck->setText(mTranslator ->translate("Return to Us").c_str());
+    ui->Returns->setText((mTranslator ->translate("Returns") + ":").c_str());
 }
 
 

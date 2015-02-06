@@ -16,14 +16,16 @@ SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
     Remaining.cpp \
     Return.cpp \
     returnto.cpp \
-    translator.cpp
+    translator.cpp \
+    imenubar.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Remaining.h \
     Return.h \
     returnto.h \
     IConst.h \
-    translator.h
+    translator.h \
+    imenubar.h
 
 
 FORMS    += dialog.ui
