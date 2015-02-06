@@ -1339,352 +1339,12 @@ int Dialog:: sameDay(int i1, int i2, int i3, int i4){
 void Dialog::saveAs(){
 
     QWidget *activeWindow = QApplication::activeWindow();
-
     QString filename = QFileDialog::getSaveFileName(activeWindow,
         "Save File As", "", "Datafile files (*.datafile);;All files (*)");
-
     string datafile1 = filename.toUtf8().constData();
-
     const char* datafile = datafile1.c_str();
-
     inventory->setFileName(datafile);
-    fstream* fio = new fstream (datafile, ios :: out |ios::binary);
-    fio->seekp(0, ios::beg);
-    int temp = inventory->getCompanyNum();
-    fio->write((const char *) &(temp), sizeof(int));
-    temp = inventory->getPersonNum();
-    fio->write((const char *) &(temp), sizeof(int));
-    temp = inventory->getUnitNum();
-    fio->write((const char *) &(temp), sizeof(int));
-    temp = inventory->getVegNum();
-    fio->write((const char *) &(temp), sizeof(int));
-
-
-    for(int i = 0; i < inventory->getCompanyNum() ; i++){
-
-        string temp3 = inventory->getCompany(i);
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-
-    }
-
-    for(int i = 0; i < inventory->getPersonNum() ; i++){
-
-        string temp3 = inventory->getPerson(i);
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-    }
-
-    for(int i = 0; i < inventory->getUnitNum() ; i++){
-
-        string temp3 = inventory->getUnit(i);
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-
-    }
-
-
-    for(int i = 0; i < inventory->getVegNum() ; i++){
-        string temp3 = inventory->getVegetableByIndex(i)->getVegetablename();
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-
-
-
-        int temp2 = inventory->getVegetableByIndex(i)->getTotalVeges();
-        fio->write((const char *) &(temp2), sizeof(int));
-
-        string temp4 = inventory->getVegetableByIndex(i)->getUnit() ;
-        a=new char[temp4.size()+1];
-        a[temp4.size()]=0;
-        int tempNum4 = temp4.size();
-        fio->write((const char *) &(tempNum4), sizeof(int));
-        memcpy(a,temp4.c_str(),temp4.size());
-        fio->write(a,strlen(a));
-
-        temp2 = inventory->getVegetableByIndex(i)->getRemainingNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        temp2 =inventory->getVegetableByIndex(i)->getReturnNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        temp2 = inventory->getVegetableByIndex(i)->getHistoryNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        temp2 = inventory->getVegetableByIndex(i)->getTuiNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        string temp5 = inventory->getVegetableByIndex(i)->getMemo();
-        a=new char[temp5.size()+1];
-        a[temp5.size()]=0;
-        int tempNum5 = temp5.size();
-        fio->write((const char *) &(tempNum5), sizeof(int));
-        memcpy(a,temp5.c_str(),temp5.size());
-        fio->write(a,strlen(a));
-
-        for( int j = 0; j< inventory->getVegetableByIndex(i)->getTuiNum(); j++){
-            string temp = inventory->getVegetableByIndex(i)->getTuiObject(j)->getDatePurchased() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getTuiObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            int temp2 = inventory->getVegetableByIndex(i)->getTuiObject(j)->getReturn() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-
-
-            temp = inventory->getVegetableByIndex(i)->getTuiObject(j)->getDateReturned() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-        }
-
-        for(int j = 0; j < inventory->getVegetableByIndex(i)->getRemainingNum() ; j++){
-            string temp = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getDate();
-            char *a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-
-            temp = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-            temp = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getPrice();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-            int temp2 = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getRemaining();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getReturn() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-        }
-
-        for(int j = 0; j < inventory->getVegetableByIndex(i)->getReturnNum() ; j++){
-            string temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getDatePurchased() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-
-            temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-
-            int temp2 = inventory->getVegetableByIndex(i)->getReturnObject(j)->getReturn() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-            temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getReturner() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getDateReturned() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-        }
-
-        for(int j = 0; j < inventory->getVegetableByIndex(i)->getHistoryNum() ; j++){
-            string temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateSold() ;
-            char *a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDatePurchased() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            int temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDifference();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCustomer() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getPrice();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateToCompare();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getReturned();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDumped() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-            int temp21 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getSplitNum();
-            fio->write((const char *) &(temp21 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getChangeNum();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getTui();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            for(int z = 0; z < temp21; z++){
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateSoldS(z) ;
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                int tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDatePurchasedS(z) ;
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                int temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDifferenceS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCustomerS(z) ;
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getPriceS(z);
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCompanyS(z);
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateToCompareS(z);
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getReturnedS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDumpedS(z) ;
-                fio->write((const char *) &(temp2), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getSplitNumS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getChangeNumS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getTuiS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-            }
-
-        }
-
-
-    }
-    fio->close();
-    needSave = 0;
+    save();
 }
 
 void Dialog:: newFile(){
@@ -1741,356 +1401,131 @@ void Dialog::save(){
     if(!inventory->getFileName().compare("")){
         saveAs();
     }else{
-
-
-    const char* datafile = inventory->getFileName().c_str();
-
-    inventory->setFileName(datafile);
-    fstream* fio = new fstream (datafile, ios :: out| ios::binary);
-    fio->seekp(0, ios::beg);
-    int temp = inventory->getCompanyNum();
-    fio->write((const char *) &(temp), sizeof(int));
-    temp = inventory->getPersonNum();
-    fio->write((const char *) &(temp), sizeof(int));
-    temp = inventory->getUnitNum();
-    fio->write((const char *) &(temp), sizeof(int));
-    temp = inventory->getVegNum();
-    fio->write((const char *) &(temp), sizeof(int));
-/*
-    string temp2 = inventory->getFileName();
-    char *a=new char[temp2.size()+1];
-    a[temp2.size()]=0;
-    int tempNum = temp2.size();
-    fio->write((const char *) &(tempNum), sizeof(int));
-    memcpy(a,temp2.c_str(),temp2.size());
-    fio->write(a,strlen(a));*/
-
-
-    for(int i = 0; i < inventory->getCompanyNum() ; i++){
-
-        string temp3 = inventory->getCompany(i);
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-
-    }
-
-    for(int i = 0; i < inventory->getPersonNum() ; i++){
-
-        string temp3 = inventory->getPerson(i);
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-    }
-
-    for(int i = 0; i < inventory->getUnitNum() ; i++){
-
-        string temp3 = inventory->getUnit(i);
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-
-    }
-
-
-    for(int i = 0; i < inventory->getVegNum() ; i++){
-        string temp3 = inventory->getVegetableByIndex(i)->getVegetablename();
-        char *a=new char[temp3.size()+1];
-        a[temp3.size()]=0;
-        int tempNum3 = temp3.size();
-        fio->write((const char *) &(tempNum3), sizeof(int));
-        memcpy(a,temp3.c_str(),temp3.size());
-        fio->write(a,strlen(a));
-
-
-
-        int temp2 = inventory->getVegetableByIndex(i)->getTotalVeges();
-        fio->write((const char *) &(temp2), sizeof(int));
-
-        string temp4 = inventory->getVegetableByIndex(i)->getUnit() ;
-        a=new char[temp4.size()+1];
-        a[temp4.size()]=0;
-        int tempNum4 = temp4.size();
-        fio->write((const char *) &(tempNum4), sizeof(int));
-        memcpy(a,temp4.c_str(),temp4.size());
-        fio->write(a,strlen(a));
-
-        temp2 = inventory->getVegetableByIndex(i)->getRemainingNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        temp2 =inventory->getVegetableByIndex(i)->getReturnNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        temp2 = inventory->getVegetableByIndex(i)->getHistoryNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        temp2 = inventory->getVegetableByIndex(i)->getTuiNum();
-        fio->write((const char *) &(temp2), sizeof(int));
-        string temp5 = inventory->getVegetableByIndex(i)->getMemo();
-        a=new char[temp5.size()+1];
-        a[temp5.size()]=0;
-        int tempNum5 = temp5.size();
-        fio->write((const char *) &(tempNum5), sizeof(int));
-        memcpy(a,temp5.c_str(),temp5.size());
-        fio->write(a,strlen(a));
-
-        for( int j = 0; j< inventory->getVegetableByIndex(i)->getTuiNum(); j++){
-            string temp = inventory->getVegetableByIndex(i)->getTuiObject(j)->getDatePurchased() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getTuiObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            int temp2 = inventory->getVegetableByIndex(i)->getTuiObject(j)->getReturn() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-
-
-            temp = inventory->getVegetableByIndex(i)->getTuiObject(j)->getDateReturned() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
+        fstream* fio = new fstream (inventory->getFileName().c_str(),
+                                    ios :: out |ios::binary);
+        fio->seekp(0, ios::beg);
+        writeInt(inventory->getCompanyNum(),fio);
+        writeInt(inventory->getPersonNum(),fio);
+        writeInt(inventory->getUnitNum(),fio);
+        writeInt(inventory->getVegNum(),fio);
+        for(int i = 0; i < inventory->getCompanyNum() ; i++){
+            writeString( inventory->getCompany(i), fio);
         }
 
-        for(int j = 0; j < inventory->getVegetableByIndex(i)->getRemainingNum() ; j++){
-            string temp = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getDate();
-            char *a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-
-            temp = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-            temp = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getPrice();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-            int temp2 = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getRemaining();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getRemainingObject(j)->getReturn() ;
-            fio->write((const char *) &(temp2), sizeof(int));
+        for(int i = 0; i < inventory->getPersonNum() ; i++){
+            writeString( inventory->getPerson(i) , fio);
         }
 
-        for(int j = 0; j < inventory->getVegetableByIndex(i)->getReturnNum() ; j++){
-            string temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getDatePurchased() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-
-            temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-
-            int temp2 = inventory->getVegetableByIndex(i)->getReturnObject(j)->getReturn() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-            temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getReturner() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getReturnObject(j)->getDateReturned() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
+        for(int i = 0; i < inventory->getUnitNum() ; i++){
+            writeString( inventory->getUnit(i), fio);
         }
+        for(int i = 0; i < inventory->getVegNum() ; i++){
+            writeString(inventory->getVegetableByIndex(i)
+                        ->getVegetablename(), fio);
+            writeInt( inventory->getVegetableByIndex(i)->getTotalVeges(), fio);
+            writeString( inventory->getVegetableByIndex(i)->getUnit(), fio);
+            writeInt( inventory->getVegetableByIndex(i)->getRemainingNum(), fio);
+            writeInt( inventory->getVegetableByIndex(i)->getReturnNum(), fio);
+            writeInt( inventory->getVegetableByIndex(i)->getHistoryNum(), fio);
+            writeInt( inventory->getVegetableByIndex(i)->getTuiNum(), fio);
+            writeString( inventory->getVegetableByIndex(i)->getMemo(), fio);
 
-        for(int j = 0; j < inventory->getVegetableByIndex(i)->getHistoryNum() ; j++){
-            string temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateSold() ;
-            char *a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            int tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDatePurchased() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            int temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDifference();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCustomer() ;
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getPrice();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCompany();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateToCompare();
-            a=new char[temp.size()+1];
-            a[temp.size()]=0;
-            tempNum = temp.size();
-            fio->write((const char *) &(tempNum), sizeof(int));
-            memcpy(a,temp.c_str(),temp.size());
-            fio->write(a,strlen(a));
-
-
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getReturned();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDumped() ;
-            fio->write((const char *) &(temp2), sizeof(int));
-            int temp21 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getSplitNum();
-            fio->write((const char *) &(temp21 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getChangeNum();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getTui();
-            fio->write((const char *) &(temp2 ), sizeof(int));
-            for(int z = 0; z < temp21; z++){
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateSoldS(z) ;
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                int tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDatePurchasedS(z) ;
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                int temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDifferenceS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCustomerS(z) ;
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getPriceS(z);
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getCompanyS(z);
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-
-                temp = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDateToCompareS(z);
-                a=new char[temp.size()+1];
-                a[temp.size()]=0;
-                tempNum = temp.size();
-                fio->write((const char *) &(tempNum), sizeof(int));
-                memcpy(a,temp.c_str(),temp.size());
-                fio->write(a,strlen(a));
-
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getReturnedS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getDumpedS(z) ;
-                fio->write((const char *) &(temp2), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getSplitNumS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getChangeNumS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
-                temp2 = inventory->getVegetableByIndex(i)->getHistoryObject(j)->getTuiS(z);
-                fio->write((const char *) &(temp2 ), sizeof(int));
+            for( int j = 0; j< inventory->getVegetableByIndex(i)->getTuiNum(); j++){
+                writeString( inventory->getVegetableByIndex(i)
+                             ->getTuiObject(j)->getDatePurchased(), fio);
+                writeString( inventory->getVegetableByIndex(i)
+                             ->getTuiObject(j)->getCompany(), fio);
+                writeInt( inventory->getVegetableByIndex(i)
+                          ->getTuiObject(j)->getReturn(), fio);
+                writeString( inventory->getVegetableByIndex(i)
+                             ->getTuiObject(j)->getDateReturned(), fio);
             }
 
+            for(int j = 0; j < inventory->getVegetableByIndex(i)
+                                                        ->getRemainingNum() ; j++){
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getRemainingObject(j)->getDate(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getRemainingObject(j)->getCompany(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getRemainingObject(j)->getPrice(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getRemainingObject(j)->getRemaining(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getRemainingObject(j)->getReturn(), fio);
+            }
+
+            for(int j = 0; j < inventory->getVegetableByIndex(i)
+                                                ->getReturnNum() ; j++){
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getReturnObject(j)->getDatePurchased(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getReturnObject(j)->getCompany(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getReturnObject(j)->getReturn(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getReturnObject(j)->getReturner(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getReturnObject(j)->getDateReturned(), fio);
+            }
+
+            for(int j = 0; j < inventory->getVegetableByIndex(i)->getHistoryNum() ; j++){
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getDateSold(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getDatePurchased(),fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getHistoryObject(j)->getDifference(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getCustomer(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getPrice(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getCompany(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getDateToCompare(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getHistoryObject(j)->getReturned(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getHistoryObject(j)->getDumped(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getHistoryObject(j)->getSplitNum(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getHistoryObject(j)->getChangeNum(), fio);
+                writeInt(inventory->getVegetableByIndex(i)
+                         ->getHistoryObject(j)->getTui(), fio);
+                for(int z = 0; z < inventory->getVegetableByIndex(i)
+                                    ->getHistoryObject(j)->getSplitNum(); z++){
+                    writeString(inventory->getVegetableByIndex(i)
+                                ->getHistoryObject(j)->getDateSoldS(z), fio);
+                    writeString(inventory->getVegetableByIndex(i)
+                                ->getHistoryObject(j)->getDatePurchasedS(z), fio);
+                    writeInt(inventory->getVegetableByIndex(i)
+                             ->getHistoryObject(j)->getDifferenceS(z), fio);
+                    writeString(inventory->getVegetableByIndex(i)
+                                ->getHistoryObject(j)->getCustomerS(z), fio);
+                    writeString(inventory->getVegetableByIndex(i)
+                                ->getHistoryObject(j)->getPriceS(z), fio);
+                    writeString(inventory->getVegetableByIndex(i)
+                                ->getHistoryObject(j)->getCompanyS(z), fio);
+                    writeString(inventory->getVegetableByIndex(i)
+                                ->getHistoryObject(j)->getDateToCompareS(z), fio);
+                    writeInt(inventory->getVegetableByIndex(i)
+                             ->getHistoryObject(j)->getReturnedS(z), fio);
+                    writeInt(inventory->getVegetableByIndex(i)->getHistoryObject(j)
+                             ->getDumpedS(z),fio) ;
+                    writeInt(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getSplitNumS(z), fio);
+                    writeInt(inventory->getVegetableByIndex(i)->getHistoryObject(j)
+                             ->getChangeNumS(z), fio);
+                    writeInt(inventory->getVegetableByIndex(i)
+                             ->getHistoryObject(j)->getTuiS(z), fio);
+                }
+
+            }
         }
-
-
-    }
-    fio->close();
-    needSave = 0;
+        fio->close();
+        needSave = 0;
     }
 }
 
