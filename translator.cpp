@@ -39,15 +39,15 @@ Translator::Translator(){
     translator.insert(pair<string, string>("請輸入你要加的單位?", "Unit" ));
     translator.insert(pair<string, string>("請輸入你要加的菜名", "Vegetable" ));
 
-    translator.insert(pair<string, string>("你要賣那天的菜？", "Date" ));
     translator.insert(pair<string, string>("你要刪掉哪一個公司？", "Company" ));
     translator.insert(pair<string, string>("你要刪掉哪一個客戶？", "Customer" ));
     translator.insert(pair<string, string>("你要刪掉哪一個單位？", "Unit" ));
+    translator.insert(pair<string, string>("你要刪掉哪一個菜名？", "Vegetable" ));
     translator.insert(pair<string, string>("沒單位!", "No Units!" ));
     translator.insert(pair<string, string>("警告", "Warning" ));
-    translator.insert(pair<string, string>("你要刪掉哪一個菜名？", "Vegetable" ));
     translator.insert(pair<string, string>("請輸入字體大小", "Font Size"));
     translator.insert(pair<string, string>("你要列印哪一天的日期?", "Date" ));
+    translator.insert(pair<string, string>("你要賣那天的菜？", "Date" ));
 
     /* On Buy Click */
     translator.insert(pair<string, string>("輸入進菜資料", "Buying Information" ));
@@ -60,33 +60,61 @@ Translator::Translator(){
     /* On Sell Click */
     translator.insert(pair<string, string>("輸入賣菜資料", "Selling Information" ));
     translator.insert(pair<string, string>("賣了多少？", "Amount Sold" ));
-    translator.insert(pair<string, string>("不夠賣!", "Not enough to sell!" ));
+    translator.insert(pair<string, string>("不夠賣!", "Not Enough to Sell!" ));
     translator.insert(pair<string, string>("賣给谁？", "Customer" ));
     translator.insert(pair<string, string>("那天賣出", "Date" ));
     translator.insert(pair<string, string>("賣多少錢?", "賣了多少？" ));
     translator.insert(pair<string, string>("你要賣那天的菜？", "In Stock" ));
     translator.insert(pair<string, string>("聯合賣", "Split" ));
     translator.insert(pair<string, string>("賣多少錢?", "Price" ));
-    translator.insert(pair<string, string>("", "" ));
+    translator.insert(pair<string, string>("菜不足,繼續買另外一天的菜?",
+                   "Not Enough Vegetables, Sell Remaining on Another Day?" ));
+    translator.insert(pair<string, string>("聯合數字錯誤!", "Not Valid" ));
+    translator.insert(pair<string, string>("不夠賣!", "Not Enough to Sell" ));
+
+    /* Query Splits */
+    translator.insert(pair<string, string>("你要幾家公司聯合? (最多4家)",
+                                           "How Many Splits? (Max 4)" ));
+    translator.insert(pair<string, string>("聯合賣", "" ));
+    translator.insert(pair<string, string>("輸入的數量不一樣!", "" ));
+    translator.insert(pair<string, string>("輸入的數量太多!", "Not Enough to Sell!" ));
+
+    /* On Return Click */
+    translator.insert(pair<string, string>("退還給公司的菜", "" ));
+    translator.insert(pair<string, string>("退幾箱", "" ));
+    translator.insert(pair<string, string>("誰退回來的？", "" ));
+    translator.insert(pair<string, string>("这是哪天退回來的", "" ));
+    translator.insert(pair<string, string>("这是哪家公司的菜？", "" ));
+    translator.insert(pair<string, string>("这是哪天買的菜？", "" ));
+    translator.insert(pair<string, string>("退還給農場的菜", "" ));
+    translator.insert(pair<string, string>("退還給農場的菜", "" ));
+    translator.insert(pair<string, string>("輸入退菜資料", "" ));
+    translator.insert(pair<string, string>("你要退那天的菜？", "" ));
+    translator.insert(pair<string, string>("退幾箱？", "" ));
+    translator.insert(pair<string, string>("不夠菜退!", "" ));
 
 
+    translator.insert(pair<string, string>("你要儲存嗎?", "Do You Want To Save?"));
+
+    /* Dump */
+    translator.insert(pair<string, string>("倒", "" ));
+    translator.insert(pair<string, string>("你要倒那天的菜？", "" ));
+    translator.insert(pair<string, string>("倒幾箱？", "" ));
+    translator.insert(pair<string, string>("全部", "" ));
+    translator.insert(pair<string, string>("不夠數量倒!", "" ));
+    translator.insert(pair<string, string>("你確定你要倒掉全部嗎?", "" ));
+
+    /* Delete/Undo History */
+    translator.insert(pair<string, string>("你要打勾所有的選項才能undo!", "" ));
 
 
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
-    translator.insert(pair<string, string>("", "" ));
+    translator.insert(pair<string, string>("你確定你要刪掉全部嗎?", "" ));
+    translator.insert(pair<string, string>("刪掉歷史", "" ));
+    translator.insert(pair<string, string>("刪掉多少？", "" ));
+    translator.insert(pair<string, string>("全部", "All" ));
+    translator.insert(pair<string, string>("不夠數量刪除!", "" ));
 
-
-
-
+    translator.insert(pair<string, string>("", "" ));
 
     currentLanguage = CHINESE;
 }

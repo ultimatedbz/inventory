@@ -262,7 +262,8 @@ void Dialog::on_Sell_clicked()
 
             else if(amount > currentVege -> getTotalVeges() ){
                 QMessageBox messageBox;
-                messageBox.critical(0,mTranslator->translate("錯誤").c_str(),"不夠賣!");
+                messageBox.critical(0,mTranslator->translate("錯誤").c_str(),
+                                    mTranslator->translate("不夠賣!"));
                 messageBox.setFixedSize(500,200);
                 additionalSell(amount, customerDrop->currentIndex(), date->text(), price->text());
             }
@@ -271,8 +272,9 @@ void Dialog::on_Sell_clicked()
                                       date->text().toUtf8().constData(),
                                       price->text().toUtf8().constData(), selection)){
                 QMessageBox error;
-                QMessageBox::StandardButton reply = error.critical(0,"警告","菜不足,繼續買另外一天的菜?",
-                                        QMessageBox::No|QMessageBox::Yes);
+                QMessageBox::StandardButton reply = error.critical(0,"警告"
+                           , mTranslator->translate("菜不足,繼續買另外一天的菜?").c_str(),
+                           QMessageBox::No|QMessageBox::Yes);
                 error.setFixedSize(500,200);
                 if (reply == QMessageBox::Yes) {
                     int remaining = currentVege->getRemaining(selection);
@@ -294,7 +296,7 @@ void Dialog::on_Sell_clicked()
                     splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
                 else{
                     QMessageBox messageBox;
-                    messageBox.critical(0,"警告","聯合數字錯誤!");
+                    messageBox.critical(0,"警告",mTranslator->translate("聯合數字錯誤!").c_str());
                     messageBox.setFixedSize(500,200);
                     additionalSell(amount, customerDrop->currentIndex(), date->text(), price->text());
                 }
@@ -305,17 +307,17 @@ void Dialog::on_Sell_clicked()
 
 void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString priceB  ){
     QDialog dialog(this);
-    dialog.setWindowTitle("賣");
+    dialog.setWindowTitle(mTranslator->translate("賣").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
     // Add some text above the fields
-    form.addRow(new QLabel("輸入賣菜資料"));
+    form.addRow(new QLabel(mTranslator->translate("輸入賣菜資料").c_str()));
 
 
 
     QLineEdit *lineEdit = new QLineEdit(&dialog);
-    QString label = QString("賣了多少？");
+    QString label = QString(mTranslator->translate("賣了多少？").c_str());
     lineEdit -> setText(QString::number(amount));
     form.addRow(label, lineEdit);
 
@@ -330,16 +332,16 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
     }
     customerDrop->setFont(font);
     customerDrop->setCurrentIndex(cusIndex);
-    QString label2 = QString("賣给谁？");
+    QString label2 = QString(mTranslator->translate("賣给谁？").c_str());
     form.addRow(label2, customerDrop);
 
     QLineEdit * date = new QLineEdit(&dialog);
     date -> setText(dateB);
-    QString label4 = QString("那天賣出");
+    QString label4 = QString(mTranslator->translate("那天賣出").c_str());
     form.addRow(label4, date);
 
     QLineEdit *price = new QLineEdit(&dialog);
-    QString label5 = QString("賣多少錢?");
+    QString label5 = QString(mTranslator->translate("賣多少錢?").c_str());
     price ->setText(priceB);
     form.addRow(label5, price);
 
@@ -349,9 +351,9 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
     }
     remainingDrop->setFont(font);
 
-    form.addRow("你要賣那天的菜？", remainingDrop);
+    form.addRow(mTranslator->translate("你要賣那天的菜？").c_str(), remainingDrop);
 
-    QCheckBox checkBox("聯合賣",&dialog);
+    QCheckBox checkBox(mTranslator->translate("聯合賣").c_str(),&dialog);
     form.addRow(&checkBox);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -379,7 +381,7 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
 
         else if(amount > currentVege -> getTotalVeges() ){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤","不夠賣!");
+            messageBox.critical(0,"錯誤",mTranslator->translate("不夠賣!").c_str());
             messageBox.setFixedSize(500,200);
             additionalSell(amount, customerDrop->currentIndex(), date->text(), price->text());
         }
@@ -388,7 +390,8 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
                                   date->text().toUtf8().constData(),
                                   price->text().toUtf8().constData(), selection)){
             QMessageBox error;
-            QMessageBox::StandardButton reply = error.critical(0,"警告","菜不足,繼續買另外一天的菜?",
+            QMessageBox::StandardButton reply = error.critical(0,"警告",
+                                    mTranslator->translate("菜不足,繼續買另外一天的菜?").c_str(),
                                     QMessageBox::No|QMessageBox::Yes);
             error.setFixedSize(500,200);
             if (reply == QMessageBox::Yes) {
@@ -411,7 +414,8 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
                 splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
             else{
                 QMessageBox messageBox;
-                messageBox.critical(0,"警告","聯合數字錯誤!");
+                messageBox.critical(0,"警告",mTranslator
+                                    ->translate("聯合數字錯誤!").c_str());
                 messageBox.setFixedSize(500,200);
                 additionalSell(amount, customerDrop->currentIndex(), date->text(), price->text());
             }
@@ -516,7 +520,7 @@ void Dialog::removeCompany(){
     if(!inventory->getCompanyNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator ->translate("Delete Company").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("刪除公司").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -525,7 +529,7 @@ void Dialog::removeCompany(){
             companyDrop->addItem(inventory->getCompany(i).c_str());
     }
     companyDrop->setFont(font);
-    form.addRow(mTranslator ->translate("Which Company?").c_str(), companyDrop);
+    form.addRow(mTranslator ->translate("你要刪掉哪一個公司？").c_str(), companyDrop);
 
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -547,7 +551,7 @@ void Dialog::removePerson(){
     if(!inventory->getPersonNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator ->translate("Remove Customer").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("刪除客戶").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -557,7 +561,7 @@ void Dialog::removePerson(){
     }
     personDrop->setFont(font);
 
-    form.addRow(mTranslator ->translate("Which Customer?").c_str(), personDrop);
+    form.addRow(mTranslator ->translate("你要刪掉哪一個客戶？").c_str(), personDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -579,7 +583,7 @@ void Dialog::removeUnit(){
     if(!inventory->getUnitNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator ->translate("Remove Unit").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("刪掉單位").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -589,7 +593,7 @@ void Dialog::removeUnit(){
     }
     unitDrop->setFont(font);
 
-    form.addRow(mTranslator ->translate("Which Unit?").c_str(), unitDrop);
+    form.addRow(mTranslator ->translate("你要刪掉哪一個單位？").c_str(), unitDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -611,7 +615,7 @@ void Dialog::removeVegetable(){
     if(!inventory->getVegNum())
         return;
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator ->translate("Delete Vegetable").c_str());
+    dialog.setWindowTitle(mTranslator ->translate("刪掉菜名").c_str());
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
 
@@ -621,7 +625,7 @@ void Dialog::removeVegetable(){
     }
     vegeDrop->setFont(font);
 
-    form.addRow(mTranslator ->translate("Which Vegetable?").c_str(), vegeDrop);
+    form.addRow(mTranslator ->translate("請輸入你要加的菜名").c_str(), vegeDrop);
 
     // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -682,11 +686,11 @@ void Dialog::printI(QPrinter* printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle(mTranslator ->translate("Print Inventory").c_str());
+    dialog1.setWindowTitle(mTranslator ->translate("印 Inventory").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString(mTranslator ->translate("Font Size").c_str());
+    QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
     lineEdit -> setText("20");
     form.addRow(label, lineEdit);
 
@@ -831,16 +835,16 @@ void Dialog::printH(QPrinter * printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle(mTranslator ->translate("Print History").c_str());
+    dialog1.setWindowTitle(mTranslator ->translate("印 History").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *l2 = new QLineEdit(&dialog1);
-    QString label2 = QString(mTranslator ->translate("Print Which Day?").c_str());
+    QString label2 = QString(mTranslator ->translate("你要列印哪一天的日期?").c_str());
     l2 -> setText(today.c_str());
     form.addRow(label2,l2);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString(mTranslator ->translate("Font Size").c_str());
+    QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
     lineEdit -> setText("20");
     form.addRow(label, lineEdit);
 
@@ -1143,7 +1147,7 @@ int Dialog::querySplits(){
     QFormLayout form(&dialog);
 
     // Add some text above the fields
-    form.addRow(new QLabel("你要幾家公司聯合? (最多4家)"));
+    form.addRow(new QLabel(mTranslator->translate("你要幾家公司聯合? (最多4家)").c_str()));
 
     QLineEdit *lineEdit = new QLineEdit(&dialog);
     form.addRow( lineEdit);
@@ -1166,12 +1170,11 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
     QFormLayout form(&dialog);
 
     // Add some text above the fields
-    form.addRow(new QLabel("輸入賣菜資料"));
-
+    form.addRow(new QLabel(mTranslator->translate("輸入賣菜資料").c_str()));
 
 
     QLineEdit *lineEdit = new QLineEdit(&dialog);
-    QString label = QString("賣了多少？");
+    QString label = QString(mTranslator->translate("賣了多少？").c_str());
     lineEdit -> setText(QString::number(amount));
     form.addRow(label, lineEdit);
 
@@ -1183,20 +1186,20 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
 
     customerDrop->setFont(font);
     customerDrop->setCurrentIndex(cusIndex);
-    QString label2 = QString("賣给谁？");
+    QString label2 = QString(mTranslator->translate("賣给谁？").c_str());
     form.addRow(label2, customerDrop);
 
     QLineEdit * date = new QLineEdit(&dialog);
     date -> setText(dateB);
-    QString label4 = QString("那天賣出");
+    QString label4 = QString(mTranslator->translate("那天賣出").c_str());
     form.addRow(label4, date);
 
     QLineEdit *price = new QLineEdit(&dialog);
-    QString label5 = QString("賣多少錢?");
+    QString label5 = QString(mTranslator->translate("賣多少錢?").c_str());
     price ->setText(priceB);
     form.addRow(label5, price);
 
-    form.addRow(new QLabel("你要賣那天的菜？"));
+    form.addRow(new QLabel(mTranslator->translate("你要賣那天的菜？").c_str()));
     QComboBox* remainingDrop = new QComboBox(&dialog);
     QLineEdit *lineEdit1 = new QLineEdit(&dialog);
     QLineEdit *lineEdit2;
@@ -1290,7 +1293,7 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
         }
         else if(amount != input1+input2+input3+input4){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤","輸入的數量不一樣!");
+            messageBox.critical(0,"錯誤",mTranslator->translator("輸入的數量不一樣!").c_str());
             messageBox.setFixedSize(500,200);
             splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
         }
@@ -1314,7 +1317,8 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
                 (input4 &&
                 input4> currentVege->getRemaining(selection4))){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤","輸入的數量太多!");
+            messageBox.critical(0,"錯誤",mTranslator
+                                ->translate("輸入的數量太多!").c_str());
             messageBox.setFixedSize(500,200);
             splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
 
@@ -1359,14 +1363,13 @@ void Dialog::newFile(){
         askSave();
     //clear everything
     inventory->remove();
-  //  inventory = new Inventory();
     ui->historyList->clear();
     ui->breakDown->clear();
     ui->returnList->clear();
     ui->vegeList->clear();
     ui->Memo_2->clear();
     ui->changeTotal->clear();
-    //ui->buyCheck->
+
     currentVege = NULL;
  }
 
@@ -1828,17 +1831,15 @@ void Dialog:: deleteVege(){
 
 void Dialog:: deleteHistory(){
     if(currentVege && currentVege->getHistoryNum()){
-        if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked() && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked() && ui->tuiCheck->isChecked())){
+        if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked()
+             && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked()
+             && ui->tuiCheck->isChecked())){
                 QMessageBox messageBox;
                 messageBox.critical(0,"錯誤","你要打勾所有的選項才能undo!");
                 messageBox.setFixedSize(500,200);
         }else{
             currentVege->deleteHistory( ui->historyList->currentRow());
                 needSave = 1;
-            /*QList<QListWidgetItem *> removeThis = ui->historyList->
-                    findItems (ui->historyList->currentItem()->text().toUtf8().constData(), Qt::MatchExactly);
-
-            delete removeThis[0];*/
             on_vegeList_itemPressed(ui->vegeList->currentItem());
         }
     }
