@@ -187,7 +187,7 @@ void Dialog::on_Buy_clicked()
 
 void Dialog::on_Sell_clicked()
 {
-    if(currentVege){
+    if(currentVege && currentVege->getRemainingNum()){
 
         QDialog dialog(this);
         dialog.setWindowTitle(mTranslator->translate("賣").c_str());
@@ -263,7 +263,7 @@ void Dialog::on_Sell_clicked()
             else if(amount > currentVege -> getTotalVeges() ){
                 QMessageBox messageBox;
                 messageBox.critical(0,mTranslator->translate("錯誤").c_str(),
-                                    mTranslator->translate("不夠賣!"));
+                                    mTranslator->translate("不夠賣!").c_str());
                 messageBox.setFixedSize(500,200);
                 additionalSell(amount, customerDrop->currentIndex(), date->text(), price->text());
             }
@@ -1293,7 +1293,7 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
         }
         else if(amount != input1+input2+input3+input4){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤",mTranslator->translator("輸入的數量不一樣!").c_str());
+            messageBox.critical(0,"錯誤",mTranslator->translate("輸入的數量不一樣!").c_str());
             messageBox.setFixedSize(500,200);
             splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
         }
@@ -1553,12 +1553,12 @@ void Dialog::on_Return_clicked()
         QFormLayout form(&dialog);
 
         // Add some text above the fields
-        form.addRow(new QLabel("輸入退菜資料"));
+        form.addRow(new QLabel(mTranslator->translate("輸入退菜資料").c_str()));
 
 
 
         QLineEdit *lineEdit = new QLineEdit(&dialog);
-        QString label = QString("退幾箱？");
+        QString label = QString( mTranslator->translate("退幾箱？").c_str());
         form.addRow(label, lineEdit);
 
 
@@ -1567,7 +1567,7 @@ void Dialog::on_Return_clicked()
             customerDrop->addItem(inventory->getPerson(i).c_str());
         }
         customerDrop->setFont(font);
-        QString label3 = QString("誰退回來的？");
+        QString label3 = QString(mTranslator->translate("誰退回來的？").c_str());
         form.addRow(label3, customerDrop);
 
         QLineEdit * date = new QLineEdit(&dialog);
@@ -1576,7 +1576,7 @@ void Dialog::on_Return_clicked()
         char buffer[128];
         sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
         date -> setText(QString::fromUtf8(buffer));
-        QString label4 = QString("这是哪天退回來的");
+        QString label4 = QString(mTranslator->translate("这是哪天退回來的").c_str());
         form.addRow(label4, date);
 
         QComboBox* companyDrop = new QComboBox(&dialog);
@@ -1585,11 +1585,11 @@ void Dialog::on_Return_clicked()
         }
         companyDrop->setFont(font);
 
-        form.addRow("这是哪家公司的菜？", companyDrop);
+        form.addRow(mTranslator->translate("这是哪家公司的菜？").c_str(), companyDrop);
 
 
         QLineEdit *lineEdit2 = new QLineEdit(&dialog);
-        QString label2 = QString("这是哪天買的菜？");
+        QString label2 = QString(mTranslator->translate("这是哪天買的菜？").c_str());
         form.addRow(label2, lineEdit2);
 
         QCheckBox checkBox("退還給農場的菜",&dialog);
@@ -1615,8 +1615,6 @@ void Dialog::on_Return_clicked()
                 QMessageBox messageBox;
                 messageBox.critical(0,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
-             //   additionalReturn(amount, customerDrop->currentIndex(), date->text(), companyDrop->currentIndex(),
-               //                  dateBought);
             }else{
                 currentVege->returnThis(dateReturned, amount, returner, company, dateBought);
             }
@@ -1625,12 +1623,12 @@ void Dialog::on_Return_clicked()
             if(checkBox.isChecked()){
 
                 QDialog dialog(this);
-                dialog.setWindowTitle("退還給農場的菜");
+                dialog.setWindowTitle(mTranslator->translate("退還給農場的菜").c_str());
                 // Use a layout allowing to have a label next to each field
                 QFormLayout form(&dialog);
 
                 // Add some text above the fields
-                form.addRow(new QLabel("輸入退菜資料"));
+                form.addRow(new QLabel(mTranslator->translate("輸入退菜資料").c_str()));
 
 
                 QComboBox* remainingDrop = new QComboBox(&dialog);
@@ -1642,7 +1640,7 @@ void Dialog::on_Return_clicked()
                 form.addRow("你要退那天的菜？", remainingDrop);
 
                 QLineEdit *lineEdit = new QLineEdit(&dialog);
-                QString label = QString("退幾箱？");
+                QString label = QString(mTranslator->translate("退幾箱？").c_str());
                 form.addRow(label, lineEdit);
 
 
@@ -1671,7 +1669,8 @@ void Dialog::on_Return_clicked()
                         messageBox.setFixedSize(500,200);
                     }else if(!currentVege->returnTo(amount,today,selection)){
                         QMessageBox error;
-                        error.critical(0,"警告","不夠菜退!");
+                        error.critical(0,"警告",mTranslator
+                                       ->translate("不夠菜退!").c_str());
                         error.setFixedSize(500,200);
                     }
 
@@ -1690,7 +1689,8 @@ void Dialog::closeEvent(QCloseEvent *event) {
 
 void Dialog:: askSave(){
     QMessageBox error;
-    QMessageBox::StandardButton reply = error.critical(0,"警告","你要儲存嗎?",
+    QMessageBox::StandardButton reply = error.critical(0,"警告",
+                            mTranslator->translate("你要儲存嗎?").c_str(),
                             QMessageBox::No|QMessageBox::Yes);
     error.setFixedSize(500,200);
     if (reply == QMessageBox::Yes) {
@@ -1708,7 +1708,7 @@ void Dialog::on_dumpButton_clicked()
         QFormLayout form(&dialog);
 
         // Add some text above the fields
-        dialog.setWindowTitle("倒");
+        dialog.setWindowTitle(mTranslator->translate("倒").c_str());
 
         QComboBox* remainingDrop = new QComboBox(&dialog);
         for(int i = 0; i< currentVege -> getRemainingNum(); i++){
@@ -1716,14 +1716,14 @@ void Dialog::on_dumpButton_clicked()
         }
         remainingDrop->setFont(font);
 
-        form.addRow("你要倒那天的菜？", remainingDrop);
+        form.addRow(mTranslator->translate("你要倒那天的菜？").c_str(), remainingDrop);
 
         QLineEdit *lineEdit = new QLineEdit(&dialog);
-        form.addRow(new QLabel("倒幾箱？"));
+        form.addRow(new QLabel(mTranslator->translate("倒幾箱？").c_str()));
         form.addRow(lineEdit);
 
 
-        QCheckBox checkBox("全部",&dialog);
+        QCheckBox checkBox(mTranslator->translate("全部").c_str(),&dialog);
         form.addRow(&checkBox);
 
 
@@ -1754,7 +1754,7 @@ void Dialog::on_dumpButton_clicked()
 
             else if(!currentVege->dumpVege(amount, today, selection)){
                 QMessageBox error;
-                error.critical(0,"警告","不夠數量倒!");
+                error.critical(0,"警告",mTranslator->translate("不夠數量倒!").c_str());
                 error.setFixedSize(500,200);
 
             }
@@ -1765,7 +1765,8 @@ void Dialog::on_dumpButton_clicked()
                 QFormLayout form(&dialog);
 
                 // Add some text above the fields
-                form.addRow(new QLabel("你確定你要倒掉全部嗎?"));
+                form.addRow(new QLabel(mTranslator
+                                       ->translate("你確定你要倒掉全部嗎?").c_str()));
 
                 QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                                        Qt::Horizontal, &dialog);
@@ -1835,7 +1836,8 @@ void Dialog:: deleteHistory(){
              && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked()
              && ui->tuiCheck->isChecked())){
                 QMessageBox messageBox;
-                messageBox.critical(0,"錯誤","你要打勾所有的選項才能undo!");
+                messageBox.critical(0,"錯誤",
+                            mTranslator->translate("你要打勾所有的選項才能undo!").c_str());
                 messageBox.setFixedSize(500,200);
         }else{
             currentVege->deleteHistory( ui->historyList->currentRow());
@@ -1849,7 +1851,8 @@ void Dialog:: undoHistory(){
     if(currentVege&&currentVege->getHistoryNum()){
         if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked() && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked() && ui->tuiCheck->isChecked())){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤","你要打勾所有的選項才能undo!");
+            messageBox.critical(0,"錯誤",
+                           mTranslator->translate("你要打勾所有的選項才能undo!").c_str());
             messageBox.setFixedSize(500,200);
         }else{
             int amount = 0;

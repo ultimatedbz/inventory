@@ -47,7 +47,6 @@ Translator::Translator(){
     translator.insert(pair<string, string>("警告", "Warning" ));
     translator.insert(pair<string, string>("請輸入字體大小", "Font Size"));
     translator.insert(pair<string, string>("你要列印哪一天的日期?", "Date" ));
-    translator.insert(pair<string, string>("你要賣那天的菜？", "Date" ));
 
     /* On Buy Click */
     translator.insert(pair<string, string>("輸入進菜資料", "Buying Information" ));
@@ -63,7 +62,6 @@ Translator::Translator(){
     translator.insert(pair<string, string>("不夠賣!", "Not Enough to Sell!" ));
     translator.insert(pair<string, string>("賣给谁？", "Customer" ));
     translator.insert(pair<string, string>("那天賣出", "Date" ));
-    translator.insert(pair<string, string>("賣多少錢?", "賣了多少？" ));
     translator.insert(pair<string, string>("你要賣那天的菜？", "In Stock" ));
     translator.insert(pair<string, string>("聯合賣", "Split" ));
     translator.insert(pair<string, string>("賣多少錢?", "Price" ));
