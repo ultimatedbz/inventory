@@ -21,6 +21,7 @@
 #include <QFontMetrics>
 #include <QAbstractItemDelegate>
 #include <QContextMenuEvent>
+#include <QSplitter>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -32,7 +33,21 @@ Dialog::Dialog(QWidget *parent) :
 
 {
 
-    ui->setupUi(this);
+    ui->setupUi(this);/*
+    QSplitter* splitter = new QSplitter();
+    splitter->addWidget(ui->returnToFarm);
+    splitter->addWidget(ui->returnList);
+    splitter->setOrientation(Qt::Vertical);
+    //ui->gridLayout_4->addWidget(splitter);
+
+    QSplitter* splitter2 = new QSplitter();
+    //QWidget* w = new QWidget();
+    //w->setLayout(ui->gridLayout_4);
+    splitter2->addWidget(ui->breakDown);
+    splitter2->addWidget(splitter);
+    splitter2->setOrientation(Qt::Horizontal);
+    ui->gridLayout_2->addWidget(splitter2);*/
+
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->breakDown->setContextMenuPolicy(Qt::ActionsContextMenu);

@@ -14,139 +14,6 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
-   <item row="0" column="0">
-    <widget class="QLabel" name="VegieList">
-     <property name="text">
-      <string>菜名：</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_8">
-     <item>
-      <widget class="QLabel" name="Inventory">
-       <property name="text">
-        <string>庫存表：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="changeTotal">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Buy">
-       <property name="text">
-        <string>買</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Sell">
-       <property name="text">
-        <string>賣</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="dumpButton">
-       <property name="text">
-        <string>倒</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="2" colspan="3">
-    <layout class="QHBoxLayout" name="horizontalLayout_9">
-     <item>
-      <widget class="QLabel" name="Returns">
-       <property name="text">
-        <string>退貨單：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Return">
-       <property name="text">
-        <string>退貨</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0" rowspan="3">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
-      <widget class="QListWidget" name="vegeList"/>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="1">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QListWidget" name="breakDown"/>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="2" colspan="3">
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="1" column="0">
-      <widget class="QListWidget" name="returnList"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QListWidget" name="returnToFarm"/>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLabel" name="Total">
-     <property name="text">
-      <string>歷史:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="3">
-    <widget class="QLabel" name="Memo">
-     <property name="text">
-      <string>Memo:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="4">
-    <widget class="QPushButton" name="clearReturnButton">
-     <property name="text">
-      <string>清掉退貨單</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="0">
-      <widget class="QListWidget" name="historyList"/>
-     </item>
-    </layout>
-   </item>
-   <item row="3" column="3" colspan="2">
-    <widget class="QTextEdit" name="Memo_2"/>
-   </item>
    <item row="4" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -204,12 +71,145 @@
      </item>
     </layout>
    </item>
+   <item row="2" column="1">
+    <widget class="QLabel" name="Total">
+     <property name="text">
+      <string>歷史:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="3">
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="1" column="0">
+      <widget class="QListWidget" name="returnList"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QListWidget" name="returnToFarm"/>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="3" colspan="2">
+    <widget class="QTextEdit" name="Memo_2"/>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QListWidget" name="historyList"/>
+     </item>
+    </layout>
+   </item>
    <item row="4" column="2">
     <widget class="QPushButton" name="clearHistoryButton">
      <property name="text">
       <string>清掉歷史</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="2" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <item>
+      <widget class="QLabel" name="Returns">
+       <property name="text">
+        <string>退貨單：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Return">
+       <property name="text">
+        <string>退貨</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="VegieList">
+     <property name="text">
+      <string>菜名：</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="3">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QListWidget" name="vegeList"/>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QListWidget" name="breakDown"/>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="3">
+    <widget class="QLabel" name="Memo">
+     <property name="text">
+      <string>Memo:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPushButton" name="clearReturnButton">
+     <property name="text">
+      <string>清掉退貨單</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <widget class="QLabel" name="Inventory">
+       <property name="text">
+        <string>庫存表：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="changeTotal">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Buy">
+       <property name="text">
+        <string>買</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Sell">
+       <property name="text">
+        <string>賣</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="dumpButton">
+       <property name="text">
+        <string>倒</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

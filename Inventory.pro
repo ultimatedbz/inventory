@@ -28,6 +28,7 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     imenubar.h
 
 
-FORMS    += dialog.ui
+FORMS    += dialog.ui \
+    returns.ui
 
-CONFIG-=app_bundle
+#CONFIG-=app_bundle
