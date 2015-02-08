@@ -267,7 +267,7 @@ void Dialog::on_Sell_clicked()
 
        // Show the dialog as modal
         if ( result == QDialog::Accepted) {
-            if( !amount ){
+            if( amount <= 0 ){
                 QMessageBox messageBox;
                 messageBox.critical(0,mTranslator->translate("錯誤").c_str(),"Not Valid!");
                 messageBox.setFixedSize(500,200);
@@ -386,7 +386,7 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
 
    // Show the dialog as modal
     if ( result == QDialog::Accepted) {
-        if( !amount ){
+        if( amount <= 0 ){
             QMessageBox messageBox;
             messageBox.critical(0,"錯誤","Not Valid!");
             messageBox.setFixedSize(500,200);
@@ -1300,7 +1300,7 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
 
    // Show the dialog as modal
     if ( result == QDialog::Accepted) {
-        if( !amount ){
+        if( amount <= 0 ){
             QMessageBox messageBox;
             messageBox.critical(0,"錯誤","Not Valid!");
             messageBox.setFixedSize(500,200);
@@ -1336,7 +1336,18 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
                                 ->translate("輸入的數量太多!").c_str());
             messageBox.setFixedSize(500,200);
             splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
-
+        }else if((input1 <= 0)||
+                (input2 &&
+                input2 <= 0)||
+                (input3 &&
+                input3 <= 0)||
+                (input4 &&
+                input4 <= 0)){
+            QMessageBox messageBox;
+            messageBox.critical(0,"錯誤",mTranslator
+                                ->translate("輸入的數量太多!").c_str());
+            messageBox.setFixedSize(500,200);
+            splitSell(splits, amount, customerDrop->currentIndex(), date->text(), price->text());
         }else{
             currentVege->splitSell(splits, input1, input2, input3, input4, date->text().toUtf8().constData(),
                                customer, price->text().toUtf8().constData(), selection1, selection2, selection3,selection4);
@@ -1626,7 +1637,7 @@ void Dialog::on_Return_clicked()
         string dateReturned = date->text().toUtf8().constData();
        // Show the dialog as modal
         if ( result == QDialog::Accepted) {
-            if( !amount ){
+            if( amount <= 0 ){
                 QMessageBox messageBox;
                 messageBox.critical(0,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
@@ -1678,7 +1689,7 @@ void Dialog::on_Return_clicked()
 
                // Show the dialog as modal
                 if ( result == QDialog::Accepted) {
-                    if( !amount ){
+                    if( amount <= 0 ){
                         QMessageBox messageBox;
                         messageBox.critical(0,"錯誤","Not Valid!");
                         messageBox.setFixedSize(500,200);
@@ -1761,7 +1772,7 @@ void Dialog::on_dumpButton_clicked()
 
        // Show the dialog as modal
         if ( result == QDialog::Accepted) {
-            if( !amount ){
+            if( amount <= 0){
                 QMessageBox messageBox;
                 messageBox.critical(0,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
@@ -2004,7 +2015,7 @@ void Dialog::on_clearHistoryButton_clicked()
 
        // Show the dialog as modal
         if ( result == QDialog::Accepted) {
-            if( !amount ){
+            if( amount <= 0 ){
                 QMessageBox messageBox;
                 messageBox.critical(0,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
