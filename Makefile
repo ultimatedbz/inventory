@@ -57,8 +57,10 @@ SOURCES       = main.cpp \
 		Return.cpp \
 		returnto.cpp \
 		translator.cpp \
-		imenubar.cpp moc_dialog.cpp \
-		moc_imenubar.cpp
+		imenubar.cpp \
+		returnswidget.cpp moc_dialog.cpp \
+		moc_imenubar.cpp \
+		moc_returnswidget.cpp
 OBJECTS       = main.o \
 		dialog.o \
 		Vegetable.o \
@@ -69,8 +71,10 @@ OBJECTS       = main.o \
 		returnto.o \
 		translator.o \
 		imenubar.o \
+		returnswidget.o \
 		moc_dialog.o \
-		moc_imenubar.o
+		moc_imenubar.o \
+		moc_returnswidget.o
 DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.4/clang_64/mkspecs/qdevice.pri \
 		../../../Qt/5.4/clang_64/mkspecs/features/device_config.prf \
@@ -178,6 +182,7 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.4/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.4/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt/5.4/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/5.4/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.4/clang_64/mkspecs/features/default_pre.prf \
 		../../../Qt/5.4/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -207,7 +212,8 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		returnto.h \
 		IConst.h \
 		translator.h \
-		imenubar.h main.cpp \
+		imenubar.h \
+		returnswidget.h main.cpp \
 		dialog.cpp \
 		Vegetable.cpp \
 		Inventory.cpp \
@@ -216,7 +222,8 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		Return.cpp \
 		returnto.cpp \
 		translator.cpp \
-		imenubar.cpp
+		imenubar.cpp \
+		returnswidget.cpp
 QMAKE_TARGET  = Inventory
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Inventory.app/Contents/MacOS/Inventory
@@ -365,6 +372,7 @@ Makefile: Inventory.pro ../../../Qt/5.4/clang_64/mkspecs/macx-clang/qmake.conf .
 		../../../Qt/5.4/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.4/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt/5.4/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/5.4/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.4/clang_64/mkspecs/features/default_pre.prf \
 		../../../Qt/5.4/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -498,6 +506,7 @@ Makefile: Inventory.pro ../../../Qt/5.4/clang_64/mkspecs/macx-clang/qmake.conf .
 ../../../Qt/5.4/clang_64/mkspecs/features/qt_config.prf:
 ../../../Qt/5.4/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../Qt/5.4/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/5.4/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/5.4/clang_64/mkspecs/features/default_pre.prf:
 ../../../Qt/5.4/clang_64/mkspecs/features/mac/default_pre.prf:
@@ -552,8 +561,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp Remaining.cpp Return.cpp returnto.cpp translator.cpp imenubar.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h returnswidget.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp Remaining.cpp Return.cpp returnto.cpp translator.cpp imenubar.cpp returnswidget.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog.ui returns.ui $(DISTDIR)/
 
 
@@ -579,9 +588,9 @@ compiler_objective_c_make_all:
 compiler_objective_c_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_dialog.cpp moc_imenubar.cpp
+compiler_moc_header_make_all: moc_dialog.cpp moc_imenubar.cpp moc_returnswidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_dialog.cpp moc_imenubar.cpp
+	-$(DEL_FILE) moc_dialog.cpp moc_imenubar.cpp moc_returnswidget.cpp
 moc_dialog.cpp: ../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QDialog \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qdialog.h \
 		Inventory.h \
@@ -608,6 +617,11 @@ moc_imenubar.cpp: ../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/He
 		IConst.h \
 		imenubar.h
 	/Users/jeffreychen/Qt/5.4/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -I/Users/jeffreychen/Qt/5.4/clang_64/mkspecs/macx-clang -I/Users/jeffreychen/Projects/Qt/Inventory -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtWidgets.framework/Headers -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtGui.framework/Headers -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtCore.framework/Headers -F/Users/jeffreychen/Qt/5.4/clang_64/lib imenubar.h -o moc_imenubar.cpp
+
+moc_returnswidget.cpp: ../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		returnswidget.h
+	/Users/jeffreychen/Qt/5.4/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -I/Users/jeffreychen/Qt/5.4/clang_64/mkspecs/macx-clang -I/Users/jeffreychen/Projects/Qt/Inventory -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtWidgets.framework/Headers -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtGui.framework/Headers -I/Users/jeffreychen/Qt/5.4/clang_64/lib/QtCore.framework/Headers -F/Users/jeffreychen/Qt/5.4/clang_64/lib returnswidget.h -o moc_returnswidget.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1149,11 +1163,19 @@ imenubar.o: imenubar.cpp imenubar.h \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/qprinter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imenubar.o imenubar.cpp
 
+returnswidget.o: returnswidget.cpp returnswidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o returnswidget.o returnswidget.cpp
+
 moc_dialog.o: moc_dialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp
 
 moc_imenubar.o: moc_imenubar.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_imenubar.o moc_imenubar.cpp
+
+moc_returnswidget.o: moc_returnswidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_returnswidget.o moc_returnswidget.cpp
 
 ####### Install
 

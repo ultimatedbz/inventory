@@ -441,7 +441,8 @@ string History::getCompanyS(int z){
 }
 
 void History::deleteHistory(){
-    delete[] splitArray;
+    if(splitArray)
+        delete[] splitArray;
 }
 
 int History::getChangeNum(){

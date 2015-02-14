@@ -224,23 +224,25 @@ void Inventory::removeVegetable(string name){
   for( int i = 0; i < vegetableNum; i++){
     if(!vegeArray[i].getVegetablename().compare(name)){
       for( int j = i; j < vegetableNum - 1; j++){
-        vegeArray[j] = vegeArray[j+1];
+        vegeArray[j] = vegeArray[j + 1];
       }
-      vegeArray[vegetableNum].remove();
+      //vegeArray[vegetableNum - 1] = NULL;
       vegetableNum--;
     }
   }
-    if(!vegetableNum)
-        vegeArray = NULL;
+
+
+  if(!vegetableNum)
+      vegeArray = NULL;
 }
 
 void Inventory::removeUnit(string name){
   for( int i = 0; i < unitNum; i++){
     if(!unitArray[i].compare(name)){
       for( int j = i; j < unitNum - 1; j++){
-        unitArray[j] = unitArray[j+1];
+        unitArray[j] = unitArray[j + 1];
       }
-      unitArray[unitNum -1 ] = "\t";
+      unitArray[unitNum - 1 ] = "\t";
       unitNum--;
     }
   }

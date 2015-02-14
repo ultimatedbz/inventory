@@ -51,10 +51,24 @@ Dialog::Dialog(QWidget *parent) :
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->breakDown->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->returnList->setContextMenuPolicy(Qt::ActionsContextMenu);
+    //ui->returnList->setContextMenuPolicy(Qt::ActionsContextMenu);
 
+    deleteVegeAction = new QAction(tr("&Delete"),this);
+    connect(deleteVegeAction, SIGNAL(triggered()), this, SLOT(deleteVege()));
+    ui->vegeList->addAction(deleteVegeAction);
+
+    undoHistoryAction = new QAction(tr("&Undo"),this);
+    connect(undoHistoryAction, SIGNAL(triggered()), this, SLOT(undoHistory()));
+    ui->historyList->addAction(undoHistoryAction);
+
+    deleteHistoryAction = new QAction(tr("&Delete"),this);
+    connect(deleteHistoryAction, SIGNAL(triggered()), this, SLOT(deleteHistory()));
+    ui->historyList->addAction(deleteHistoryAction);
+
+    /*Edit Vegetable Name */
     connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
             this, SLOT(ListWidgetEditEnd(QWidget*, QAbstractItemDelegate::EndEditHint)));
+
     inventory = new Inventory();
     mTranslator = new Translator();
     menuBar = new IMenuBar(this, mTranslator);
@@ -71,7 +85,6 @@ Dialog::~Dialog()
 
 void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
 {
-
     ui->historyList->clear();
     ui->breakDown->clear();
     ui->returnList->clear();
@@ -95,7 +108,6 @@ void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
                             currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
                             || currentVege->getHistoryObject(i)->getDumped()))     ){
 
-
             ui->historyList->addItem(QString::fromStdString(currentVege->viewHistory(i)));
             ui->historyList->item(index)->setFont(font);
             if(currentVege->getHistoryObject(i)->getReturned() ||
@@ -107,20 +119,18 @@ void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
             index++;
         }
     }
+
     ui ->changeTotal->setText(QString::number(currentVege->getTotalVeges()) +
                               " " + QString::fromStdString(currentVege->getUnit()));
-
     for(int i = 0; i< currentVege -> getRemainingNum() ; i++){
             ui->breakDown->addItem(currentVege->formatRemaining2(i).c_str());
             ui->breakDown->item(i)->setFont(font);
     }
     ui ->Memo_2->setText(currentVege->getMemo().c_str());
-
     for(int i = 0; i< currentVege->getReturnNum(); i++){
         ui->returnList->addItem(currentVege->formatReturn(i).c_str());
         ui->returnList->item(i)->setFont(font);
     }
-
     for(int i = 0; i< currentVege->getTuiNum(); i++){
         ui->returnToFarm->addItem(currentVege->formatTui(i).c_str());
         ui->returnToFarm->item(i)->setFont(font);
@@ -1837,12 +1847,10 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
 
 void Dialog:: deleteVege(){
     inventory->removeVegetable( ui->vegeList->currentItem()->text().toUtf8().constData());
-        needSave = 1;
+    needSave = 1;
+    qDeleteAll(ui->vegeList->selectedItems());
 
-    QList<QListWidgetItem *> removeThis = ui->vegeList->
-            findItems (ui->vegeList->currentItem()->text().toUtf8().constData(), Qt::MatchExactly);
 
-    delete removeThis[0];
     if(inventory->getVegNum() == 0){
         currentVege = NULL;
         ui->historyList->clear();
@@ -1851,7 +1859,7 @@ void Dialog:: deleteVege(){
         ui->Memo_2->clear();
         ui->changeTotal->clear();
     }else{
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+       on_vegeList_itemPressed(ui->vegeList->currentItem());
     }
 
 }

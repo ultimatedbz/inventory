@@ -623,7 +623,6 @@ void Vegetable::remove(){
         delete[] historyArray;
     }
     historyArray = NULL;
-
     if(remainingArray)
         delete[] remainingArray;
     remainingArray = NULL;

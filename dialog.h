@@ -46,7 +46,6 @@ public:
     void addCompany();
     void addPerson();
     void addUnit();
-    void deleteVege();
     void removeCompany();
     void removePerson();
     void removeVegetable();
@@ -76,6 +75,7 @@ public slots:
 
     void deleteHistory();
     void undoHistory();
+    void deleteVege();
 
     void on_Memo_2_textChanged();
     static int compareCompany(const void *a, const void *b);
@@ -106,6 +106,10 @@ private:
     int needSave;
     QFont font;
     int refresh;
+
+    QAction* deleteVegeAction;
+    QAction* undoHistoryAction;
+    QAction* deleteHistoryAction;
 
 };
 
