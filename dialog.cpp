@@ -36,24 +36,14 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
     ui->pushButton->hide();
     QList<int> sizes = ui->splitter_4->sizes();
-    qDebug()<<this->width();
-    sizes.replace(0,this->width() * 3/ 12);
-    sizes.replace(1,this->width() * 9 / 12);
+    sizes.replace(0,this->width() * 1/4);
+    sizes.replace(1,this->width() * 3/4);
     ui->splitter_4->setSizes(sizes);
-    /*
-    QSplitter* splitter = new QSplitter();
-    splitter->addWidget(ui->returnToFarm);
-    splitter->addWidget(ui->returnList);
-    splitter->setOrientation(Qt::Vertical);
-    //ui->gridLayout_4->addWidget(splitter);
 
-    QSplitter* splitter2 = new QSplitter();
-    //QWidget* w = new QWidget();
-    //w->setLayout(ui->gridLayout_4);
-    splitter2->addWidget(ui->breakDown);
-    splitter2->addWidget(splitter);
-    splitter2->setOrientation(Qt::Horizontal);
-    ui->gridLayout_2->addWidget(splitter2);*/
+    QList<int> sizes2 = ui->splitter_4->sizes();
+    sizes2.replace(0,this->width() * 3/4 * 5/8);
+    sizes2.replace(1,this->width() * 3/4 * 3/8);
+    ui->splitter_3->setSizes(sizes2);
 
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);

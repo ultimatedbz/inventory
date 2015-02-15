@@ -75,6 +75,7 @@ public:
     QCheckBox *dumpCheck;
     QCheckBox *returnCheck;
     QCheckBox *tuiCheck;
+    QLabel *label_3;
     QPushButton *clearHistoryButton;
     QWidget *widget5;
     QVBoxLayout *verticalLayout_3;
@@ -90,7 +91,7 @@ public:
         Dialog->resize(1197, 612);
         splitter_4 = new QSplitter(Dialog);
         splitter_4->setObjectName(QStringLiteral("splitter_4"));
-        splitter_4->setGeometry(QRect(10, 10, 1171, 591));
+        splitter_4->setGeometry(QRect(10, 10, 1181, 591));
         splitter_4->setOrientation(Qt::Horizontal);
         widget = new QWidget(splitter_4);
         widget->setObjectName(QStringLiteral("widget"));
@@ -137,8 +138,14 @@ public:
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setSpacing(6);
         horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        horizontalLayout_8->setSizeConstraint(QLayout::SetDefaultConstraint);
         Inventory = new QLabel(widget2);
         Inventory->setObjectName(QStringLiteral("Inventory"));
+        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(Inventory->sizePolicy().hasHeightForWidth());
+        Inventory->setSizePolicy(sizePolicy);
 
         horizontalLayout_8->addWidget(Inventory);
 
@@ -149,16 +156,25 @@ public:
 
         Buy = new QPushButton(widget2);
         Buy->setObjectName(QStringLiteral("Buy"));
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(Buy->sizePolicy().hasHeightForWidth());
+        Buy->setSizePolicy(sizePolicy1);
 
         horizontalLayout_8->addWidget(Buy);
 
         Sell = new QPushButton(widget2);
         Sell->setObjectName(QStringLiteral("Sell"));
+        sizePolicy1.setHeightForWidth(Sell->sizePolicy().hasHeightForWidth());
+        Sell->setSizePolicy(sizePolicy1);
 
         horizontalLayout_8->addWidget(Sell);
 
         dumpButton = new QPushButton(widget2);
         dumpButton->setObjectName(QStringLiteral("dumpButton"));
+        sizePolicy1.setHeightForWidth(dumpButton->sizePolicy().hasHeightForWidth());
+        dumpButton->setSizePolicy(sizePolicy1);
 
         horizontalLayout_8->addWidget(dumpButton);
 
@@ -204,6 +220,8 @@ public:
 
         Return = new QPushButton(widget3);
         Return->setObjectName(QStringLiteral("Return"));
+        sizePolicy1.setHeightForWidth(Return->sizePolicy().hasHeightForWidth());
+        Return->setSizePolicy(sizePolicy1);
 
         horizontalLayout_2->addWidget(Return);
 
@@ -246,6 +264,8 @@ public:
 
         pushButton = new QPushButton(widget4);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        sizePolicy1.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy1);
 
         horizontalLayout_5->addWidget(pushButton);
 
@@ -272,24 +292,35 @@ public:
         buyCheck = new QCheckBox(widget4);
         buyCheck->setObjectName(QStringLiteral("buyCheck"));
         buyCheck->setEnabled(true);
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(buyCheck->sizePolicy().hasHeightForWidth());
+        buyCheck->setSizePolicy(sizePolicy2);
         buyCheck->setChecked(true);
 
         horizontalLayout->addWidget(buyCheck);
 
         sellCheck = new QCheckBox(widget4);
         sellCheck->setObjectName(QStringLiteral("sellCheck"));
+        sizePolicy2.setHeightForWidth(sellCheck->sizePolicy().hasHeightForWidth());
+        sellCheck->setSizePolicy(sizePolicy2);
         sellCheck->setChecked(true);
 
         horizontalLayout->addWidget(sellCheck);
 
         dumpCheck = new QCheckBox(widget4);
         dumpCheck->setObjectName(QStringLiteral("dumpCheck"));
+        sizePolicy2.setHeightForWidth(dumpCheck->sizePolicy().hasHeightForWidth());
+        dumpCheck->setSizePolicy(sizePolicy2);
         dumpCheck->setChecked(true);
 
         horizontalLayout->addWidget(dumpCheck);
 
         returnCheck = new QCheckBox(widget4);
         returnCheck->setObjectName(QStringLiteral("returnCheck"));
+        sizePolicy2.setHeightForWidth(returnCheck->sizePolicy().hasHeightForWidth());
+        returnCheck->setSizePolicy(sizePolicy2);
         returnCheck->setChecked(true);
 
         horizontalLayout->addWidget(returnCheck);
@@ -303,8 +334,15 @@ public:
 
         horizontalLayout_4->addLayout(horizontalLayout);
 
+        label_3 = new QLabel(widget4);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        horizontalLayout_4->addWidget(label_3);
+
         clearHistoryButton = new QPushButton(widget4);
         clearHistoryButton->setObjectName(QStringLiteral("clearHistoryButton"));
+        sizePolicy1.setHeightForWidth(clearHistoryButton->sizePolicy().hasHeightForWidth());
+        clearHistoryButton->setSizePolicy(sizePolicy1);
 
         horizontalLayout_4->addWidget(clearHistoryButton);
 
@@ -329,6 +367,8 @@ public:
 
         clearReturnButton = new QPushButton(widget5);
         clearReturnButton->setObjectName(QStringLiteral("clearReturnButton"));
+        sizePolicy1.setHeightForWidth(clearReturnButton->sizePolicy().hasHeightForWidth());
+        clearReturnButton->setSizePolicy(sizePolicy1);
 
         horizontalLayout_3->addWidget(clearReturnButton);
 
@@ -376,6 +416,7 @@ public:
         dumpCheck->setText(QApplication::translate("Dialog", "\345\200\222", 0));
         returnCheck->setText(QApplication::translate("Dialog", "\351\200\200\347\265\246\345\205\254\345\217\270", 0));
         tuiCheck->setText(QApplication::translate("Dialog", "\351\200\200\347\265\246\350\276\262\345\240\264", 0));
+        label_3->setText(QString());
         clearHistoryButton->setText(QApplication::translate("Dialog", "\346\270\205\346\216\211\346\255\267\345\217\262", 0));
         Memo->setText(QApplication::translate("Dialog", "Memo:", 0));
         clearReturnButton->setText(QApplication::translate("Dialog", "\346\270\205\346\216\211\351\200\200\350\262\250\345\226\256", 0));
