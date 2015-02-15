@@ -17,8 +17,7 @@ SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
     Return.cpp \
     returnto.cpp \
     translator.cpp \
-    imenubar.cpp \
-    returnswidget.cpp
+    imenubar.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Remaining.h \
@@ -26,11 +25,9 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     returnto.h \
     IConst.h \
     translator.h \
-    imenubar.h \
-    returnswidget.h
+    imenubar.h
 
 
-FORMS    += dialog.ui \
-    returns.ui
+FORMS    += dialog.ui
 
 #CONFIG-=app_bundle

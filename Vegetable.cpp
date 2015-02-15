@@ -404,10 +404,8 @@ qDebug()<<368 << remainingArray[selection].getReturn();
         }
      remainingNum--;
   }
-qDebug()<<408;
   History newHist;
   newHist.sell(amount, customer, date, price, dp,bc, returnChange);
-  qDebug()<<411;
   historyArray[historyNum] = newHist;
   historyNum++;
   totalVeges += newHist.getDifference();

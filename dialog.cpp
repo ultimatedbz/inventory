@@ -33,7 +33,14 @@ Dialog::Dialog(QWidget *parent) :
 
 {
 
-    ui->setupUi(this);/*
+    ui->setupUi(this);
+    ui->pushButton->hide();
+    QList<int> sizes = ui->splitter_4->sizes();
+    qDebug()<<this->width();
+    sizes.replace(0,this->width() * 3/ 12);
+    sizes.replace(1,this->width() * 9 / 12);
+    ui->splitter_4->setSizes(sizes);
+    /*
     QSplitter* splitter = new QSplitter();
     splitter->addWidget(ui->returnToFarm);
     splitter->addWidget(ui->returnList);
