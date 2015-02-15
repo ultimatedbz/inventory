@@ -350,9 +350,11 @@ void Vegetable::setVegetableName(string name){
 }
 
 int Vegetable::sellVege(int amount, string customer, string date, string price, int selection){
+
     int returnChange = 0;
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
+
     if( historyArray==NULL){
       historyArray = new History[100];
     }
@@ -363,51 +365,49 @@ int Vegetable::sellVege(int amount, string customer, string date, string price, 
         }
         historyNum--;
     }
-
+qDebug()<<368 << remainingArray[selection].getReturn();
   if(getRemaining(selection) - amount < 0)
       return 0;
 
+  /* Update the Breakdown */
+  remainingArray[selection].updateRemaining((-1) * amount);
+
   if (remainingArray[selection].getReturn()){
-
+      /* Change returns */
       returnChange = min(amount,remainingArray[selection].getReturn());
-      remainingArray[selection].updateRemainingWithRet((-1) * amount);
 
-  }
-  else
-      remainingArray[selection].updateRemaining((-1) * amount);
+      while(returnChange){
+          int temp = returnExistCompany( remainingArray[selection].getCompany(),
+                                  remainingArray[selection].getDate());
+          int portion = returnArray[temp].getReturn();
 
-  //change individual returns
-  int left = returnChange;
+          int deduct = min(portion, returnChange);
+          returnArray[temp].updateReturn((-1)*deduct,customer);
+          if(temp >-1 && returnArray[temp].getReturn() == 0){
+                for(int i=temp; i < returnNum - 1; i++){
+                    returnArray[temp]= returnArray[temp+1];
+                }
+                returnNum--;
+          }
+          returnChange -= deduct;
 
-  while(left){
-      int temp = returnExistCompany( remainingArray[selection].getCompany(),
-                              remainingArray[selection].getDate());
-      int portion = returnArray[temp].getReturn();
-
-      int deduct = min(portion, left);
-      returnArray[temp].updateReturn((-1)*deduct,customer);
-
-      if(temp >-1 && returnArray[temp].getReturn() == 0){
-            for(int i=temp; i < returnNum; i++){
-                returnArray[temp]= returnArray[temp+1];
-            }
-            returnNum--;
       }
-      left -= deduct;
 
   }
+
     //needs to be last or else selection will get messed up
     if(remainingArray[selection].getRemaining() == 0){
         if(remainingNum !=1){
             for(int i=selection; i < remainingNum -1; i++){
-            remainingArray[i]= remainingArray[1+i];
+                remainingArray[i]= remainingArray[1+i];
             }
-     }
+        }
      remainingNum--;
   }
-
+qDebug()<<408;
   History newHist;
   newHist.sell(amount, customer, date, price, dp,bc, returnChange);
+  qDebug()<<411;
   historyArray[historyNum] = newHist;
   historyNum++;
   totalVeges += newHist.getDifference();
