@@ -34,6 +34,11 @@ Dialog::Dialog(QWidget *parent) :
 {
 
     ui->setupUi(this);
+
+    #ifdef W_OS_WIN32
+        ui->label_4->hide();
+    #endif
+
     ui->pushButton->hide();
     QList<int> sizes = ui->splitter_4->sizes();
     sizes.replace(0,this->width() * 1/4);
@@ -48,7 +53,6 @@ Dialog::Dialog(QWidget *parent) :
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->breakDown->setContextMenuPolicy(Qt::ActionsContextMenu);
-    //ui->returnList->setContextMenuPolicy(Qt::ActionsContextMenu);
 
     deleteVegeAction = new QAction(tr("&Delete"),this);
     connect(deleteVegeAction, SIGNAL(triggered()), this, SLOT(deleteVege()));
