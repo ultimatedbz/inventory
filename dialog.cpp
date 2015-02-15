@@ -35,7 +35,7 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->setupUi(this);
 
-    #ifdef W_OS_WIN32
+    #ifndef W_OS_WIN32
         ui->label_4->hide();
     #endif
 
