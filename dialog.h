@@ -57,8 +57,6 @@ public:
 
 
     void changeLanguage();
-    void printI(QPrinter* printer);
-    void printH(QPrinter* printer);
 
     Translator* mTranslator;
 
@@ -66,6 +64,9 @@ public slots:
 
     void on_Buy_clicked();
     void on_Sell_clicked();
+    void printI(QPrinter* printer);
+    void printH(QPrinter* printer);
+
 
 
     void additionalSell(int amount, int cusIndex, QString dateB, QString priceB);

@@ -97,6 +97,11 @@ public:
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         label_4 = new QLabel(Dialog);
         label_4->setObjectName(QStringLiteral("label_4"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy);
 
         verticalLayout_7->addWidget(label_4);
 
@@ -151,11 +156,11 @@ public:
         horizontalLayout_8->setSizeConstraint(QLayout::SetDefaultConstraint);
         Inventory = new QLabel(widget2);
         Inventory->setObjectName(QStringLiteral("Inventory"));
-        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(Inventory->sizePolicy().hasHeightForWidth());
-        Inventory->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(Inventory->sizePolicy().hasHeightForWidth());
+        Inventory->setSizePolicy(sizePolicy1);
 
         horizontalLayout_8->addWidget(Inventory);
 
@@ -166,25 +171,25 @@ public:
 
         Buy = new QPushButton(widget2);
         Buy->setObjectName(QStringLiteral("Buy"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(Buy->sizePolicy().hasHeightForWidth());
-        Buy->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(Buy->sizePolicy().hasHeightForWidth());
+        Buy->setSizePolicy(sizePolicy2);
 
         horizontalLayout_8->addWidget(Buy);
 
         Sell = new QPushButton(widget2);
         Sell->setObjectName(QStringLiteral("Sell"));
-        sizePolicy1.setHeightForWidth(Sell->sizePolicy().hasHeightForWidth());
-        Sell->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(Sell->sizePolicy().hasHeightForWidth());
+        Sell->setSizePolicy(sizePolicy2);
 
         horizontalLayout_8->addWidget(Sell);
 
         dumpButton = new QPushButton(widget2);
         dumpButton->setObjectName(QStringLiteral("dumpButton"));
-        sizePolicy1.setHeightForWidth(dumpButton->sizePolicy().hasHeightForWidth());
-        dumpButton->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(dumpButton->sizePolicy().hasHeightForWidth());
+        dumpButton->setSizePolicy(sizePolicy2);
 
         horizontalLayout_8->addWidget(dumpButton);
 
@@ -230,8 +235,8 @@ public:
 
         Return = new QPushButton(widget3);
         Return->setObjectName(QStringLiteral("Return"));
-        sizePolicy1.setHeightForWidth(Return->sizePolicy().hasHeightForWidth());
-        Return->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(Return->sizePolicy().hasHeightForWidth());
+        Return->setSizePolicy(sizePolicy2);
 
         horizontalLayout_2->addWidget(Return);
 
@@ -274,8 +279,8 @@ public:
 
         pushButton = new QPushButton(widget4);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        sizePolicy1.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy2);
 
         horizontalLayout_5->addWidget(pushButton);
 
@@ -302,35 +307,35 @@ public:
         buyCheck = new QCheckBox(widget4);
         buyCheck->setObjectName(QStringLiteral("buyCheck"));
         buyCheck->setEnabled(true);
-        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(buyCheck->sizePolicy().hasHeightForWidth());
-        buyCheck->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(buyCheck->sizePolicy().hasHeightForWidth());
+        buyCheck->setSizePolicy(sizePolicy3);
         buyCheck->setChecked(true);
 
         horizontalLayout->addWidget(buyCheck);
 
         sellCheck = new QCheckBox(widget4);
         sellCheck->setObjectName(QStringLiteral("sellCheck"));
-        sizePolicy2.setHeightForWidth(sellCheck->sizePolicy().hasHeightForWidth());
-        sellCheck->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(sellCheck->sizePolicy().hasHeightForWidth());
+        sellCheck->setSizePolicy(sizePolicy3);
         sellCheck->setChecked(true);
 
         horizontalLayout->addWidget(sellCheck);
 
         dumpCheck = new QCheckBox(widget4);
         dumpCheck->setObjectName(QStringLiteral("dumpCheck"));
-        sizePolicy2.setHeightForWidth(dumpCheck->sizePolicy().hasHeightForWidth());
-        dumpCheck->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(dumpCheck->sizePolicy().hasHeightForWidth());
+        dumpCheck->setSizePolicy(sizePolicy3);
         dumpCheck->setChecked(true);
 
         horizontalLayout->addWidget(dumpCheck);
 
         returnCheck = new QCheckBox(widget4);
         returnCheck->setObjectName(QStringLiteral("returnCheck"));
-        sizePolicy2.setHeightForWidth(returnCheck->sizePolicy().hasHeightForWidth());
-        returnCheck->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(returnCheck->sizePolicy().hasHeightForWidth());
+        returnCheck->setSizePolicy(sizePolicy3);
         returnCheck->setChecked(true);
 
         horizontalLayout->addWidget(returnCheck);
@@ -351,8 +356,8 @@ public:
 
         clearHistoryButton = new QPushButton(widget4);
         clearHistoryButton->setObjectName(QStringLiteral("clearHistoryButton"));
-        sizePolicy1.setHeightForWidth(clearHistoryButton->sizePolicy().hasHeightForWidth());
-        clearHistoryButton->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(clearHistoryButton->sizePolicy().hasHeightForWidth());
+        clearHistoryButton->setSizePolicy(sizePolicy2);
 
         horizontalLayout_4->addWidget(clearHistoryButton);
 
@@ -377,8 +382,8 @@ public:
 
         clearReturnButton = new QPushButton(widget5);
         clearReturnButton->setObjectName(QStringLiteral("clearReturnButton"));
-        sizePolicy1.setHeightForWidth(clearReturnButton->sizePolicy().hasHeightForWidth());
-        clearReturnButton->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(clearReturnButton->sizePolicy().hasHeightForWidth());
+        clearReturnButton->setSizePolicy(sizePolicy2);
 
         horizontalLayout_3->addWidget(clearReturnButton);
 

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Dialog_t {
-    QByteArrayData data[43];
-    char stringdata[501];
+    QByteArrayData data[47];
+    char stringdata[533];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,48 +33,53 @@ QT_MOC_LITERAL(0, 0, 6), // "Dialog"
 QT_MOC_LITERAL(1, 7, 14), // "on_Buy_clicked"
 QT_MOC_LITERAL(2, 22, 0), // ""
 QT_MOC_LITERAL(3, 23, 15), // "on_Sell_clicked"
-QT_MOC_LITERAL(4, 39, 14), // "additionalSell"
-QT_MOC_LITERAL(5, 54, 6), // "amount"
-QT_MOC_LITERAL(6, 61, 8), // "cusIndex"
-QT_MOC_LITERAL(7, 70, 5), // "dateB"
-QT_MOC_LITERAL(8, 76, 6), // "priceB"
-QT_MOC_LITERAL(9, 83, 11), // "querySplits"
-QT_MOC_LITERAL(10, 95, 9), // "splitSell"
-QT_MOC_LITERAL(11, 105, 6), // "splits"
-QT_MOC_LITERAL(12, 112, 7), // "sameDay"
-QT_MOC_LITERAL(13, 120, 2), // "i1"
-QT_MOC_LITERAL(14, 123, 2), // "i2"
-QT_MOC_LITERAL(15, 126, 2), // "i3"
-QT_MOC_LITERAL(16, 129, 2), // "i4"
-QT_MOC_LITERAL(17, 132, 13), // "deleteHistory"
-QT_MOC_LITERAL(18, 146, 11), // "undoHistory"
-QT_MOC_LITERAL(19, 158, 10), // "deleteVege"
-QT_MOC_LITERAL(20, 169, 21), // "on_Memo_2_textChanged"
-QT_MOC_LITERAL(21, 191, 14), // "compareCompany"
-QT_MOC_LITERAL(22, 206, 11), // "const void*"
-QT_MOC_LITERAL(23, 218, 1), // "a"
-QT_MOC_LITERAL(24, 220, 1), // "b"
-QT_MOC_LITERAL(25, 222, 15), // "compareCustomer"
-QT_MOC_LITERAL(26, 238, 17), // "on_Return_clicked"
-QT_MOC_LITERAL(27, 256, 10), // "closeEvent"
-QT_MOC_LITERAL(28, 267, 12), // "QCloseEvent*"
-QT_MOC_LITERAL(29, 280, 5), // "event"
-QT_MOC_LITERAL(30, 286, 7), // "askSave"
-QT_MOC_LITERAL(31, 294, 23), // "on_vegeList_itemPressed"
-QT_MOC_LITERAL(32, 318, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(33, 335, 4), // "item"
-QT_MOC_LITERAL(34, 340, 17), // "ListWidgetEditEnd"
-QT_MOC_LITERAL(35, 358, 8), // "QWidget*"
-QT_MOC_LITERAL(36, 367, 6), // "editor"
-QT_MOC_LITERAL(37, 374, 34), // "QAbstractItemDelegate::EndEdi..."
-QT_MOC_LITERAL(38, 409, 4), // "hint"
-QT_MOC_LITERAL(39, 414, 5), // "slot1"
-QT_MOC_LITERAL(40, 420, 21), // "on_dumpButton_clicked"
-QT_MOC_LITERAL(41, 442, 29), // "on_clearHistoryButton_clicked"
-QT_MOC_LITERAL(42, 472, 28) // "on_clearReturnButton_clicked"
+QT_MOC_LITERAL(4, 39, 6), // "printI"
+QT_MOC_LITERAL(5, 46, 9), // "QPrinter*"
+QT_MOC_LITERAL(6, 56, 7), // "printer"
+QT_MOC_LITERAL(7, 64, 6), // "printH"
+QT_MOC_LITERAL(8, 71, 14), // "additionalSell"
+QT_MOC_LITERAL(9, 86, 6), // "amount"
+QT_MOC_LITERAL(10, 93, 8), // "cusIndex"
+QT_MOC_LITERAL(11, 102, 5), // "dateB"
+QT_MOC_LITERAL(12, 108, 6), // "priceB"
+QT_MOC_LITERAL(13, 115, 11), // "querySplits"
+QT_MOC_LITERAL(14, 127, 9), // "splitSell"
+QT_MOC_LITERAL(15, 137, 6), // "splits"
+QT_MOC_LITERAL(16, 144, 7), // "sameDay"
+QT_MOC_LITERAL(17, 152, 2), // "i1"
+QT_MOC_LITERAL(18, 155, 2), // "i2"
+QT_MOC_LITERAL(19, 158, 2), // "i3"
+QT_MOC_LITERAL(20, 161, 2), // "i4"
+QT_MOC_LITERAL(21, 164, 13), // "deleteHistory"
+QT_MOC_LITERAL(22, 178, 11), // "undoHistory"
+QT_MOC_LITERAL(23, 190, 10), // "deleteVege"
+QT_MOC_LITERAL(24, 201, 21), // "on_Memo_2_textChanged"
+QT_MOC_LITERAL(25, 223, 14), // "compareCompany"
+QT_MOC_LITERAL(26, 238, 11), // "const void*"
+QT_MOC_LITERAL(27, 250, 1), // "a"
+QT_MOC_LITERAL(28, 252, 1), // "b"
+QT_MOC_LITERAL(29, 254, 15), // "compareCustomer"
+QT_MOC_LITERAL(30, 270, 17), // "on_Return_clicked"
+QT_MOC_LITERAL(31, 288, 10), // "closeEvent"
+QT_MOC_LITERAL(32, 299, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(33, 312, 5), // "event"
+QT_MOC_LITERAL(34, 318, 7), // "askSave"
+QT_MOC_LITERAL(35, 326, 23), // "on_vegeList_itemPressed"
+QT_MOC_LITERAL(36, 350, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(37, 367, 4), // "item"
+QT_MOC_LITERAL(38, 372, 17), // "ListWidgetEditEnd"
+QT_MOC_LITERAL(39, 390, 8), // "QWidget*"
+QT_MOC_LITERAL(40, 399, 6), // "editor"
+QT_MOC_LITERAL(41, 406, 34), // "QAbstractItemDelegate::EndEdi..."
+QT_MOC_LITERAL(42, 441, 4), // "hint"
+QT_MOC_LITERAL(43, 446, 5), // "slot1"
+QT_MOC_LITERAL(44, 452, 21), // "on_dumpButton_clicked"
+QT_MOC_LITERAL(45, 474, 29), // "on_clearHistoryButton_clicked"
+QT_MOC_LITERAL(46, 504, 28) // "on_clearReturnButton_clicked"
 
     },
     "Dialog\0on_Buy_clicked\0\0on_Sell_clicked\0"
+    "printI\0QPrinter*\0printer\0printH\0"
     "additionalSell\0amount\0cusIndex\0dateB\0"
     "priceB\0querySplits\0splitSell\0splits\0"
     "sameDay\0i1\0i2\0i3\0i4\0deleteHistory\0"
@@ -97,7 +102,7 @@ static const uint qt_meta_data_Dialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -105,46 +110,50 @@ static const uint qt_meta_data_Dialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  119,    2, 0x0a /* Public */,
-       3,    0,  120,    2, 0x0a /* Public */,
-       4,    4,  121,    2, 0x0a /* Public */,
-       9,    0,  130,    2, 0x0a /* Public */,
-      10,    5,  131,    2, 0x0a /* Public */,
-      12,    4,  142,    2, 0x0a /* Public */,
-      17,    0,  151,    2, 0x0a /* Public */,
-      18,    0,  152,    2, 0x0a /* Public */,
-      19,    0,  153,    2, 0x0a /* Public */,
-      20,    0,  154,    2, 0x0a /* Public */,
-      21,    2,  155,    2, 0x0a /* Public */,
-      25,    2,  160,    2, 0x0a /* Public */,
-      26,    0,  165,    2, 0x0a /* Public */,
-      27,    1,  166,    2, 0x0a /* Public */,
-      30,    0,  169,    2, 0x0a /* Public */,
-      31,    1,  170,    2, 0x0a /* Public */,
-      34,    2,  173,    2, 0x0a /* Public */,
-      39,    0,  178,    2, 0x0a /* Public */,
-      40,    0,  179,    2, 0x0a /* Public */,
-      41,    0,  180,    2, 0x08 /* Private */,
-      42,    0,  181,    2, 0x08 /* Private */,
+       1,    0,  129,    2, 0x0a /* Public */,
+       3,    0,  130,    2, 0x0a /* Public */,
+       4,    1,  131,    2, 0x0a /* Public */,
+       7,    1,  134,    2, 0x0a /* Public */,
+       8,    4,  137,    2, 0x0a /* Public */,
+      13,    0,  146,    2, 0x0a /* Public */,
+      14,    5,  147,    2, 0x0a /* Public */,
+      16,    4,  158,    2, 0x0a /* Public */,
+      21,    0,  167,    2, 0x0a /* Public */,
+      22,    0,  168,    2, 0x0a /* Public */,
+      23,    0,  169,    2, 0x0a /* Public */,
+      24,    0,  170,    2, 0x0a /* Public */,
+      25,    2,  171,    2, 0x0a /* Public */,
+      29,    2,  176,    2, 0x0a /* Public */,
+      30,    0,  181,    2, 0x0a /* Public */,
+      31,    1,  182,    2, 0x0a /* Public */,
+      34,    0,  185,    2, 0x0a /* Public */,
+      35,    1,  186,    2, 0x0a /* Public */,
+      38,    2,  189,    2, 0x0a /* Public */,
+      43,    0,  194,    2, 0x0a /* Public */,
+      44,    0,  195,    2, 0x0a /* Public */,
+      45,    0,  196,    2, 0x08 /* Private */,
+      46,    0,  197,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QString,    5,    6,    7,    8,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QString,    9,   10,   11,   12,
     QMetaType::Int,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QString,   11,    5,    6,    7,    8,
-    QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,   13,   14,   15,   16,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::QString,   15,    9,   10,   11,   12,
+    QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,   17,   18,   19,   20,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Int, 0x80000000 | 22, 0x80000000 | 22,   23,   24,
-    QMetaType::Int, 0x80000000 | 22, 0x80000000 | 22,   23,   24,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 28,   29,
+    QMetaType::Int, 0x80000000 | 26, 0x80000000 | 26,   27,   28,
+    QMetaType::Int, 0x80000000 | 26, 0x80000000 | 26,   27,   28,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 32,   33,
-    QMetaType::Void, 0x80000000 | 35, 0x80000000 | 37,   36,   38,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 36,   37,
+    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 41,   40,   42,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -160,35 +169,37 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         switch (_id) {
         case 0: _t->on_Buy_clicked(); break;
         case 1: _t->on_Sell_clicked(); break;
-        case 2: _t->additionalSell((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4]))); break;
-        case 3: { int _r = _t->querySplits();
+        case 2: _t->printI((*reinterpret_cast< QPrinter*(*)>(_a[1]))); break;
+        case 3: _t->printH((*reinterpret_cast< QPrinter*(*)>(_a[1]))); break;
+        case 4: _t->additionalSell((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4]))); break;
+        case 5: { int _r = _t->querySplits();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 4: _t->splitSell((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5]))); break;
-        case 5: { int _r = _t->sameDay((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])));
+        case 6: _t->splitSell((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5]))); break;
+        case 7: { int _r = _t->sameDay((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 6: _t->deleteHistory(); break;
-        case 7: _t->undoHistory(); break;
-        case 8: _t->deleteVege(); break;
-        case 9: _t->on_Memo_2_textChanged(); break;
-        case 10: { int _r = _t->compareCompany((*reinterpret_cast< const void*(*)>(_a[1])),(*reinterpret_cast< const void*(*)>(_a[2])));
+        case 8: _t->deleteHistory(); break;
+        case 9: _t->undoHistory(); break;
+        case 10: _t->deleteVege(); break;
+        case 11: _t->on_Memo_2_textChanged(); break;
+        case 12: { int _r = _t->compareCompany((*reinterpret_cast< const void*(*)>(_a[1])),(*reinterpret_cast< const void*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 11: { int _r = _t->compareCustomer((*reinterpret_cast< const void*(*)>(_a[1])),(*reinterpret_cast< const void*(*)>(_a[2])));
+        case 13: { int _r = _t->compareCustomer((*reinterpret_cast< const void*(*)>(_a[1])),(*reinterpret_cast< const void*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 12: _t->on_Return_clicked(); break;
-        case 13: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
-        case 14: _t->askSave(); break;
-        case 15: _t->on_vegeList_itemPressed((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 16: _t->ListWidgetEditEnd((*reinterpret_cast< QWidget*(*)>(_a[1])),(*reinterpret_cast< QAbstractItemDelegate::EndEditHint(*)>(_a[2]))); break;
-        case 17: _t->slot1(); break;
-        case 18: _t->on_dumpButton_clicked(); break;
-        case 19: _t->on_clearHistoryButton_clicked(); break;
-        case 20: _t->on_clearReturnButton_clicked(); break;
+        case 14: _t->on_Return_clicked(); break;
+        case 15: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
+        case 16: _t->askSave(); break;
+        case 17: _t->on_vegeList_itemPressed((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 18: _t->ListWidgetEditEnd((*reinterpret_cast< QWidget*(*)>(_a[1])),(*reinterpret_cast< QAbstractItemDelegate::EndEditHint(*)>(_a[2]))); break;
+        case 19: _t->slot1(); break;
+        case 20: _t->on_dumpButton_clicked(); break;
+        case 21: _t->on_clearHistoryButton_clicked(); break;
+        case 22: _t->on_clearReturnButton_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 16:
+        case 18:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -224,13 +235,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 21)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 21)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 23;
     }
     return _id;
 }
