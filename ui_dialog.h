@@ -31,9 +31,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Dialog
 {
 public:
-    QVBoxLayout *verticalLayout_8;
     QVBoxLayout *verticalLayout_7;
-    QLabel *label_4;
     QSplitter *splitter_4;
     QWidget *widget;
     QVBoxLayout *verticalLayout_6;
@@ -92,18 +90,10 @@ public:
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QStringLiteral("Dialog"));
         Dialog->resize(1197, 612);
-        verticalLayout_8 = new QVBoxLayout(Dialog);
-        verticalLayout_8->setSpacing(6);
-        verticalLayout_8->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
-        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7 = new QVBoxLayout(Dialog);
         verticalLayout_7->setSpacing(6);
+        verticalLayout_7->setContentsMargins(11, 11, 11, 11);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
-        label_4 = new QLabel(Dialog);
-        label_4->setObjectName(QStringLiteral("label_4"));
-
-        verticalLayout_7->addWidget(label_4);
-
         splitter_4 = new QSplitter(Dialog);
         splitter_4->setObjectName(QStringLiteral("splitter_4"));
         splitter_4->setOrientation(Qt::Horizontal);
@@ -403,9 +393,6 @@ public:
         verticalLayout_7->addWidget(splitter_4);
 
 
-        verticalLayout_8->addLayout(verticalLayout_7);
-
-
         retranslateUi(Dialog);
         QObject::connect(buyCheck, SIGNAL(toggled(bool)), Dialog, SLOT(slot1()));
         QObject::connect(sellCheck, SIGNAL(clicked()), Dialog, SLOT(slot1()));
@@ -419,7 +406,6 @@ public:
     void retranslateUi(QDialog *Dialog)
     {
         Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", 0));
-        label_4->setText(QString());
         VegieList->setText(QApplication::translate("Dialog", "\350\217\234\345\220\215\357\274\232", 0));
         Inventory->setText(QApplication::translate("Dialog", "\345\272\253\345\255\230\350\241\250\357\274\232", 0));
         changeTotal->setText(QString());

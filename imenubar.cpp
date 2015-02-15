@@ -8,6 +8,9 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
         QMenuBar(p),
         parent(p),
         mTranslator(trans){
+
+    setFixedHeight(25);
+    setFixedWidth(p->width());
     QMenu* fileMenu = addMenu("File");
 
     QMenu* editMenu = addMenu("Edit");
