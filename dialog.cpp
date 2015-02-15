@@ -36,7 +36,7 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
 
     #ifndef Q_OS_WIN32
-
+        ui->label_4->hide();
     #endif
 
     ui->pushButton->hide();
