@@ -35,6 +35,7 @@ private:
   int remaining;
   int returnNum;
   string price;
+  string padding(string word);
 };
 
 

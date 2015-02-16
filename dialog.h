@@ -112,6 +112,8 @@ private:
     QAction* undoHistoryAction;
     QAction* deleteHistoryAction;
 
+
+
 };
 
 #endif // DIALOG_H

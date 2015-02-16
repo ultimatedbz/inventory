@@ -57,11 +57,13 @@ string History::getHistory(string unit){
   if(splitNum){
         string final= "";
         for(int i = 0; i<splitNum; i++){
-            sprintf(buffer,"%5s%7d%6s%13s%13s%15s%7s",
+            sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%15s%7s",
                   day.c_str(),
                   splitArray[i].getDifference(),
                   unit.c_str(),
+                  padding(customer).c_str(),
                   customer.c_str(),
+                  padding(splitArray[i].getCompany()).c_str(),
                   splitArray[i].getCompany().c_str(),
                   Price.c_str(),
                   splitArray[i].getDatePurchased().c_str());
@@ -74,48 +76,58 @@ string History::getHistory(string unit){
   }
   else if (returned){
       string temp2 = "退給公司";
-      sprintf(buffer,"%5s%7d%6s%13s%13s%15s%7s",
+      sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%s%15s%7s",
                     daySold.c_str(),
                     difference,
                     unit.c_str(),
+                    padding(customer).c_str(),
                     customer.c_str(),
+                    padding(company).c_str(),
                     company.c_str(),
+                    padding(temp2).c_str(),
                     temp2.c_str(),
                     dayPurchased.c_str());
   }else if (dumped){
       string temp2 = "倒";
-      sprintf(buffer,"%5s%7d%6s%13s%13s%15s%7s",
+      sprintf(buffer,"%5s%7d%6s%13s%s%13s%s%15s%7s",
                     daySold.c_str(),
                     difference,
                     unit.c_str(),
                     " ",
+                    padding(company).c_str(),
                     company.c_str(),
+                    padding(temp2).c_str(),
                     temp2.c_str(),
                     dayPurchased.c_str());
   }else if (mTui){
       string temp2 = "退給農場";
-      sprintf(buffer,"%5s%7d%6s%13s%13s%15s%7s",
+      sprintf(buffer,"%5s%7d%6s%13s%s%13s%s%15s%7s",
                     daySold.c_str(),
                     difference,
                     unit.c_str(),
                     " ",
+                    padding(company).c_str(),
                     company.c_str(),
+                    padding(temp2).c_str(),
                     temp2.c_str(),
                     dayPurchased.c_str());
   }else if(customer.compare("\t"))
-    sprintf(buffer,"%5s%7d%6s%13s%13s%15s%7s",
+    sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%15s%7s",
           day.c_str(),
           difference,
           unit.c_str(),
+          padding(customer).c_str(),
           customer.c_str(),
+          padding(company).c_str(),
           company.c_str(),
           Price.c_str(),
           dayPurchased.c_str());
   else
-    sprintf(buffer,"%5s%7d%6s%26s%15s",
+    sprintf(buffer,"%5s%7d%6s%s%26s%15s",
            day.c_str(),
             difference,
             unit.c_str(),
+            padding(company).c_str(),
             company.c_str(),
             Price.c_str());
 
@@ -139,10 +151,13 @@ string History::printFormat(){
               for(int p = abs(splitArray[i].getDifference()); p > 0; p/=10){
                   temp2++;
               }
-               sprintf(buffer,"%4d%12s%12s%5s",
+               sprintf(buffer,"%4d%s%12s%s%12s%s%5s",
                     splitArray[i].getDifference(),
+                    padding(customer).c_str(),
                     customer.c_str(),
+                    padding(splitArray[i].getCompany()).c_str(),
                     splitArray[i].getCompany().c_str(),
+                    padding(splitArray[i].getDatePurchased()).c_str(),
                     splitArray[i].getDatePurchased().c_str());
               if(i == splitNum - 1)
                   final= final + string(buffer);
@@ -155,30 +170,38 @@ string History::printFormat(){
         char d [200];
         sprintf(d,"+%d",difference);
 
-        sprintf(buffer,"%4s%12s%12s%5s",
+        sprintf(buffer,"%4s%s%12s%s%12s%5s",
                 d,
+                padding(customer).c_str(),
                 customer.c_str(),
+                padding(company).c_str(),
                 company.c_str(),
                 dayPurchased.c_str());
     }else if (dumped){
-        sprintf(buffer,"%4d%12s%12s%5s",
+        sprintf(buffer,"%4d%s%12s%s%12s%5s",
                       difference,
+                      padding(customer).c_str(),
                       customer.c_str(),
+                      padding(company).c_str(),
                       company.c_str(),
                       dayPurchased.c_str());
     }else if(mTui){
-        sprintf(buffer,"%4d%12s%12s%5s",
+        sprintf(buffer,"%4d%s%12s%s%12s%5s",
                 difference,
+                padding(customer).c_str(),
                 customer.c_str(),
+                padding(company).c_str(),
                 company.c_str(),
                 dayPurchased.c_str());
     }else if(customer.compare("\t")){
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
         string Price = "$" + price;
-        sprintf(buffer,"%4d%12s%12s%5s%4s",
+        sprintf(buffer,"%4d%s%12s%s%12s%5s%4s",
             difference,
+            padding(customer).c_str(),
             customer.c_str(),
+            padding(company).c_str(),
             company.c_str(),
             dayPurchased.c_str(),
             Price.c_str());
@@ -468,4 +491,19 @@ void History::tui(int amount, string date, string bd, string comp, int change){
     changeNum = change;
 }
 
-
+string History:: padding( string word){
+    string product = "";
+    int num = 0;
+    for(int i = 0; i < word.size(); i ++){
+        char x = word[i];
+        if( x < 0 && (x & 0x40)){
+            product = product + " ";
+            num++;
+            if(num == 2){
+                num = 0;
+                product = product + " ";
+            }
+        }
+    }
+    return product;
+}

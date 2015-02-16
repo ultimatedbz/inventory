@@ -33,6 +33,15 @@ Dialog::Dialog(QWidget *parent) :
 
 {
 
+ //   qDebug()<<hi<<sizeof(hi)<<sizeof(hi[0])<<(int) hi[0];
+    //qDebug()<<hi;
+    /*
+    const size_t cSize = strlen(hi)+1;
+    wchar_t* wc = new wchar_t[cSize];
+    mbstowcs (wc, hi, cSize);
+    qDebug()<<hi<<sizeof(hi)<<(int) hi[0];
+    qDebug()<<wc<<sizeof(wc)<<wc[0];
+*/
     ui->setupUi(this);
 
     #ifndef Q_OS_WIN32
@@ -1856,6 +1865,8 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
 }
 
 void Dialog:: deleteVege(){
+    if(!currentVege)
+        return;
     inventory->removeVegetable( ui->vegeList->currentItem()->text().toUtf8().constData());
     needSave = 1;
     qDeleteAll(ui->vegeList->selectedItems());
@@ -2078,3 +2089,11 @@ void Dialog::on_clearReturnButton_clicked()
         currentVege->clearTui();
     }
 }
+
+
+
+
+
+
+
+

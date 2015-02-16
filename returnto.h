@@ -30,6 +30,7 @@ private:
   string company;
   int returnNum;
   string dayReturned;
+  string padding(string word);
 };
 
 

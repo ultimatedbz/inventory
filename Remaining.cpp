@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <QDebug>
 
 using namespace std;
 #include "Remaining.h"
@@ -75,8 +76,9 @@ string Remaining::formatRemaining(){
 
 
       char buffer [128];
-    sprintf(buffer,"%5s%12s%5d",
+    sprintf(buffer,"%5s%s%12s%5d",
             dayPurchased.c_str(),
+            padding(company).c_str(),
             company.c_str(),
             remaining);
  return buffer;
@@ -86,10 +88,11 @@ string Remaining::formatRemaining2(string unit){
         price = "--";
     string Price = "$" + price;
       char buffer [128];
-    sprintf(buffer,"%5s%11d%6s%20s%7s",
+    sprintf(buffer,"%5s%11d%6s%s%20s%7s",
             dayPurchased.c_str(),
             remaining,
             unit.c_str(),
+            padding(company).c_str(),
             company.c_str(),
             Price.c_str());
  return buffer;
@@ -99,11 +102,12 @@ string Remaining::formatRemaining3(){
         price = "--";
     string Price = "$" + price;
     char buffer [128];
-    sprintf(buffer,"%5s%5d%10s%4s",
+    sprintf(buffer,"%5s%5d%s%10s%4s",
            dayPurchased.c_str(),
            remaining,
+           padding(company).c_str(),
            company.c_str(),
-            Price.c_str());
+           Price.c_str());
  return buffer;
 }
 void Remaining:: updateRemaining(int amount){
@@ -144,4 +148,21 @@ void Remaining::load(fstream* fio){
 
     fio->read(( char *) &(remaining ), sizeof(int));
     fio->read(( char *) &(returnNum), sizeof(int));
+}
+
+string Remaining:: padding( string word){
+    string product = "";
+    int num = 0;
+    for(int i = 0; i < word.size(); i ++){
+        char x = word[i];
+        if( x < 0 && (x & 0x40)){
+            product = product + " ";
+            num++;
+            if(num == 2){
+                num = 0;
+                product = product + " ";
+            }
+        }
+    }
+    return product;
 }

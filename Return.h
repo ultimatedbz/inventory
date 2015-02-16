@@ -30,6 +30,7 @@ private:
   int returnNum;
   string returner;
   string dayReturned;
+  string padding(string word);
 };
 
 

@@ -67,6 +67,7 @@ private:
   History* splitArray;
   int changeNum;
   int mTui;
+  string padding(string word);
 };
 
 #endif // History_H

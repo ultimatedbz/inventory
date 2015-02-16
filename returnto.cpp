@@ -70,10 +70,11 @@ string ReturnTo::formatReturn(string unit){
     for(int i = abs(returnNum); i > 0; i/=10){
         temp++;
     }
-      sprintf(buffer,"%5s%7d%6s%13s%7s",
+      sprintf(buffer,"%5s%7d%6s%s%13s%7s",
             dayReturned.c_str(),
             returnNum,
             unit.c_str(),
+            padding(company).c_str(),
             company.c_str(),
             dayPurchased.c_str());
       return buffer;
@@ -115,3 +116,19 @@ void ReturnTo::load(fstream* fio){
 
 }
 
+string ReturnTo:: padding( string word){
+    string product = "";
+    int num = 0;
+    for(int i = 0; i < word.size(); i ++){
+        char x = word[i];
+        if( x < 0 && (x & 0x40)){
+            product = product + " ";
+            num++;
+            if(num == 2){
+                num = 0;
+                product = product + " ";
+            }
+        }
+    }
+    return product;
+}
