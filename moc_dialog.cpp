@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Dialog_t {
-    QByteArrayData data[47];
-    char stringdata[533];
+    QByteArrayData data[49];
+    char stringdata[551];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -73,9 +73,11 @@ QT_MOC_LITERAL(40, 399, 6), // "editor"
 QT_MOC_LITERAL(41, 406, 34), // "QAbstractItemDelegate::EndEdi..."
 QT_MOC_LITERAL(42, 441, 4), // "hint"
 QT_MOC_LITERAL(43, 446, 5), // "slot1"
-QT_MOC_LITERAL(44, 452, 21), // "on_dumpButton_clicked"
-QT_MOC_LITERAL(45, 474, 29), // "on_clearHistoryButton_clicked"
-QT_MOC_LITERAL(46, 504, 28) // "on_clearReturnButton_clicked"
+QT_MOC_LITERAL(44, 452, 29), // "on_clearHistoryButton_clicked"
+QT_MOC_LITERAL(45, 482, 21), // "on_dumpButton_clicked"
+QT_MOC_LITERAL(46, 504, 28), // "on_clearReturnButton_clicked"
+QT_MOC_LITERAL(47, 533, 8), // "sellVege"
+QT_MOC_LITERAL(48, 542, 8) // "dumpVege"
 
     },
     "Dialog\0on_Buy_clicked\0\0on_Sell_clicked\0"
@@ -90,9 +92,10 @@ QT_MOC_LITERAL(46, 504, 28) // "on_clearReturnButton_clicked"
     "on_vegeList_itemPressed\0QListWidgetItem*\0"
     "item\0ListWidgetEditEnd\0QWidget*\0editor\0"
     "QAbstractItemDelegate::EndEditHint\0"
-    "hint\0slot1\0on_dumpButton_clicked\0"
-    "on_clearHistoryButton_clicked\0"
-    "on_clearReturnButton_clicked"
+    "hint\0slot1\0on_clearHistoryButton_clicked\0"
+    "on_dumpButton_clicked\0"
+    "on_clearReturnButton_clicked\0sellVege\0"
+    "dumpVege"
 };
 #undef QT_MOC_LITERAL
 
@@ -102,7 +105,7 @@ static const uint qt_meta_data_Dialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
+      25,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -110,29 +113,31 @@ static const uint qt_meta_data_Dialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  129,    2, 0x0a /* Public */,
-       3,    0,  130,    2, 0x0a /* Public */,
-       4,    1,  131,    2, 0x0a /* Public */,
-       7,    1,  134,    2, 0x0a /* Public */,
-       8,    4,  137,    2, 0x0a /* Public */,
-      13,    0,  146,    2, 0x0a /* Public */,
-      14,    5,  147,    2, 0x0a /* Public */,
-      16,    4,  158,    2, 0x0a /* Public */,
-      21,    0,  167,    2, 0x0a /* Public */,
-      22,    0,  168,    2, 0x0a /* Public */,
-      23,    0,  169,    2, 0x0a /* Public */,
-      24,    0,  170,    2, 0x0a /* Public */,
-      25,    2,  171,    2, 0x0a /* Public */,
-      29,    2,  176,    2, 0x0a /* Public */,
-      30,    0,  181,    2, 0x0a /* Public */,
-      31,    1,  182,    2, 0x0a /* Public */,
-      34,    0,  185,    2, 0x0a /* Public */,
-      35,    1,  186,    2, 0x0a /* Public */,
-      38,    2,  189,    2, 0x0a /* Public */,
-      43,    0,  194,    2, 0x0a /* Public */,
-      44,    0,  195,    2, 0x0a /* Public */,
-      45,    0,  196,    2, 0x08 /* Private */,
-      46,    0,  197,    2, 0x08 /* Private */,
+       1,    0,  139,    2, 0x0a /* Public */,
+       3,    0,  140,    2, 0x0a /* Public */,
+       4,    1,  141,    2, 0x0a /* Public */,
+       7,    1,  144,    2, 0x0a /* Public */,
+       8,    4,  147,    2, 0x0a /* Public */,
+      13,    0,  156,    2, 0x0a /* Public */,
+      14,    5,  157,    2, 0x0a /* Public */,
+      16,    4,  168,    2, 0x0a /* Public */,
+      21,    0,  177,    2, 0x0a /* Public */,
+      22,    0,  178,    2, 0x0a /* Public */,
+      23,    0,  179,    2, 0x0a /* Public */,
+      24,    0,  180,    2, 0x0a /* Public */,
+      25,    2,  181,    2, 0x0a /* Public */,
+      29,    2,  186,    2, 0x0a /* Public */,
+      30,    0,  191,    2, 0x0a /* Public */,
+      31,    1,  192,    2, 0x0a /* Public */,
+      34,    0,  195,    2, 0x0a /* Public */,
+      35,    1,  196,    2, 0x0a /* Public */,
+      38,    2,  199,    2, 0x0a /* Public */,
+      43,    0,  204,    2, 0x0a /* Public */,
+      44,    0,  205,    2, 0x08 /* Private */,
+      45,    0,  206,    2, 0x08 /* Private */,
+      46,    0,  207,    2, 0x08 /* Private */,
+      47,    0,  208,    2, 0x08 /* Private */,
+      48,    0,  209,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -154,6 +159,8 @@ static const uint qt_meta_data_Dialog[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 36,   37,
     QMetaType::Void, 0x80000000 | 39, 0x80000000 | 41,   40,   42,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -191,9 +198,11 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 17: _t->on_vegeList_itemPressed((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         case 18: _t->ListWidgetEditEnd((*reinterpret_cast< QWidget*(*)>(_a[1])),(*reinterpret_cast< QAbstractItemDelegate::EndEditHint(*)>(_a[2]))); break;
         case 19: _t->slot1(); break;
-        case 20: _t->on_dumpButton_clicked(); break;
-        case 21: _t->on_clearHistoryButton_clicked(); break;
+        case 20: _t->on_clearHistoryButton_clicked(); break;
+        case 21: _t->on_dumpButton_clicked(); break;
         case 22: _t->on_clearReturnButton_clicked(); break;
+        case 23: _t->sellVege(); break;
+        case 24: _t->dumpVege(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -235,13 +244,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 25;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 25;
     }
     return _id;
 }

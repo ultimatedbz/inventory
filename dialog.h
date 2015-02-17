@@ -92,12 +92,14 @@ public slots:
 
 
     void slot1();
-    void on_dumpButton_clicked();
+
 
 private slots:
     void on_clearHistoryButton_clicked();
-
+    void on_dumpButton_clicked();
     void on_clearReturnButton_clicked();
+    void sellVege();
+    void dumpVege();
 
 private:
     Ui::Dialog *ui;
@@ -111,8 +113,8 @@ private:
     QAction* deleteVegeAction;
     QAction* undoHistoryAction;
     QAction* deleteHistoryAction;
-
-
+    QAction* sellVegeAction;
+    QAction* dumpVegeAction;
 
 };
 
