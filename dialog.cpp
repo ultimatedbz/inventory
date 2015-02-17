@@ -705,7 +705,7 @@ void Dialog::printHistory(){
         preview.exec();
 
 }
-
+/*
 void Dialog::printI(QPrinter* printer){
 
     int amount;
@@ -753,7 +753,7 @@ void Dialog::printI(QPrinter* printer){
         QString rightText="";
         QString * currentText = &leftText;
 
-        /* Dimensions of paper are roughly 590 X 775 */
+        /* Dimensions of paper are roughly 590 X 775 *
 
         painter.drawText(295,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
         int lineCount = 0;
@@ -836,6 +836,132 @@ void Dialog::printI(QPrinter* printer){
     }
    painter.drawText(0,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, leftText );
    painter.drawText(295,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, rightText );
+   painter.end();
+  }
+}
+*/
+
+void Dialog::printI(QPrinter* printer){
+
+    int amount;
+    time_t t = time(0);
+    struct tm * now = localtime(&t);
+    char buffer[128];
+    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    string today = buffer;
+
+    QDialog dialog1(this);
+    dialog1.setWindowTitle("列印資料");
+    QFormLayout form(&dialog1);
+
+    QLineEdit *lineEdit = new QLineEdit(&dialog1);
+    QString label = QString("請輸入字體大小");
+    lineEdit -> setText("20");
+    form.addRow(label, lineEdit);
+
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                           Qt::Horizontal, &dialog1);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog1, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog1, SLOT(reject()));
+
+    if (dialog1.exec() == QDialog::Accepted) {
+        amount = lineEdit->text().toInt();
+        QPainter painter;
+        QFont font("Courier",-1,QFont::Bold,false);
+
+        painter.begin(printer);
+        font.setPixelSize(amount);
+        painter.setFont(font);
+        QFontMetrics metric(font);
+        int lineHeight = metric.height();
+
+        QString leftText= "";
+        QString rightText="";
+        QString * currentText = &leftText;
+        painter.drawLine(450,40,450,1250);
+        painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+        int lineCount = 0;
+        int column = 0;
+        for(int i = 0; i<inventory->getVegNum(); i++){
+            if(inventory->getVegetableByIndex(i)->getRemainingNum()){
+                if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) > 1250  ){
+                    if(currentText == &leftText){
+                        currentText = &rightText;
+                        lineCount = 0;
+                        column = 1;
+                        painter.drawLine(450,40,450,1250);
+                    }else{
+                        painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                        painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                        leftText= "";
+                        rightText="";
+                        printer->newPage();
+
+                        painter.drawLine(450,40,450,1250);
+
+                        painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                        currentText = &leftText;
+                        column = 0;
+                        lineCount = 0;
+                }
+            }
+
+                *currentText = *currentText + QString(inventory->
+                                   getVegetableByIndex(i)->
+                                   getVegetablename().c_str()) + ":  "+ "\n";
+                *currentText = *currentText +"Total: " + QString::number(inventory->getVegetableByIndex(i)
+                               ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                            getUnit().c_str()) +"\n";
+                for(int j =0; j < inventory->getVegetableByIndex(i)
+                                    ->getRemainingNum(); j++){
+                    *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
+                                    ->formatRemaining3(j).c_str()) +"\n";
+                    lineCount++;
+                }
+
+                lineCount += 2;
+                painter.drawLine(450 * column,lineHeight * (lineCount +1) + 40,
+                                450 *(column + 1),lineHeight * (1+lineCount)+40);
+
+        }else{
+                if( lineHeight * (lineCount + 1) > 1250  ){
+                    if(currentText == &leftText){
+                        currentText = &rightText;
+                        lineCount = 0;
+                        column = 1;
+                        painter.drawLine(450,40,450,1250);
+                    }else{
+                        painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                        painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                        leftText= "";
+                        rightText="";
+                        printer->newPage();
+
+                        painter.drawLine(450,40,450,1250);
+
+                        painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                        currentText = &leftText;
+                        column = 0;
+                        lineCount = 0;
+                }
+            }
+
+                *currentText = *currentText + QString(inventory->
+                                   getVegetableByIndex(i)->
+                                   getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
+                               ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                            getUnit().c_str()) +"\n";
+                lineCount += 1;
+                painter.drawLine(450 * column,lineHeight * (lineCount + 1) + 40,
+                                450 *(column + 1),lineHeight * (lineCount + 1)+40);
+
+        }
+
+    }
+   painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+   painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
    painter.end();
   }
 }
