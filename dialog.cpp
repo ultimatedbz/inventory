@@ -2303,3 +2303,11 @@ void Dialog::on_vegeList_currentRowChanged(int currentRow)
 {
     on_vegeList_itemPressed(ui->vegeList->currentItem());
 }
+
+void Dialog::showPreferences() {
+  //mPreferencesPanel->show();
+  //mPreferencesPanel->activateWindow();
+  //mPreferencesPanel->raise();
+}
+
+

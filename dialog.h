@@ -5,6 +5,7 @@
 #include "Inventory.h"
 #include "translator.h"
 #include "imenubar.h"
+#include "ipreferencespanel.h"
 #include <QListWidgetItem>
 #include <iostream>
 #include <QPrinter>
@@ -41,6 +42,7 @@ public:
     void saveAs();
     void changeToEnglish();
     void changeToChinese();
+    void showPreferences();
 
     void addVegetable();
     void addCompany();
@@ -107,6 +109,8 @@ private:
     Ui::Dialog *ui;
     Inventory* inventory;
     IMenuBar *menuBar;
+    IPreferencesPanel *mPreferencesPanel;
+
     Vegetable *currentVege;
     int needSave;
     QFont font;
@@ -117,6 +121,7 @@ private:
     QAction* deleteHistoryAction;
     QAction* sellVegeAction;
     QAction* dumpVegeAction;
+
 
 };
 

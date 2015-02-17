@@ -41,6 +41,10 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     changeToEnglishAction = translateMenu->addAction("English");
     changeToChineseAction = translateMenu->addAction("中文");
 
+    mShowPreferencesAction = new QAction(tr("&Preferences"), this);
+    mShowPreferencesAction->setShortcuts(QKeySequence::Preferences);
+    QObject::connect(mShowPreferencesAction, SIGNAL(triggered()),
+                     this, SLOT(showPreferences()));
 
 
     connect(newAction, SIGNAL(triggered()), this, SLOT(newFile()));
@@ -111,6 +115,10 @@ void IMenuBar:: changeToEnglish(){
 
 void IMenuBar:: changeToChinese(){
     ((Dialog* ) parent) -> changeToChinese();
+}
+
+void IMenuBar::showPreferences(){
+    ((Dialog* ) parent) -> showPreferences();
 }
 
 /* Edit */

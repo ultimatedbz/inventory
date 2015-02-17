@@ -21,6 +21,7 @@ public slots:
     void printHistory();
     void changeToEnglish();
     void changeToChinese();
+    void showPreferences();
 
     void addVegetable();
     void addCompany();
@@ -57,7 +58,7 @@ private:
     QAction *deleteReturnAction;
     QAction *changeToChineseAction;
     QAction *changeToEnglishAction;
-
+    QAction *mShowPreferencesAction;
     QWidget* parent;
 };
 

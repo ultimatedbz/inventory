@@ -57,7 +57,8 @@ SOURCES       = main.cpp \
 		Return.cpp \
 		returnto.cpp \
 		translator.cpp \
-		imenubar.cpp moc_dialog.cpp \
+		imenubar.cpp \
+		ipreferencespanel.cpp moc_dialog.cpp \
 		moc_imenubar.cpp
 OBJECTS       = main.o \
 		dialog.o \
@@ -69,6 +70,7 @@ OBJECTS       = main.o \
 		returnto.o \
 		translator.o \
 		imenubar.o \
+		ipreferencespanel.o \
 		moc_dialog.o \
 		moc_imenubar.o
 DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
@@ -208,7 +210,8 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		returnto.h \
 		IConst.h \
 		translator.h \
-		imenubar.h main.cpp \
+		imenubar.h \
+		ipreferencespanel.h main.cpp \
 		dialog.cpp \
 		Vegetable.cpp \
 		Inventory.cpp \
@@ -217,7 +220,8 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		Return.cpp \
 		returnto.cpp \
 		translator.cpp \
-		imenubar.cpp
+		imenubar.cpp \
+		ipreferencespanel.cpp
 QMAKE_TARGET  = Inventory
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Inventory.app/Contents/MacOS/Inventory
@@ -555,8 +559,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp Remaining.cpp Return.cpp returnto.cpp translator.cpp imenubar.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h ipreferencespanel.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp Remaining.cpp Return.cpp returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog.ui $(DISTDIR)/
 
 
@@ -1108,7 +1112,9 @@ History.o: History.cpp ../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/
 		History.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o History.o History.cpp
 
-Remaining.o: Remaining.cpp Remaining.h
+Remaining.o: Remaining.cpp ../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QDebug \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qdebug.h \
+		Remaining.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Remaining.o Remaining.cpp
 
 Return.o: Return.cpp ../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qDebug \
@@ -1148,6 +1154,9 @@ imenubar.o: imenubar.cpp imenubar.h \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/QPrinter \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/qprinter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imenubar.o imenubar.cpp
+
+ipreferencespanel.o: ipreferencespanel.cpp ipreferencespanel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ipreferencespanel.o ipreferencespanel.cpp
 
 moc_dialog.o: moc_dialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp
