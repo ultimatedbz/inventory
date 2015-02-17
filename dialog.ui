@@ -15,19 +15,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <item>
-    <widget class="QLabel" name="label_4">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QSplitter" name="splitter_4">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -35,11 +22,28 @@
      <widget class="QWidget" name="">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QLabel" name="VegieList">
-         <property name="text">
-          <string>菜名：</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="VegieList">
+           <property name="text">
+            <string>菜名：</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="multiSellButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Multiple Sell/ 快速卖</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
@@ -370,6 +374,19 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_4">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>

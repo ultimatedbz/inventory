@@ -24,195 +24,194 @@
 #include <QSplitter>
 
 Dialog::Dialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Dialog),
-    currentVege(NULL),
-    needSave(0),
-    font("Courier",-1,QFont::Bold,false),
-    inventory(new Inventory()),
-    mTranslator(new Translator()),
-    menuBar(new IMenuBar(this,mTranslator))
+  QDialog(parent),
+  ui(new Ui::Dialog),
+  currentVege(NULL),
+  needSave(0),
+  font("Courier",-1,QFont::Bold,false),
+  inventory(new Inventory()),
+  mTranslator(new Translator()),
+  menuBar(new IMenuBar(this,mTranslator))
 
 {
 
-    ui->setupUi(this);
+  ui->setupUi(this);
 
-    #ifndef Q_OS_WIN32
-        ui->label_4->hide();
-    #endif
+  #ifndef Q_OS_WIN32
+    ui->label_4->hide();
+  #endif
 
-    ui->pushButton->hide();
-    QList<int> sizes = ui->splitter_4->sizes();
-    sizes.replace(0,this->width() * 1/4);
-    sizes.replace(1,this->width() * 3/4);
-    ui->splitter_4->setSizes(sizes);
+  ui->pushButton->hide();
+  QList<int> sizes = ui->splitter_4->sizes();
+  sizes.replace(0,this->width() * 1/4);
+  sizes.replace(1,this->width() * 3/4);
+  ui->splitter_4->setSizes(sizes);
 
-    QList<int> sizes2 = ui->splitter_4->sizes();
-    sizes2.replace(0,this->width() * 3/4 * 5/8);
-    sizes2.replace(1,this->width() * 3/4 * 3/8);
-    ui->splitter_3->setSizes(sizes2);
+  QList<int> sizes2 = ui->splitter_4->sizes();
+  sizes2.replace(0,this->width() * 3/4 * 5/8);
+  sizes2.replace(1,this->width() * 3/4 * 3/8);
+  ui->splitter_3->setSizes(sizes2);
 
-    ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->breakDown->setContextMenuPolicy(Qt::ActionsContextMenu);
+  ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
+  ui->historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
+  ui->breakDown->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    deleteVegeAction = new QAction(tr("&Delete"),this);
-    connect(deleteVegeAction, SIGNAL(triggered()), this, SLOT(deleteVege()));
-    ui->vegeList->addAction(deleteVegeAction);
+  deleteVegeAction = new QAction(tr("&Delete"),this);
+  connect(deleteVegeAction, SIGNAL(triggered()), this, SLOT(deleteVege()));
+  ui->vegeList->addAction(deleteVegeAction);
 
-    sellVegeAction = new QAction(mTranslator->translate("賣").c_str(), this);
-    connect(sellVegeAction, SIGNAL(triggered()), this, SLOT(sellVege()));
-    ui->breakDown->addAction(sellVegeAction);
+  sellVegeAction = new QAction(mTranslator->translate("賣").c_str(), this);
+  connect(sellVegeAction, SIGNAL(triggered()), this, SLOT(sellVege()));
+  ui->breakDown->addAction(sellVegeAction);
 
-    dumpVegeAction = new QAction(mTranslator->translate("倒").c_str(), this);
-    connect(dumpVegeAction, SIGNAL(triggered()), this, SLOT(dumpVege()));
-    ui->breakDown->addAction(dumpVegeAction);
+  dumpVegeAction = new QAction(mTranslator->translate("倒").c_str(), this);
+  connect(dumpVegeAction, SIGNAL(triggered()), this, SLOT(dumpVege()));
+  ui->breakDown->addAction(dumpVegeAction);
 
-    undoHistoryAction = new QAction(tr("&Undo"),this);
-    connect(undoHistoryAction, SIGNAL(triggered()), this, SLOT(undoHistory()));
-    ui->historyList->addAction(undoHistoryAction);
+  undoHistoryAction = new QAction(tr("&Undo"),this);
+  connect(undoHistoryAction, SIGNAL(triggered()), this, SLOT(undoHistory()));
+  ui->historyList->addAction(undoHistoryAction);
 
-    deleteHistoryAction = new QAction(tr("&Delete"),this);
-    connect(deleteHistoryAction, SIGNAL(triggered()), this, SLOT(deleteHistory()));
-    ui->historyList->addAction(deleteHistoryAction);
+  deleteHistoryAction = new QAction(tr("&Delete"),this);
+  connect(deleteHistoryAction, SIGNAL(triggered()), this, SLOT(deleteHistory()));
+  ui->historyList->addAction(deleteHistoryAction);
 
-    /*Edit Vegetable Name */
-    connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
-            this, SLOT(ListWidgetEditEnd(QWidget*, QAbstractItemDelegate::EndEditHint)));
+  /*Edit Vegetable Name */
+  connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
+          this, SLOT(ListWidgetEditEnd(QWidget*, QAbstractItemDelegate::EndEditHint)));
 
 
-    QFont vFont = font;
-    vFont.setPixelSize(18);
-    ui->vegeList->setFont(vFont);
+  QFont vFont = font;
+  vFont.setPixelSize(18);
+  ui->vegeList->setFont(vFont);
 }
 
 Dialog::~Dialog()
 {
-    delete ui;
+  delete ui;
 }
 
 void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
 {
-    ui->historyList->clear();
-    ui->breakDown->clear();
-    ui->returnList->clear();
-    ui->returnToFarm->clear();
+  ui->historyList->clear();
+  ui->breakDown->clear();
+  ui->returnList->clear();
+  ui->returnToFarm->clear();
 
-    QString text = item -> text();
-    string vegeName = text.toStdString();
-    currentVege = inventory->getVegetable(vegeName);
-    int historyNum = currentVege->getHistoryNum();
+  QString text = item -> text();
+  string vegeName = text.toStdString();
+  currentVege = inventory->getVegetable(vegeName);
+  int historyNum = currentVege->getHistoryNum();
 
-    int index = 0;
-    for(int i = 0; i < historyNum; i++){
-        if((currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked())              ||
-                (currentVege->getHistoryObject(i)->getDumped() && ui->dumpCheck->isChecked())     ||
-                (currentVege->getHistoryObject(i)->getReturned() && ui->returnCheck->isChecked())   ||
-                ((currentVege->getHistoryObject(i)->getCustomer().compare("\t") &&ui->sellCheck->isChecked())
-                        &&
-                        !(currentVege->getHistoryObject(i)->getTui() || currentVege->getHistoryObject(i)->getDumped()||
-                          currentVege->getHistoryObject(i)->getReturned())     )       ||
-                (ui->buyCheck->isChecked() && !(currentVege->getHistoryObject(i)->getTui() ||
-                            currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
-                            || currentVege->getHistoryObject(i)->getDumped()))     ){
+  int index = 0;
+  for(int i = 0; i < historyNum; i++){
+    if((currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked())              ||
+          (currentVege->getHistoryObject(i)->getDumped() && ui->dumpCheck->isChecked())     ||
+          (currentVege->getHistoryObject(i)->getReturned() && ui->returnCheck->isChecked())   ||
+          ((currentVege->getHistoryObject(i)->getCustomer().compare("\t") &&ui->sellCheck->isChecked())
+                  &&
+                  !(currentVege->getHistoryObject(i)->getTui() || currentVege->getHistoryObject(i)->getDumped()||
+                    currentVege->getHistoryObject(i)->getReturned())     )       ||
+          (ui->buyCheck->isChecked() && !(currentVege->getHistoryObject(i)->getTui() ||
+                      currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
+                      || currentVege->getHistoryObject(i)->getDumped()))     ){
 
-            ui->historyList->addItem(QString::fromStdString(currentVege->viewHistory(i)));
-            ui->historyList->item(index)->setFont(font);
-            if(currentVege->getHistoryObject(i)->getReturned() ||
-                    currentVege->getHistoryObject(i)->getDumped()||currentVege->getHistoryObject(i)->getTui()){
-                font.setItalic(true);
-                ui->historyList->item(index)->setFont(font);
-                font.setItalic(false);
-            }
-            index++;
-        }
+      ui->historyList->addItem(QString::fromStdString(currentVege->viewHistory(i)));
+      ui->historyList->item(index)->setFont(font);
+      if(currentVege->getHistoryObject(i)->getReturned() ||
+              currentVege->getHistoryObject(i)->getDumped()||currentVege->getHistoryObject(i)->getTui()){
+          font.setItalic(true);
+          ui->historyList->item(index)->setFont(font);
+          font.setItalic(false);
+      }
+      index++;
     }
+  }
 
-    ui ->changeTotal->setText(QString::number(currentVege->getTotalVeges()) +
-                              " " + QString::fromStdString(currentVege->getUnit()));
-    for(int i = 0; i< currentVege -> getRemainingNum() ; i++){
-            ui->breakDown->addItem(currentVege->formatRemaining2(i).c_str());
-            ui->breakDown->item(i)->setFont(font);
-    }
-    ui ->Memo_2->setText(currentVege->getMemo().c_str());
-    for(int i = 0; i< currentVege->getReturnNum(); i++){
-        ui->returnList->addItem(currentVege->formatReturn(i).c_str());
-        ui->returnList->item(i)->setFont(font);
-    }
-    for(int i = 0; i< currentVege->getTuiNum(); i++){
-        ui->returnToFarm->addItem(currentVege->formatTui(i).c_str());
-        ui->returnToFarm->item(i)->setFont(font);
-    }
-    needSave = 1;
+  ui ->changeTotal->setText(QString::number(currentVege->getTotalVeges()) +
+                            " " + QString::fromStdString(currentVege->getUnit()));
+  for(int i = 0; i< currentVege -> getRemainingNum() ; i++){
+          ui->breakDown->addItem(currentVege->formatRemaining2(i).c_str());
+          ui->breakDown->item(i)->setFont(font);
+  }
+  ui ->Memo_2->setText(currentVege->getMemo().c_str());
+  for(int i = 0; i< currentVege->getReturnNum(); i++){
+      ui->returnList->addItem(currentVege->formatReturn(i).c_str());
+      ui->returnList->item(i)->setFont(font);
+  }
+  for(int i = 0; i< currentVege->getTuiNum(); i++){
+      ui->returnToFarm->addItem(currentVege->formatTui(i).c_str());
+      ui->returnToFarm->item(i)->setFont(font);
+  }
+  needSave = 1;
 }
 
 void Dialog::on_Buy_clicked()
 {
-    if(currentVege){
+  if(currentVege){
 
-        QDialog dialog(this);
-        dialog.setWindowTitle(mTranslator ->translate("買").c_str());
-        // Use a layout allowing to have a label next to each field
-        QFormLayout form(&dialog);
+      QDialog dialog(this);
+      dialog.setWindowTitle(mTranslator ->translate("買").c_str());
+      // Use a layout allowing to have a label next to each field
+      QFormLayout form(&dialog);
 
-        // Add some text above the fields
-        form.addRow(new QLabel(mTranslator->translate("輸入進菜資料").c_str()));
+      // Add some text above the fields
+      form.addRow(new QLabel(mTranslator->translate("輸入進菜資料").c_str()));
 
-        QLineEdit *lineEdit = new QLineEdit(&dialog);
-        QString label = QString(mTranslator->translate("買了多少?").c_str());
-        form.addRow(label, lineEdit);
+      QLineEdit *lineEdit = new QLineEdit(&dialog);
+      QString label = QString(mTranslator->translate("買了多少?").c_str());
+      form.addRow(label, lineEdit);
 
-        QString label2 = QString(mTranslator->translate("哪家公司的?").c_str());
-        QComboBox* companyDrop = new QComboBox(&dialog);
-        for(int i = 0; i< inventory->getCompanyNum(); i++)
-            companyDrop->addItem(inventory->getCompany(i).c_str());
-        companyDrop->setFont(font);
-        form.addRow(label2, companyDrop);
+      QString label2 = QString(mTranslator->translate("哪家公司的?").c_str());
+      QComboBox* companyDrop = new QComboBox(&dialog);
+      for(int i = 0; i< inventory->getCompanyNum(); i++)
+          companyDrop->addItem(inventory->getCompany(i).c_str());
+      companyDrop->setFont(font);
+      form.addRow(label2, companyDrop);
 
-        QLineEdit *date = new QLineEdit(&dialog);
-        time_t t = time(0);
-        struct tm * now = localtime(&t);
-        char buffer[128];
-        sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
-        date -> setText(QString::fromUtf8(buffer));
-        QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
-        form.addRow(label4, date);
-
-
-        QLineEdit *price = new QLineEdit(&dialog);
-        QString label5 = QString(mTranslator->translate("進價多少?").c_str());
-        form.addRow(label5, price);
+      QLineEdit *date = new QLineEdit(&dialog);
+      time_t t = time(0);
+      struct tm * now = localtime(&t);
+      char buffer[128];
+      sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+      date -> setText(QString::fromUtf8(buffer));
+      QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
+      form.addRow(label4, date);
 
 
-        // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+      QLineEdit *price = new QLineEdit(&dialog);
+      QString label5 = QString(mTranslator->translate("進價多少?").c_str());
+      form.addRow(label5, price);
 
-       // Show the dialog as modal
-       if (dialog.exec() == QDialog::Accepted) {
 
-            int amount = lineEdit->text().toInt();
-            string buyerCompany = companyDrop->currentText().toUtf8().constData();
+      // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+      QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                             Qt::Horizontal, &dialog);
+      form.addRow(&buttonBox);
+      QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+      QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+     // Show the dialog as modal
+     if (dialog.exec() == QDialog::Accepted) {
+
+        int amount = lineEdit->text().toInt();
+        string buyerCompany = companyDrop->currentText().toUtf8().constData();
+        on_vegeList_itemPressed(ui->vegeList->currentItem());
+
+        if(!currentVege->buyVege(amount,buyerCompany,
+                               date->text().toUtf8().constData(),
+                               price->text().toUtf8().constData())){
+
+          QMessageBox messageBox;
+          messageBox.critical(0,mTranslator->translate("錯誤").c_str(),"Not Valid!");
+          messageBox.setFixedSize(500,200);
+        }
+
+        else{
             on_vegeList_itemPressed(ui->vegeList->currentItem());
-
-            if(!currentVege->buyVege(amount,buyerCompany,
-                                     date->text().toUtf8().constData(),
-                                     price->text().toUtf8().constData())){
-
-                QMessageBox messageBox;
-                messageBox.critical(0,mTranslator->translate("錯誤").c_str(),"Not Valid!");
-                messageBox.setFixedSize(500,200);
-            }
-
-            else{
-                on_vegeList_itemPressed(ui->vegeList->currentItem());
-
-            }
-       }
-    }
+        }
+     }
+  }
 }
 
 void Dialog::on_Sell_clicked()
@@ -2437,3 +2436,147 @@ void Dialog::showPreferences() {
 }
 
 
+
+void Dialog::on_multiSellButton_clicked()
+{
+  if(!currentVege)
+    return;
+
+  int queryNum= queryVeges();
+
+  if(queryNum > 0 && queryNum <= 15 ){
+    QDialog dialog(this);
+    dialog.setWindowTitle("multiple sell");
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
+
+
+    /* Generate form items that appear once*/
+
+    /* Customer Drop */
+    QComboBox* customerDrop = new QComboBox(&dialog);
+    for(int i = 0; i< inventory->getPersonNum(); i++){
+      customerDrop->addItem(inventory->getPerson(i).c_str());
+    }
+
+    customerDrop->setFont(font);
+
+    QString label2 = QString(mTranslator->translate("Customer").c_str());
+    form.addRow(label2, customerDrop);
+
+    /* Date */
+    QLineEdit *date = new QLineEdit(&dialog);
+    time_t t = time(0);
+    struct tm * now = localtime(&t);
+    char buffer[128];
+    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    date -> setText(QString::fromUtf8(buffer));
+    QString label4 = QString("Date");
+    form.addRow(label4, date);
+
+
+    /* Loop and keep making new dropboxes and stuff for each vegetable */
+    for( int i = 0; i < queryNum; i++){
+
+      QFrame* line = new QFrame();
+      line->setGeometry(QRect(/* ... */));
+      line->setFrameShape(QFrame::HLine); // Replace by VLine for vertical line
+      line->setFrameShadow(QFrame::Sunken);
+      form.addRow(line);
+
+      /* Vegetable */
+
+      QComboBox* vegeDrop = new QComboBox(&dialog);
+          for(int i=0; i< inventory->getVegNum(); i++){
+              vegeDrop->addItem(inventory->getVegetableByIndex(i)->getVegetablename().c_str());
+      }
+      vegeDrop->setFont(font);
+      form.addRow("Vegetable", vegeDrop);
+
+      /* Amount */
+      QLineEdit *amount = new QLineEdit(&dialog);
+
+      QString label5 = QString("Amount");
+      form.addRow(label5, amount);
+
+      /* In Stock */
+      QComboBox* remainingDrop = new QComboBox(&dialog);
+      for(int i = 0; i< currentVege -> getRemainingNum(); i++){
+          remainingDrop->addItem(currentVege->formatRemaining(i).c_str());
+      }
+      remainingDrop->setFont(font);
+
+      QToolButton *tb = new QToolButton();
+      tb->setText("+");
+
+      QHBoxLayout* hLay = new QHBoxLayout();
+      hLay->addWidget(remainingDrop);
+      hLay->addWidget(tb);
+
+      form.addRow("In Stock", hLay);
+
+      /* Price */
+      QLineEdit *price = new QLineEdit(&dialog);
+
+      QString label6 = QString("Price");
+      form.addRow(label6, price);
+
+
+    }
+
+    if (dialog.exec() == QDialog::Accepted ) {
+
+    }
+/*
+
+
+
+
+        QLineEdit * date = new QLineEdit(&dialog);
+        date -> setText(dateB);
+        QString label4 = QString(mTranslator->translate("那天賣出").c_str());
+        form.addRow(label4, date);
+
+        QLineEdit *price = new QLineEdit(&dialog);
+        QString label5 = QString(mTranslator->translate("賣多少錢?").c_str());
+        price ->setText(priceB);
+        form.addRow(label5, price);
+
+        form.addRow(new QLabel(mTranslator->translate("你要賣那天的菜？").c_str()));
+        QComboBox* remainingDrop = new QComboBox(&dialog);
+        QLineEdit *lineEdit1 = new QLineEdit(&dialog);
+        QLineEdit *lineEdit2;
+        QComboBox* remainingDrop2;
+        QLineEdit *lineEdit3;
+        QComboBox* remainingDrop3;
+        QLineEdit *lineEdit4;
+        QComboBox* remainingDrop4;
+*/
+    }else{
+        QMessageBox messageBox;
+        messageBox.critical(0,"警告","Not Valid");
+        messageBox.setFixedSize(500,200);
+    }
+}
+
+int Dialog::queryVeges(){
+    QDialog dialog(this);
+    // Use a layout allowing to have a label next to each field
+    QFormLayout form(&dialog);
+
+    // Add some text above the fields
+    form.addRow(new QLabel("Sell How Many Kinds?"));
+
+    QLineEdit *lineEdit = new QLineEdit(&dialog);
+    form.addRow( lineEdit);
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                           Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    if (dialog.exec() == QDialog::Accepted ) {
+        return lineEdit->text().toInt();
+    }
+    return 0;
+}

@@ -105,6 +105,8 @@ private slots:
 
     void on_vegeList_currentRowChanged(int currentRow);
 
+    void on_multiSellButton_clicked();
+
 private:
     Ui::Dialog *ui;
     Inventory* inventory;
@@ -121,6 +123,8 @@ private:
     QAction* deleteHistoryAction;
     QAction* sellVegeAction;
     QAction* dumpVegeAction;
+
+    int queryVeges();
 
 
 };
