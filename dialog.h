@@ -101,6 +101,8 @@ private slots:
     void sellVege();
     void dumpVege();
 
+    void on_vegeList_currentRowChanged(int currentRow);
+
 private:
     Ui::Dialog *ui;
     Inventory* inventory;

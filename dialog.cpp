@@ -2296,10 +2296,7 @@ void Dialog::on_clearReturnButton_clicked()
     }
 }
 
-
-
-
-
-
-
-
+void Dialog::on_vegeList_currentRowChanged(int currentRow)
+{
+    on_vegeList_itemPressed(ui->vegeList->currentItem());
+}
