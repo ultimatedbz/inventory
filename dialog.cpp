@@ -2047,6 +2047,9 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
 
         QString NewValue = reinterpret_cast<QLineEdit*>(editor)->text();
         currentVege->setVegetableName(NewValue.toUtf8().constData());
+
+        ui->vegeList->blockSignals(true);
+
         ui->vegeList->clear();
         inventory->sortVeges();
 
@@ -2065,7 +2068,7 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
             ui->vegeList->setCurrentRow(temp);
             on_vegeList_itemPressed(ui->vegeList->item(temp));
         }
-
+        ui->vegeList->blockSignals(false);
 }
 
 void Dialog:: deleteVege(){
