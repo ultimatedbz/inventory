@@ -1,27 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
-#include "IConst.h"
-#include <qlistwidget.h>
-#include <Qtcore>
-#include <QtGui>
-#include <QMessageBox>
-#include <QInputDialog>
-#include <QListWidgetItem>
-#include <QPrintPreviewWidget>
-#include <QtWidgets>
-#include <ctime>
-#include <QPrinter>
-#include <QPrintDialog>
-#include <QPainter>
-#include <QPrintPreviewDialog>
-#include <QCheckBox>
-#include <fstream>
-#include <stdlib.h>
-#include <QCloseEvent>
-#include <QFontMetrics>
-#include <QAbstractItemDelegate>
-#include <QContextMenuEvent>
-#include <QSplitter>
+
 
 Dialog::Dialog(QWidget *parent) :
   QDialog(parent),
@@ -91,7 +70,7 @@ Dialog::~Dialog()
   delete ui;
 }
 
-void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
+void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
 {
   ui->historyList->clear();
   ui->breakDown->clear();
@@ -99,10 +78,10 @@ void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
   ui->returnToFarm->clear();
 
   QString text = item -> text();
+
   string vegeName = text.toStdString();
   currentVege = inventory->getVegetable(vegeName);
   int historyNum = currentVege->getHistoryNum();
-
   int index = 0;
   for(int i = 0; i < historyNum; i++){
     if((currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked())              ||
@@ -115,6 +94,7 @@ void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
           (ui->buyCheck->isChecked() && !(currentVege->getHistoryObject(i)->getTui() ||
                       currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
                       || currentVege->getHistoryObject(i)->getDumped()))     ){
+
 
       ui->historyList->addItem(QString::fromStdString(currentVege->viewHistory(i)));
       ui->historyList->item(index)->setFont(font);
@@ -144,6 +124,7 @@ void Dialog::on_vegeList_itemPressed(QListWidgetItem *item)
       ui->returnToFarm->item(i)->setFont(font);
   }
   needSave = 1;
+
 }
 
 void Dialog::on_Buy_clicked()
@@ -196,7 +177,7 @@ void Dialog::on_Buy_clicked()
 
         int amount = lineEdit->text().toInt();
         string buyerCompany = companyDrop->currentText().toUtf8().constData();
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
 
         if(!currentVege->buyVege(amount,buyerCompany,
                                date->text().toUtf8().constData(),
@@ -208,7 +189,7 @@ void Dialog::on_Buy_clicked()
         }
 
         else{
-            on_vegeList_itemPressed(ui->vegeList->currentItem());
+            on_vegeList_itemClicked(ui->vegeList->currentItem());
         }
      }
   }
@@ -312,12 +293,12 @@ void Dialog::on_Sell_clicked()
                                             date->text().toUtf8().constData(),
                                             price->text().toUtf8().constData(),
                                              selection);
-                    on_vegeList_itemPressed(ui->vegeList->currentItem());
+                    on_vegeList_itemClicked(ui->vegeList->currentItem());
 
                     additionalSell(amount - remaining, customerDrop->currentIndex(), date->text(), price->text());
                 }
             }
-            on_vegeList_itemPressed(ui->vegeList->currentItem());
+            on_vegeList_itemClicked(ui->vegeList->currentItem());
         }else if (result == QDialog::Rejected){
             if(checkBox.isChecked()){
                 int splits = querySplits();
@@ -430,12 +411,12 @@ void Dialog::additionalSell(int amount, int cusIndex, QString dateB, QString pri
                                         date->text().toUtf8().constData(),
                                         price->text().toUtf8().constData(),
                                          selection);
-                on_vegeList_itemPressed(ui->vegeList->currentItem());
+                on_vegeList_itemClicked(ui->vegeList->currentItem());
 
                 additionalSell(amount - remaining, customerDrop->currentIndex(), date->text(), price->text());
             }
         }
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
     }else if (result == QDialog::Rejected){
         if(checkBox.isChecked()){
             int splits = querySplits();
@@ -487,7 +468,10 @@ void Dialog::addVegetable(){
             messageBox.setFixedSize(500,200);
         }else if(inventory->addVegetable(lineEdit->text().toUtf8().constData(),
                                    unitDrop->currentText().toUtf8().constData())){
-            ui->vegeList->clear();
+          ui->vegeList->blockSignals(true);
+          ui->vegeList->clear();
+          ui->vegeList->blockSignals(false);
+
             for(int i = 0; i < inventory->getVegNum(); i++){
                 ui->vegeList->addItem(inventory->getVegetableByIndex(i)->getVegetablename().c_str());
                 ui->vegeList->item(i)->setFlags (ui->vegeList->item(i)->flags()| Qt::ItemIsEditable);
@@ -495,12 +479,12 @@ void Dialog::addVegetable(){
             if(inventory->getVegNum() == 1){
                 ui->vegeList->item(0)->setSelected(true);
                 ui->vegeList->setCurrentRow(0);
-                on_vegeList_itemPressed(ui->vegeList->item(0));
+                on_vegeList_itemClicked(ui->vegeList->item(0));
             }else{
                 int temp = inventory->getVegetableIndex(currentVege->getVegetablename());
                 ui->vegeList->item(temp)->setSelected(true);
                 ui->vegeList->setCurrentRow(temp);
-                on_vegeList_itemPressed(ui->vegeList->item(temp));
+                on_vegeList_itemClicked(ui->vegeList->item(temp));
             }
         }
 
@@ -511,7 +495,7 @@ void Dialog::addVegetable(){
 
 void Dialog::slot1(){
     if(currentVege)
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
 }
 
 void Dialog::addCompany(){
@@ -684,7 +668,7 @@ void Dialog::removeVegetable(){
             ui->changeTotal->clear();
         }
     }else{
-            on_vegeList_itemPressed(ui->vegeList->currentItem());
+            on_vegeList_itemClicked(ui->vegeList->currentItem());
         }
 
 }
@@ -1064,12 +1048,12 @@ void Dialog::sellVege(){
                                                 date->text().toUtf8().constData(),
                                                 price->text().toUtf8().constData(),
                                                  selection);
-                        on_vegeList_itemPressed(ui->vegeList->currentItem());
+                        on_vegeList_itemClicked(ui->vegeList->currentItem());
 
                         additionalSell(amount - remaining, customerDrop->currentIndex(), date->text(), price->text());
                     }
                 }
-                on_vegeList_itemPressed(ui->vegeList->currentItem());
+                on_vegeList_itemClicked(ui->vegeList->currentItem());
             }else if (result == QDialog::Rejected){
                 if(checkBox.isChecked()){
                     int splits = querySplits();
@@ -1170,7 +1154,7 @@ void Dialog::dumpVege(){
                 }
             }
         }
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }
 
@@ -1711,7 +1695,7 @@ void Dialog::splitSell(int splits, int amount, int cusIndex, QString dateB, QStr
                                customer, price->text().toUtf8().constData(), selection1, selection2, selection3,selection4);
 
         }
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }
 
@@ -1750,14 +1734,19 @@ void Dialog::newFile(){
     ui->historyList->clear();
     ui->breakDown->clear();
     ui->returnList->clear();
+
+    ui->vegeList->blockSignals(true);
     ui->vegeList->clear();
+    ui->vegeList->blockSignals(false);
+
     ui->Memo_2->clear();
-    ui->changeTotal->clear();
+    ui->changeTotal->clear();\
 
     currentVege = NULL;
  }
 
 void Dialog::loadFile(){
+
     if(needSave)
         askSave();
     QWidget *activeWindow = QApplication::activeWindow();
@@ -1783,7 +1772,7 @@ void Dialog::loadFile(){
             ui->vegeList->setFont(vFont);
             ui->vegeList->item(0)->setSelected(true);
             ui->vegeList->setCurrentRow(0);
-            on_vegeList_itemPressed(ui->vegeList->item(0));
+            on_vegeList_itemClicked(ui->vegeList->item(0));
         }
         needSave = 0;
     }
@@ -2061,7 +2050,7 @@ void Dialog::on_Return_clicked()
                 }
             }
         }
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }
 
@@ -2163,7 +2152,7 @@ void Dialog::on_dumpButton_clicked()
                 }
             }
         }
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }
 
@@ -2186,12 +2175,12 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
         if(inventory->getVegNum() == 1){
             ui->vegeList->item(0)->setSelected(true);
             ui->vegeList->setCurrentRow(0);
-            on_vegeList_itemPressed(ui->vegeList->item(0));
+            on_vegeList_itemClicked(ui->vegeList->item(0));
         }else{
             int temp = inventory->getVegetableIndex(NewValue.toUtf8().constData());
             ui->vegeList->item(temp)->setSelected(true);
             ui->vegeList->setCurrentRow(temp);
-            on_vegeList_itemPressed(ui->vegeList->item(temp));
+            on_vegeList_itemClicked(ui->vegeList->item(temp));
         }
         ui->vegeList->blockSignals(false);
 }
@@ -2212,7 +2201,7 @@ void Dialog:: deleteVege(){
         ui->Memo_2->clear();
         ui->changeTotal->clear();
     }else{
-       on_vegeList_itemPressed(ui->vegeList->currentItem());
+       on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 
 }
@@ -2229,7 +2218,7 @@ void Dialog:: deleteHistory(){
         }else{
             currentVege->deleteHistory( ui->historyList->currentRow());
                 needSave = 1;
-            on_vegeList_itemPressed(ui->vegeList->currentItem());
+            on_vegeList_itemClicked(ui->vegeList->currentItem());
         }
     }
 }
@@ -2289,7 +2278,7 @@ void Dialog:: undoHistory(){
                     findItems (ui->historyList->currentItem()->text().toUtf8().constData(), Qt::MatchExactly);
 
             delete removeThis[0];
-            on_vegeList_itemPressed(ui->vegeList->currentItem());
+            on_vegeList_itemClicked(ui->vegeList->currentItem());
         }
     }
 }
@@ -2411,7 +2400,7 @@ void Dialog::on_clearHistoryButton_clicked()
             }
         }
 
-        on_vegeList_itemPressed(ui->vegeList->currentItem());
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }
 
@@ -2426,7 +2415,7 @@ void Dialog::on_clearReturnButton_clicked()
 
 void Dialog::on_vegeList_currentRowChanged(int currentRow)
 {
-    on_vegeList_itemPressed(ui->vegeList->currentItem());
+    on_vegeList_itemClicked(ui->vegeList->currentItem());
 }
 
 void Dialog::showPreferences() {
@@ -2444,7 +2433,7 @@ void Dialog::on_multiSellButton_clicked()
 
   int queryNum= queryVeges();
 
-  if(queryNum > 0 && queryNum <= 15 ){
+  if(queryNum > 0 && queryNum <= 15 && queryNum < inventory->getVegNum()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
     // Use a layout allowing to have a label next to each field
@@ -2474,89 +2463,35 @@ void Dialog::on_multiSellButton_clicked()
     QString label4 = QString("Date");
     form.addRow(label4, date);
 
+    /* Make individual forms */
+    MultiSellFormLayout* formArray = new MultiSellFormLayout(queryNum,
+                                        &dialog, inventory, font);
 
-    /* Loop and keep making new dropboxes and stuff for each vegetable */
+    /* Add individual forms to big form */
     for( int i = 0; i < queryNum; i++){
-
-      QFrame* line = new QFrame();
-      line->setGeometry(QRect(/* ... */));
-      line->setFrameShape(QFrame::HLine); // Replace by VLine for vertical line
-      line->setFrameShadow(QFrame::Sunken);
-      form.addRow(line);
-
-      /* Vegetable */
-
-      QComboBox* vegeDrop = new QComboBox(&dialog);
-          for(int i=0; i< inventory->getVegNum(); i++){
-              vegeDrop->addItem(inventory->getVegetableByIndex(i)->getVegetablename().c_str());
-      }
-      vegeDrop->setFont(font);
-      form.addRow("Vegetable", vegeDrop);
-
-      /* Amount */
-      QLineEdit *amount = new QLineEdit(&dialog);
-
-      QString label5 = QString("Amount");
-      form.addRow(label5, amount);
-
-      /* In Stock */
-      QComboBox* remainingDrop = new QComboBox(&dialog);
-      for(int i = 0; i< currentVege -> getRemainingNum(); i++){
-          remainingDrop->addItem(currentVege->formatRemaining(i).c_str());
-      }
-      remainingDrop->setFont(font);
-
-      QToolButton *tb = new QToolButton();
-      tb->setText("+");
-
-      QHBoxLayout* hLay = new QHBoxLayout();
-      hLay->addWidget(remainingDrop);
-      hLay->addWidget(tb);
-
-      form.addRow("In Stock", hLay);
-
-      /* Price */
-      QLineEdit *price = new QLineEdit(&dialog);
-
-      QString label6 = QString("Price");
-      form.addRow(label6, price);
-
-
+      form.addRow(formArray->getMSElement(i));
     }
+
+
+
+    /* Button Box */
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                           Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
     if (dialog.exec() == QDialog::Accepted ) {
 
+
     }
-/*
+    /* Deallocate memory*/
 
-
-
-
-        QLineEdit * date = new QLineEdit(&dialog);
-        date -> setText(dateB);
-        QString label4 = QString(mTranslator->translate("那天賣出").c_str());
-        form.addRow(label4, date);
-
-        QLineEdit *price = new QLineEdit(&dialog);
-        QString label5 = QString(mTranslator->translate("賣多少錢?").c_str());
-        price ->setText(priceB);
-        form.addRow(label5, price);
-
-        form.addRow(new QLabel(mTranslator->translate("你要賣那天的菜？").c_str()));
-        QComboBox* remainingDrop = new QComboBox(&dialog);
-        QLineEdit *lineEdit1 = new QLineEdit(&dialog);
-        QLineEdit *lineEdit2;
-        QComboBox* remainingDrop2;
-        QLineEdit *lineEdit3;
-        QComboBox* remainingDrop3;
-        QLineEdit *lineEdit4;
-        QComboBox* remainingDrop4;
-*/
-    }else{
-        QMessageBox messageBox;
-        messageBox.critical(0,"警告","Not Valid");
-        messageBox.setFixedSize(500,200);
-    }
+  }else{
+      QMessageBox messageBox;
+      messageBox.critical(0,"警告","Not Valid");
+      messageBox.setFixedSize(500,200);
+  }
 }
 
 int Dialog::queryVeges(){

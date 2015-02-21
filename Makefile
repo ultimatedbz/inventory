@@ -58,7 +58,8 @@ SOURCES       = main.cpp \
 		returnto.cpp \
 		translator.cpp \
 		imenubar.cpp \
-		ipreferencespanel.cpp moc_dialog.cpp \
+		ipreferencespanel.cpp \
+		multisellformlayout.cpp moc_dialog.cpp \
 		moc_imenubar.cpp
 OBJECTS       = main.o \
 		dialog.o \
@@ -71,6 +72,7 @@ OBJECTS       = main.o \
 		translator.o \
 		imenubar.o \
 		ipreferencespanel.o \
+		multisellformlayout.o \
 		moc_dialog.o \
 		moc_imenubar.o
 DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
@@ -211,7 +213,8 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		IConst.h \
 		translator.h \
 		imenubar.h \
-		ipreferencespanel.h main.cpp \
+		ipreferencespanel.h \
+		multisellformlayout.h main.cpp \
 		dialog.cpp \
 		Vegetable.cpp \
 		Inventory.cpp \
@@ -221,7 +224,8 @@ DIST          = ../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		returnto.cpp \
 		translator.cpp \
 		imenubar.cpp \
-		ipreferencespanel.cpp
+		ipreferencespanel.cpp \
+		multisellformlayout.cpp
 QMAKE_TARGET  = Inventory
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Inventory.app/Contents/MacOS/Inventory
@@ -559,8 +563,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h ipreferencespanel.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp Remaining.cpp Return.cpp returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h ipreferencespanel.h multisellformlayout.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp Remaining.cpp Return.cpp returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp multisellformlayout.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog.ui $(DISTDIR)/
 
 
@@ -602,6 +606,7 @@ moc_dialog.cpp: ../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Head
 		imenubar.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMenuBar \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qmenubar.h \
+		ipreferencespanel.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QListWidgetItem \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlistwidget.h \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/QPrinter \
@@ -650,6 +655,7 @@ main.o: main.cpp dialog.h \
 		imenubar.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMenuBar \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qmenubar.h \
+		ipreferencespanel.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QListWidgetItem \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlistwidget.h \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/QPrinter \
@@ -672,6 +678,7 @@ dialog.o: dialog.cpp dialog.h \
 		imenubar.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMenuBar \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qmenubar.h \
+		ipreferencespanel.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QListWidgetItem \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlistwidget.h \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/QPrinter \
@@ -1149,6 +1156,7 @@ imenubar.o: imenubar.cpp imenubar.h \
 		History.h \
 		Remaining.h \
 		Vegetable.h \
+		ipreferencespanel.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QListWidgetItem \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlistwidget.h \
 		../../../Qt/5.4/clang_64/lib/QtPrintSupport.framework/Versions/5/Headers/QPrinter \
@@ -1157,6 +1165,9 @@ imenubar.o: imenubar.cpp imenubar.h \
 
 ipreferencespanel.o: ipreferencespanel.cpp ipreferencespanel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ipreferencespanel.o ipreferencespanel.cpp
+
+multisellformlayout.o: multisellformlayout.cpp multisellformlayout.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o multisellformlayout.o multisellformlayout.cpp
 
 moc_dialog.o: moc_dialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp

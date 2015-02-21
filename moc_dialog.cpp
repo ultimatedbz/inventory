@@ -64,7 +64,7 @@ QT_MOC_LITERAL(31, 288, 10), // "closeEvent"
 QT_MOC_LITERAL(32, 299, 12), // "QCloseEvent*"
 QT_MOC_LITERAL(33, 312, 5), // "event"
 QT_MOC_LITERAL(34, 318, 7), // "askSave"
-QT_MOC_LITERAL(35, 326, 23), // "on_vegeList_itemPressed"
+QT_MOC_LITERAL(35, 326, 23), // "on_vegeList_itemClicked"
 QT_MOC_LITERAL(36, 350, 16), // "QListWidgetItem*"
 QT_MOC_LITERAL(37, 367, 4), // "item"
 QT_MOC_LITERAL(38, 372, 17), // "ListWidgetEditEnd"
@@ -92,7 +92,7 @@ QT_MOC_LITERAL(51, 592, 26) // "on_multiSellButton_clicked"
     "compareCompany\0const void*\0a\0b\0"
     "compareCustomer\0on_Return_clicked\0"
     "closeEvent\0QCloseEvent*\0event\0askSave\0"
-    "on_vegeList_itemPressed\0QListWidgetItem*\0"
+    "on_vegeList_itemClicked\0QListWidgetItem*\0"
     "item\0ListWidgetEditEnd\0QWidget*\0editor\0"
     "QAbstractItemDelegate::EndEditHint\0"
     "hint\0slot1\0on_clearHistoryButton_clicked\0"
@@ -203,7 +203,7 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 14: _t->on_Return_clicked(); break;
         case 15: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
         case 16: _t->askSave(); break;
-        case 17: _t->on_vegeList_itemPressed((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 17: _t->on_vegeList_itemClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         case 18: _t->ListWidgetEditEnd((*reinterpret_cast< QWidget*(*)>(_a[1])),(*reinterpret_cast< QAbstractItemDelegate::EndEditHint(*)>(_a[2]))); break;
         case 19: _t->slot1(); break;
         case 20: _t->on_clearHistoryButton_clicked(); break;

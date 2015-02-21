@@ -6,9 +6,32 @@
 #include "translator.h"
 #include "imenubar.h"
 #include "ipreferencespanel.h"
+#include "multisellformlayout.h"
 #include <QListWidgetItem>
 #include <iostream>
 #include <QPrinter>
+#include "IConst.h"
+#include <qlistwidget.h>
+#include <Qtcore>
+#include <QtGui>
+#include <QMessageBox>
+#include <QInputDialog>
+#include <QListWidgetItem>
+#include <QPrintPreviewWidget>
+#include <QtWidgets>
+#include <ctime>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPainter>
+#include <QPrintPreviewDialog>
+#include <QCheckBox>
+#include <fstream>
+#include <stdlib.h>
+#include <QCloseEvent>
+#include <QFontMetrics>
+#include <QAbstractItemDelegate>
+#include <QContextMenuEvent>
+#include <QSplitter>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -87,7 +110,7 @@ public slots:
     void closeEvent(QCloseEvent *event);
     void askSave();
 
-    void on_vegeList_itemPressed(QListWidgetItem *item);
+    void on_vegeList_itemClicked(QListWidgetItem *item);
 
 
     void ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditHint hint);
