@@ -2433,7 +2433,7 @@ void Dialog::on_multiSellButton_clicked()
 
   int queryNum= queryVeges();
 
-  if(queryNum > 0 && queryNum <= 15 && queryNum < inventory->getVegNum()){
+  if(queryNum > 0 && queryNum <= 15 && queryNum <= inventory->getVegNum()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
     // Use a layout allowing to have a label next to each field
@@ -2471,8 +2471,6 @@ void Dialog::on_multiSellButton_clicked()
     for( int i = 0; i < queryNum; i++){
       form.addRow(formArray->getMSElement(i));
     }
-
-
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,

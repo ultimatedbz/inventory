@@ -2,11 +2,12 @@
 #define MULTISELLFORMLAYOUT_H
 
 #include <QtWidgets>
-#include "Inventory.h"
+#include <QObject>
+#include "Inventory.h"F
 
-
-class MultiSellFormLayout
+class MultiSellFormLayout:public QObject
 {
+Q_OBJECT
 public:
     MultiSellFormLayout(int queryNum, QDialog* d, Inventory* i, QFont f);
     ~MultiSellFormLayout();
@@ -17,7 +18,7 @@ private:
     Inventory* mInventory;
     QFont font;
 
-private slots:
+public slots:
     void addRemaining();
 
 };

@@ -1,4 +1,5 @@
 #include "multisellformlayout.h"
+#include <QDebug>
 
 MultiSellFormLayout::MultiSellFormLayout(int queryNum, QDialog* d, Inventory* i, QFont f):
   mFormArray(new QFormLayout[queryNum]),
@@ -36,7 +37,7 @@ MultiSellFormLayout::MultiSellFormLayout(int queryNum, QDialog* d, Inventory* i,
 
     QToolButton *tb = new QToolButton();
     tb->setText("+");
-   // QObject::connect(tb, SIGNAL(clicked()), SLOT(addRemaining()));
+    QObject::connect(tb, SIGNAL(clicked()),this, SLOT(addRemaining()));
 
     QHBoxLayout* hLay = new QHBoxLayout();
     hLay->addWidget(remainingDrop);
@@ -68,7 +69,7 @@ QFormLayout* MultiSellFormLayout::getMSElement(int i){
 }
 
 void MultiSellFormLayout::addRemaining(){
-
+qDebug()<<"ran";
 }
 
 
