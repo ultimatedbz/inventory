@@ -9,14 +9,15 @@ class MultiSellFormLayout:public QObject
 {
 Q_OBJECT
 public:
-    MultiSellFormLayout(int queryNum, QDialog* d, Inventory* i, QFont f);
+    MultiSellFormLayout(int index, QDialog* d, Inventory* i, QFont f);
     ~MultiSellFormLayout();
-    QFormLayout* getMSElement(int i);
+    QFormLayout* getElement();
 private:
-    QFormLayout* mFormArray;
+    QFormLayout* mForm;
     QDialog* dialog;
     Inventory* mInventory;
     QFont font;
+    int first;
 
 public slots:
     void addRemaining();

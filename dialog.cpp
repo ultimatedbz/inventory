@@ -2464,12 +2464,13 @@ void Dialog::on_multiSellButton_clicked()
     form.addRow(label4, date);
 
     /* Make individual forms */
-    MultiSellFormLayout* formArray = new MultiSellFormLayout(queryNum,
-                                        &dialog, inventory, font);
+
+    MultiSellFormLayout** formArray = new MultiSellFormLayout* [queryNum] ;
 
     /* Add individual forms to big form */
     for( int i = 0; i < queryNum; i++){
-      form.addRow(formArray->getMSElement(i));
+      formArray[i] = new MultiSellFormLayout(i, &dialog, inventory, font);
+      form.addRow(formArray[i]->getElement());
     }
 
     /* Button Box */
