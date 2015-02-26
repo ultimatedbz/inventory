@@ -6,8 +6,11 @@ MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QF
   dialog(d),
   mInventory(i),
   font(f),
-  first(1)
+  first(1),
+  selectedRemains(new set<int>()),
+  mVegIndex(index)
 {
+
   /* Loop and keep making new dropboxes and stuff for each vegetable */
   QFrame* line = new QFrame();
   line->setGeometry(QRect(/* ... */));
@@ -38,7 +41,10 @@ MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QF
 
   /* In Stock */
   QComboBox* remainingDrop = new QComboBox(dialog);
-  remainingDrop->addItem(mInventory->getVegetableByIndex(index)->formatRemaining(index).c_str());
+  for(int i = 0; i < mInventory->getVegetableByIndex(index)-> getRemainingNum(); i++){
+    remainingDrop->addItem(mInventory->getVegetableByIndex(index)->formatRemaining(i).c_str());
+  }
+  selectedRemains->insert(0);
   remainingDrop->setFont(font);
 
   QToolButton *tb = new QToolButton();
@@ -75,17 +81,35 @@ QFormLayout* MultiSellFormLayout::getElement(){
 }
 
 void MultiSellFormLayout::addRemaining(){
-  QComboBox* remainingDrop = new QComboBox(dialog);
-  remainingDrop->addItem(mInventory->getVegetableByIndex(0)->formatRemaining(0).c_str());
-  remainingDrop->setFont(font);
-  //don't need to deal with qhboxlayout, only the label. How do we change label?
-  if(first){
-    ((QLabel*) mForm->itemAt(6)->widget())->setText("");
-    first = 0;
-  }else
-    ((QLabel*) mForm->itemAt(mForm->count() - 2)->widget())->setText("");
+  if(selectedRemains->size() < mInventory->getVegetableByIndex(mVegIndex)->getRemainingNum()){
+    QComboBox* remainingDrop = new QComboBox(dialog);
+    /* First index will be the one that is shown on the combobox  */
+    int firstIndex = -1;
+    for(int i = 0; i < mInventory->getVegetableByIndex(mVegIndex)-> getRemainingNum(); i++){
+      if(selectedRemains->find(i) == selectedRemains->end()){
+        if(firstIndex == -1)
+          firstIndex = i;
+        remainingDrop->addItem(mInventory->getVegetableByIndex(mVegIndex)->formatRemaining(i).c_str());
+      }
+    }
+    selectedRemains->insert(firstIndex);
+    remainingDrop->setFont(font);
+    /* Changes visible label to empty */
+    if(first){
+      ((QLabel*) mForm->itemAt(6)->widget())->setText("");
+      first = 0;
+    }else
+      ((QLabel*) mForm->itemAt(mForm->count() - 2)->widget())->setText("");
 
-  mForm->insertRow(4,"In Stock", remainingDrop);
+    mForm->insertRow(4,"In Stock", remainingDrop);
+  }
 }
+
+
+
+
+
+
+
 
 

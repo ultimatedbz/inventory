@@ -3,7 +3,8 @@
 
 #include <QtWidgets>
 #include <QObject>
-#include "Inventory.h"F
+#include "Inventory.h"
+#include <set>
 
 class MultiSellFormLayout:public QObject
 {
@@ -18,8 +19,10 @@ private:
     Inventory* mInventory;
     QFont font;
     int first;
+    set<int>* selectedRemains;
+    int mVegIndex;
 
-public slots:
+private slots:
     void addRemaining();
 
 };

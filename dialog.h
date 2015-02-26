@@ -148,6 +148,7 @@ private:
     QAction* dumpVegeAction;
 
     int queryVeges();
+    int numberOfNonEmptyVeges();
 
 
 };

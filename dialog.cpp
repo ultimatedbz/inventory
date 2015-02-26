@@ -2431,9 +2431,9 @@ void Dialog::on_multiSellButton_clicked()
   if(!currentVege)
     return;
 
-  int queryNum= queryVeges();
+  int queryNum = queryVeges();
 
-  if(queryNum > 0 && queryNum <= 15 && queryNum <= inventory->getVegNum()){
+  if(queryNum > 0 && queryNum <= 15 && queryNum <= numberOfNonEmptyVeges()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
     // Use a layout allowing to have a label next to each field
@@ -2463,16 +2463,18 @@ void Dialog::on_multiSellButton_clicked()
     QString label4 = QString("Date");
     form.addRow(label4, date);
 
-    /* Make individual forms */
-
+    /* Make array for individual forms */
     MultiSellFormLayout** formArray = new MultiSellFormLayout* [queryNum] ;
 
-    /* Add individual forms to big form */
+    /* Make and add individual forms to big form */
     for( int i = 0; i < queryNum; i++){
-      formArray[i] = new MultiSellFormLayout(i, &dialog, inventory, font);
-      form.addRow(formArray[i]->getElement());
+      if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
+        formArray[i] = new MultiSellFormLayout(i, &dialog, inventory, font);
+        form.addRow(formArray[i]->getElement());
+      }else{
+        queryNum++;
+      }
     }
-
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
@@ -2514,3 +2516,13 @@ int Dialog::queryVeges(){
     }
     return 0;
 }
+
+int Dialog::numberOfNonEmptyVeges(){
+  int counter = 0;
+  for(int i = 0; i < inventory->getVegNum(); i++){
+      if(inventory->getVegetableByIndex(i)->getTotalVeges())
+        counter++;
+  }
+  return counter;
+}
+
