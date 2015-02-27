@@ -43,6 +43,7 @@ MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QF
 
   /* In Stock */
   QComboBox* remainingDrop = new QComboBox(dialog);
+  connect(remainingDrop, SIGNAL(activated(int)), this, SLOT(remainingDropChanged(int)));
   comboIndexToActual[0] = vector<int>(mInventory->getVegetableByIndex(index)->
                                                 getRemainingNum());
 
@@ -99,6 +100,7 @@ void MultiSellFormLayout::addRemaining(){
                                                   ->getRemainingNum());
 
     QComboBox* remainingDrop = new QComboBox(dialog);
+    connect(remainingDrop, SIGNAL(activated(int)), this, SLOT(remainingDropChanged(int)));
 
     /* First index will be the one that is shown on the combobox  */
     int firstIndex = -1;
@@ -157,7 +159,27 @@ void MultiSellFormLayout::updateRemainDrops(){
   }
 }
 
+void MultiSellFormLayout::remainingDropChanged(int newIndex){
+  qDebug()<<162;
+  /* Find which remaining drop has been changed */
+  QComboBox* remainingDrop = dynamic_cast<QComboBox*>(QObject::sender());
 
+  int comboBoxNum = -1;
+  for(int i = 0; i < remainingDrops->size(); i++){
+    if((*remainingDrops)[i] == remainingDrop)
+      comboBoxNum = i;
+  }
+  /* Remove from set */
+  selectedRemains->erase(comboIndexToActual[comboBoxNum][0]);
+
+  /* Change the first element of the comboIndexToActual*/
+  comboIndexToActual[comboBoxNum][0] =
+                    comboIndexToActual[comboBoxNum][newIndex];
+   /* Update the Set*/
+   selectedRemains->insert(comboIndexToActual[comboBoxNum][0]);
+
+   updateRemainDrops();
+}
 
 
 
