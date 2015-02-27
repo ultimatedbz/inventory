@@ -8,7 +8,9 @@ MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QF
   font(f),
   first(1),
   selectedRemains(new set<int>()),
-  mVegIndex(index)
+  mVegIndex(index),
+  remainingDrops(new vector<QComboBox*>()),
+  comboIndexToActual(new vector<int>[5])
 {
 
   /* Loop and keep making new dropboxes and stuff for each vegetable */
@@ -41,10 +43,17 @@ MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QF
 
   /* In Stock */
   QComboBox* remainingDrop = new QComboBox(dialog);
+  comboIndexToActual[0] = vector<int>(mInventory->getVegetableByIndex(index)->
+                                                getRemainingNum());
+
   for(int i = 0; i < mInventory->getVegetableByIndex(index)-> getRemainingNum(); i++){
     remainingDrop->addItem(mInventory->getVegetableByIndex(index)->formatRemaining(i).c_str());
+    comboIndexToActual[0][i] = i;
   }
+  remainingDrops->push_back(remainingDrop);
   selectedRemains->insert(0);
+
+
   remainingDrop->setFont(font);
 
   QToolButton *tb = new QToolButton();
@@ -81,19 +90,30 @@ QFormLayout* MultiSellFormLayout::getElement(){
 }
 
 void MultiSellFormLayout::addRemaining(){
-  if(selectedRemains->size() < mInventory->getVegetableByIndex(mVegIndex)->getRemainingNum()){
+  if(selectedRemains->size() < mInventory->getVegetableByIndex(mVegIndex)->getRemainingNum()
+     && selectedRemains->size() < 5){
+
+    int comboBoxNum = selectedRemains->size();
+    comboIndexToActual[comboBoxNum] =
+                        vector<int>(mInventory->getVegetableByIndex(mVegIndex)
+                                                  ->getRemainingNum());
+
     QComboBox* remainingDrop = new QComboBox(dialog);
+
     /* First index will be the one that is shown on the combobox  */
     int firstIndex = -1;
+
     for(int i = 0; i < mInventory->getVegetableByIndex(mVegIndex)-> getRemainingNum(); i++){
       if(selectedRemains->find(i) == selectedRemains->end()){
         if(firstIndex == -1)
           firstIndex = i;
         remainingDrop->addItem(mInventory->getVegetableByIndex(mVegIndex)->formatRemaining(i).c_str());
+        comboIndexToActual[comboBoxNum][remainingDrop->count() - 1] = i;
       }
     }
     selectedRemains->insert(firstIndex);
     remainingDrop->setFont(font);
+
     /* Changes visible label to empty */
     if(first){
       ((QLabel*) mForm->itemAt(6)->widget())->setText("");
@@ -102,10 +122,40 @@ void MultiSellFormLayout::addRemaining(){
       ((QLabel*) mForm->itemAt(mForm->count() - 2)->widget())->setText("");
 
     mForm->insertRow(4,"In Stock", remainingDrop);
+    remainingDrops->push_back(remainingDrop);
+
+    updateRemainDrops();
   }
 }
 
+/* connect change in remain drop and vegetable drop */
 
+void MultiSellFormLayout::updateRemainDrops(){
+  for( int z = 0; z < remainingDrops->size(); z++){
+    QComboBox* remainingDrop = (*remainingDrops)[z];
+
+    /* Save first index */
+    int firstSelectionIndex = comboIndexToActual[z][0];
+
+    /* Clear back end and front end of combo box */
+    comboIndexToActual->clear();
+    remainingDrop->clear();
+
+    /* Add the first one back */
+    remainingDrop->addItem(mInventory->getVegetableByIndex(mVegIndex)
+                           ->formatRemaining(firstSelectionIndex).c_str());
+    comboIndexToActual[z][0] = firstSelectionIndex;
+
+    /* Re-add only the ones that aren't selected */
+    for(int i = 0; i <  mInventory->getVegetableByIndex(mVegIndex)->getRemainingNum(); i++){
+      if(selectedRemains->find(i) == selectedRemains->end()){
+        remainingDrop->addItem(mInventory->getVegetableByIndex(mVegIndex)
+                               ->formatRemaining(i).c_str());
+        comboIndexToActual[z][remainingDrop->count() - 1] = i;
+      }
+    }
+  }
+}
 
 
 

@@ -5,6 +5,8 @@
 #include <QObject>
 #include "Inventory.h"
 #include <set>
+#include <vector>
+#include <map>
 
 class MultiSellFormLayout:public QObject
 {
@@ -19,8 +21,17 @@ private:
     Inventory* mInventory;
     QFont font;
     int first;
+
+    /* Set of indexes from the actual remaining array */
     set<int>* selectedRemains;
+
     int mVegIndex;
+    void updateRemainDrops();
+    vector<QComboBox*>* remainingDrops; // contains all remainingcomboboxes
+
+    /* Array with each index corresponding to the actual index
+     **/
+    vector<int>* comboIndexToActual;
 
 private slots:
     void addRemaining();
