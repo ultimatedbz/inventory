@@ -1,5 +1,5 @@
-#ifndef MULTISELLFORMLAYOUT_H
-#define MULTISELLFORMLAYOUT_H
+#ifndef MULTISELLELEMENT_H
+#define MULTISELLELEMENT_H
 
 #include <QtWidgets>
 #include <QObject>
@@ -8,27 +8,28 @@
 #include "Inventory.h"
 #include <set>
 #include <vector>
-#include <map>
 
-class Dialog;
+class MultiSellController;
 
-class MultiSellFormLayout:public QObject
+class MultiSellElement:public QObject
 {
 Q_OBJECT
 public:
-    MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFont f);
-    ~MultiSellFormLayout();
+    MultiSellElement(int index, MultiSellController* d, Inventory* i, QFont f);
+    ~MultiSellElement();
     QFormLayout* getElement();
+    QComboBox* getVegeDrop();
 private:
 
     void updateRemainDrops();
 
     QFormLayout* mForm;
-    Dialog* dialog;
+    MultiSellController* controller;
     Inventory* mInventory;
     QFont font;
     int mVegIndex;
     int first;
+    QComboBox* vegeDrop;
 
     /* Contains all the remaining comboboxes*/
     vector<QComboBox*>* remainingDrops;

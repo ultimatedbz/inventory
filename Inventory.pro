@@ -19,7 +19,8 @@ SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
     translator.cpp \
     imenubar.cpp \
     ipreferencespanel.cpp \
-    multisellformlayout.cpp
+    MultiSellElement.cpp \
+    MultiSellController.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Remaining.h \
@@ -29,7 +30,8 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     translator.h \
     imenubar.h \
     ipreferencespanel.h \
-    multisellformlayout.h
+    MultiSellElement.h \
+    MultiSellController.h
 
 
 FORMS    += dialog.ui

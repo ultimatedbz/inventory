@@ -6,7 +6,8 @@
 #include "translator.h"
 #include "imenubar.h"
 #include "ipreferencespanel.h"
-#include "multisellformlayout.h"
+#include "MultiSellController.h"
+#include "MultiSellElement.h"
 #include <QListWidgetItem>
 #include <iostream>
 #include <QPrinter>
@@ -91,8 +92,6 @@ public slots:
     void on_Sell_clicked();
     void printI(QPrinter* printer);
     void printH(QPrinter* printer);
-
-    void vegeDropChanged(int newIndex);
 
     void additionalSell(int amount, int cusIndex, QString dateB, QString priceB);
     int querySplits();

@@ -1,16 +1,18 @@
-#include "multisellformlayout.h"
+#include "MultiSellElement.h"
 #include <QDebug>
 
-MultiSellFormLayout::MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFont f):
+MultiSellElement::MultiSellElement(int index, MultiSellController* c,
+                                   Inventory* i, QFont f):
   mForm(new QFormLayout()),
-  dialog(d),
+  controller(c),
   mInventory(i),
   font(f),
   first(1),
   selectedRemains(new set<int>()),
   mVegIndex(index),
   remainingDrops(new vector<QComboBox*>()),
-  comboIndexToActual(new vector<int>[5])
+  comboIndexToActual(new vector<int>[5]),
+  vegeDrop()
 {
 
   /* Loop and keep making new dropboxes and stuff for each vegetable */
@@ -22,8 +24,8 @@ MultiSellFormLayout::MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFo
 
   /* Vegetable */
 
-  QComboBox* vegeDrop = new QComboBox(dialog);
-  connect(vegeDrop, SIGNAL(activated(int)), d,SLOT(vegeDropChanged(int)));
+  vegeDrop = new QComboBox();
+  connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
   vegeDrop->addItem("Test1");
   vegeDrop->addItem("Test2");
@@ -39,13 +41,13 @@ MultiSellFormLayout::MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFo
   mForm->addRow(line2);
 
   /* Amount */
-  QLineEdit *amount = new QLineEdit(dialog);
+  QLineEdit *amount = new QLineEdit();
 
   QString label5 = QString("Amounts");
   mForm->addRow(label5, amount);
 
   /* In Stock */
-  QComboBox* remainingDrop = new QComboBox(dialog);
+  QComboBox* remainingDrop = new QComboBox();
   connect(remainingDrop, SIGNAL(activated(int)), this, SLOT(remainingDropChanged(int)));
   comboIndexToActual[0] = vector<int>(mInventory->getVegetableByIndex(index)->
                                                 getRemainingNum());
@@ -71,7 +73,7 @@ MultiSellFormLayout::MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFo
   mForm->addRow("In Stock", hLay);
 
   /* Price */
-  QLineEdit *price = new QLineEdit(dialog);
+  QLineEdit *price = new QLineEdit();
 
   QString label6 = QString("Price");
   mForm->addRow(label6, price);
@@ -84,16 +86,16 @@ MultiSellFormLayout::MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFo
         when add button is pressed
 */
 
-MultiSellFormLayout::~MultiSellFormLayout()
+MultiSellElement::~MultiSellElement()
 {
 
 }
 
-QFormLayout* MultiSellFormLayout::getElement(){
+QFormLayout* MultiSellElement::getElement(){
   return mForm;
 }
 
-void MultiSellFormLayout::addRemaining(){
+void MultiSellElement::addRemaining(){
   if(selectedRemains->size() < mInventory->getVegetableByIndex(mVegIndex)->getRemainingNum()
      && selectedRemains->size() < 5){
 
@@ -102,7 +104,7 @@ void MultiSellFormLayout::addRemaining(){
                         vector<int>(mInventory->getVegetableByIndex(mVegIndex)
                                                   ->getRemainingNum());
 
-    QComboBox* remainingDrop = new QComboBox(dialog);
+    QComboBox* remainingDrop = new QComboBox();
     connect(remainingDrop, SIGNAL(activated(int)), this, SLOT(remainingDropChanged(int)));
 
     /* First index will be the one that is shown on the combobox  */
@@ -135,7 +137,7 @@ void MultiSellFormLayout::addRemaining(){
 
 /* connect change in remain drop and vegetable drop */
 
-void MultiSellFormLayout::updateRemainDrops(){
+void MultiSellElement::updateRemainDrops(){
   for( int z = 0; z < remainingDrops->size(); z++){
     QComboBox* remainingDrop = (*remainingDrops)[z];
 
@@ -162,7 +164,7 @@ void MultiSellFormLayout::updateRemainDrops(){
   }
 }
 
-void MultiSellFormLayout::remainingDropChanged(int newIndex){
+void MultiSellElement::remainingDropChanged(int newIndex){
   /* Find which remaining drop has been changed */
   QComboBox* remainingDrop = dynamic_cast<QComboBox*>(QObject::sender());
 
@@ -183,7 +185,9 @@ void MultiSellFormLayout::remainingDropChanged(int newIndex){
    updateRemainDrops();
 }
 
-
+QComboBox* MultiSellElement:: getVegeDrop(){
+  return vegeDrop;
+}
 
 
 
