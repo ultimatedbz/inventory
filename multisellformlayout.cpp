@@ -1,7 +1,7 @@
 #include "multisellformlayout.h"
 #include <QDebug>
 
-MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QFont f):
+MultiSellFormLayout::MultiSellFormLayout(int index, Dialog* d, Inventory* i, QFont f):
   mForm(new QFormLayout()),
   dialog(d),
   mInventory(i),
@@ -23,7 +23,10 @@ MultiSellFormLayout::MultiSellFormLayout(int index, QDialog* d, Inventory* i, QF
   /* Vegetable */
 
   QComboBox* vegeDrop = new QComboBox(dialog);
+  connect(vegeDrop, SIGNAL(activated(int)), d,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
+  vegeDrop->addItem("Test1");
+  vegeDrop->addItem("Test2");
 
   vegeDrop->setFont(font);
   mForm->addRow("Vegetable", vegeDrop);
@@ -160,7 +163,6 @@ void MultiSellFormLayout::updateRemainDrops(){
 }
 
 void MultiSellFormLayout::remainingDropChanged(int newIndex){
-  qDebug()<<162;
   /* Find which remaining drop has been changed */
   QComboBox* remainingDrop = dynamic_cast<QComboBox*>(QObject::sender());
 

@@ -2469,7 +2469,7 @@ void Dialog::on_multiSellButton_clicked()
     /* Make and add individual forms to big form */
     for( int i = 0; i < queryNum; i++){
       if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
-        formArray[i] = new MultiSellFormLayout(i, &dialog, inventory, font);
+        formArray[i] = new MultiSellFormLayout(i, this, inventory, font);
         form.addRow(formArray[i]->getElement());
       }else{
         queryNum++;
@@ -2493,6 +2493,10 @@ void Dialog::on_multiSellButton_clicked()
       messageBox.critical(0,"警告","Not Valid");
       messageBox.setFixedSize(500,200);
   }
+}
+
+void Dialog::vegeDropChanged( int newIndex ){
+  qDebug()<<newIndex<<"hi";
 }
 
 int Dialog::queryVeges(){

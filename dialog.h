@@ -92,7 +92,7 @@ public slots:
     void printI(QPrinter* printer);
     void printH(QPrinter* printer);
 
-
+    void vegeDropChanged(int newIndex);
 
     void additionalSell(int amount, int cusIndex, QString dateB, QString priceB);
     int querySplits();
@@ -117,6 +117,7 @@ public slots:
 
 
     void slot1();
+
 
 
 private slots:
