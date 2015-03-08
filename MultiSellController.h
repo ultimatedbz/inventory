@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QtWidgets>
+
 #include "Inventory.h"
-#include "MultiSellElement.h"
 #include <set>
 #include <vector>
+
+class MultiSellElement;
 
 class MultiSellController : public QObject
 {
@@ -23,8 +25,14 @@ public slots:
 
 private:
 
-  /* Contains all the vegeDrops */
-  vector<QComboBox*>* vegeDrops;
+  void updateVegeDrops();
+
+  QFont font;
+
+  Inventory* mInventory;
+
+  /* Contains all the multiSellElements */
+  MultiSellElement** formArray;
 
   /* Set of indexes from the actual vege array */
   set<int>* selectedVeges;

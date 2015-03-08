@@ -4,21 +4,24 @@
 #include <QtWidgets>
 #include <QObject>
 
-#include "dialog.h"
 #include "Inventory.h"
+#include "MultiSellController.h"
 #include <set>
 #include <vector>
 
-class MultiSellController;
 
 class MultiSellElement:public QObject
 {
 Q_OBJECT
 public:
-    MultiSellElement(int index, MultiSellController* d, Inventory* i, QFont f);
+    MultiSellElement(int index, MultiSellController* c, Inventory* i, QFont f,
+                     set<int>* selectedVeges,
+                     vector<int>& vegeIndexToActual);
     ~MultiSellElement();
     QFormLayout* getElement();
     QComboBox* getVegeDrop();
+    void updateVegeDrops(set<int> selectedVeges,
+                         vector<int>& actualIndexes);
 private:
 
     void updateRemainDrops();
@@ -49,4 +52,4 @@ private slots:
 
 };
 
-#endif // MULTISELLFORMLAYOUT_H
+#endif// MULTISELLELEMENT_H

@@ -2462,7 +2462,6 @@ void Dialog::on_multiSellButton_clicked()
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString("Date");
     form.addRow(label4, date);
-
     MultiSellController* multiSellController = new MultiSellController(
           queryNum, inventory, form, font);
 

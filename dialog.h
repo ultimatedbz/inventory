@@ -6,8 +6,8 @@
 #include "translator.h"
 #include "imenubar.h"
 #include "ipreferencespanel.h"
-#include "MultiSellController.h"
 #include "MultiSellElement.h"
+#include "MultiSellController.h"
 #include <QListWidgetItem>
 #include <iostream>
 #include <QPrinter>

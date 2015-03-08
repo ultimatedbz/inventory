@@ -2,7 +2,9 @@
 #include <QDebug>
 
 MultiSellElement::MultiSellElement(int index, MultiSellController* c,
-                                   Inventory* i, QFont f):
+                                   Inventory* i, QFont f,
+                                   set<int>* selectedVeges,
+                                   vector<int>& vegeIndexToActual):
   mForm(new QFormLayout()),
   controller(c),
   mInventory(i),
@@ -11,8 +13,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   selectedRemains(new set<int>()),
   mVegIndex(index),
   remainingDrops(new vector<QComboBox*>()),
-  comboIndexToActual(new vector<int>[5]),
-  vegeDrop()
+  comboIndexToActual(new vector<int>[5])
 {
 
   /* Loop and keep making new dropboxes and stuff for each vegetable */
@@ -23,13 +24,17 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   mForm->addRow(line);
 
   /* Vegetable */
-
   vegeDrop = new QComboBox();
   connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
-  vegeDrop->addItem("Test1");
-  vegeDrop->addItem("Test2");
-
+  for( int i = 0; i < mInventory->getVegNum(); i++){
+    if( mInventory->getVegetableByIndex(i)->getTotalVeges() &&
+                    selectedVeges->find(i) == selectedVeges->end() ){
+      vegeDrop->addItem(mInventory->getVegetableByIndex(i)->getVegetablename().c_str());
+      qDebug()<<"pushingback "<<i;
+      vegeIndexToActual.push_back(i);
+    }
+  }
   vegeDrop->setFont(font);
   mForm->addRow("Vegetable", vegeDrop);
 
@@ -78,13 +83,9 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   QString label6 = QString("Price");
   mForm->addRow(label6, price);
 
-
+qDebug()<<"Finished";
 }
 
-/*TODO
-  Update fields when vegetable is changed, when in stock is changed,
-        when add button is pressed
-*/
 
 MultiSellElement::~MultiSellElement()
 {
@@ -189,5 +190,28 @@ QComboBox* MultiSellElement:: getVegeDrop(){
   return vegeDrop;
 }
 
+void MultiSellElement:: updateVegeDrops( set<int> selectedVeges,
+                                         vector<int>& actualIndexes){
+  /* Save first index */
+  int firstIndex = actualIndexes[0];
 
+  /* Clear actual indexes */
+  actualIndexes.clear();
+  vegeDrop->clear();
+
+  /* Put the first index back in */
+  actualIndexes.push_back(firstIndex);
+  vegeDrop->addItem(mInventory->getVegetableByIndex(firstIndex)
+                    ->getVegetablename().c_str());
+
+  /* Re-add all the other vegetable names that aren't selected */
+  for(int i = 0; i <  mInventory->getVegNum(); i++){
+    if(mInventory->getVegetableByIndex(i)->getTotalVeges() &&
+       selectedVeges.find(i) == selectedVeges.end()){
+       vegeDrop->addItem(mInventory->getVegetableByIndex(i)
+                             ->getVegetablename().c_str());
+      actualIndexes.push_back(i);
+    }
+  }
+}
 
