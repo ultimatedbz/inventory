@@ -8,9 +8,7 @@
 #include "ipreferencespanel.h"
 #include "MultiSellElement.h"
 #include "MultiSellController.h"
-#include <QListWidgetItem>
-#include <iostream>
-#include <QPrinter>
+#include "ui_dialog.h"
 #include "IConst.h"
 #include <qlistwidget.h>
 #include <Qtcore>
@@ -33,6 +31,10 @@
 #include <QAbstractItemDelegate>
 #include <QContextMenuEvent>
 #include <QSplitter>
+#include <QListWidgetItem>
+#include <iostream>
+#include <QPrinter>
+#include <sstream>
 
 QT_BEGIN_NAMESPACE
 class QAction;

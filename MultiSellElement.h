@@ -22,6 +22,10 @@ public:
     QComboBox* getVegeDrop();
     void updateVegeDrops(set<int> selectedVeges,
                          vector<int>& actualIndexes);
+    string getAmounts();
+    vector<int> getRemainingIndexes();
+    string getPrice();
+
 private:
 
     void updateRemainDrops();
@@ -34,6 +38,8 @@ private:
     int first;
     QComboBox* vegeDrop;
     QHBoxLayout* hLay;
+    QLineEdit* amount;
+    QLineEdit *price;
 
     /* Contains all the remaining comboboxes*/
     vector<QComboBox*>* remainingDrops;

@@ -45,7 +45,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   mForm->addRow(line2);
 
   /* Amount */
-  QLineEdit *amount = new QLineEdit();
+  amount = new QLineEdit();
 
   QString label5 = QString("Amounts");
   mForm->addRow(label5, amount);
@@ -77,7 +77,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   mForm->addRow("In Stock", hLay);
 
   /* Price */
-  QLineEdit *price = new QLineEdit();
+  price = new QLineEdit();
 
   QString label6 = QString("Price");
   mForm->addRow(label6, price);
@@ -98,7 +98,6 @@ MultiSellElement::~MultiSellElement()
   {
 
      if(i != 2 ){
-       //qDebug()<<item->widget()<<i;
         delete item->widget();
      }
      delete item;
@@ -107,10 +106,6 @@ MultiSellElement::~MultiSellElement()
 
   mForm->deleteLater();
   vegeDrop->deleteLater();
-
-  //for(int i = 0; i < remainingDrops->size(); i++){
-    //(*remainingDrops)[i]->deleteLater();
-  //}
 
   delete remainingDrops;
   delete selectedRemains;
@@ -240,6 +235,20 @@ void MultiSellElement:: updateVegeDrops( set<int> selectedVeges,
   }
 }
 
+string MultiSellElement:: getAmounts(){
+  return amount->text().toStdString();
+}
 
+vector<int> MultiSellElement:: getRemainingIndexes(){
+  vector<int> returnThis;
+  for( int i = 0; i < selectedRemains->size(); i++){
+    returnThis.push_back(comboIndexToActual[i][0]);
+  }
+  return returnThis;
+}
+
+string MultiSellElement:: getPrice(){
+  return price->text().toStdString();
+}
 
 

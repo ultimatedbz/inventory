@@ -1,5 +1,4 @@
 #include "dialog.h"
-#include "ui_dialog.h"
 
 
 Dialog::Dialog(QWidget *parent) :
@@ -268,8 +267,6 @@ void Dialog::on_Sell_clicked()
                 messageBox.setFixedSize(500,200);
                 additionalSell(amount, customerDrop->currentIndex(), date->text(), price->text());
             }
-
-
             else if(amount > currentVege -> getTotalVeges() ){
                 QMessageBox messageBox;
                 messageBox.critical(0,mTranslator->translate("錯誤").c_str(),
@@ -2424,8 +2421,6 @@ void Dialog::showPreferences() {
   //mPreferencesPanel->raise();
 }
 
-
-
 void Dialog::on_multiSellButton_clicked()
 {
   if(!currentVege)
@@ -2482,8 +2477,40 @@ void Dialog::on_multiSellButton_clicked()
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
     if (dialog.exec() == QDialog::Accepted ) {
+      for( int i = 0; i < queryNum; i++){
+        int vegeIndex = multiSellController->
+                            getActualVegeIndex(i);
+        string customer = customerDrop->currentText().toUtf8().constData();
+        string amountString = multiSellController->
+                            getAmounts(i);
+        string price = multiSellController->getPrice(i);
+        vector<int> remainIndexes = multiSellController->
+                            getActualRemainingIndexes(i);
+        qDebug()<<vegeIndex <<amountString.c_str();
+        for(auto it = remainIndexes.begin(); it != remainIndexes.end(); it++)
+          qDebug()<<*it;
 
+        stringstream ss(amountString);
+        vector<string> amounts;
 
+        while (ss.good())
+        {
+            string substr;
+            getline(ss, substr, ',');
+            amounts.push_back(substr);
+        }
+        qDebug()<<"amounts: ";
+        for(auto it = amounts.begin(); it != amounts.end(); it++)
+          qDebug()<<it->c_str();
+        for(int j = 0; j < amounts.size(); j++){
+          qDebug()<<"ran"<<vegeIndex;
+          inventory->getVegetableByIndex(vegeIndex)->sellVege(
+                atoi(amounts[j].c_str()), customer, date->text().toStdString(),
+                price, remainIndexes[j]);
+        }
+        qDebug()<<"end";
+      }
+      on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
     /* Deallocate memory*/
 

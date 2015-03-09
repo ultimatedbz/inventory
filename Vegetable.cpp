@@ -365,7 +365,7 @@ int Vegetable::sellVege(int amount, string customer, string date, string price, 
         }
         historyNum--;
     }
-qDebug()<<368 << remainingArray[selection].getReturn();
+
   if(getRemaining(selection) - amount < 0)
       return 0;
 

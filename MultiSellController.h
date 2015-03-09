@@ -17,7 +17,10 @@ public:
   MultiSellController(int queryNum,
                       Inventory* inventory, QFormLayout* fo, QFont font);
   ~MultiSellController();
-
+  int getActualVegeIndex(int i);
+  string getAmounts(int i);
+  vector<int> getActualRemainingIndexes(int i);
+  string getPrice(int i);
 signals:
 
 public slots:
