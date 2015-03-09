@@ -2463,12 +2463,20 @@ void Dialog::on_multiSellButton_clicked()
     QString label4 = QString("Date");
     form.addRow(label4, date);
     MultiSellController* multiSellController = new MultiSellController(
-          queryNum, inventory, form, font);
+          queryNum, inventory, &form, font);
 
+
+    /* Line */
+    QFrame* line = new QFrame();
+    line->setGeometry(QRect(/* ... */));
+    line->setFrameShape(QFrame::HLine); // Replace by VLine for vertical line
+    line->setFrameShadow(QFrame::Sunken);
+    form.addRow(line);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
+
     form.addRow(&buttonBox);
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));

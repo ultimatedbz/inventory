@@ -31,7 +31,6 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
     if( mInventory->getVegetableByIndex(i)->getTotalVeges() &&
                     selectedVeges->find(i) == selectedVeges->end() ){
       vegeDrop->addItem(mInventory->getVegetableByIndex(i)->getVegetablename().c_str());
-      qDebug()<<"pushingback "<<i;
       vegeIndexToActual.push_back(i);
     }
   }
@@ -71,7 +70,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   tb->setText("+");
   QObject::connect(tb, SIGNAL(clicked()),this, SLOT(addRemaining()));
 
-  QHBoxLayout* hLay = new QHBoxLayout();
+  hLay = new QHBoxLayout();
   hLay->addWidget(remainingDrop);
   hLay->addWidget(tb);
 
@@ -82,14 +81,40 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
 
   QString label6 = QString("Price");
   mForm->addRow(label6, price);
-
-qDebug()<<"Finished";
 }
 
 
 MultiSellElement::~MultiSellElement()
 {
 
+  QLayoutItem* item;
+  while ( ( item = hLay->takeAt( 0 ) ) != NULL )
+  {
+      delete item->widget();
+      delete item;
+  }
+  int i = 0;
+  while ( ( item = mForm->takeAt( 0 ) ) != NULL )
+  {
+
+     if(i != 2 ){
+       //qDebug()<<item->widget()<<i;
+        delete item->widget();
+     }
+     delete item;
+     i++;
+  }
+
+  mForm->deleteLater();
+  vegeDrop->deleteLater();
+
+  //for(int i = 0; i < remainingDrops->size(); i++){
+    //(*remainingDrops)[i]->deleteLater();
+  //}
+
+  delete remainingDrops;
+  delete selectedRemains;
+  delete[] comboIndexToActual;
 }
 
 QFormLayout* MultiSellElement::getElement(){
@@ -214,4 +239,7 @@ void MultiSellElement:: updateVegeDrops( set<int> selectedVeges,
     }
   }
 }
+
+
+
 

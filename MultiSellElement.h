@@ -33,6 +33,7 @@ private:
     int mVegIndex;
     int first;
     QComboBox* vegeDrop;
+    QHBoxLayout* hLay;
 
     /* Contains all the remaining comboboxes*/
     vector<QComboBox*>* remainingDrops;

@@ -15,7 +15,7 @@ class MultiSellController : public QObject
   Q_OBJECT
 public:
   MultiSellController(int queryNum,
-                      Inventory* inventory, QFormLayout& form, QFont font);
+                      Inventory* inventory, QFormLayout* fo, QFont font);
   ~MultiSellController();
 
 signals:
@@ -28,7 +28,7 @@ private:
   void updateVegeDrops();
 
   QFont font;
-
+  QFormLayout* form;
   Inventory* mInventory;
 
   /* Contains all the multiSellElements */
