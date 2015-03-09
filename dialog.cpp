@@ -2431,9 +2431,22 @@ void Dialog::on_multiSellButton_clicked()
   if(queryNum > 0 && queryNum <= 15 && queryNum <= numberOfNonEmptyVeges()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
-    // Use a layout allowing to have a label next to each field
-    QFormLayout form(&dialog);
 
+    //Add the viewport to the scroll area
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    //Create a widget and set its layout as your new layout created above
+    QWidget *viewport = new QWidget(&dialog);
+    scrollArea->setWidget(viewport);
+    scrollArea->setWidgetResizable(true);
+
+    QFormLayout* form = new QFormLayout(viewport);
+    viewport->setLayout(form);
+
+    QFormLayout *dialog_layout = new QFormLayout(&dialog);
+    dialog.setLayout(dialog_layout);
+    dialog.layout()->addWidget(scrollArea);
 
     /* Generate form items that appear once*/
 
@@ -2446,7 +2459,7 @@ void Dialog::on_multiSellButton_clicked()
     customerDrop->setFont(font);
 
     QString label2 = QString(mTranslator->translate("Customer").c_str());
-    form.addRow(label2, customerDrop);
+    form->addRow(label2, customerDrop);
 
     /* Date */
     QLineEdit *date = new QLineEdit(&dialog);
@@ -2456,23 +2469,15 @@ void Dialog::on_multiSellButton_clicked()
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString("Date");
-    form.addRow(label4, date);
+    form->addRow(label4, date);
     MultiSellController* multiSellController = new MultiSellController(
-          queryNum, inventory, &form, font);
-
-
-    /* Line */
-    QFrame* line = new QFrame();
-    line->setGeometry(QRect(/* ... */));
-    line->setFrameShape(QFrame::HLine); // Replace by VLine for vertical line
-    line->setFrameShadow(QFrame::Sunken);
-    form.addRow(line);
+          queryNum, inventory, form, font);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
 
-    form.addRow(&buttonBox);
+    dialog_layout->addRow(&buttonBox);
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
@@ -2486,9 +2491,6 @@ void Dialog::on_multiSellButton_clicked()
         string price = multiSellController->getPrice(i);
         vector<int> remainIndexes = multiSellController->
                             getActualRemainingIndexes(i);
-        qDebug()<<vegeIndex <<amountString.c_str();
-        for(auto it = remainIndexes.begin(); it != remainIndexes.end(); it++)
-          qDebug()<<*it;
 
         stringstream ss(amountString);
         vector<string> amounts;
@@ -2499,16 +2501,14 @@ void Dialog::on_multiSellButton_clicked()
             getline(ss, substr, ',');
             amounts.push_back(substr);
         }
-        qDebug()<<"amounts: ";
-        for(auto it = amounts.begin(); it != amounts.end(); it++)
-          qDebug()<<it->c_str();
+
+        if(amounts.size() != remainIndexes.size())
+          continue;
         for(int j = 0; j < amounts.size(); j++){
-          qDebug()<<"ran"<<vegeIndex;
           inventory->getVegetableByIndex(vegeIndex)->sellVege(
                 atoi(amounts[j].c_str()), customer, date->text().toStdString(),
                 price, remainIndexes[j]);
         }
-        qDebug()<<"end";
       }
       on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
