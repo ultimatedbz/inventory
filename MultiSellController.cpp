@@ -49,18 +49,11 @@ void MultiSellController::vegeDropChanged( int newIndex ){
   qDebug()<<"Start";
   int vegeBoxNum = -1;
   for( int i = 0; i < selectedVeges->size(); i++){
-    //qDebug()<<52;
-    if(formArray[i])
-      qDebug()<<"there";
-    else
-      qDebug()<<"not there";
-
     if (formArray[i]->getVegeDrop() ==
         dynamic_cast <QComboBox*>(QObject::sender()))
       vegeBoxNum = i;
   }
 
- // qDebug()<<comboIndexToActual[vegeBoxNum][0];
   qDebug()<<"VegeBoxNum: "<<vegeBoxNum;
   qDebug()<<"new index: "<<newIndex;
 
@@ -81,7 +74,7 @@ void MultiSellController::vegeDropChanged( int newIndex ){
   formArray[vegeBoxNum] = new MultiSellElement(
         comboIndexToActual[vegeBoxNum][0], this, mInventory,
         font, selectedVeges, comboIndexToActual[vegeBoxNum]);
-  form->insertRow(4 + vegeBoxNum, formArray[vegeBoxNum]->getElement());
+  form->insertRow(2 + vegeBoxNum, formArray[vegeBoxNum]->getElement());
   updateVegeDrops();
 }
 
