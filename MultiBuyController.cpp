@@ -135,6 +135,7 @@ void MultiBuyController:: subtractElement(){
     delete (*formArray)[vegeBoxNum];
     formArray->pop_back();
     comboIndexToActual->pop_back();
+    updateVegeDrops();
   }
 }
 
