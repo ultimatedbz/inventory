@@ -16,7 +16,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   comboIndexToActual(new vector<int>[5])
 {
 
-  /* Loop and keep making new dropboxes and stuff for each vegetable */
+  /* Line */
   QFrame* line = new QFrame();
   line->setGeometry(QRect(/* ... */));
   line->setFrameShape(QFrame::HLine); // Replace by VLine for vertical line
@@ -46,7 +46,6 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
 
   /* Amount */
   amount = new QLineEdit();
-
   QString label5 = QString("Amounts");
   mForm->addRow(label5, amount);
 

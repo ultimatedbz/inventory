@@ -8,6 +8,7 @@
 #include "ipreferencespanel.h"
 #include "MultiSellElement.h"
 #include "MultiSellController.h"
+#include "MultiBuyElement.h"
 #include "ui_dialog.h"
 #include "IConst.h"
 #include <qlistwidget.h>

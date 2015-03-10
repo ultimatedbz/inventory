@@ -3,12 +3,13 @@
 
 #include <QObject>
 #include <QtWidgets>
-
-#include "Inventory.h"
 #include <set>
 #include <vector>
 
 class MultiSellElement;
+class Inventory;
+
+using namespace std;
 
 class MultiSellController : public QObject
 {

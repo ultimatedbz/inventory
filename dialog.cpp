@@ -128,6 +128,83 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
 
 void Dialog::on_Buy_clicked()
 {
+
+  if(!currentVege)
+    return;
+
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("multiple buy");
+
+    //Add the viewport to the scroll area
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    //Create a widget and set its layout as your new layout created above
+    QWidget *viewport = new QWidget(&dialog);
+    scrollArea->setWidget(viewport);
+    scrollArea->setWidgetResizable(true);
+
+    QFormLayout* form = new QFormLayout(viewport);
+    viewport->setLayout(form);
+
+    QFormLayout *dialog_layout = new QFormLayout(&dialog);
+    dialog.setLayout(dialog_layout);
+    dialog.layout()->addWidget(scrollArea);
+
+    /* Generate form items that appear once*/
+
+    /* Customer Drop */
+    QComboBox* companyDrop = new QComboBox(&dialog);
+    for(int i = 0; i< inventory->getPersonNum(); i++){
+      companyDrop->addItem(inventory->getPerson(i).c_str());
+    }
+
+    companyDrop->setFont(font);
+
+    QString label2 = QString(mTranslator->translate("Company").c_str());
+    form->addRow(label2, companyDrop);
+
+    /* Date */
+    QLineEdit *date = new QLineEdit(&dialog);
+    time_t t = time(0);
+    struct tm * now = localtime(&t);
+    char buffer[128];
+    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    date -> setText(QString::fromUtf8(buffer));
+    QString label4 = QString("Date");
+    form->addRow(label4, date);
+    qDebug()<<177;
+    MultiBuyController* multiBuyController = new MultiBuyController(
+          inventory, form, font);
+qDebug()<<180;
+    /* Button Box */
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                           Qt::Horizontal, &dialog);
+    QToolButton *tb = new QToolButton();
+    tb->setText("+");
+
+
+    QToolButton *tb1 = new QToolButton();
+    tb1->setText("-");
+
+    QHBoxLayout* hLay = new QHBoxLayout();
+    hLay->addWidget(tb);
+    hLay->addWidget(tb1);
+    hLay->addWidget(&buttonBox);
+    dialog_layout->addRow(hLay);
+    QObject::connect(tb, SIGNAL(clicked()),this, SLOT(addRemaining()));
+    QObject::connect(tb1, SIGNAL(clicked()),this, SLOT(addRemaining()));
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+dialog.exec();
+
+
+
+
+
+
+  /*
   if(currentVege){
 
       QDialog dialog(this);
@@ -191,7 +268,7 @@ void Dialog::on_Buy_clicked()
             on_vegeList_itemClicked(ui->vegeList->currentItem());
         }
      }
-  }
+  }*/
 }
 
 void Dialog::on_Sell_clicked()

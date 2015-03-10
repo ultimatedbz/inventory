@@ -3,12 +3,12 @@
 
 #include <QtWidgets>
 #include <QObject>
-
-#include "Inventory.h"
-#include "MultiSellController.h"
 #include <set>
 #include <vector>
+#include "MultiSellController.h"
+#include "Inventory.h"
 
+using namespace std;
 
 class MultiSellElement:public QObject
 {
@@ -49,9 +49,6 @@ private:
 
     /* Array with each index corresponding to the actual index*/
     vector<int>* comboIndexToActual;
-
-
-
 
 private slots:
     void addRemaining();
