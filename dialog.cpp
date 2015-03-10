@@ -149,6 +149,7 @@ void Dialog::on_Buy_clicked()
     viewport->setLayout(form);
 
     QFormLayout *dialog_layout = new QFormLayout(&dialog);
+    dialog_layout->setSizeConstraint(QLayout::SetMinimumSize);
     dialog.setLayout(dialog_layout);
     dialog.layout()->addWidget(scrollArea);
 
@@ -174,10 +175,10 @@ void Dialog::on_Buy_clicked()
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString("Date");
     form->addRow(label4, date);
-    qDebug()<<177;
+
     MultiBuyController* multiBuyController = new MultiBuyController(
           inventory, form, font);
-qDebug()<<180;
+
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
@@ -193,8 +194,8 @@ qDebug()<<180;
     hLay->addWidget(tb1);
     hLay->addWidget(&buttonBox);
     dialog_layout->addRow(hLay);
-    QObject::connect(tb, SIGNAL(clicked()),this, SLOT(addRemaining()));
-    QObject::connect(tb1, SIGNAL(clicked()),this, SLOT(addRemaining()));
+    QObject::connect(tb, SIGNAL(clicked()),multiBuyController, SLOT(addElement()));
+    QObject::connect(tb1, SIGNAL(clicked()),multiBuyController, SLOT(subtractElement()));
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 dialog.exec();

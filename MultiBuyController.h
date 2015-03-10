@@ -24,18 +24,19 @@ public:
 
   public slots:
     void vegeDropChanged( int newIndex );
+    void addElement();
+    void subtractElement();
 
   private:
 
     void updateVegeDrops();
 
-    int elementNum;
     QFont font;
     QFormLayout* form;
     Inventory* mInventory;
 
     /* Contains all the multiSellElements */
-    vector<MultiBuyElement*> formArray;
+    vector<MultiBuyElement*>* formArray;
 
     /* Set of indexes from the actual vege array */
     set<int>* selectedVeges;

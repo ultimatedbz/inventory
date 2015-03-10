@@ -15,10 +15,10 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
   line->setFrameShape(QFrame::HLine); // Replace by VLine for vertical line
   line->setFrameShadow(QFrame::Sunken);
   mForm->addRow(line);
-qDebug()<<18;
+
   /* Vegetable */
   vegeDrop = new QComboBox();
-  connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
+  //connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
   for( int i = 0; i < mInventory->getVegNum(); i++){
     if( mInventory->getVegetableByIndex(i)->getTotalVeges() &&
@@ -29,7 +29,7 @@ qDebug()<<18;
   }
   vegeDrop->setFont(font);
   mForm->addRow("Vegetable", vegeDrop);
-qDebug()<<32;
+
   /* Amount */
   amount = new QLineEdit();
   QString label5 = QString("Amounts");
@@ -40,7 +40,7 @@ qDebug()<<32;
 
   QString label6 = QString("Price");
   mForm->addRow(label6, price);
-qDebug()<<43;
+
 }
 
 MultiBuyElement::~MultiBuyElement()

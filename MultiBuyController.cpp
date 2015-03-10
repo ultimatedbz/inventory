@@ -8,17 +8,15 @@ MultiBuyController::MultiBuyController(Inventory* inventory,
   form(fo),
   comboIndexToActual(new vector<vector<int> >()),
   selectedVeges(new set<int>()),
-  elementNum(1)
+  formArray(new vector<MultiBuyElement*>)
 
 {
-  /* Make array for individual forms */
-  vector<MultiBuyElement*> formArray;
 
   vector<int> tempv;
   comboIndexToActual->push_back(tempv);
   /* Add all selected into the set and set all indexes to actual */
   int index = 0; //index of combo box num
-  int temp = elementNum;
+  int temp = 1;
   for(int i = 0; i < temp; i++){
     if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
       selectedVeges->insert(i);
@@ -27,23 +25,20 @@ MultiBuyController::MultiBuyController(Inventory* inventory,
     }else
       temp++;
   }
-qDebug()<<27;
   index = 0;
-  temp = elementNum;
+  temp = 1;
   /* Make and add individual forms to big form */
   for( int i = 0; i < temp; i++){
     if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
 
-      formArray.push_back(new MultiBuyElement(i, this, inventory, font,
+      formArray->push_back(new MultiBuyElement(i, this, inventory, font,
                                    selectedVeges, (*comboIndexToActual)[index]));
-      form->addRow(formArray[index]->getElement());
+      form->addRow((*formArray)[index]->getElement());
       index++;
-      qDebug()<<41;
     }else{
       temp++;
     }
   }
-  qDebug()<<45;
 }
 
 MultiBuyController::~MultiBuyController()
@@ -54,7 +49,7 @@ MultiBuyController::~MultiBuyController()
 void MultiBuyController::vegeDropChanged( int newIndex ){
   int vegeBoxNum = -1;
   for( int i = 0; i < selectedVeges->size(); i++){
-    if (formArray[i]->getVegeDrop() ==
+    if ((*formArray)[i]->getVegeDrop() ==
         dynamic_cast <QComboBox*>(QObject::sender()))
       vegeBoxNum = i;
   }
@@ -71,13 +66,13 @@ void MultiBuyController::vegeDropChanged( int newIndex ){
 
   /* Remake the individual element */
   form->update();
-  delete formArray[vegeBoxNum];
+  delete (*formArray)[vegeBoxNum];
 
-  formArray[vegeBoxNum] = new MultiBuyElement(
+  (*formArray)[vegeBoxNum] = new MultiBuyElement(
         (*comboIndexToActual)[vegeBoxNum][0],
         this, mInventory,
         font, selectedVeges, (*comboIndexToActual)[vegeBoxNum]);
-  form->insertRow(2 + vegeBoxNum, formArray[vegeBoxNum]->getElement());
+  form->insertRow(2 + vegeBoxNum, (*formArray)[vegeBoxNum]->getElement());
   updateVegeDrops();
 }
 
@@ -85,7 +80,7 @@ void MultiBuyController::vegeDropChanged( int newIndex ){
 void MultiBuyController::updateVegeDrops(){
 
   for( int z = 0; z < selectedVeges->size(); z++){
-    formArray[z]->updateVegeDrops(*selectedVeges, (*comboIndexToActual)[z]);
+    (*formArray)[z]->updateVegeDrops(*selectedVeges, (*comboIndexToActual)[z]);
   }
 
 }
@@ -95,9 +90,51 @@ int MultiBuyController::getActualVegeIndex(int i){
 }
 
 string MultiBuyController::getAmount(int i){
-  return formArray[i]->getAmount();
+  return (*formArray)[i]->getAmount();
 }
 
 string MultiBuyController:: getPrice(int i){
-  return formArray[i]->getPrice();
+  return (*formArray)[i]->getPrice();
 }
+
+void MultiBuyController:: addElement(){
+  qDebug()<<"add";
+
+  vector<int> tempv;
+  comboIndexToActual->push_back(tempv);
+  if(selectedVeges->size() < mInventory->getVegNum()){
+    int comboBoxNum = selectedVeges->size();
+    comboIndexToActual->push_back(vector<int>());
+
+    for(int i = 0; i < mInventory->getVegNum(); i++){
+      if(mInventory->getVegetableByIndex(i)->getTotalVeges() &&
+         selectedVeges->find(i) == selectedVeges->end()){
+        formArray->push_back(new MultiBuyElement(i, this, mInventory, font,
+                             selectedVeges, (*comboIndexToActual)[comboBoxNum]));
+        form->addRow((*formArray)[selectedVeges->size()]->getElement());
+        selectedVeges->insert(i);
+        break;
+      }
+    }
+    updateVegeDrops();
+  }
+}
+
+void MultiBuyController:: subtractElement(){
+  qDebug()<<"subtract";
+
+
+  if(selectedVeges->size() > 1){
+    int vegeBoxNum = selectedVeges->size() - 1;
+
+    /* Remove from Set */
+    selectedVeges->erase((*comboIndexToActual)[vegeBoxNum][0]);
+
+    /* Remove individual element */
+    form->update();
+    delete (*formArray)[vegeBoxNum];
+    formArray->pop_back();
+    comboIndexToActual->pop_back();
+  }
+}
+
