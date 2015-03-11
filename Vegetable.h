@@ -57,8 +57,6 @@ public:
   static int compareRet(const void *a, const void *b);
   void load(fstream* fio);
   int clearHist(int num);
-  void splitSell(int splits,int  input1,int input2,int input3, int input4,string date,
-                  string customer, string price, int selection1,int selection2, int selection3, int selection4);
    void setVegetableName(string name);
    void deleteHistory (int index);
    int restock(int amount, string dp, string company, int retNum);

@@ -33,17 +33,17 @@ class Ui_Dialog
 public:
     QVBoxLayout *verticalLayout_7;
     QSplitter *splitter_4;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_6;
     QHBoxLayout *horizontalLayout_6;
     QLabel *VegieList;
     QPushButton *multiSellButton;
     QGridLayout *gridLayout;
     QListWidget *vegeList;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_5;
     QSplitter *splitter_2;
-    QWidget *widget2;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_8;
     QLabel *Inventory;
@@ -53,7 +53,7 @@ public:
     QPushButton *dumpButton;
     QGridLayout *gridLayout_2;
     QListWidget *breakDown;
-    QWidget *widget3;
+    QWidget *layoutWidget3;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *Returns;
@@ -64,7 +64,7 @@ public:
     QListWidget *returnList;
     QListWidget *returnToFarm;
     QSplitter *splitter_3;
-    QWidget *widget4;
+    QWidget *layoutWidget4;
     QVBoxLayout *verticalLayout_4;
     QHBoxLayout *horizontalLayout_5;
     QLabel *Total;
@@ -80,7 +80,7 @@ public:
     QCheckBox *tuiCheck;
     QLabel *label_3;
     QPushButton *clearHistoryButton;
-    QWidget *widget5;
+    QWidget *layoutWidget5;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_3;
     QLabel *Memo;
@@ -100,9 +100,9 @@ public:
         splitter_4 = new QSplitter(Dialog);
         splitter_4->setObjectName(QStringLiteral("splitter_4"));
         splitter_4->setOrientation(Qt::Horizontal);
-        widget = new QWidget(splitter_4);
-        widget->setObjectName(QStringLiteral("widget"));
-        verticalLayout_6 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(splitter_4);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        verticalLayout_6 = new QVBoxLayout(layoutWidget);
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
@@ -110,12 +110,12 @@ public:
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
-        VegieList = new QLabel(widget);
+        VegieList = new QLabel(layoutWidget);
         VegieList->setObjectName(QStringLiteral("VegieList"));
 
         horizontalLayout_6->addWidget(VegieList);
 
-        multiSellButton = new QPushButton(widget);
+        multiSellButton = new QPushButton(layoutWidget);
         multiSellButton->setObjectName(QStringLiteral("multiSellButton"));
         QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
@@ -132,7 +132,7 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
-        vegeList = new QListWidget(widget);
+        vegeList = new QListWidget(layoutWidget);
         vegeList->setObjectName(QStringLiteral("vegeList"));
 
         gridLayout->addWidget(vegeList, 1, 0, 1, 1);
@@ -140,20 +140,20 @@ public:
 
         verticalLayout_6->addLayout(gridLayout);
 
-        splitter_4->addWidget(widget);
-        widget1 = new QWidget(splitter_4);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        verticalLayout_5 = new QVBoxLayout(widget1);
+        splitter_4->addWidget(layoutWidget);
+        layoutWidget1 = new QWidget(splitter_4);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        verticalLayout_5 = new QVBoxLayout(layoutWidget1);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        splitter_2 = new QSplitter(widget1);
+        splitter_2 = new QSplitter(layoutWidget1);
         splitter_2->setObjectName(QStringLiteral("splitter_2"));
         splitter_2->setOrientation(Qt::Horizontal);
-        widget2 = new QWidget(splitter_2);
-        widget2->setObjectName(QStringLiteral("widget2"));
-        verticalLayout_2 = new QVBoxLayout(widget2);
+        layoutWidget2 = new QWidget(splitter_2);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget2);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
@@ -162,7 +162,7 @@ public:
         horizontalLayout_8->setSpacing(6);
         horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
         horizontalLayout_8->setSizeConstraint(QLayout::SetDefaultConstraint);
-        Inventory = new QLabel(widget2);
+        Inventory = new QLabel(layoutWidget2);
         Inventory->setObjectName(QStringLiteral("Inventory"));
         QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
@@ -172,26 +172,26 @@ public:
 
         horizontalLayout_8->addWidget(Inventory);
 
-        changeTotal = new QLabel(widget2);
+        changeTotal = new QLabel(layoutWidget2);
         changeTotal->setObjectName(QStringLiteral("changeTotal"));
 
         horizontalLayout_8->addWidget(changeTotal);
 
-        Buy = new QPushButton(widget2);
+        Buy = new QPushButton(layoutWidget2);
         Buy->setObjectName(QStringLiteral("Buy"));
         sizePolicy.setHeightForWidth(Buy->sizePolicy().hasHeightForWidth());
         Buy->setSizePolicy(sizePolicy);
 
         horizontalLayout_8->addWidget(Buy);
 
-        Sell = new QPushButton(widget2);
+        Sell = new QPushButton(layoutWidget2);
         Sell->setObjectName(QStringLiteral("Sell"));
         sizePolicy.setHeightForWidth(Sell->sizePolicy().hasHeightForWidth());
         Sell->setSizePolicy(sizePolicy);
 
         horizontalLayout_8->addWidget(Sell);
 
-        dumpButton = new QPushButton(widget2);
+        dumpButton = new QPushButton(layoutWidget2);
         dumpButton->setObjectName(QStringLiteral("dumpButton"));
         sizePolicy.setHeightForWidth(dumpButton->sizePolicy().hasHeightForWidth());
         dumpButton->setSizePolicy(sizePolicy);
@@ -204,7 +204,7 @@ public:
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        breakDown = new QListWidget(widget2);
+        breakDown = new QListWidget(layoutWidget2);
         breakDown->setObjectName(QStringLiteral("breakDown"));
 
         gridLayout_2->addWidget(breakDown, 0, 0, 1, 1);
@@ -212,10 +212,10 @@ public:
 
         verticalLayout_2->addLayout(gridLayout_2);
 
-        splitter_2->addWidget(widget2);
-        widget3 = new QWidget(splitter_2);
-        widget3->setObjectName(QStringLiteral("widget3"));
-        verticalLayout = new QVBoxLayout(widget3);
+        splitter_2->addWidget(layoutWidget2);
+        layoutWidget3 = new QWidget(splitter_2);
+        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
+        verticalLayout = new QVBoxLayout(layoutWidget3);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
@@ -223,22 +223,22 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        Returns = new QLabel(widget3);
+        Returns = new QLabel(layoutWidget3);
         Returns->setObjectName(QStringLiteral("Returns"));
 
         horizontalLayout_2->addWidget(Returns);
 
-        label = new QLabel(widget3);
+        label = new QLabel(layoutWidget3);
         label->setObjectName(QStringLiteral("label"));
 
         horizontalLayout_2->addWidget(label);
 
-        label_2 = new QLabel(widget3);
+        label_2 = new QLabel(layoutWidget3);
         label_2->setObjectName(QStringLiteral("label_2"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        Return = new QPushButton(widget3);
+        Return = new QPushButton(layoutWidget3);
         Return->setObjectName(QStringLiteral("Return"));
         sizePolicy.setHeightForWidth(Return->sizePolicy().hasHeightForWidth());
         Return->setSizePolicy(sizePolicy);
@@ -248,7 +248,7 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
-        splitter = new QSplitter(widget3);
+        splitter = new QSplitter(layoutWidget3);
         splitter->setObjectName(QStringLiteral("splitter"));
         splitter->setOrientation(Qt::Vertical);
         returnList = new QListWidget(splitter);
@@ -260,16 +260,16 @@ public:
 
         verticalLayout->addWidget(splitter);
 
-        splitter_2->addWidget(widget3);
+        splitter_2->addWidget(layoutWidget3);
 
         verticalLayout_5->addWidget(splitter_2);
 
-        splitter_3 = new QSplitter(widget1);
+        splitter_3 = new QSplitter(layoutWidget1);
         splitter_3->setObjectName(QStringLiteral("splitter_3"));
         splitter_3->setOrientation(Qt::Horizontal);
-        widget4 = new QWidget(splitter_3);
-        widget4->setObjectName(QStringLiteral("widget4"));
-        verticalLayout_4 = new QVBoxLayout(widget4);
+        layoutWidget4 = new QWidget(splitter_3);
+        layoutWidget4->setObjectName(QStringLiteral("layoutWidget4"));
+        verticalLayout_4 = new QVBoxLayout(layoutWidget4);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
@@ -277,12 +277,12 @@ public:
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setSpacing(6);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
-        Total = new QLabel(widget4);
+        Total = new QLabel(layoutWidget4);
         Total->setObjectName(QStringLiteral("Total"));
 
         horizontalLayout_5->addWidget(Total);
 
-        pushButton = new QPushButton(widget4);
+        pushButton = new QPushButton(layoutWidget4);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
         pushButton->setSizePolicy(sizePolicy);
@@ -295,7 +295,7 @@ public:
         gridLayout_3 = new QGridLayout();
         gridLayout_3->setSpacing(6);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-        historyList = new QListWidget(widget4);
+        historyList = new QListWidget(layoutWidget4);
         historyList->setObjectName(QStringLiteral("historyList"));
 
         gridLayout_3->addWidget(historyList, 0, 0, 1, 1);
@@ -309,7 +309,7 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        buyCheck = new QCheckBox(widget4);
+        buyCheck = new QCheckBox(layoutWidget4);
         buyCheck->setObjectName(QStringLiteral("buyCheck"));
         buyCheck->setEnabled(true);
         QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
@@ -321,7 +321,7 @@ public:
 
         horizontalLayout->addWidget(buyCheck);
 
-        sellCheck = new QCheckBox(widget4);
+        sellCheck = new QCheckBox(layoutWidget4);
         sellCheck->setObjectName(QStringLiteral("sellCheck"));
         sizePolicy2.setHeightForWidth(sellCheck->sizePolicy().hasHeightForWidth());
         sellCheck->setSizePolicy(sizePolicy2);
@@ -329,7 +329,7 @@ public:
 
         horizontalLayout->addWidget(sellCheck);
 
-        dumpCheck = new QCheckBox(widget4);
+        dumpCheck = new QCheckBox(layoutWidget4);
         dumpCheck->setObjectName(QStringLiteral("dumpCheck"));
         sizePolicy2.setHeightForWidth(dumpCheck->sizePolicy().hasHeightForWidth());
         dumpCheck->setSizePolicy(sizePolicy2);
@@ -337,7 +337,7 @@ public:
 
         horizontalLayout->addWidget(dumpCheck);
 
-        returnCheck = new QCheckBox(widget4);
+        returnCheck = new QCheckBox(layoutWidget4);
         returnCheck->setObjectName(QStringLiteral("returnCheck"));
         sizePolicy2.setHeightForWidth(returnCheck->sizePolicy().hasHeightForWidth());
         returnCheck->setSizePolicy(sizePolicy2);
@@ -345,7 +345,7 @@ public:
 
         horizontalLayout->addWidget(returnCheck);
 
-        tuiCheck = new QCheckBox(widget4);
+        tuiCheck = new QCheckBox(layoutWidget4);
         tuiCheck->setObjectName(QStringLiteral("tuiCheck"));
         tuiCheck->setChecked(true);
 
@@ -354,12 +354,12 @@ public:
 
         horizontalLayout_4->addLayout(horizontalLayout);
 
-        label_3 = new QLabel(widget4);
+        label_3 = new QLabel(layoutWidget4);
         label_3->setObjectName(QStringLiteral("label_3"));
 
         horizontalLayout_4->addWidget(label_3);
 
-        clearHistoryButton = new QPushButton(widget4);
+        clearHistoryButton = new QPushButton(layoutWidget4);
         clearHistoryButton->setObjectName(QStringLiteral("clearHistoryButton"));
         sizePolicy.setHeightForWidth(clearHistoryButton->sizePolicy().hasHeightForWidth());
         clearHistoryButton->setSizePolicy(sizePolicy);
@@ -369,10 +369,10 @@ public:
 
         verticalLayout_4->addLayout(horizontalLayout_4);
 
-        splitter_3->addWidget(widget4);
-        widget5 = new QWidget(splitter_3);
-        widget5->setObjectName(QStringLiteral("widget5"));
-        verticalLayout_3 = new QVBoxLayout(widget5);
+        splitter_3->addWidget(layoutWidget4);
+        layoutWidget5 = new QWidget(splitter_3);
+        layoutWidget5->setObjectName(QStringLiteral("layoutWidget5"));
+        verticalLayout_3 = new QVBoxLayout(layoutWidget5);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
@@ -380,12 +380,12 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        Memo = new QLabel(widget5);
+        Memo = new QLabel(layoutWidget5);
         Memo->setObjectName(QStringLiteral("Memo"));
 
         horizontalLayout_3->addWidget(Memo);
 
-        clearReturnButton = new QPushButton(widget5);
+        clearReturnButton = new QPushButton(layoutWidget5);
         clearReturnButton->setObjectName(QStringLiteral("clearReturnButton"));
         sizePolicy.setHeightForWidth(clearReturnButton->sizePolicy().hasHeightForWidth());
         clearReturnButton->setSizePolicy(sizePolicy);
@@ -395,16 +395,16 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_3);
 
-        Memo_2 = new QTextEdit(widget5);
+        Memo_2 = new QTextEdit(layoutWidget5);
         Memo_2->setObjectName(QStringLiteral("Memo_2"));
 
         verticalLayout_3->addWidget(Memo_2);
 
-        splitter_3->addWidget(widget5);
+        splitter_3->addWidget(layoutWidget5);
 
         verticalLayout_5->addWidget(splitter_3);
 
-        splitter_4->addWidget(widget1);
+        splitter_4->addWidget(layoutWidget1);
 
         verticalLayout_7->addWidget(splitter_4);
 

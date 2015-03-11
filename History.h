@@ -22,8 +22,6 @@ public:
   void updateCompany(int victim, int source);
   int getDifference();
     int getDifferenceS(int z);
-  int getSplitNum();
-    int getSplitNumS(int z);
   string getHistory(string unit);
   string getCustomer();
     string getCustomerS(int z);
@@ -44,9 +42,6 @@ public:
   int getDumped();
   void load(fstream* fio);
   string printFormat();
-  void splitSell(int spl, int input1,int  input2,int  input3,int  input4, string dateS,string cust,
-                 string pr, string d1, string d2, string d3, string d4, string c1, string c2, string c3, string c4,
-                 int a, int b, int c, int d);
   void deleteHistory();
   int getChangeNum();
   int getChangeNumS(int z);
@@ -63,8 +58,6 @@ private:
   int returned;
   int dumped;
   string dateToCompare;
-  int splitNum;
-  History* splitArray;
   int changeNum;
   int mTui;
   string padding(string word);

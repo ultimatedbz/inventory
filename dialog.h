@@ -96,11 +96,6 @@ public slots:
     void printI(QPrinter* printer);
     void printH(QPrinter* printer);
 
-    void additionalSell(int amount, int cusIndex, QString dateB, QString priceB);
-    int querySplits();
-    void splitSell(int splits, int amount, int cusIndex, QString dateB, QString priceB);
-    int sameDay(int i1, int i2, int i3, int i4);
-
     void deleteHistory();
     void undoHistory();
     void deleteVege();
@@ -126,12 +121,9 @@ private slots:
     void on_clearHistoryButton_clicked();
     void on_dumpButton_clicked();
     void on_clearReturnButton_clicked();
-    void sellVege();
     void dumpVege();
 
     void on_vegeList_currentRowChanged(int currentRow);
-
-    void on_multiSellButton_clicked();
 
 private:
     Ui::Dialog *ui;
