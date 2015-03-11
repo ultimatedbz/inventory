@@ -7,6 +7,7 @@
 #include <vector>
 #include "MultiBuyController.h"
 #include "Inventory.h"
+#include "scrolleater.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ private:
     QComboBox* vegeDrop;
     QLineEdit* amount;
     QLineEdit* price;
+    ScrollEater* scrollEat;
 };
 
 #endif // MULTIBUYELEMENT_H

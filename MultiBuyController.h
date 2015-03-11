@@ -15,11 +15,13 @@ class MultiBuyController : public QObject
 {
   Q_OBJECT
 public:
-    MultiBuyController(Inventory* inventory, QFormLayout* fo, QFont font);
+    MultiBuyController(Inventory* inventory, QFormLayout* fo,
+                       QFont font, QScrollArea* sa, QDialog* d);
     ~MultiBuyController();
     int getActualVegeIndex(int i);
     string getAmount(int i);
     string getPrice(int i);
+    int getElementNum();
   signals:
 
   public slots:
@@ -34,6 +36,8 @@ public:
     QFont font;
     QFormLayout* form;
     Inventory* mInventory;
+    QScrollArea* scrollArea;
+    QDialog* dialog;
 
     /* Contains all the multiSellElements */
     vector<MultiBuyElement*>* formArray;

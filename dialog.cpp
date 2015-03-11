@@ -132,7 +132,6 @@ void Dialog::on_Buy_clicked()
   if(!currentVege)
     return;
 
-
     QDialog dialog(this);
     dialog.setWindowTitle("multiple buy");
 
@@ -142,11 +141,13 @@ void Dialog::on_Buy_clicked()
 
     //Create a widget and set its layout as your new layout created above
     QWidget *viewport = new QWidget(&dialog);
+    viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
 
     QFormLayout* form = new QFormLayout(viewport);
     viewport->setLayout(form);
+    form->setSizeConstraint(QLayout::SetMinimumSize);
 
     QFormLayout *dialog_layout = new QFormLayout(&dialog);
     dialog_layout->setSizeConstraint(QLayout::SetMinimumSize);
@@ -155,7 +156,7 @@ void Dialog::on_Buy_clicked()
 
     /* Generate form items that appear once*/
 
-    /* Customer Drop */
+    /* Company Drop */
     QComboBox* companyDrop = new QComboBox(&dialog);
     for(int i = 0; i< inventory->getPersonNum(); i++){
       companyDrop->addItem(inventory->getPerson(i).c_str());
@@ -177,7 +178,7 @@ void Dialog::on_Buy_clicked()
     form->addRow(label4, date);
 
     MultiBuyController* multiBuyController = new MultiBuyController(
-          inventory, form, font);
+          inventory, form, font, scrollArea, &dialog);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -194,11 +195,28 @@ void Dialog::on_Buy_clicked()
     hLay->addWidget(tb1);
     hLay->addWidget(&buttonBox);
     dialog_layout->addRow(hLay);
+
+    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
+
     QObject::connect(tb, SIGNAL(clicked()),multiBuyController, SLOT(addElement()));
     QObject::connect(tb1, SIGNAL(clicked()),multiBuyController, SLOT(subtractElement()));
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-dialog.exec();
+
+    if (dialog.exec() == QDialog::Accepted ) {
+      for( int i = 0; i < multiBuyController->getElementNum(); i++){
+        int vegeIndex = multiBuyController->
+                            getActualVegeIndex(i);
+        string company = companyDrop->currentText().toUtf8().constData();
+        string amount = multiBuyController->
+                            getAmount(i);
+        string price = multiBuyController->getPrice(i);
+          inventory->getVegetableByIndex(vegeIndex)->buyVege(
+                atoi(amount.c_str()), company, date->text().toStdString(),
+                price);
+      }
+      on_vegeList_itemClicked(ui->vegeList->currentItem());
+    }
 
 
 
@@ -277,9 +295,14 @@ void Dialog::on_Sell_clicked()
     if(currentVege && currentVege->getRemainingNum()){
 
         QDialog dialog(this);
+
+
         dialog.setWindowTitle(mTranslator->translate("賣").c_str());
         // Use a layout allowing to have a label next to each field
+
+
         QFormLayout form(&dialog);
+
 
         // Add some text above the fields
         form.addRow(new QLabel(mTranslator->translate("輸入賣菜資料").c_str()));
@@ -309,6 +332,7 @@ void Dialog::on_Sell_clicked()
         QString label4 = QString(mTranslator->translate("那天賣出").c_str());
         form.addRow(label4, date);
 
+        date->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
         QLineEdit *price = new QLineEdit(&dialog);
         QString label5 = QString(mTranslator->translate("賣多少錢?").c_str());
         form.addRow(label5, price);
@@ -2506,6 +2530,8 @@ void Dialog::on_multiSellButton_clicked()
 
   int queryNum = queryVeges();
 
+  if (queryNum == -1 )
+    return;
   if(queryNum > 0 && queryNum <= 15 && queryNum <= numberOfNonEmptyVeges()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
@@ -2549,8 +2575,16 @@ void Dialog::on_multiSellButton_clicked()
     QString label4 = QString("Date");
     form->addRow(label4, date);
     MultiSellController* multiSellController = new MultiSellController(
-          queryNum, inventory, form, font);
+          queryNum, inventory, form, font, scrollArea, &dialog);
 
+    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
+
+    //int boxHeight = (queryNum > 5) multiSellController->:form->sizeHint().height();
+    /*scrollArea->setMinimumHeight(scrollArea->sizeHint().height() +
+                                 (*formArray)[0]->getElement()->sizeHint().height()
+                                  * (selectedVeges->size() - 1));
+    dialog->adjustSize();
+    */
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
@@ -2618,8 +2652,8 @@ int Dialog::queryVeges(){
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
     if (dialog.exec() == QDialog::Accepted ) {
         return lineEdit->text().toInt();
-    }
-    return 0;
+    }else
+      return -1;
 }
 
 int Dialog::numberOfNonEmptyVeges(){

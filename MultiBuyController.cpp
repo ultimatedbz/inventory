@@ -2,13 +2,17 @@
 #include "MultiBuyElement.h"
 
 MultiBuyController::MultiBuyController(Inventory* inventory,
-                                       QFormLayout* fo, QFont f):
+                                       QFormLayout* fo, QFont f,
+                                       QScrollArea* sa,
+                                       QDialog* d):
   mInventory(inventory),
   font(f),
   form(fo),
   comboIndexToActual(new vector<vector<int> >()),
   selectedVeges(new set<int>()),
-  formArray(new vector<MultiBuyElement*>)
+  formArray(new vector<MultiBuyElement*>),
+  scrollArea(sa),
+  dialog(d)
 
 {
 
@@ -58,20 +62,22 @@ void MultiBuyController::vegeDropChanged( int newIndex ){
   selectedVeges->erase((*comboIndexToActual)[vegeBoxNum][0]);
 
   /* Change the first element of the comboIndexToActual*/
-  comboIndexToActual[vegeBoxNum][0] =
-      comboIndexToActual[vegeBoxNum][newIndex];
+  (*comboIndexToActual)[vegeBoxNum][0] =
+      (*comboIndexToActual)[vegeBoxNum][newIndex];
 
   /* Update the Set */
   selectedVeges->insert((*comboIndexToActual)[vegeBoxNum][0]);
 
   /* Remake the individual element */
   form->update();
+
   delete (*formArray)[vegeBoxNum];
 
   (*formArray)[vegeBoxNum] = new MultiBuyElement(
         (*comboIndexToActual)[vegeBoxNum][0],
         this, mInventory,
         font, selectedVeges, (*comboIndexToActual)[vegeBoxNum]);
+
   form->insertRow(2 + vegeBoxNum, (*formArray)[vegeBoxNum]->getElement());
   updateVegeDrops();
 }
@@ -97,12 +103,19 @@ string MultiBuyController:: getPrice(int i){
   return (*formArray)[i]->getPrice();
 }
 
+int MultiBuyController:: getElementNum(){
+  return selectedVeges->size();
+}
+
 void MultiBuyController:: addElement(){
   qDebug()<<"add";
 
   vector<int> tempv;
   comboIndexToActual->push_back(tempv);
   if(selectedVeges->size() < mInventory->getVegNum()){
+
+    QComboBox* temp = (*formArray)[0]->getVegeDrop();
+
     int comboBoxNum = selectedVeges->size();
     comboIndexToActual->push_back(vector<int>());
 
@@ -117,6 +130,16 @@ void MultiBuyController:: addElement(){
       }
     }
     updateVegeDrops();
+
+    int h = (selectedVeges->size() > 5)?
+          scrollArea->sizeHint().height() + 4
+                     * ((*formArray)[0]->getElement()->sizeHint().height() +
+                     .5 * temp->sizeHint().height())
+        :
+        form->sizeHint().height()+ 2.5 *
+        temp->sizeHint().height();
+    scrollArea->setMinimumHeight(h);
+    dialog->adjustSize();
   }
 }
 
@@ -131,11 +154,24 @@ void MultiBuyController:: subtractElement(){
     selectedVeges->erase((*comboIndexToActual)[vegeBoxNum][0]);
 
     /* Remove individual element */
-    form->update();
     delete (*formArray)[vegeBoxNum];
     formArray->pop_back();
     comboIndexToActual->pop_back();
     updateVegeDrops();
+
+    form->update();
+    QComboBox* temp = (*formArray)[0]->getVegeDrop();
+    int h = (selectedVeges->size()>5)?
+          scrollArea->sizeHint().height() + 4
+                   * ((*formArray)[0]->getElement()->sizeHint().height() +
+                    .5 * temp->sizeHint().height())
+        :
+          scrollArea->sizeHint().height()
+                   + (selectedVeges->size() - 1)
+                    * ((*formArray)[0]->getElement()->sizeHint().height() +
+                      .5 * temp->sizeHint().height());
+    scrollArea->setMinimumHeight(h);
+     dialog->adjustSize();
   }
 }
 

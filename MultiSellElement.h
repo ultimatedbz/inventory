@@ -7,6 +7,7 @@
 #include <vector>
 #include "MultiSellController.h"
 #include "Inventory.h"
+#include "scrolleater.h"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ private:
     QHBoxLayout* hLay;
     QLineEdit* amount;
     QLineEdit *price;
+    ScrollEater* scrollEat;
 
     /* Contains all the remaining comboboxes*/
     vector<QComboBox*>* remainingDrops;

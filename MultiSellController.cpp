@@ -3,12 +3,14 @@
 
 MultiSellController::MultiSellController(int queryNum,
                               Inventory* inventory, QFormLayout* fo,
-                              QFont f):
+                              QFont f, QScrollArea* sa, QDialog* d):
   mInventory(inventory),
   font(f),
   comboIndexToActual(new vector<int>[queryNum]),
   form(fo),
-  selectedVeges(new set<int>())
+  selectedVeges(new set<int>()),
+  scrollArea(sa),
+  dialog(d)
 {
   /* Make array for individual forms */
   formArray = new MultiSellElement* [queryNum] ;

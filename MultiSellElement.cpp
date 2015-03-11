@@ -13,8 +13,10 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   selectedRemains(new set<int>()),
   mVegIndex(index),
   remainingDrops(new vector<QComboBox*>()),
-  comboIndexToActual(new vector<int>[5])
+  comboIndexToActual(new vector<int>[5]),
+  scrollEat(new ScrollEater(this))
 {
+
 
   /* Line */
   QFrame* line = new QFrame();
@@ -25,6 +27,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
 
   /* Vegetable */
   vegeDrop = new QComboBox();
+  vegeDrop->installEventFilter(scrollEat);
   connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
   for( int i = 0; i < mInventory->getVegNum(); i++){
@@ -51,6 +54,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
 
   /* In Stock */
   QComboBox* remainingDrop = new QComboBox();
+  remainingDrop->installEventFilter(scrollEat);
   connect(remainingDrop, SIGNAL(activated(int)), this, SLOT(remainingDropChanged(int)));
   comboIndexToActual[0] = vector<int>(mInventory->getVegetableByIndex(index)->
                                                 getRemainingNum());
@@ -109,6 +113,7 @@ MultiSellElement::~MultiSellElement()
   delete remainingDrops;
   delete selectedRemains;
   delete[] comboIndexToActual;
+  delete scrollEat;
 }
 
 QFormLayout* MultiSellElement::getElement(){
@@ -125,6 +130,7 @@ void MultiSellElement::addRemaining(){
                                                   ->getRemainingNum());
 
     QComboBox* remainingDrop = new QComboBox();
+    remainingDrop->installEventFilter(scrollEat);
     connect(remainingDrop, SIGNAL(activated(int)), this, SLOT(remainingDropChanged(int)));
 
     /* First index will be the one that is shown on the combobox  */

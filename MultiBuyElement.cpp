@@ -7,7 +7,8 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
   mForm(new QFormLayout()),
   controller(c),
   mInventory(i),
-  font(f)
+  font(f),
+  scrollEat(new ScrollEater(this))
 {
   /* Line */
   QFrame* line = new QFrame();
@@ -18,7 +19,8 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
 
   /* Vegetable */
   vegeDrop = new QComboBox();
-  //connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
+  vegeDrop->installEventFilter(scrollEat);
+  connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
   for( int i = 0; i < mInventory->getVegNum(); i++){
     if( mInventory->getVegetableByIndex(i)->getTotalVeges() &&
@@ -60,6 +62,7 @@ MultiBuyElement::~MultiBuyElement()
 
   mForm->deleteLater();
   vegeDrop->deleteLater();
+  delete scrollEat;
 }
 
 QFormLayout* MultiBuyElement::getElement(){

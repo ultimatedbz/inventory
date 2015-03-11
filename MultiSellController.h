@@ -16,7 +16,10 @@ class MultiSellController : public QObject
   Q_OBJECT
 public:
   MultiSellController(int queryNum,
-                      Inventory* inventory, QFormLayout* fo, QFont font);
+                      Inventory* inventory,
+                      QFormLayout* fo, QFont font,
+                      QScrollArea* sa,
+                      QDialog* d);
   ~MultiSellController();
   int getActualVegeIndex(int i);
   string getAmounts(int i);
@@ -34,6 +37,8 @@ private:
   QFont font;
   QFormLayout* form;
   Inventory* mInventory;
+  QScrollArea* scrollArea;
+  QDialog* dialog;
 
   /* Contains all the multiSellElements */
   MultiSellElement** formArray;
