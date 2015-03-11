@@ -120,8 +120,7 @@ void MultiBuyController:: addElement(){
     comboIndexToActual->push_back(vector<int>());
 
     for(int i = 0; i < mInventory->getVegNum(); i++){
-      if(mInventory->getVegetableByIndex(i)->getTotalVeges() &&
-         selectedVeges->find(i) == selectedVeges->end()){
+      if(selectedVeges->find(i) == selectedVeges->end()){
         formArray->push_back(new MultiBuyElement(i, this, mInventory, font,
                              selectedVeges, (*comboIndexToActual)[comboBoxNum]));
         form->addRow((*formArray)[selectedVeges->size()]->getElement());

@@ -23,8 +23,7 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
   connect(vegeDrop, SIGNAL(activated(int)), controller,SLOT(vegeDropChanged(int)));
   vegeDrop->addItem(mInventory->getVegetableByIndex(index)->getVegetablename().c_str());
   for( int i = 0; i < mInventory->getVegNum(); i++){
-    if( mInventory->getVegetableByIndex(i)->getTotalVeges() &&
-                    selectedVeges->find(i) == selectedVeges->end() ){
+    if(selectedVeges->find(i) == selectedVeges->end() ){
       vegeDrop->addItem(mInventory->getVegetableByIndex(i)->getVegetablename().c_str());
       vegeIndexToActual.push_back(i);
     }
@@ -89,8 +88,7 @@ void MultiBuyElement:: updateVegeDrops( set<int> selectedVeges,
 
   /* Re-add all the other vegetable names that aren't selected */
   for(int i = 0; i <  mInventory->getVegNum(); i++){
-    if(mInventory->getVegetableByIndex(i)->getTotalVeges() &&
-       selectedVeges.find(i) == selectedVeges.end()){
+    if(selectedVeges.find(i) == selectedVeges.end()){
        vegeDrop->addItem(mInventory->getVegetableByIndex(i)
                              ->getVegetablename().c_str());
       actualIndexes.push_back(i);
