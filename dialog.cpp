@@ -2579,12 +2579,11 @@ void Dialog::on_multiSellButton_clicked()
 
     dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
 
-    //int boxHeight = (queryNum > 5) multiSellController->:form->sizeHint().height();
-    /*scrollArea->setMinimumHeight(scrollArea->sizeHint().height() +
-                                 (*formArray)[0]->getElement()->sizeHint().height()
-                                  * (selectedVeges->size() - 1));
-    dialog->adjustSize();
-    */
+    int boxHeight = (queryNum > 4)? scrollArea->sizeHint().height() * 2
+                                  :form->sizeHint().height();
+    scrollArea->setMinimumHeight(boxHeight);
+    dialog.adjustSize();
+
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
