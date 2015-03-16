@@ -15,7 +15,7 @@ class MultiBuyController : public QObject
 {
   Q_OBJECT
 public:
-    MultiBuyController(Inventory* inventory, QFormLayout* fo,
+    MultiBuyController(int currentVI, Inventory* inventory, QFormLayout* fo,
                        QFont font, QScrollArea* sa, QDialog* d);
     ~MultiBuyController();
     int getActualVegeIndex(int i);

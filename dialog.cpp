@@ -125,7 +125,6 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
 
 void Dialog::on_Buy_clicked()
 {
-
   if(!currentVege)
     return;
 
@@ -138,16 +137,16 @@ void Dialog::on_Buy_clicked()
 
     //Create a widget and set its layout as your new layout created above
     QWidget *viewport = new QWidget(&dialog);
-    viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
+    //viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
 
     QFormLayout* form = new QFormLayout(viewport);
     viewport->setLayout(form);
-    form->setSizeConstraint(QLayout::SetMinimumSize);
+    //form->setSizeConstraint(QLayout::SetMinimumSize);
 
     QFormLayout *dialog_layout = new QFormLayout(&dialog);
-    dialog_layout->setSizeConstraint(QLayout::SetMinimumSize);
+    //dialog_layout->setSizeConstraint(QLayout::SetMinimumSize);
     dialog.setLayout(dialog_layout);
     dialog.layout()->addWidget(scrollArea);
 
@@ -161,7 +160,7 @@ void Dialog::on_Buy_clicked()
 
     companyDrop->setFont(font);
 
-    QString label2 = QString(mTranslator->translate("Company").c_str());
+    QString label2 = QString("Company");
     form->addRow(label2, companyDrop);
 
     /* Date */
@@ -175,6 +174,7 @@ void Dialog::on_Buy_clicked()
     form->addRow(label4, date);
 
     MultiBuyController* multiBuyController = new MultiBuyController(
+          inventory->getVegetableIndex(currentVege->getVegetablename()),
           inventory, form, font, scrollArea, &dialog);
 
     /* Button Box */
@@ -214,10 +214,6 @@ void Dialog::on_Buy_clicked()
       }
       on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
-
-
-
-
 }
 
 void Dialog::on_Sell_clicked()
@@ -225,11 +221,7 @@ void Dialog::on_Sell_clicked()
   if(!currentVege)
     return;
 
-  int queryNum = queryVeges();
-
-  if (queryNum == -1 )
-    return;
-  if(queryNum > 0 && queryNum <= 15 && queryNum <= numberOfNonEmptyVeges()){
+  if(numberOfNonEmptyVeges()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
 
@@ -259,7 +251,7 @@ void Dialog::on_Sell_clicked()
 
     customerDrop->setFont(font);
 
-    QString label2 = QString(mTranslator->translate("Customer").c_str());
+    QString label2 = QString("Customer");
     form->addRow(label2, customerDrop);
 
     /* Date */
@@ -271,26 +263,36 @@ void Dialog::on_Sell_clicked()
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString("Date");
     form->addRow(label4, date);
+
     MultiSellController* multiSellController = new MultiSellController(
-          queryNum, inventory, form, font, scrollArea, &dialog);
-
-    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
-
-    int boxHeight = (queryNum > 4)? scrollArea->sizeHint().height() * 2
-                                  :form->sizeHint().height();
-    scrollArea->setMinimumHeight(boxHeight);
-    dialog.adjustSize();
+          inventory, form, font, scrollArea, &dialog);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
 
     dialog_layout->addRow(&buttonBox);
+    QToolButton *tb = new QToolButton();
+    tb->setText("+");
+
+
+    QToolButton *tb1 = new QToolButton();
+    tb1->setText("-");
+
+    QHBoxLayout* hLay = new QHBoxLayout();
+    hLay->addWidget(tb);
+    hLay->addWidget(tb1);
+    hLay->addWidget(&buttonBox);
+    dialog_layout->addRow(hLay);
+
+    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
+
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
+    QObject::connect(tb, SIGNAL(clicked()),multiSellController, SLOT(addElement()));
+    QObject::connect(tb1, SIGNAL(clicked()),multiSellController, SLOT(subtractElement()));
     if (dialog.exec() == QDialog::Accepted ) {
-      for( int i = 0; i < queryNum; i++){
+      for( int i = 0; i < multiSellController->getElementNum(); i++){
         int vegeIndex = multiSellController->
                             getActualVegeIndex(i);
         string customer = customerDrop->currentText().toUtf8().constData();
@@ -324,7 +326,7 @@ void Dialog::on_Sell_clicked()
 
   }else{
       QMessageBox messageBox;
-      messageBox.critical(0,"警告","Not Valid");
+      messageBox.critical(0,"警告","No Vegetables to Sell");
       messageBox.setFixedSize(500,200);
   }
 }
@@ -383,10 +385,7 @@ void Dialog::addVegetable(){
                 on_vegeList_itemClicked(ui->vegeList->item(temp));
             }
         }
-
-
      }
-
 }
 
 void Dialog::slot1(){
@@ -1797,7 +1796,6 @@ void Dialog::changeLanguage(){
     ui->returnCheck->setText(mTranslator ->translate("退給農場").c_str());
 
     ui->Returns->setText((mTranslator ->translate("退貨單") + ":").c_str());
-    sellVegeAction->setText(mTranslator ->translate("賣").c_str());
     dumpVegeAction->setText(mTranslator ->translate("倒").c_str());
 }
 

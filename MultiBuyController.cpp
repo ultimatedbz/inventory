@@ -1,7 +1,8 @@
 #include "MultiBuyController.h"
 #include "MultiBuyElement.h"
 
-MultiBuyController::MultiBuyController(Inventory* inventory,
+MultiBuyController::MultiBuyController(int currentVegeIndex,
+                                       Inventory* inventory,
                                        QFormLayout* fo, QFont f,
                                        QScrollArea* sa,
                                        QDialog* d):
@@ -15,34 +16,17 @@ MultiBuyController::MultiBuyController(Inventory* inventory,
   dialog(d)
 
 {
-
   vector<int> tempv;
   comboIndexToActual->push_back(tempv);
   /* Add all selected into the set and set all indexes to actual */
-  int index = 0; //index of combo box num
-  int temp = 1;
-  for(int i = 0; i < temp; i++){
-    if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
-      selectedVeges->insert(i);
-      (*comboIndexToActual)[index].push_back(i);
-      index++;
-    }else
-      temp++;
-  }
-  index = 0;
-  temp = 1;
-  /* Make and add individual forms to big form */
-  for( int i = 0; i < temp; i++){
-    if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
 
-      formArray->push_back(new MultiBuyElement(i, this, inventory, font,
-                                   selectedVeges, (*comboIndexToActual)[index]));
-      form->addRow((*formArray)[index]->getElement());
-      index++;
-    }else{
-      temp++;
-    }
-  }
+      selectedVeges->insert(currentVegeIndex);
+      (*comboIndexToActual)[0].push_back(currentVegeIndex);
+  /* Make and add individual forms to big form */
+
+      formArray->push_back(new MultiBuyElement(currentVegeIndex, this, inventory, font,
+                                   selectedVeges, (*comboIndexToActual)[0]));
+      form->addRow((*formArray)[0]->getElement());
 }
 
 MultiBuyController::~MultiBuyController()
@@ -88,7 +72,6 @@ void MultiBuyController::updateVegeDrops(){
   for( int z = 0; z < selectedVeges->size(); z++){
     (*formArray)[z]->updateVegeDrops(*selectedVeges, (*comboIndexToActual)[z]);
   }
-
 }
 
 int MultiBuyController::getActualVegeIndex(int i){
@@ -108,11 +91,10 @@ int MultiBuyController:: getElementNum(){
 }
 
 void MultiBuyController:: addElement(){
-  qDebug()<<"add";
-
   vector<int> tempv;
   comboIndexToActual->push_back(tempv);
-  if(selectedVeges->size() < mInventory->getVegNum()){
+  if(selectedVeges->size() < mInventory->getVegNum()
+     && selectedVeges->size() < 15){
 
     QComboBox* temp = (*formArray)[0]->getVegeDrop();
 
@@ -129,7 +111,6 @@ void MultiBuyController:: addElement(){
       }
     }
     updateVegeDrops();
-
     int h = (selectedVeges->size() > 5)?
           scrollArea->sizeHint().height() + 4
                      * ((*formArray)[0]->getElement()->sizeHint().height() +
@@ -143,9 +124,6 @@ void MultiBuyController:: addElement(){
 }
 
 void MultiBuyController:: subtractElement(){
-  qDebug()<<"subtract";
-
-
   if(selectedVeges->size() > 1){
     int vegeBoxNum = selectedVeges->size() - 1;
 

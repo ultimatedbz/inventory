@@ -139,7 +139,6 @@ private:
     QAction* deleteVegeAction;
     QAction* undoHistoryAction;
     QAction* deleteHistoryAction;
-    QAction* sellVegeAction;
     QAction* dumpVegeAction;
 
     int queryVeges();
