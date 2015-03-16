@@ -4,15 +4,14 @@
 Dialog::Dialog(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::Dialog),
+  inventory(new Inventory()),
   currentVege(NULL),
   needSave(0),
   font("Courier",-1,QFont::Bold,false),
-  inventory(new Inventory()),
   mTranslator(new Translator()),
+  mAbbreviator(new Abbreviation()),
   menuBar(new IMenuBar(this,mTranslator))
-
 {
-
   ui->setupUi(this);
 
   #ifndef Q_OS_WIN32
@@ -394,25 +393,65 @@ void Dialog::slot1(){
 }
 
 void Dialog::addCompany(){
-    bool ok;
-    QString text = QInputDialog::getText(this, mTranslator
-                                         ->translate("加入新客戶").c_str(),
-                      mTranslator ->translate("請輸入你要加的新公司名字?").c_str(),
-                                         QLineEdit::Normal,"", &ok);
-    if(ok)
-        inventory->addCompany(text.toUtf8().constData());
+    QDialog dialog(this);
+    dialog.setWindowTitle(mTranslator->translate("加入新客戶").c_str());
+
+    QFormLayout* form = new QFormLayout(&dialog);
+
+    QLineEdit* companyEdit = new QLineEdit(&dialog);
+    QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
+
+    form->addRow(QString(mTranslator->translate("請輸入你要加的新公司名字?").c_str()), companyEdit);
+    form->addRow(QString("Abbreviation"), abbreviationEdit);
+
+    /* Button Box */
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                           Qt::Horizontal, &dialog);
+
+    form->addRow(&buttonBox);
+
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+
+    if (dialog.exec() == QDialog::Accepted ) {
+      mAbbreviator->add(companyEdit->text().toUtf8().constData(),
+                        abbreviationEdit->text().toUtf8().constData());
+      inventory->addCompany(companyEdit->text().toUtf8().constData());
+    }
+
     needSave = 1;
 }
 
 void Dialog::addPerson(){
-    bool ok;
-    QString text = QInputDialog::getText(this, mTranslator
-                                         ->translate("請輸入你要加的新客戶名字?").c_str(),
-                      mTranslator ->translate("你要刪掉哪一個客戶？").c_str(),
-                                         QLineEdit::Normal,"", &ok);
-    if(ok)
-        inventory->addPerson(text.toUtf8().constData());
-        needSave = 1;
+
+    QDialog dialog(this);
+    dialog.setWindowTitle( mTranslator
+                           ->translate("請輸入你要加的新客戶名字?").c_str());
+
+    QFormLayout* form = new QFormLayout(&dialog);
+
+    QLineEdit* customerEdit = new QLineEdit(&dialog);
+    QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
+
+    form->addRow(QString( mTranslator ->translate("你要刪掉哪一個客戶？").c_str()), customerEdit);
+    form->addRow(QString("Abbreviation"), abbreviationEdit);
+
+    /* Button Box */
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                           Qt::Horizontal, &dialog);
+
+    form->addRow(&buttonBox);
+
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+
+    if (dialog.exec() == QDialog::Accepted ) {
+      mAbbreviator->add(customerEdit->text().toUtf8().constData(),
+                        abbreviationEdit->text().toUtf8().constData());
+      inventory->addPerson(customerEdit->text().toUtf8().constData());
+    }
+
+    needSave = 1;
 }
 
 void Dialog::addUnit(){
@@ -583,141 +622,6 @@ void Dialog::printHistory(){
         preview.exec();
 
 }
-/*
-void Dialog::printI(QPrinter* printer){
-
-    int amount;
-    time_t t = time(0);
-    struct tm * now = localtime(&t);
-    char buffer[128];
-    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
-    string today = buffer;
-
-    QDialog dialog1(this);
-    dialog1.setWindowTitle(mTranslator ->translate("印 Inventory").c_str());
-    QFormLayout form(&dialog1);
-
-    QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
-    lineEdit -> setText("20");
-    form.addRow(label, lineEdit);
-
-
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                           Qt::Horizontal, &dialog1);
-    form.addRow(&buttonBox);
-    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog1, SLOT(accept()));
-    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog1, SLOT(reject()));
-
-    if (dialog1.exec() == QDialog::Accepted) {
-        amount = lineEdit->text().toInt();
-        QPainter painter;
-        QFont font("Courier",-1,QFont::Bold,false);
-
-        painter.begin(printer);
-
-#ifdef Q_OS_WIN32
-        QTransform t = QTransform::fromScale(
-                    96/72.,
-                    96/72.);
-        painter.setWorldTransform(t,false);
-#endif
-        font.setPixelSize(amount);
-        painter.setFont(font);
-        QFontMetrics metric(font);
-        int lineHeight = metric.height();
-
-        QString leftText= "";
-        QString rightText="";
-        QString * currentText = &leftText;
-
-        /* Dimensions of paper are roughly 590 X 775 *
-
-        painter.drawText(295,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
-        int lineCount = 0;
-        int column = 0;
-        for(int i = 0; i<inventory->getVegNum(); i++){
-            if(inventory->getVegetableByIndex(i)->getRemainingNum()){
-                if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) + 40> 775  ){
-                    if(currentText == &leftText){
-                        currentText = &rightText;
-                        lineCount = 0;
-                        column = 1;
-                        painter.drawLine(295,40,295,775);
-                    }else{
-                        painter.drawText(0,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, leftText );
-                        painter.drawText(295,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, rightText );
-                        leftText= "";
-                        rightText="";
-                        printer->newPage();
-
-                        painter.drawLine(295,40,295,775);
-
-                        painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
-                        currentText = &leftText;
-                        column = 0;
-                        lineCount = 0;
-                    }
-                }
-
-                *currentText = *currentText + QString(inventory->
-                                   getVegetableByIndex(i)->
-                                   getVegetablename().c_str()) + ":  "+ "\n";
-                *currentText = *currentText +"Total: " + QString::number(inventory->getVegetableByIndex(i)
-                               ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
-                                                            getUnit().c_str()) +"\n";
-                for(int j =0; j < inventory->getVegetableByIndex(i)
-                                    ->getRemainingNum(); j++){
-                    *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
-                                    ->formatRemaining3(j).c_str()) +"\n";
-                    lineCount++;
-                }
-
-                lineCount += 2;
-                painter.drawLine(295 * column,lineHeight * (lineCount +1) + 40,
-                                295 *(column + 1),lineHeight * (1+lineCount)+40);
-
-        }else{
-                if( lineHeight * (lineCount + 1) > 775  ){
-                    if(currentText == &leftText){
-                        currentText = &rightText;
-                        lineCount = 0;
-                        column = 1;
-                        painter.drawLine(295,40,295,775);
-                    }else{
-                        painter.drawText(0,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, leftText );
-                        painter.drawText(295,40+lineHeight,590,775,Qt::AlignLeft|Qt::AlignTop, rightText );
-                        leftText= "";
-                        rightText="";
-                        printer->newPage();
-
-                        painter.drawLine(295,40,295,775);
-
-                        painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
-                        currentText = &leftText;
-                        column = 0;
-                        lineCount = 0;
-                }
-            }
-
-                *currentText = *currentText + QString(inventory->
-                                   getVegetableByIndex(i)->
-                                   getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
-                               ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
-                                                            getUnit().c_str()) +"\n";
-                lineCount += 1;
-                painter.drawLine(295 * column,lineHeight * (lineCount + 1) + 40,
-                                295 *(column + 1),lineHeight * (lineCount + 1)+40);
-
-        }
-
-    }
-   painter.drawText(0,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, leftText );
-   painter.drawText(295,40+lineHeight,295,775,Qt::AlignLeft|Qt::AlignTop, rightText );
-   painter.end();
-  }
-}
-*/
 
 void Dialog::printI(QPrinter* printer){
 
@@ -1276,12 +1180,22 @@ void Dialog::loadFile(){
     if(filename != NULL){
         needSave = 0;
         newFile();
+        setWindowTitle(filename.section("/",-1,-1));
         string datafile1 = filename.toUtf8().constData();
         const char* datafile = datafile1.c_str();
         fstream* fio = new fstream (datafile, ios :: in| ios::binary);
+
         fio->seekg(0, ios::beg);
+
+        int abbs;
+        fio->read(( char *) &(abbs), sizeof(int));
+        for(int i = 0;i < abbs; i++){
+          mAbbreviator->add(readString(fio), readString(fio));
+        }
+
         inventory->load(fio);
         fio->close();
+
         inventory->setFileName(filename.toUtf8().constData() );
         if(inventory->getVegNum()){
             for(int i = 0; i<inventory->getVegNum(); i++){
@@ -1295,6 +1209,7 @@ void Dialog::loadFile(){
             ui->vegeList->setCurrentRow(0);
             on_vegeList_itemClicked(ui->vegeList->item(0));
         }
+
         needSave = 0;
     }
 }
@@ -1307,6 +1222,13 @@ void Dialog::save(){
         fstream* fio = new fstream (inventory->getFileName().c_str(),
                                     ios :: out |ios::binary);
         fio->seekp(0, ios::beg);
+        writeInt(mAbbreviator->keyCount(),fio);
+        qDebug()<<mAbbreviator->keyCount();
+        map<string, string> abbs = mAbbreviator->getAbbs();
+        for(auto it = abbs.begin(); it !=abbs.end() ; it++){
+            writeString( it->first, fio);
+            writeString( it->second, fio);
+        }
         writeInt(inventory->getCompanyNum(),fio);
         writeInt(inventory->getPersonNum(),fio);
         writeInt(inventory->getUnitNum(),fio);
@@ -1397,6 +1319,7 @@ void Dialog::save(){
                          ->getHistoryObject(j)->getTui(), fio);
             }
         }
+
         fio->close();
         needSave = 0;
     }
@@ -1810,6 +1733,22 @@ void Dialog::writeString(string temp, fstream* fio){
     fio->write((const char *) &(tempNum), sizeof(int));
     memcpy(a,temp.c_str(),temp.size());
     fio->write(a,strlen(a));
+}
+
+int Dialog::readInt(fstream* fio){
+  int storeHere;
+  fio->read(( char *) &(storeHere), sizeof(int));
+  return storeHere;
+}
+
+string Dialog::readString(fstream* fio){
+  char temp2[200];
+  int tempNum2;
+  fio->read((char *) &(tempNum2),sizeof(int));
+  fio->read(temp2, tempNum2);
+  temp2[tempNum2] = '\0';
+  string str(temp2);
+  return str;
 }
 
 void Dialog::on_clearHistoryButton_clicked()

@@ -11,6 +11,7 @@
 #include "MultiBuyElement.h"
 #include "ui_dialog.h"
 #include "IConst.h"
+#include "abbreviation.h"
 #include <qlistwidget.h>
 #include <Qtcore>
 #include <QtGui>
@@ -83,11 +84,12 @@ public:
     void printHistory();
     void writeInt(int temp, fstream* fio);
     void writeString(string temp, fstream* fio);
-
+    int readInt(fstream* fio);
+    string readString(fstream* fio);
 
     void changeLanguage();
 
-    Translator* mTranslator;
+
 
 public slots:
 
@@ -128,7 +130,6 @@ private slots:
 private:
     Ui::Dialog *ui;
     Inventory* inventory;
-    IMenuBar *menuBar;
     IPreferencesPanel *mPreferencesPanel;
 
     Vegetable *currentVege;
@@ -140,6 +141,10 @@ private:
     QAction* undoHistoryAction;
     QAction* deleteHistoryAction;
     QAction* dumpVegeAction;
+
+    Translator* mTranslator;
+    Abbreviation* mAbbreviator;
+    IMenuBar *menuBar;
 
     int queryVeges();
     int numberOfNonEmptyVeges();

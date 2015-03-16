@@ -23,7 +23,8 @@ SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
     MultiSellController.cpp \
     MultiBuyController.cpp \
     MultiBuyElement.cpp \
-    scrolleater.cpp
+    scrolleater.cpp \
+    abbreviation.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Remaining.h \
@@ -37,7 +38,8 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     MultiSellController.h \
     MultiBuyController.h \
     MultiBuyElement.h \
-    scrolleater.h
+    scrolleater.h \
+    abbreviation.h
 
 
 FORMS    += dialog.ui
