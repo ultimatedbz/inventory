@@ -1225,7 +1225,7 @@ void Dialog::save(){
         writeInt(mAbbreviator->keyCount(),fio);
         qDebug()<<mAbbreviator->keyCount();
         map<string, string> abbs = mAbbreviator->getAbbs();
-        for(auto it = abbs.begin(); it !=abbs.end() ; it++){
+        for(map<string,string>::iterator it = abbs.begin(); it !=abbs.end() ; it++){
             writeString( it->first, fio);
             writeString( it->second, fio);
         }
