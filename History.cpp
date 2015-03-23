@@ -33,7 +33,8 @@ History::History()
     dumped(0),
     dateToCompare("\t"),
     changeNum(0),
-    mTui(0)
+    mTui(0),
+    type("")
     
       {
       
@@ -222,7 +223,7 @@ void History::buy(int amount, string bc, string date, string p){
   dayPurchased = date;
   price = p;
   dateToCompare = date;
-  //customer is set as the company
+  type = "Buy";
 }
 
 void History::sell(int amount, string b, string date, string p, string dp,string c , int change){
@@ -235,16 +236,18 @@ void History::sell(int amount, string b, string date, string p, string dp,string
   dayPurchased = dp;
   company = c;
   changeNum = change;
+  type = "Sell";
 }
 
 void History::dump(int amount, string date, string bd, string comp, int change){
     difference = amount *(-1);
     daySold = date;
     dumped = 1;
-    dayPurchased=bd;
+    dayPurchased = bd;
     dateToCompare = date;
     company = comp;
     changeNum = change;
+    type = "Dump";
 }
 
 void History::returnn(string dR, int amount, string returner, string c, string dB){
@@ -257,6 +260,7 @@ void History::returnn(string dR, int amount, string returner, string c, string d
     returned = 1;
     difference = amount;
     dateToCompare = dR;
+    type = "Return";
 }
 
 
@@ -334,6 +338,11 @@ void History::tui(int amount, string date, string bd, string comp, int change){
     dateToCompare = date;
     company = comp;
     changeNum = change;
+    type = "Tui";
+}
+
+string History:: getType(){
+  return type;
 }
 
 string History:: padding( string word){

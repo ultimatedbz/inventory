@@ -77,6 +77,8 @@ public:
 
   void sortVeges();
 
+  int numberOfNonEmptyVeges();
+
   void load(fstream* fio);
   static int compareV(const void * a, const void *b);
   static int compareS(const void * a, const void *b);

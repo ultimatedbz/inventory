@@ -19,6 +19,7 @@ public slots:
     void saveAs();
     void printInventory();
     void printHistory();
+    void printTransactions();
     void changeToEnglish();
     void changeToChinese();
     void showPreferences();
@@ -40,6 +41,7 @@ private:
     QAction *exitAction;
     QAction *printAction;
     QAction *printAction2;
+    QAction *printAction3;
     QAction *newAction;
     QAction *saveAction;
     QAction *saveAsAction;

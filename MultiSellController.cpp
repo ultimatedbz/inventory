@@ -74,17 +74,19 @@ void MultiSellController::updateVegeDrops(){
 }
 
 void MultiSellController::addElement(){
-  vector<int> tempv;
-  comboIndexToActual->push_back(tempv);
-  if(selectedVeges->size() < mInventory->getVegNum()){
 
+  if(selectedVeges->size() < mInventory->numberOfNonEmptyVeges()){
+
+    vector<int> tempv;
+    comboIndexToActual->push_back(tempv);
     QComboBox* temp = (*formArray)[0]->getVegeDrop();
 
     int comboBoxNum = selectedVeges->size();
     comboIndexToActual->push_back(vector<int>());
 
     for(int i = 0; i < mInventory->getVegNum(); i++){
-      if(selectedVeges->find(i) == selectedVeges->end()){
+      if(selectedVeges->find(i) == selectedVeges->end() &&
+          mInventory->getVegetableByIndex(i)->getTotalVeges()){
         formArray->push_back(new MultiSellElement(i, this, mInventory, font,
                              selectedVeges, (*comboIndexToActual)[comboBoxNum]));
         form->addRow((*formArray)[selectedVeges->size()]->getElement());

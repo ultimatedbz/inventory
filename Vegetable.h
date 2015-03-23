@@ -26,6 +26,8 @@ public:
   int sellVege(int amount, string costumer, string date, string price, int selection);
   int dumpVege(int amount, string date, int selection);
   int returnTo(int amount, string date, int selection);
+  void returnThis(string dateBought, int a, string rer, string co, string dateB);
+
   int getHistoryNum();
   int getTotalVeges();
   int getRemaining(int i);
@@ -37,20 +39,22 @@ public:
   Remaining* getRemainingObject(int index);
   History* getHistoryObject(int index);
   Return* getReturnObject(int index);
+  string getUnit();
+
   int remainExist(string company, string date);
   void updateRemaining(int i, int amount);
   void updateReturnInRemaining(int exist, int amount);
   void updateMemo(string m);
   void addReturnToRemaining(int amount);
-  string getUnit();
+
   string viewHistory(int i);
   string formatTui(int i);
   string formatRemaining(int i);
   string formatRemaining2(int i);
   string formatRemaining3(int i);
+  string formatTransaction();
   string formatReturn(int i);
   const string getVegetablename() const;
-  void returnThis(string dateBought, int a, string rer, string co, string dateB);
   int returnExist(string company, string date);
   static int compareH(const void *a, const void *b);
   static int compareR(const void *a, const void *b);
@@ -65,6 +69,17 @@ public:
    void reTui(string dS, int amount, string dP, string company);
    ReturnTo* getTuiObject(int index);
    void clearTui();
+
+   /* Transaction Printing */
+   void setUpTrans();
+   void transBuy();
+   void transSell(int amount, string datePurchased, string company);
+   void transTui();
+   void transReturn();
+   void transDump();
+   string transByIndex(int index);
+   bool hasInteraction();
+
 private:
   string vegetableName;
   History* historyArray;
@@ -78,6 +93,7 @@ private:
   string memo;
   int tuiNum;
   ReturnTo* tuiArray;
+  vector<vector<string> > transactions;
 };
 
 #endif // Vegetable_H

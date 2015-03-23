@@ -339,7 +339,14 @@ void Inventory::load(fstream* fio){
     }
 }
 
-
+int Inventory::numberOfNonEmptyVeges(){
+  int counter = 0;
+  for(int i = 0; i < getVegNum(); i++){
+      if(getVegetableByIndex(i)->getTotalVeges())
+        counter++;
+  }
+  return counter;
+}
 
 
 

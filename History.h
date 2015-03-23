@@ -21,34 +21,26 @@ public:
   void updateCompany(string company);
   void updateCompany(int victim, int source);
   int getDifference();
-    int getDifferenceS(int z);
   string getHistory(string unit);
   string getCustomer();
-    string getCustomerS(int z);
   string getDateSold();
-    string getDateSoldS(int z);
   string getDateToCompare();
-    string getDateToCompareS(int z);
   string getDatePurchased();
-    string getDatePurchasedS(int z);
   string getPrice();
-    string getPriceS(int z);
   string getCompany();
-    string getCompanyS(int z);
+  string getType();
 
-    int getReturnedS(int z);
-    int getDumpedS(int z);
   int getReturned();
   int getDumped();
   void load(fstream* fio);
   string printFormat();
   void deleteHistory();
   int getChangeNum();
-  int getChangeNumS(int z);
   void tui(int amount, string date, string bd, string comp, int change);
   int getTui();
-  int getTuiS(int z);
+
 private:
+  string type;
   string daySold;
   string dayPurchased;
   int difference;

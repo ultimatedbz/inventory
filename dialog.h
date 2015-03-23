@@ -82,6 +82,7 @@ public:
     void removeUnit();
     void printInventory();
     void printHistory();
+    void printTransactions();
     void writeInt(int temp, fstream* fio);
     void writeString(string temp, fstream* fio);
     int readInt(fstream* fio);
@@ -97,6 +98,7 @@ public slots:
     void on_Sell_clicked();
     void printI(QPrinter* printer);
     void printH(QPrinter* printer);
+    void printT(QPrinter* printer);
 
     void deleteHistory();
     void undoHistory();
@@ -147,7 +149,7 @@ private:
     IMenuBar *menuBar;
 
     int queryVeges();
-    int numberOfNonEmptyVeges();
+
 
 
 };

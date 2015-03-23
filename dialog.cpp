@@ -142,10 +142,8 @@ void Dialog::on_Buy_clicked()
 
     QFormLayout* form = new QFormLayout(viewport);
     viewport->setLayout(form);
-    //form->setSizeConstraint(QLayout::SetMinimumSize);
 
     QFormLayout *dialog_layout = new QFormLayout(&dialog);
-    //dialog_layout->setSizeConstraint(QLayout::SetMinimumSize);
     dialog.setLayout(dialog_layout);
     dialog.layout()->addWidget(scrollArea);
 
@@ -153,8 +151,8 @@ void Dialog::on_Buy_clicked()
 
     /* Company Drop */
     QComboBox* companyDrop = new QComboBox(&dialog);
-    for(int i = 0; i< inventory->getPersonNum(); i++){
-      companyDrop->addItem(inventory->getPerson(i).c_str());
+    for(int i = 0; i< inventory->getCompanyNum(); i++){
+      companyDrop->addItem(inventory->getCompany(i).c_str());
     }
 
     companyDrop->setFont(font);
@@ -207,9 +205,9 @@ void Dialog::on_Buy_clicked()
         string amount = multiBuyController->
                             getAmount(i);
         string price = multiBuyController->getPrice(i);
-          inventory->getVegetableByIndex(vegeIndex)->buyVege(
-                atoi(amount.c_str()), company, date->text().toStdString(),
-                price);
+        inventory->getVegetableByIndex(vegeIndex)->buyVege(
+              atoi(amount.c_str()), company, date->text().toStdString(),
+              price);
       }
       on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
@@ -220,7 +218,7 @@ void Dialog::on_Sell_clicked()
   if(!currentVege)
     return;
 
-  if(numberOfNonEmptyVeges()){
+  if(inventory->numberOfNonEmptyVeges()){
     QDialog dialog(this);
     dialog.setWindowTitle("multiple sell");
 
@@ -414,8 +412,11 @@ void Dialog::addCompany(){
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
 
     if (dialog.exec() == QDialog::Accepted ) {
+      string temp = (abbreviationEdit->text().toUtf8().constData() == "")?
+          companyEdit->text().toUtf8().constData():
+            abbreviationEdit->text().toUtf8().constData();
       mAbbreviator->add(companyEdit->text().toUtf8().constData(),
-                        abbreviationEdit->text().toUtf8().constData());
+                        temp);
       inventory->addCompany(companyEdit->text().toUtf8().constData());
     }
 
@@ -446,8 +447,11 @@ void Dialog::addPerson(){
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
 
     if (dialog.exec() == QDialog::Accepted ) {
+      string temp = (abbreviationEdit->text().toUtf8().constData() == "")?
+          customerEdit->text().toUtf8().constData():
+            abbreviationEdit->text().toUtf8().constData();
       mAbbreviator->add(customerEdit->text().toUtf8().constData(),
-                        abbreviationEdit->text().toUtf8().constData());
+                        temp);
       inventory->addPerson(customerEdit->text().toUtf8().constData());
     }
 
@@ -608,19 +612,150 @@ void Dialog::removeVegetable(){
 }
 
 void Dialog::printInventory(){
-        QPrinter printer;
-        QPrintPreviewDialog preview (&printer, this);
-        connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printI(QPrinter*)) );
-        preview.exec();
+  QPrinter printer;
+  QPrintPreviewDialog preview (&printer, this);
+  connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printI(QPrinter*)) );
+  preview.exec();
+}
 
+void Dialog::printTransactions(){
+  QPrinter printer;
+  QPrintPreviewDialog preview (&printer, this);
+  connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printT(QPrinter*)) );
+  preview.exec();
 }
 
 void Dialog::printHistory(){
-        QPrinter printer;
-        QPrintPreviewDialog preview (&printer, this);
-        connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printH(QPrinter*)) );
-        preview.exec();
+  QPrinter printer;
+  QPrintPreviewDialog preview (&printer, this);
+  connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(printH(QPrinter*)) );
+  preview.exec();
 
+}
+
+void Dialog::printT(QPrinter* printer){
+  
+  int amount;
+  time_t t = time(0);
+  struct tm * now = localtime(&t);
+  char buffer[128];
+  sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+  string today = buffer;
+
+  QDialog dialog1(this);
+  dialog1.setWindowTitle("列印資料");
+  QFormLayout form(&dialog1);
+
+  QLineEdit *lineEdit = new QLineEdit(&dialog1);
+  QString label = QString("請輸入字體大小");
+  lineEdit -> setText("20");
+  form.addRow(label, lineEdit);
+
+
+  QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                         Qt::Horizontal, &dialog1);
+  form.addRow(&buttonBox);
+  QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog1, SLOT(accept()));
+  QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog1, SLOT(reject()));
+
+  if (dialog1.exec() == QDialog::Accepted) {
+      amount = lineEdit->text().toInt();
+      QPainter painter;
+      QFont font("Courier",-1,QFont::Bold,false);
+
+      painter.begin(printer);
+
+      font.setPixelSize(amount);
+      painter.setFont(font);
+      QFontMetrics metric(font);
+      double lineHeight = painter.fontMetrics().height();
+
+      QString leftText= "";
+      QString rightText="";
+      QString * currentText = &leftText;
+      painter.drawLine(500,40,500,1250);
+      painter.drawText(850,100,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+      int lineCount = 0;
+      int column = 0;
+      for(int i = 0; i<inventory->getVegNum(); i++){
+        qDebug()<<i;
+          if(inventory->getVegetableByIndex(i)->getRemainingNum() || 
+                  inventory->getVegetableByIndex(i)->hasInteraction()){
+              if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) > 1250  ){
+                  if(currentText == &leftText){
+                      currentText = &rightText;
+                      lineCount = 0;
+                      column = 1;
+                      painter.drawLine(500,40,500,1250);
+                  }else{
+                      painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                      painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                      leftText= "";
+                      rightText="";
+                      printer->newPage();
+
+                      painter.drawLine(500,40,500,1250);
+
+                      painter.drawText(550,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                      currentText = &leftText;
+                      column = 0;
+                      lineCount = 0;
+              }
+          }
+
+              *currentText = *currentText + QString(inventory->
+                                 getVegetableByIndex(i)->
+                                 getVegetablename().c_str()) + ":  "+ "\n";
+              *currentText = *currentText +"Total: " + QString::number(inventory->getVegetableByIndex(i)
+                             ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                          getUnit().c_str()) +"\n";
+
+              *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
+                              ->formatTransaction().c_str()) +"\n";
+
+              lineCount += 2;
+              painter.drawLine(500 * column,lineHeight * (lineCount +1) + 40,
+                              500 *(column + 1),lineHeight * (1+lineCount) + 40);
+
+      }else{
+              if( lineHeight * (lineCount + 1) > 1250  ){
+                  if(currentText == &leftText){
+                      currentText = &rightText;
+                      lineCount = 0;
+                      column = 1;
+                      painter.drawLine(500,40,500,1250);
+                  }else{
+                      painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                      painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                      leftText= "";
+                      rightText="";
+                      printer->newPage();
+
+                      painter.drawLine(500,40,500,1250);
+
+                      painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                      currentText = &leftText;
+                      column = 0;
+                      lineCount = 0;
+              }
+          }
+
+              *currentText = *currentText + QString(inventory->
+                                 getVegetableByIndex(i)->
+                                 getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
+                             ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                          getUnit().c_str()) +"\n";
+              lineCount += 1;
+              painter.drawLine(500 * column,lineHeight * (lineCount + 1) + 40,
+                              500 * (column + 1),lineHeight * (lineCount + 1) + 40);
+
+      }
+
+    }
+   painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+   painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+   painter.end();
+  }
 }
 
 void Dialog::printI(QPrinter* printer){
@@ -654,16 +789,31 @@ void Dialog::printI(QPrinter* printer){
         QFont font("Courier",-1,QFont::Bold,false);
 
         painter.begin(printer);
+
         font.setPixelSize(amount);
         painter.setFont(font);
         QFontMetrics metric(font);
-        int lineHeight = metric.height();
+        double lineHeight = painter.fontMetrics().height();
+        qDebug()<<lineHeight;
+
+
+        QString title = "test";
+
+        int textWidth = painter.window().width();
+        int maxHeight = painter.window().height();
+
+        QRect titleRect = painter.boundingRect(0, 0, textWidth, maxHeight,
+                                                Qt::TextWordWrap, title);
+
+        qDebug()<<titleRect.height();
+
+
 
         QString leftText= "";
         QString rightText="";
         QString * currentText = &leftText;
-        painter.drawLine(450,40,450,1250);
-        painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+        painter.drawLine(500,40,500,1250);
+        painter.drawText(850,100,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
         int lineCount = 0;
         int column = 0;
         for(int i = 0; i<inventory->getVegNum(); i++){
@@ -673,7 +823,7 @@ void Dialog::printI(QPrinter* printer){
                         currentText = &rightText;
                         lineCount = 0;
                         column = 1;
-                        painter.drawLine(450,40,450,1250);
+                        painter.drawLine(500,40,500,1250);
                     }else{
                         painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
                         painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
@@ -681,9 +831,9 @@ void Dialog::printI(QPrinter* printer){
                         rightText="";
                         printer->newPage();
 
-                        painter.drawLine(450,40,450,1250);
+                        painter.drawLine(500,40,500,1250);
 
-                        painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                        painter.drawText(550,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
                         currentText = &leftText;
                         column = 0;
                         lineCount = 0;
@@ -704,8 +854,8 @@ void Dialog::printI(QPrinter* printer){
                 }
 
                 lineCount += 2;
-                painter.drawLine(450 * column,lineHeight * (lineCount +1) + 40,
-                                450 *(column + 1),lineHeight * (1+lineCount)+40);
+                painter.drawLine(500 * column,lineHeight * (lineCount +1) + 40,
+                                500 *(column + 1),lineHeight * (1+lineCount)+40);
 
         }else{
                 if( lineHeight * (lineCount + 1) > 1250  ){
@@ -713,7 +863,7 @@ void Dialog::printI(QPrinter* printer){
                         currentText = &rightText;
                         lineCount = 0;
                         column = 1;
-                        painter.drawLine(450,40,450,1250);
+                        painter.drawLine(500,40,500,1250);
                     }else{
                         painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
                         painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
@@ -721,7 +871,7 @@ void Dialog::printI(QPrinter* printer){
                         rightText="";
                         printer->newPage();
 
-                        painter.drawLine(450,40,450,1250);
+                        painter.drawLine(500,40,500,1250);
 
                         painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
                         currentText = &leftText;
@@ -736,8 +886,8 @@ void Dialog::printI(QPrinter* printer){
                                ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
                                                             getUnit().c_str()) +"\n";
                 lineCount += 1;
-                painter.drawLine(450 * column,lineHeight * (lineCount + 1) + 40,
-                                450 *(column + 1),lineHeight * (lineCount + 1)+40);
+                painter.drawLine(500 * column,lineHeight * (lineCount + 1) + 40,
+                                500 * (column + 1),lineHeight * (lineCount + 1) + 40);
 
         }
 
@@ -747,10 +897,6 @@ void Dialog::printI(QPrinter* printer){
    painter.end();
   }
 }
-
-/**
- * Right click dump
- */
 
 void Dialog::dumpVege(){
     if(currentVege){
@@ -897,6 +1043,7 @@ void Dialog::printH(QPrinter * printer){
         QFont font("Courier",-1,QFont::Bold,false);
 
         painter.begin(printer);
+
         font.setPixelSize(amount);
         painter.setFont(font);
         QFontMetrics metric(font);
@@ -907,6 +1054,8 @@ void Dialog::printH(QPrinter * printer){
         int lineCount = 0;
         int column = 0;
         painter.drawLine(450,40,450,1250);
+        painter.drawLine(900,40,450,1250);
+        painter.drawLine(1000,40,450,1250);
         painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
 
         for(int i = 0; i<inventory->getVegNum(); i++){
@@ -1654,24 +1803,17 @@ void Dialog:: undoHistory(){
             customer = currentVege->getHistoryObject(ui->historyList->currentRow())->getCustomer();
             dS = currentVege->getHistoryObject(ui->historyList->currentRow())->getDateSold();
 
-            if(currentVege->getHistoryObject(ui->historyList->currentRow())->getDumped()){
-                qDebug()<<"dumped";
+            string type = currentVege->getHistoryObject(ui->historyList->currentRow())->getType();
+            if (type == "Dump"){
                 currentVege->restock(amount, dP, company, returnNum);
-
-            }else if(currentVege->getHistoryObject(ui->historyList->currentRow())->getTui()){
-                qDebug()<<"Tui";
+            }else if (type == "Tui"){
                 currentVege->restock(amount, dP, company, returnNum);
                 currentVege->reTui(dS, amount, dP, company);
-            }else if(currentVege->getHistoryObject(ui->historyList->currentRow())->getReturned()){
-                qDebug()<<"return";
+            }else if (type == "Return"){
                 currentVege->undoRetOrBuy(amount, dP, company, dS, customer);
-            }
-            else if(currentVege->getHistoryObject(ui->historyList->currentRow())->getCustomer().compare("\t")){ //if sold
-                    qDebug()<<"sell";
+            }else if (type == "Sell"){
                     currentVege->restock(amount, dP,company,returnNum);
-            }
-            else{
-                qDebug()<<"buy";
+            }else if (type == "Buy"){
                 currentVege->undoRetOrBuy(amount, dP, company, dS, customer);
             }
 
@@ -1865,12 +2007,5 @@ int Dialog::queryVeges(){
       return -1;
 }
 
-int Dialog::numberOfNonEmptyVeges(){
-  int counter = 0;
-  for(int i = 0; i < inventory->getVegNum(); i++){
-      if(inventory->getVegetableByIndex(i)->getTotalVeges())
-        counter++;
-  }
-  return counter;
-}
+
 

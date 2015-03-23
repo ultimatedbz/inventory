@@ -91,10 +91,12 @@ int MultiBuyController:: getElementNum(){
 }
 
 void MultiBuyController:: addElement(){
-  vector<int> tempv;
-  comboIndexToActual->push_back(tempv);
+
   if(selectedVeges->size() < mInventory->getVegNum()
      && selectedVeges->size() < 15){
+
+    vector<int> tempv;
+    comboIndexToActual->push_back(tempv);
 
     QComboBox* temp = (*formArray)[0]->getVegeDrop();
 

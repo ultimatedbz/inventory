@@ -24,6 +24,7 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     saveAsAction = fileMenu->addAction(mTranslator ->translate("另存新檔").c_str());
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     printAction = fileMenu->addAction(mTranslator ->translate("印 Inventory").c_str());
+    printAction3 = fileMenu->addAction("Print Today's Transactions");
     printAction2 = fileMenu->addAction(mTranslator ->translate("印 History").c_str());
 
 
@@ -53,6 +54,7 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     connect(saveAsAction, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(printAction, SIGNAL(triggered()), this, SLOT(printInventory()));
     connect(printAction2, SIGNAL(triggered()), this, SLOT(printHistory()));
+    connect(printAction3, SIGNAL(triggered()), this, SLOT(printTransactions()));
     connect(changeToEnglishAction, SIGNAL(triggered()), this, SLOT(changeToEnglish()));
     connect(changeToChineseAction, SIGNAL(triggered()), this, SLOT(changeToChinese()));
 
@@ -109,6 +111,10 @@ void IMenuBar:: printHistory(){
     ((Dialog* ) parent) -> printHistory();
 }
 
+void IMenuBar:: printTransactions(){
+    ((Dialog* ) parent) -> printTransactions();
+}
+
 void IMenuBar:: changeToEnglish(){
     ((Dialog* ) parent) -> changeToEnglish();
 }
@@ -155,6 +161,7 @@ void IMenuBar:: removeVegetable(){
 void IMenuBar:: removeUnit(){
     ((Dialog* ) parent) -> removeUnit();
 }
+
 
 
 
