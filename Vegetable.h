@@ -26,7 +26,8 @@ public:
   int sellVege(int amount, string costumer, string date, string price, int selection);
   int dumpVege(int amount, string date, int selection);
   int returnTo(int amount, string date, int selection);
-  void returnThis(string dateBought, int a, string rer, string co, string dateB);
+  void returnThis(string dateReturned, int amount,
+                  string returner, string company, string dateBought);
 
   int getHistoryNum();
   int getTotalVeges();
@@ -73,12 +74,13 @@ public:
    /* Transaction Printing */
    void setUpTrans();
    void transBuy();
-   void transSell(int amount, string datePurchased, string company);
-   void transTui();
-   void transReturn();
-   void transDump();
+   void transSell(int amount, string datePurchased, string company, string customer);
+   void transTui(int amount, string datePurchased, string company);
+   void transReturn(int amount, string datePurchased, string company);
+   void transDump(int amount, string datePurachased, string company);
    string transByIndex(int index);
    bool hasInteraction();
+   int getTransNum();
 
 private:
   string vegetableName;

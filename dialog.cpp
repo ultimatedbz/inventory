@@ -678,7 +678,6 @@ void Dialog::printT(QPrinter* printer){
       int lineCount = 0;
       int column = 0;
       for(int i = 0; i<inventory->getVegNum(); i++){
-        qDebug()<<i;
           if(inventory->getVegetableByIndex(i)->getRemainingNum() || 
                   inventory->getVegetableByIndex(i)->hasInteraction()){
               if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) > 1250  ){

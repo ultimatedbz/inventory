@@ -573,7 +573,7 @@ string Vegetable::formatTransaction(){
     temp.buyVege(remainingArray[i].getRemaining(), remainingArray[i].getCompany(),
                  remainingArray[i].getDate(),remainingArray[i].getPrice());
   }
-  temp.setUpTrans();
+
   /* Revert to yesterday's */
   for(int i = historyNum - 1; i >= 0; i--){
     if(historyArray[i].getDateToCompare() == today){
@@ -598,10 +598,13 @@ string Vegetable::formatTransaction(){
       }else if (type == "Sell"){
           temp.restock(amount, dP, company, returnNum);
       }else if(type == "Buy"){
-          temp.undoRetOrBuy(amount, dP, company, dS, customer);
+          //temp.undoRetOrBuy(amount, dP, company, dS, customer);
       }
     }
   }
+
+  /* set up temp as yesterday */
+  temp.setUpTrans();
 
   /* Sell stuff, Add new if buy */
   for(int i = 0; i < historyNum; i++){
@@ -618,24 +621,29 @@ string Vegetable::formatTransaction(){
       price = historyArray[i].getPrice();
 
       string type = historyArray[i].getType();
+      int selection = temp.returnExist(company, dP);
       if (type == "Dump"){
-          temp.transDump();
+        //temp.dumpVege(amount, "",selection);
+        temp.transDump(amount, dP, company);
       }else if (type == "Tui"){
-          temp.transTui();
+        //temp.returnTo(amount, "", selection);
+        temp.transTui(amount, dP, company);
       }else if (type == "Return"){
-          temp.transReturn();
+        //temp.returnThis(dP, amount, );
+        temp.transReturn(amount, dP, company);
       }else if (type == "Sell"){
-          temp.transSell(amount, dP, company);
+        //temp.sellVege(amount, "", "", "", selection);
+        temp.transSell(amount, dP, company, customer);
       }else if(type == "Buy"){
-          temp.buyVege(amount,company, dP, price);
-          temp.transBuy();
+        //temp.buyVege(amount,company, dP, price);
+        //temp.transBuy();
       }
     }
   }
 
   string product = "";
   /* Go through temp's transactions vector and print out all transactions */
-  for(int i = 0; i < temp.getRemainingNum(); i++){
+  for(int i = 0; i < temp.getTransNum(); i++){
     product = product + temp.transByIndex(i) + "\n";
   }
   return product;
@@ -915,18 +923,21 @@ void Vegetable::setUpTrans(){
   transactions = vector<vector<string> >();
   for( int i = 0; i < remainingNum; i++){
     transactions.push_back(vector<string>());
-    transactions[i].push_back(formatRemaining3(i));
-    qDebug()<<transactions[i][0].c_str();
+    transactions[i].push_back(formatRemaining3(i) + " ");
   }
 }
 
 /* Need to push back another one */
 void Vegetable::transBuy(){
-  transactions.push_back(vector<string>());
-  transactions[transactions.size() - 1].push_back(formatRemaining3(remainingNum - 1));
+  if(transactions.size() < remainingNum){
+    transactions.push_back(vector<string>());
+    transactions[transactions.size() - 1]
+        .push_back(formatRemaining3(remainingNum - 1) + " ");
+    qDebug()<<transactions.size();
+  }
 }
 
-void Vegetable::transSell(int amount, string dP, string company){
+void Vegetable::transSell(int amount, string dP, string company, string customer){
   string result;
 
   ostringstream convert;
@@ -937,27 +948,65 @@ void Vegetable::transSell(int amount, string dP, string company){
 
   /* Gets index of Remaining*/
   int selection = remainExist(company,dP);
-  transactions[selection].push_back(" -" + result + "(" + company + ")");
+  transactions[selection].push_back(result + "(" + customer + ")");
 }
 
-void Vegetable::transTui(){
+void Vegetable::transTui(int amount, string dP, string company){
+  string result;
+
+  ostringstream convert;
+
+  convert << amount;
+
+  result = convert.str();
+
+  /* Gets index of Remaining*/
+  int selection = remainExist(company,dP);
+  transactions[selection].push_back(result + "(TUI)");
 
 }
 
-void Vegetable::transReturn(){
+void Vegetable::transReturn(int amount, string dP, string company){
+  string result;
 
+  ostringstream convert;
+
+  convert << amount;
+
+  result = convert.str();
+
+  /* Gets index of Remaining*/
+  int selection = remainExist(company,dP);
+  transactions[selection].push_back("+" + result + "(RT)");
 }
 
-void Vegetable::transDump(){
+void Vegetable::transDump(int amount, string dP, string company){
+  string result;
 
+  ostringstream convert;
+
+  convert << amount;
+
+  result = convert.str();
+
+  /* Gets index of Remaining*/
+  int selection = remainExist(company,dP);
+  transactions[selection].push_back(result + "(Dump)");
 }
 
 string Vegetable::transByIndex(int index){
   string product = "";
   for(int i = 0; i < transactions[index].size(); i++){
     product = product + transactions[index][i];
+    if( i > 0 && ! (i%3)){
+      product = product + "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
+    }
   }
   return product;
+}
+
+int Vegetable::getTransNum(){
+  return transactions.size();
 }
 
 bool Vegetable::hasInteraction(){
