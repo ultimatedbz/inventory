@@ -559,97 +559,6 @@ string Vegetable::formatRemaining3(int i){
     return remainingArray[i].formatRemaining3();
 }
 
-string Vegetable::formatTransaction(){
-  Vegetable temp = Vegetable();
-
-  time_t t = time(0);
-  struct tm * now = localtime(&t);
-  char buffer[128];
-  sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
-  string today = buffer;
-
-  /* Copy the remaining array over */
-  for(int i = 0; i < remainingNum; i++){
-    temp.buyVege(remainingArray[i].getRemaining(), remainingArray[i].getCompany(),
-                 remainingArray[i].getDate(),remainingArray[i].getPrice());
-  }
-
-  /* Revert to yesterday's */
-  for(int i = historyNum - 1; i >= 0; i--){
-    if(historyArray[i].getDateToCompare() == today){
-
-      int amount = 0;
-      string dP, company, customer, dS;
-      amount = historyArray[i].getDifference();
-      dP =  historyArray[i].getDatePurchased();
-      company = historyArray[i].getCompany();
-      int returnNum = historyArray[i].getChangeNum();
-      customer = historyArray[i].getCustomer();
-      dS = historyArray[i].getDateSold();
-
-      string type = historyArray[i].getType();
-      if (type == "Dump"){
-          temp.restock(amount, dP, company, returnNum);
-      }else if (type == "Tui"){
-          temp.restock(amount, dP, company, returnNum);
-          temp.reTui(dS, amount, dP, company);
-      }else if (type == "Return"){
-          temp.undoRetOrBuy(amount, dP, company, dS, customer);
-      }else if (type == "Sell"){
-          temp.restock(amount, dP, company, returnNum);
-      }else if(type == "Buy"){
-          //temp.undoRetOrBuy(amount, dP, company, dS, customer);
-      }
-    }
-  }
-
-  /* set up temp as yesterday */
-  temp.setUpTrans();
-
-  /* Sell stuff, Add new if buy */
-  for(int i = 0; i < historyNum; i++){
-    if(historyArray[i].getDateToCompare() == today){
-
-      int amount = 0;
-      string dP, company, customer, dS, price;
-      amount = historyArray[i].getDifference();
-      dP =  historyArray[i].getDatePurchased();
-      company = historyArray[i].getCompany();
-      int returnNum = historyArray[i].getChangeNum();
-      customer = historyArray[i].getCustomer();
-      dS = historyArray[i].getDateSold();
-      price = historyArray[i].getPrice();
-
-      string type = historyArray[i].getType();
-      int selection = temp.returnExist(company, dP);
-      if (type == "Dump"){
-        //temp.dumpVege(amount, "",selection);
-        temp.transDump(amount, dP, company);
-      }else if (type == "Tui"){
-        //temp.returnTo(amount, "", selection);
-        temp.transTui(amount, dP, company);
-      }else if (type == "Return"){
-        //temp.returnThis(dP, amount, );
-        temp.transReturn(amount, dP, company);
-      }else if (type == "Sell"){
-        //temp.sellVege(amount, "", "", "", selection);
-        temp.transSell(amount, dP, company, customer);
-      }else if(type == "Buy"){
-        //temp.buyVege(amount,company, dP, price);
-        //temp.transBuy();
-      }
-    }
-  }
-
-  string product = "";
-  /* Go through temp's transactions vector and print out all transactions */
-  for(int i = 0; i < temp.getTransNum(); i++){
-    product = product + temp.transByIndex(i) + "\n";
-  }
-  return product;
-}
-
-
 string Vegetable::formatReturn(int i){
     return returnArray[i].formatReturn(unit);
 }
@@ -977,7 +886,23 @@ void Vegetable::transReturn(int amount, string dP, string company){
 
   /* Gets index of Remaining*/
   int selection = remainExist(company,dP);
-  transactions[selection].push_back("+" + result + "(RT)");
+  if(selection < 0){ // this means a new entry was returned
+    transactions.push_back(vector<string>());
+    char buffer [128];
+    sprintf(buffer,"%5s%5d%s%10s%4s",
+           dP.c_str(),
+           0,
+           padding(company).c_str(),
+           company.c_str(),
+           "");
+
+    transactions[transactions.size() - 1]
+        .push_back(string(buffer) + " ");
+    returnThis("",amount,"",company, dP); //so we can find this with remainExist later on
+    transactions[transactions.size() - 1].push_back("+" + result + "(RT)");
+
+  }else
+    transactions[selection].push_back("+" + result + "(RT)");
 }
 
 void Vegetable::transDump(int amount, string dP, string company){
@@ -1023,9 +948,112 @@ bool Vegetable::hasInteraction(){
   return false;
 }
 
+string Vegetable::formatTransaction(){
+  Vegetable temp = Vegetable();
 
+  time_t t = time(0);
+  struct tm * now = localtime(&t);
+  char buffer[128];
+  sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+  string today = buffer;
 
+  /* Copy the remaining array over */
+  for(int i = 0; i < remainingNum; i++){
+    temp.buyVege(remainingArray[i].getRemaining(), remainingArray[i].getCompany(),
+                 remainingArray[i].getDate(),remainingArray[i].getPrice());
+  }
 
+  /* Revert to yesterday's */
+  for(int i = historyNum - 1; i >= 0; i--){
+    if(historyArray[i].getDateToCompare() == today){
+
+      int amount = 0;
+      string dP, company, customer, dS;
+      amount = historyArray[i].getDifference();
+      dP =  historyArray[i].getDatePurchased();
+      company = historyArray[i].getCompany();
+      int returnNum = historyArray[i].getChangeNum();
+      customer = historyArray[i].getCustomer();
+      dS = historyArray[i].getDateSold();
+
+      string type = historyArray[i].getType();
+      if (type == "Dump"){
+          temp.restock(amount, dP, company, returnNum);
+      }else if (type == "Tui"){
+          temp.restock(amount, dP, company, returnNum);
+          temp.reTui(dS, amount, dP, company);
+      }else if (type == "Return"){
+          temp.undoRetOrBuy(amount, dP, company, dS, customer);
+      }else if (type == "Sell"){
+          temp.restock(amount, dP, company, returnNum);
+      }else if(type == "Buy"){
+          //temp.undoRetOrBuy(amount, dP, company, dS, customer);
+      }
+    }
+  }
+
+  /* set up temp as yesterday */
+  temp.setUpTrans();
+
+  /* Sell stuff, Add new if buy */
+  for(int i = 0; i < historyNum; i++){
+    if(historyArray[i].getDateToCompare() == today){
+
+      int amount = 0;
+      string dP, company, customer, dS, price;
+      amount = historyArray[i].getDifference();
+      dP =  historyArray[i].getDatePurchased();
+      company = historyArray[i].getCompany();
+      int returnNum = historyArray[i].getChangeNum();
+      customer = historyArray[i].getCustomer();
+      dS = historyArray[i].getDateSold();
+      price = historyArray[i].getPrice();
+
+      string type = historyArray[i].getType();
+      int selection = temp.returnExist(company, dP);
+      if (type == "Dump"){
+        //temp.dumpVege(amount, "",selection);
+        temp.transDump(amount, dP, company);
+      }else if (type == "Tui"){
+        //temp.returnTo(amount, "", selection);
+        temp.transTui(amount, dP, company);
+      }else if (type == "Return"){
+        //temp.returnThis(dP, amount, );
+        temp.transReturn(amount, dP, company);
+      }else if (type == "Sell"){
+        //temp.sellVege(amount, "", "", "", selection);
+        temp.transSell(amount, dP, company, customer);
+      }else if(type == "Buy"){
+        //temp.buyVege(amount,company, dP, price);
+        //temp.transBuy();
+      }
+    }
+  }
+
+  string product = "";
+  /* Go through temp's transactions vector and print out all transactions */
+  for(int i = 0; i < temp.getTransNum(); i++){
+    product = product + temp.transByIndex(i) + "\n";
+  }
+  return product;
+}
+
+string Vegetable:: padding( string word){
+    string product = "";
+    int num = 0;
+    for(int i = 0; i < word.size(); i ++){
+        char x = word[i];
+        if( x < 0 && (x & 0x40)){
+            product = product + " ";
+            num++;
+            if(num == 2){
+                num = 0;
+                product = product + " ";
+            }
+        }
+    }
+    return product;
+}
 
 
 

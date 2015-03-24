@@ -81,7 +81,7 @@ public:
    string transByIndex(int index);
    bool hasInteraction();
    int getTransNum();
-
+   string padding(string word);
 private:
   string vegetableName;
   History* historyArray;
