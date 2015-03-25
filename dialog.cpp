@@ -324,7 +324,7 @@ void Dialog::on_Sell_clicked()
         sort(indexToPrice.begin(),indexToPrice.end(),myobject);
 
         /* Sell the remainIndexes, greatest to least */
-        for(auto it = indexToPrice.begin(); it != indexToPrice.end(); it++){
+        for(vector<pair<int,int> >::iterator it = indexToPrice.begin(); it != indexToPrice.end(); it++){
           qDebug()<<(*it).first;
           inventory->getVegetableByIndex(vegeIndex)->sellVege(
                 (*it).second, customer, date->text().toStdString(),
