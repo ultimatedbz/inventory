@@ -19,7 +19,7 @@ MultiSellController::MultiSellController(Inventory* inventory,
   /* Add first vegetable in stock */
   int temp = 1;
   for(int i = 0; i < temp; i++){
-    if( inventory->getVegetableByIndex(0)->getTotalVeges() ){
+    if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
       selectedVeges->insert(i);
       (*comboIndexToActual)[0].push_back(i);
       formArray->push_back(new MultiSellElement(i, this, inventory, font,

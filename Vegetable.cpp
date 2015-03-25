@@ -184,22 +184,20 @@ int Vegetable::sellVege(int amount, string customer, string date,
 
           int deduct = min(portion, returnChange);
           returnArray[temp].updateReturn((-1)*deduct,customer);
-          if(temp >-1 && returnArray[temp].getReturn() == 0){
+          if(temp > -1 && returnArray[temp].getReturn() == 0){
                 for(int i=temp; i < returnNum - 1; i++){
                     returnArray[temp]= returnArray[temp+1];
                 }
                 returnNum--;
           }
           returnChange -= deduct;
-
       }
-
   }
 
     //needs to be last or else selection will get messed up
     if(remainingArray[selection].getRemaining() == 0){
         if(remainingNum !=1){
-            for(int i=selection; i < remainingNum -1; i++){
+            for(int i = selection; i < remainingNum - 1; i++){
                 remainingArray[i]= remainingArray[1+i];
             }
         }

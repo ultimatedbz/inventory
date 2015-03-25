@@ -311,11 +311,31 @@ void Dialog::on_Sell_clicked()
 
         if(amounts.size() != remainIndexes.size())
           continue;
+
+        vector<pair<int, int> > indexToPrice = vector<pair<int,int> >();
+
+        /* Link up remainindexes to amounts */
         for(int j = 0; j < amounts.size(); j++){
+          indexToPrice.push_back(
+                make_pair(remainIndexes[amounts.size() - 1 - j],
+                atoi(amounts[j].c_str())));
+        }
+        /* Sort the remainIndexes so that they are sold from greatest to least */
+        sort(indexToPrice.begin(),indexToPrice.end(),myobject);
+
+        /* Sell the remainIndexes, greatest to least */
+        for(auto it = indexToPrice.begin(); it != indexToPrice.end(); it++){
+          qDebug()<<(*it).first;
+          inventory->getVegetableByIndex(vegeIndex)->sellVege(
+                (*it).second, customer, date->text().toStdString(),
+                price, (*it).first);
+        }
+
+        /*for(int j = 0; j < amounts.size(); j++){
           inventory->getVegetableByIndex(vegeIndex)->sellVege(
                 atoi(amounts[j].c_str()), customer, date->text().toStdString(),
                 price, remainIndexes[amounts.size() - 1 - j]);
-        }
+        }*/
       }
       on_vegeList_itemClicked(ui->vegeList->currentItem());
     }

@@ -149,7 +149,11 @@ private:
     IMenuBar *menuBar;
 
     int queryVeges();
-
+    struct myclass {
+      bool operator() (pair<int,int> i, pair<int,int> j) {
+        return (i.first>j.first);
+      }
+    } myobject;
 
 
 };
