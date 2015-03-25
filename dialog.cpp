@@ -190,7 +190,7 @@ void Dialog::on_Buy_clicked()
     hLay->addWidget(&buttonBox);
     dialog_layout->addRow(hLay);
 
-    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
+    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
 
     QObject::connect(tb, SIGNAL(clicked()),multiBuyController, SLOT(addElement()));
     QObject::connect(tb1, SIGNAL(clicked()),multiBuyController, SLOT(subtractElement()));
@@ -282,7 +282,7 @@ void Dialog::on_Sell_clicked()
     hLay->addWidget(&buttonBox);
     dialog_layout->addRow(hLay);
 
-    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width());
+    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
 
     QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
@@ -314,7 +314,7 @@ void Dialog::on_Sell_clicked()
         for(int j = 0; j < amounts.size(); j++){
           inventory->getVegetableByIndex(vegeIndex)->sellVege(
                 atoi(amounts[j].c_str()), customer, date->text().toStdString(),
-                price, remainIndexes[j]);
+                price, remainIndexes[amounts.size() - 1 - j]);
         }
       }
       on_vegeList_itemClicked(ui->vegeList->currentItem());
