@@ -170,7 +170,6 @@ int Vegetable::sellVege(int amount, string customer, string date,
 
   if(getRemaining(selection) - amount < 0)
       return 0;
-qDebug()<<173;
   /* Update the Breakdown. Update returning if needed. */
   if (remainingArray[selection].getReturn()){
 
@@ -181,28 +180,25 @@ qDebug()<<173;
   else
       remainingArray[selection].updateRemaining((-1) * amount);
 
-qDebug()<<176;
   //if (remainingArray[selection].getReturn()){
       /* Change returns */
    //   returnChange = min(amount,remainingArray[selection].getReturn());
-qDebug()<<180<<remainingArray[selection].getReturn();
       while(returnChange){
           int temp = returnExistCompany( remainingArray[selection].getCompany(),
                                   remainingArray[selection].getDate());
           int portion = returnArray[temp].getReturn();
 
           int deduct = min(portion, returnChange);
-          returnArray[temp].updateReturn((-1)*deduct,customer);
+          returnArray[temp].updateReturn((-1) * deduct,customer);
           if(temp > -1 && returnArray[temp].getReturn() == 0){
-                for(int i=temp; i < returnNum - 1; i++){
-                    returnArray[temp]= returnArray[temp+1];
+                for(int i = temp; i < returnNum - 1; i++){
+                    returnArray[temp] = returnArray[temp+1];
                 }
                 returnNum--;
           }
           returnChange -= deduct;
       }
   //}
-qDebug()<<197<<remainingArray[selection].getReturn();
 
     //needs to be last or else selection will get messed up
     if(remainingArray[selection].getRemaining() == 0){
@@ -933,10 +929,14 @@ vector<vector<string> > Vegetable::getTransactions(){
 string Vegetable::transByIndex(int index){
   string product = "";
   for(int i = 0; i < transactions[index].size(); i++){
+    if( i > 1 && !( (i - 1) % 3))
+        product = product + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                  "\t\t\t\t\t\t\t\t\t\t\t";
+
     product = product + transactions[index][i];
-    if( i > 0 && ! (i%3)){
-      product = product + "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
-    }
+
+    if( i > 0 && ! (i%3))
+      product = product + "\n";
   }
   return product;
 }
@@ -1041,16 +1041,6 @@ string Vegetable::formatTransaction(){
     }
   }
 
-  mTransNum  = 0;
-  vector<vector<string> > temp2 = temp.getTransactions();
-  for(int i = 0; i < temp2.size(); i++){
-    /* temp2[i] includes the initial formatremain3 */
-    qDebug()<<temp2[i].size();
-    if(!((temp2[i].size() - 1) % 3))
-      mTransNum += (temp2[i].size() - 1) / 3;
-    else
-      mTransNum += (temp2[i].size() - 1) / 3 + 1;
-  }
 
   if(!mTransNum)
     mTransNum++;
@@ -1058,8 +1048,22 @@ string Vegetable::formatTransaction(){
   string product = "";
   /* Go through temp's transactions vector and print out all transactions */
   for(int i = 0; i < temp.getTransNum(); i++){
-    product = product + temp.transByIndex(i) + "\n";
+    product = product + temp.transByIndex(i);
   }
+
+  mTransNum  = 0;
+  vector<vector<string> > temp2 = temp.getTransactions();
+  for(int i = 0; i < temp2.size(); i++){
+    /* temp2[i] includes the initial formatremain3 */
+    qDebug()<<temp2[i].size();
+    if(!((temp2[i].size() - 1) % 3))
+      mTransNum += (temp2[i].size() - 1) / 3;
+    else{
+      mTransNum += (temp2[i].size() - 1) / 3 + 1;
+      product = product + "\n"; // Only add new line if not divisible by 3
+    }
+  }
+
   return product;
 }
 
