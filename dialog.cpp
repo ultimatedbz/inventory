@@ -325,11 +325,10 @@ void Dialog::on_Sell_clicked()
 
         /* Sell the remainIndexes, greatest to least */
         for(vector<pair<int,int> >::iterator it = indexToPrice.begin(); it != indexToPrice.end(); it++){
-          qDebug()<<328;
+
           inventory->getVegetableByIndex(vegeIndex)->sellVege(
                 (*it).second, customer, date->text().toStdString(),
                 price, (*it).first);
-          qDebug()<<332;
         }
 
         /*for(int j = 0; j < amounts.size(); j++){
@@ -731,7 +730,7 @@ void Dialog::printT(QPrinter* printer){
                                                       getUnit().c_str()) +"\n";
 
           *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
-                          ->formatTransaction().c_str());
+                          ->formatTransaction(*mAbbreviator).c_str());
 
           lineCount += 2; // For Vegetable name and Total
           int additionalLines = inventory->
@@ -817,8 +816,6 @@ void Dialog::printI(QPrinter* printer){
         painter.setFont(font);
         QFontMetrics metric(font);
         double lineHeight = painter.fontMetrics().height();
-        qDebug()<<lineHeight;
-
 
         QString title = "test";
 
@@ -827,9 +824,6 @@ void Dialog::printI(QPrinter* printer){
 
         QRect titleRect = painter.boundingRect(0, 0, textWidth, maxHeight,
                                                 Qt::TextWordWrap, title);
-
-        qDebug()<<titleRect.height();
-
 
 
         QString leftText= "";

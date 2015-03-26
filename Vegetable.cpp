@@ -18,6 +18,7 @@ using namespace std;
 #include "Vegetable.h"
 
 
+
 /**
  * Initializes and returns a newly allocated scientific data set.
  *
@@ -849,7 +850,8 @@ void Vegetable::transBuy(){
   }
 }
 
-void Vegetable::transSell(int amount, string dP, string company, string customer){
+void Vegetable::transSell(int amount, string dP, string company, string customer,
+                          Abbreviation abb){
   string result;
 
   ostringstream convert;
@@ -860,7 +862,7 @@ void Vegetable::transSell(int amount, string dP, string company, string customer
 
   /* Gets index of Remaining*/
   int selection = remainExist(company,dP);
-  transactions[selection].push_back(result + "(" + customer + ")");
+  transactions[selection].push_back(result + "(" + abb.shrink(customer) + ")");
 }
 
 void Vegetable::transTui(int amount, string dP, string company){
@@ -959,7 +961,7 @@ bool Vegetable::hasInteraction(){
   return false;
 }
 
-string Vegetable::formatTransaction(){
+string Vegetable::formatTransaction(Abbreviation abb){
   Vegetable temp = Vegetable();
 
   time_t t = time(0);
@@ -1033,7 +1035,7 @@ string Vegetable::formatTransaction(){
         temp.transReturn(amount, dP, company);
       }else if (type == "Sell"){
         //temp.sellVege(amount, "", "", "", selection);
-        temp.transSell(amount, dP, company, customer);
+        temp.transSell(amount, dP, company, customer, abb);
       }else if(type == "Buy"){
         //temp.buyVege(amount,company, dP, price);
         //temp.transBuy();
@@ -1044,7 +1046,7 @@ string Vegetable::formatTransaction(){
 
   if(!mTransNum)
     mTransNum++;
-  qDebug()<<1032 <<mTransNum;
+
   string product = "";
   /* Go through temp's transactions vector and print out all transactions */
   for(int i = 0; i < temp.getTransNum(); i++){
@@ -1055,7 +1057,7 @@ string Vegetable::formatTransaction(){
   vector<vector<string> > temp2 = temp.getTransactions();
   for(int i = 0; i < temp2.size(); i++){
     /* temp2[i] includes the initial formatremain3 */
-    qDebug()<<temp2[i].size();
+
     if(!((temp2[i].size() - 1) % 3))
       mTransNum += (temp2[i].size() - 1) / 3;
     else{

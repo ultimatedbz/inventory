@@ -1,8 +1,7 @@
 #ifndef VEGETABLE_H
 #define VEGETABLE_H
-/*
- * Vegetable.h
- */
+
+#include "abbreviation.h"
 
 #include <string>
 using namespace std;
@@ -53,7 +52,6 @@ public:
   string formatRemaining(int i);
   string formatRemaining2(int i);
   string formatRemaining3(int i);
-  string formatTransaction();
   string formatReturn(int i);
   const string getVegetablename() const;
   int returnExist(string company, string date);
@@ -72,9 +70,11 @@ public:
    void clearTui();
 
    /* Transaction Printing */
+   string formatTransaction(Abbreviation abb);
    void setUpTrans();
    void transBuy();
-   void transSell(int amount, string datePurchased, string company, string customer);
+   void transSell(int amount, string datePurchased, string company, string customer,
+                  Abbreviation abb);
    void transTui(int amount, string datePurchased, string company);
    void transReturn(int amount, string datePurchased, string company);
    void transDump(int amount, string datePurachased, string company);
