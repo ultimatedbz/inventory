@@ -81,7 +81,9 @@ public:
    string transByIndex(int index);
    bool hasInteraction();
    int getTransNum();
+   int getMTransNum();
    string padding(string word);
+   vector<vector<string> > getTransactions();
 private:
   string vegetableName;
   History* historyArray;
@@ -96,6 +98,7 @@ private:
   int tuiNum;
   ReturnTo* tuiArray;
   vector<vector<string> > transactions;
+  int mTransNum;
 };
 
 #endif // Vegetable_H

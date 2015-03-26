@@ -170,14 +170,22 @@ int Vegetable::sellVege(int amount, string customer, string date,
 
   if(getRemaining(selection) - amount < 0)
       return 0;
-
-  /* Update the Breakdown */
-  remainingArray[selection].updateRemaining((-1) * amount);
-
+qDebug()<<173;
+  /* Update the Breakdown. Update returning if needed. */
   if (remainingArray[selection].getReturn()){
-      /* Change returns */
-      returnChange = min(amount,remainingArray[selection].getReturn());
 
+      returnChange = min(amount,remainingArray[selection].getReturn());
+      remainingArray[selection].updateRemainingWithRet((-1) * amount);
+
+  }
+  else
+      remainingArray[selection].updateRemaining((-1) * amount);
+
+qDebug()<<176;
+  //if (remainingArray[selection].getReturn()){
+      /* Change returns */
+   //   returnChange = min(amount,remainingArray[selection].getReturn());
+qDebug()<<180<<remainingArray[selection].getReturn();
       while(returnChange){
           int temp = returnExistCompany( remainingArray[selection].getCompany(),
                                   remainingArray[selection].getDate());
@@ -193,7 +201,8 @@ int Vegetable::sellVege(int amount, string customer, string date,
           }
           returnChange -= deduct;
       }
-  }
+  //}
+qDebug()<<197<<remainingArray[selection].getReturn();
 
     //needs to be last or else selection will get messed up
     if(remainingArray[selection].getRemaining() == 0){
@@ -841,7 +850,6 @@ void Vegetable::transBuy(){
     transactions.push_back(vector<string>());
     transactions[transactions.size() - 1]
         .push_back(formatRemaining3(remainingNum - 1) + " ");
-    qDebug()<<transactions.size();
   }
 }
 
@@ -918,12 +926,16 @@ void Vegetable::transDump(int amount, string dP, string company){
   transactions[selection].push_back(result + "(Dump)");
 }
 
+vector<vector<string> > Vegetable::getTransactions(){
+  return transactions;
+}
+
 string Vegetable::transByIndex(int index){
   string product = "";
   for(int i = 0; i < transactions[index].size(); i++){
     product = product + transactions[index][i];
     if( i > 0 && ! (i%3)){
-      product = product + "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
+      product = product + "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
     }
   }
   return product;
@@ -1029,6 +1041,20 @@ string Vegetable::formatTransaction(){
     }
   }
 
+  mTransNum  = 0;
+  vector<vector<string> > temp2 = temp.getTransactions();
+  for(int i = 0; i < temp2.size(); i++){
+    /* temp2[i] includes the initial formatremain3 */
+    qDebug()<<temp2[i].size();
+    if(!((temp2[i].size() - 1) % 3))
+      mTransNum += (temp2[i].size() - 1) / 3;
+    else
+      mTransNum += (temp2[i].size() - 1) / 3 + 1;
+  }
+
+  if(!mTransNum)
+    mTransNum++;
+  qDebug()<<1032 <<mTransNum;
   string product = "";
   /* Go through temp's transactions vector and print out all transactions */
   for(int i = 0; i < temp.getTransNum(); i++){
@@ -1054,7 +1080,9 @@ string Vegetable:: padding( string word){
     return product;
 }
 
-
+int Vegetable::getMTransNum(){
+  return mTransNum;
+}
 
 
 

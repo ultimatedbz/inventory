@@ -49,6 +49,7 @@ void Remaining::buy(int amount, string bc, string date, string p){
   price = p;
 
 }
+
 void Remaining::returned(int amount, string bc, string date){
     company = bc;
     dayPurchased = date;
@@ -83,6 +84,7 @@ string Remaining::formatRemaining(){
             remaining);
  return buffer;
 }
+
 string Remaining::formatRemaining2(string unit){
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
@@ -97,6 +99,7 @@ string Remaining::formatRemaining2(string unit){
             Price.c_str());
  return buffer;
 }
+
 string Remaining::formatRemaining3(){
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
@@ -110,6 +113,7 @@ string Remaining::formatRemaining3(){
            Price.c_str());
  return buffer;
 }
+
 void Remaining:: updateRemaining(int amount){
     remaining += amount;
 }
