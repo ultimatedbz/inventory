@@ -687,7 +687,7 @@ void Dialog::printT(QPrinter* printer){
 
       font.setPixelSize(amount);
       painter.setFont(font);
-      double lineHeight = painter.fontMetrics().height()+.9;
+      double lineHeight = painter.fontMetrics().height()+.65;
       int topMargin = 3 * lineHeight;
       QString leftText= "";
       QString rightText="";
@@ -699,7 +699,12 @@ void Dialog::printT(QPrinter* printer){
       for(int i = 0; i < inventory->getVegNum(); i++){
           if(inventory->getVegetableByIndex(i)->getRemainingNum() || 
                   inventory->getVegetableByIndex(i)->hasInteraction()){
-              if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) + topMargin > 1250  ){
+
+              /* Need to calculate first to see if line limit will be reached */
+              inventory->getVegetableByIndex(i)->formatTransaction(*mAbbreviator);
+              int additionalLines = inventory->
+                  getVegetableByIndex(i)->getMTransNum();
+              if( lineHeight * (lineCount + (2 + additionalLines)) + topMargin > 1250  ){
                   if(currentText == &leftText){
                       currentText = &rightText;
                       lineCount = 0;
@@ -732,8 +737,8 @@ void Dialog::printT(QPrinter* printer){
                           ->formatTransaction(*mAbbreviator).c_str());
 
           lineCount += 2; // For Vegetable name and Total
-          int additionalLines = inventory->
-              getVegetableByIndex(i)->getMTransNum();
+         // int additionalLines = inventory->
+           //   getVegetableByIndex(i)->getMTransNum();
           lineCount += additionalLines; // Lines from transactions
           painter.drawLine(500 * column,lineHeight * (lineCount) + topMargin,
                           500 * (column + 1),lineHeight * (lineCount) + topMargin);
@@ -1030,7 +1035,7 @@ void Dialog::printH(QPrinter * printer){
                     else
                         first = tuiNum;
 
-                    if( lineHeight * (lineCount + 2 + first) > 1250  ){
+                    if( lineHeight * (lineCount + 2 + first) + topMargin > 1250  ){
                         if(currentText == &leftText){
                             currentText = &rightText;
                             lineCount = 0;
@@ -1073,7 +1078,7 @@ void Dialog::printH(QPrinter * printer){
 
                 }
                 if(sellNum){
-                    if( lineHeight * (lineCount + sellNum) + 20 >1250  ){
+                    if( lineHeight * (lineCount + sellNum) + topMargin > 1250  ){
                         if(currentText == &leftText){
                             currentText = &rightText;
                             lineCount = 0;
@@ -1106,7 +1111,7 @@ void Dialog::printH(QPrinter * printer){
 
                 if(returnNum){
 
-                    if( lineHeight * (lineCount + returnNum) + 20 >1090  ){
+                    if( lineHeight * (lineCount + returnNum) + topMargin > 1250  ){
                         if(currentText == &leftText){
                             column = 1;
                             currentText = &rightText;
@@ -1139,7 +1144,7 @@ void Dialog::printH(QPrinter * printer){
 
                 }
                 if(dumpNum){
-                    if( lineHeight * (lineCount + dumpNum) + 20 >1090  ){
+                    if( lineHeight * (lineCount + dumpNum) + topMargin > 1250  ){
                         if(currentText == &leftText){
                             column = 1;
                             currentText = &rightText;
@@ -1171,7 +1176,7 @@ void Dialog::printH(QPrinter * printer){
 
                }
                 if(tuiNum){
-                    if( lineHeight * (lineCount + tuiNum) + 20 >1090  ){
+                    if( lineHeight * (lineCount + tuiNum) + topMargin > 1250  ){
                         if(currentText == &leftText){
                             column = 1;
                             currentText = &rightText;

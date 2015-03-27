@@ -955,6 +955,7 @@ string Vegetable::transByIndex(int index){
   return product;
 }
 
+/* Used by upper vegetable (only called on temp) */
 int Vegetable::getTransNum(){
   return transactions.size();
 }
@@ -1098,6 +1099,7 @@ string Vegetable:: padding( string word){
     return product;
 }
 
+/* Called on actual vegetable object, used by dialog */
 int Vegetable::getMTransNum(){
   return mTransNum;
 }
