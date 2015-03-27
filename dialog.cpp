@@ -668,7 +668,7 @@ void Dialog::printT(QPrinter* printer){
 
   QLineEdit *lineEdit = new QLineEdit(&dialog1);
   QString label = QString("請輸入字體大小");
-  lineEdit -> setText("20");
+  lineEdit -> setText("18");
   form.addRow(label, lineEdit);
 
 
@@ -795,7 +795,7 @@ void Dialog::printI(QPrinter* printer){
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
     QString label = QString("請輸入字體大小");
-    lineEdit -> setText("20");
+    lineEdit -> setText("18");
     form.addRow(label, lineEdit);
 
 
@@ -915,110 +915,6 @@ void Dialog::printI(QPrinter* printer){
   }
 }
 
-void Dialog::dumpVege(){
-    if(currentVege){
-
-        QDialog dialog(this);
-        // Use a layout allowing to have a label next to each field
-        QFormLayout form(&dialog);
-
-        // Add some text above the fields
-        dialog.setWindowTitle(mTranslator->translate("倒").c_str());
-
-        QComboBox* remainingDrop = new QComboBox(&dialog);
-        for(int i = 0; i< currentVege -> getRemainingNum(); i++){
-            remainingDrop->addItem(currentVege->formatRemaining(i).c_str());
-        }
-        remainingDrop->setCurrentIndex(ui->breakDown->currentRow());
-        remainingDrop->setFont(font);
-
-        form.addRow(mTranslator->translate("你要倒那天的菜？").c_str(), remainingDrop);
-
-        QLineEdit *lineEdit = new QLineEdit(&dialog);
-        form.addRow(new QLabel(mTranslator->translate("倒幾箱？").c_str()));
-        form.addRow(lineEdit);
-
-
-        QCheckBox checkBox(mTranslator->translate("全部").c_str(),&dialog);
-        form.addRow(&checkBox);
-
-
-        // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                               Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
-        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-        QObject::connect(&checkBox,SIGNAL(toggled(bool)), &dialog, SLOT(reject()));
-
-        int result = dialog.exec();
-        int amount = lineEdit->text().toInt();
-        int selection = remainingDrop->currentIndex();
-
-        time_t t = time(0);
-        struct tm * now = localtime(&t);
-        char today[128];
-        sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
-
-       // Show the dialog as modal
-        if ( result == QDialog::Accepted) {
-            if( amount <= 0){
-                QMessageBox messageBox;
-                messageBox.critical(0,"錯誤","Not Valid!");
-                messageBox.setFixedSize(500,200);
-            }
-
-            else if(!currentVege->dumpVege(amount, today, selection)){
-                QMessageBox error;
-                error.critical(0,"警告",mTranslator->translate("不夠數量倒!").c_str());
-                error.setFixedSize(500,200);
-
-            }
-        }else if (result == QDialog::Rejected){
-            if(checkBox.isChecked()){
-                QDialog dialog(this);
-                // Use a layout allowing to have a label next to each field
-                QFormLayout form(&dialog);
-
-                // Add some text above the fields
-                form.addRow(new QLabel(mTranslator
-                                       ->translate("你確定你要倒掉全部嗎?").c_str()));
-
-                QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                       Qt::Horizontal, &dialog);
-                form.addRow(&buttonBox);
-                QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-                QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-                if (dialog.exec() == QDialog::Accepted) {
-                    amount = currentVege->getRemaining(selection);
-                    currentVege->dumpVege(amount, today, selection);
-                }
-            }
-        }
-        on_vegeList_itemClicked(ui->vegeList->currentItem());
-    }
-}
-
-int Dialog::compareCompany(const void * a, const void * b){
-
-    History* A = (History *)a;
-    History* B= (History *)b;
-    const char* cus1 = A->getCompany().c_str();
-    const char* cus2 = B->getCompany().c_str();
-
-    return strcmp(cus1,cus2);
-}
-
-int Dialog::compareCustomer(const void * a, const void * b){
-
-    History* A = (History *)a;
-    History* B= (History *)b;
-    const char* cus1 = A->getCustomer().c_str();
-    const char* cus2 = B->getCustomer().c_str();
-
-    return strcmp(cus1,cus2);
-}
-
 void Dialog::printH(QPrinter * printer){
 
     //qdialog what day do you want to print? have a drop down box with all the available days
@@ -1043,7 +939,7 @@ void Dialog::printH(QPrinter * printer){
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
     QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
-    lineEdit -> setText("20");
+    lineEdit -> setText("18");
     form.addRow(label, lineEdit);
 
 
@@ -1304,6 +1200,112 @@ void Dialog::printH(QPrinter * printer){
     }
 }
 
+void Dialog::dumpVege(){
+    if(currentVege){
+
+        QDialog dialog(this);
+        // Use a layout allowing to have a label next to each field
+        QFormLayout form(&dialog);
+
+        // Add some text above the fields
+        dialog.setWindowTitle(mTranslator->translate("倒").c_str());
+
+        QComboBox* remainingDrop = new QComboBox(&dialog);
+        for(int i = 0; i< currentVege -> getRemainingNum(); i++){
+            remainingDrop->addItem(currentVege->formatRemaining(i).c_str());
+        }
+        remainingDrop->setCurrentIndex(ui->breakDown->currentRow());
+        remainingDrop->setFont(font);
+
+        form.addRow(mTranslator->translate("你要倒那天的菜？").c_str(), remainingDrop);
+
+        QLineEdit *lineEdit = new QLineEdit(&dialog);
+        form.addRow(new QLabel(mTranslator->translate("倒幾箱？").c_str()));
+        form.addRow(lineEdit);
+
+
+        QCheckBox checkBox(mTranslator->translate("全部").c_str(),&dialog);
+        form.addRow(&checkBox);
+
+
+        // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+        form.addRow(&buttonBox);
+        QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+        QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+        QObject::connect(&checkBox,SIGNAL(toggled(bool)), &dialog, SLOT(reject()));
+
+        int result = dialog.exec();
+        int amount = lineEdit->text().toInt();
+        int selection = remainingDrop->currentIndex();
+
+        time_t t = time(0);
+        struct tm * now = localtime(&t);
+        char today[128];
+        sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
+
+       // Show the dialog as modal
+        if ( result == QDialog::Accepted) {
+            if( amount <= 0){
+                QMessageBox messageBox;
+                messageBox.critical(0,"錯誤","Not Valid!");
+                messageBox.setFixedSize(500,200);
+            }
+
+            else if(!currentVege->dumpVege(amount, today, selection)){
+                QMessageBox error;
+                error.critical(0,"警告",mTranslator->translate("不夠數量倒!").c_str());
+                error.setFixedSize(500,200);
+
+            }
+        }else if (result == QDialog::Rejected){
+            if(checkBox.isChecked()){
+                QDialog dialog(this);
+                // Use a layout allowing to have a label next to each field
+                QFormLayout form(&dialog);
+
+                // Add some text above the fields
+                form.addRow(new QLabel(mTranslator
+                                       ->translate("你確定你要倒掉全部嗎?").c_str()));
+
+                QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                                       Qt::Horizontal, &dialog);
+                form.addRow(&buttonBox);
+                QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+                QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+                if (dialog.exec() == QDialog::Accepted) {
+                    amount = currentVege->getRemaining(selection);
+                    currentVege->dumpVege(amount, today, selection);
+                }
+            }
+        }
+        on_vegeList_itemClicked(ui->vegeList->currentItem());
+    }
+}
+
+int Dialog::compareCompany(const void * a, const void * b){
+
+    History* A = (History *)a;
+    History* B= (History *)b;
+    const char* cus1 = A->getCompany().c_str();
+    const char* cus2 = B->getCompany().c_str();
+
+    return strcmp(cus1,cus2);
+}
+
+int Dialog::compareCustomer(const void * a, const void * b){
+
+    History* A = (History *)a;
+    History* B= (History *)b;
+    const char* cus1 = A->getCustomer().c_str();
+    const char* cus2 = B->getCustomer().c_str();
+
+    return strcmp(cus1,cus2);
+}
+
+
+
 void Dialog::saveAs(){
 
     QWidget *activeWindow = QApplication::activeWindow();
@@ -1389,7 +1391,6 @@ void Dialog::save(){
                                     ios :: out |ios::binary);
         fio->seekp(0, ios::beg);
         writeInt(mAbbreviator->keyCount(),fio);
-        qDebug()<<mAbbreviator->keyCount();
         map<string, string> abbs = mAbbreviator->getAbbs();
         for(map<string,string>::iterator it = abbs.begin(); it !=abbs.end() ; it++){
             writeString( it->first, fio);
@@ -1483,6 +1484,8 @@ void Dialog::save(){
                          ->getHistoryObject(j)->getChangeNum(), fio);
                 writeInt(inventory->getVegetableByIndex(i)
                          ->getHistoryObject(j)->getTui(), fio);
+                writeString(inventory->getVegetableByIndex(i)
+                            ->getHistoryObject(j)->getType(), fio);
             }
         }
 
