@@ -16,7 +16,9 @@ Translator::Translator(){
     translator.insert(pair<string, string>("刪掉菜名", "Delete Vegetable" ));
     translator.insert(pair<string, string>("刪掉單位", "Delete Unit" ));
     translator.insert(pair<string, string>("印 Inventory", "Print Inventory" ));
-    translator.insert(pair<string, string>("印 History", "Print History" ));
+    translator.insert(pair<string, string>("印 History", "Print Today's Transactions" ));
+    translator.insert(pair<string, string>("印記錄表", "Print History" ));
+
 
     /* User Interface */
     translator.insert(pair<string, string>("買", "Buy" ));

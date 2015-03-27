@@ -933,14 +933,14 @@ string Vegetable::transByIndex(int index){
   string product = "";
   /* Adds one transaction at a time */
   for(int i = 0; i < transactions[index].size(); i++){
-    /* If more than 3, continue on next line */
+    /* If one more than a factor of 3, add tabs */
     if( i > 1 && !( (i - 1) % 3))
         product = product + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" +
                                   "\t\t\t\t\t\t\t\t\t\t";
 
     product = product + transactions[index][i];
 
-    /* If i is a factor of 3 */
+    /* If i is a factor of 3, this means that we need a new line */
     if( i > 0 && ! (i%3))
       product = product + "\n";
   }
@@ -949,7 +949,7 @@ string Vegetable::transByIndex(int index){
   if(transactions[index].size() == 1)
       product = product + "\n";
 
-  /* If not factor of 3 */
+  /* If not factor of 3, we still need one more new line */
   if((transactions[index].size() - 1 )%3)
     product = product + "\n";
   return product;
