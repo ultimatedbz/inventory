@@ -903,7 +903,7 @@ void Vegetable::transReturn(int amount, string dP, string company){
 
     transactions[transactions.size() - 1]
         .push_back(string(buffer) + " ");
-    returnThis("",amount,"",company, dP); //so we can find this with remainExist later on
+    returnThis("", amount, "", company, dP); //so we can find this with remainExist later on
     transactions[transactions.size() - 1].push_back("+" + result + "(RT)");
 
   }else

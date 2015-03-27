@@ -321,6 +321,14 @@ void History::load(fstream* fio){
     fio->read(( char *) &(dumped), sizeof(int));
     fio->read(( char *) &(changeNum), sizeof(int));
     fio->read(( char *) &(mTui), sizeof(int));
+
+    char temp7[200];
+    int tempNum7;
+    fio->read((char *) &(tempNum7),sizeof(int));
+    fio->read(temp7, tempNum7);
+    temp7[tempNum7]='\0';
+    string str7(temp7);
+    type = str7;
 }
 
 void History::deleteHistory(){
