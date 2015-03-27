@@ -100,7 +100,7 @@ string Remaining::formatRemaining2(string unit){
  return buffer;
 }
 
-string Remaining::formatRemaining3(){
+string Remaining::formatRemaining3(Abbreviation abb){
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
     string Price = "$" + price;
@@ -108,8 +108,8 @@ string Remaining::formatRemaining3(){
     sprintf(buffer,"%5s%5d%s%10s%4s",
            dayPurchased.c_str(),
            remaining,
-           padding(company).c_str(),
-           company.c_str(),
+           padding(abb.shrink(company)).c_str(),
+           abb.shrink(company).c_str(),
            Price.c_str());
  return buffer;
 }

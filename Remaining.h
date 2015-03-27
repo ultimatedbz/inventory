@@ -6,6 +6,7 @@
  */
 
 #include <string>
+#include "abbreviation.h"
 using namespace std;
 
 class Remaining {
@@ -25,7 +26,7 @@ public:
   string getCompany();
   string formatRemaining();
   string formatRemaining2(string unit);
-  string formatRemaining3();
+  string formatRemaining3(Abbreviation abb);
   void returned(int amount, string bc, string date);
   void load(fstream* fio);
 

@@ -412,7 +412,7 @@ void Dialog::slot1(){
 
 void Dialog::addCompany(){
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator->translate("加入新客戶").c_str());
+    dialog.setWindowTitle(mTranslator->translate("加入新公司").c_str());
 
     QFormLayout* form = new QFormLayout(&dialog);
 
@@ -420,7 +420,7 @@ void Dialog::addCompany(){
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
     form->addRow(QString(mTranslator->translate("請輸入你要加的新公司名字?").c_str()), companyEdit);
-    form->addRow(QString("Abbreviation"), abbreviationEdit);
+    form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -447,15 +447,15 @@ void Dialog::addPerson(){
 
     QDialog dialog(this);
     dialog.setWindowTitle( mTranslator
-                           ->translate("請輸入你要加的新客戶名字?").c_str());
+                           ->translate("加入新客戶").c_str());
 
     QFormLayout* form = new QFormLayout(&dialog);
 
     QLineEdit* customerEdit = new QLineEdit(&dialog);
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
-    form->addRow(QString( mTranslator ->translate("你要刪掉哪一個客戶？").c_str()), customerEdit);
-    form->addRow(QString("Abbreviation"), abbreviationEdit);
+    form->addRow(QString( mTranslator ->translate("請輸入你要加的新客戶名字?").c_str()), customerEdit);
+    form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -667,8 +667,8 @@ void Dialog::printT(QPrinter* printer){
   QFormLayout form(&dialog1);
 
   QLineEdit *lineEdit = new QLineEdit(&dialog1);
-  QString label = QString("請輸入字體大小");
-  lineEdit -> setText("18");
+  QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
+  lineEdit -> setText("16");
   form.addRow(label, lineEdit);
 
 
@@ -687,35 +687,34 @@ void Dialog::printT(QPrinter* printer){
 
       font.setPixelSize(amount);
       painter.setFont(font);
-      QFontMetrics metric(font);
-      double lineHeight = painter.fontMetrics().height();
+      double lineHeight = painter.fontMetrics().height()+.9;
       int topMargin = 3 * lineHeight;
       QString leftText= "";
       QString rightText="";
       QString * currentText = &leftText;
-      painter.drawLine(500,40,500,1250);
-      painter.drawText(850,100,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+      painter.drawLine(500,topMargin,500,1250);
+      painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
       int lineCount = 0;
       int column = 0;
       for(int i = 0; i < inventory->getVegNum(); i++){
           if(inventory->getVegetableByIndex(i)->getRemainingNum() || 
                   inventory->getVegetableByIndex(i)->hasInteraction()){
-              if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) > 1250  ){
+              if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) + topMargin > 1250  ){
                   if(currentText == &leftText){
                       currentText = &rightText;
                       lineCount = 0;
                       column = 1;
                       painter.drawLine(500, topMargin, 500, 1250);
                   }else{
-                      painter.drawText(10,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                      painter.drawText(460, topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                      painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                      painter.drawText(510, topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                       leftText= "";
                       rightText="";
                       printer->newPage();
 
                       painter.drawLine(500,topMargin,500,1250);
 
-                      painter.drawText(850,100,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                      painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
                       currentText = &leftText;
                       column = 0;
                       lineCount = 0;
@@ -740,48 +739,45 @@ void Dialog::printT(QPrinter* printer){
                           500 * (column + 1),lineHeight * (lineCount) + topMargin);
 
       }else{
-              if( lineHeight * (lineCount + 1) > 1250  ){
+              if( lineHeight * (lineCount + 1) + topMargin > 1250  ){
                   if(currentText == &leftText){
                       currentText = &rightText;
                       lineCount = 0;
                       column = 1;
                       painter.drawLine(500,topMargin,500,1250);
                   }else{
-                      painter.drawText(10,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                      painter.drawText(460,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                      painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                      painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                       leftText= "";
                       rightText="";
                       printer->newPage();
 
                       painter.drawLine(500,topMargin,500,1250);
 
-                      painter.drawText(600,topMargin,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                      painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
                       currentText = &leftText;
                       column = 0;
                       lineCount = 0;
               }
           }
 
-              *currentText = *currentText + QString(inventory->
-                                 getVegetableByIndex(i)->
-                                 getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
-                             ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
-                                                          getUnit().c_str()) +"\n";
-              lineCount += 1;
-              painter.drawLine(500 * column,lineHeight * (lineCount) + topMargin,
-                              500 * (column + 1),lineHeight * (lineCount) + topMargin);
-
-      }
-
-    }
-   painter.drawText(10,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-   painter.drawText(460,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+          *currentText = *currentText + QString(inventory->
+                             getVegetableByIndex(i)->
+                             getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
+                         ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                      getUnit().c_str()) +"\n";
+          lineCount += 1;
+          painter.drawLine(500 * column,lineHeight * (lineCount) + topMargin,
+                          500 * (column + 1),lineHeight * (lineCount) + topMargin);
+     }
+   }
+   painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+   painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
    painter.end();
   }
 }
 
 void Dialog::printI(QPrinter* printer){
-
     int amount;
     time_t t = time(0);
     struct tm * now = localtime(&t);
@@ -794,7 +790,7 @@ void Dialog::printI(QPrinter* printer){
     QFormLayout form(&dialog1);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
-    QString label = QString("請輸入字體大小");
+    QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
     lineEdit -> setText("18");
     form.addRow(label, lineEdit);
 
@@ -816,101 +812,92 @@ void Dialog::printI(QPrinter* printer){
         painter.setFont(font);
         QFontMetrics metric(font);
         double lineHeight = painter.fontMetrics().height();
-
-        QString title = "test";
-
-        int textWidth = painter.window().width();
-        int maxHeight = painter.window().height();
-
-        QRect titleRect = painter.boundingRect(0, 0, textWidth, maxHeight,
-                                                Qt::TextWordWrap, title);
-
-
+        int topMargin = 3 * lineHeight;
         QString leftText= "";
         QString rightText="";
-        QString * currentText = &leftText;
-        painter.drawLine(500,40,500,1250);
-        painter.drawText(850,100,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+        QString* currentText = &leftText;
+        painter.drawLine(500,topMargin,500,1250);
+        painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
         int lineCount = 0;
         int column = 0;
         for(int i = 0; i<inventory->getVegNum(); i++){
             if(inventory->getVegetableByIndex(i)->getRemainingNum()){
-                if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) > 1250  ){
+                if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) + topMargin  > 1250  ){
                     if(currentText == &leftText){
                         currentText = &rightText;
                         lineCount = 0;
                         column = 1;
-                        painter.drawLine(500,40,500,1250);
+                        painter.drawLine(500, topMargin,500,1250);
                     }else{
-                        painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                        painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                        painter.drawText(10,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                        painter.drawText(510,topMargin,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                         leftText= "";
                         rightText="";
                         printer->newPage();
 
-                        painter.drawLine(500,40,500,1250);
+                        painter.drawLine(500,topMargin,500,1250);
 
-                        painter.drawText(550,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                        painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
                         currentText = &leftText;
                         column = 0;
                         lineCount = 0;
                 }
             }
 
-                *currentText = *currentText + QString(inventory->
-                                   getVegetableByIndex(i)->
-                                   getVegetablename().c_str()) + ":  "+ "\n";
-                *currentText = *currentText +"Total: " + QString::number(inventory->getVegetableByIndex(i)
-                               ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
-                                                            getUnit().c_str()) +"\n";
-                for(int j =0; j < inventory->getVegetableByIndex(i)
-                                    ->getRemainingNum(); j++){
-                    *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
-                                    ->formatRemaining3(j).c_str()) +"\n";
-                    lineCount++;
-                }
+            *currentText = *currentText + QString(inventory->
+                               getVegetableByIndex(i)->
+                               getVegetablename().c_str()) + ":  "+ "\n";
+            *currentText = *currentText +"Total: " + QString::number(inventory->getVegetableByIndex(i)
+                           ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                        getUnit().c_str()) +"\n";
+            for(int j =0; j < inventory->getVegetableByIndex(i)
+                                ->getRemainingNum(); j++){
+                *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
+                                ->formatRemaining3(j, *mAbbreviator).c_str()) +"\n";
+                lineCount++;
+            }
 
-                lineCount += 2;
-                painter.drawLine(500 * column,lineHeight * (lineCount +1) + 40,
-                                500 *(column + 1),lineHeight * (1+lineCount)+40);
+            lineCount += 2;
+            painter.drawLine(500 * column,lineHeight * (lineCount +1) + topMargin,
+                            500 *(column + 1),lineHeight * (1+lineCount) + topMargin);
 
         }else{
-                if( lineHeight * (lineCount + 1) > 1250  ){
+                if( lineHeight * (lineCount + 1) + topMargin > 1250  ){
                     if(currentText == &leftText){
                         currentText = &rightText;
                         lineCount = 0;
                         column = 1;
-                        painter.drawLine(500,40,500,1250);
+                        painter.drawLine(500,topMargin,500,1250);
                     }else{
-                        painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                        painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                        painter.drawText(10, topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                        painter.drawText(510, topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                         leftText= "";
                         rightText="";
                         printer->newPage();
 
-                        painter.drawLine(500,40,500,1250);
+                        painter.drawLine(500,topMargin,500,1250);
 
-                        painter.drawText(600,40 + lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
+                        painter.drawText(850, lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(today.c_str()) );
                         currentText = &leftText;
                         column = 0;
                         lineCount = 0;
                 }
             }
 
-                *currentText = *currentText + QString(inventory->
-                                   getVegetableByIndex(i)->
-                                   getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
-                               ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
-                                                            getUnit().c_str()) +"\n";
-                lineCount += 1;
-                painter.drawLine(500 * column,lineHeight * (lineCount + 1) + 40,
-                                500 * (column + 1),lineHeight * (lineCount + 1) + 40);
+            *currentText = *currentText + QString(inventory->
+                               getVegetableByIndex(i)->
+                               getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
+                           ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
+                                                        getUnit().c_str()) +"\n";
+            lineCount += 1;
+            painter.drawLine(500 * column,lineHeight * (lineCount + 1) + topMargin,
+                            500 * (column + 1),lineHeight * (lineCount + 1) + topMargin);
 
         }
 
     }
-   painter.drawText(10,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-   painter.drawText(460,40+lineHeight,390,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+   painter.drawText(10, topMargin + lineHeight,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+   painter.drawText(510, topMargin + lineHeight,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
    painter.end();
   }
 }
@@ -965,11 +952,12 @@ void Dialog::printH(QPrinter * printer){
         QString rightText="";
         QString * currentText = &leftText;
         int lineCount = 0;
+        int topMargin = 3 * lineHeight;
         int column = 0;
-        painter.drawLine(450,40,450,1250);
-        painter.drawLine(900,40,450,1250);
-        painter.drawLine(1000,40,450,1250);
-        painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
+        painter.drawLine(500,topMargin,500,1250);
+        //painter.drawLine(900,topMargin,500,1250);
+        //painter.drawLine(1000,topMargin,500,1250);
+        painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
 
         for(int i = 0; i<inventory->getVegNum(); i++){
             if(inventory->getVegetableByIndex(i)->getHistoryNum()){
@@ -994,8 +982,7 @@ void Dialog::printH(QPrinter * printer){
                History* tui = new History [historyNum];
 
                for(int j = 0; j<index; j++){
-                   if(temp[j].getCustomer().compare("\t") && !temp[j].getReturned()
-                           && !temp[j].getDumped()){
+                   if(temp[j].getType() == "Sell"){
                        sell[sellNum] = temp[j];
                        sellNum++;
                    }
@@ -1004,26 +991,25 @@ void Dialog::printH(QPrinter * printer){
                }
 
                for(int j = 0; j<index; j++){
-                   if(temp[j].getReturned()){
+                   if(temp[j].getType() == "Return"){
                        returnn[returnNum] = temp[j];
                        returnNum++;
                    }
                }
                for(int j = 0; j<index; j++){
-                   if(temp[j].getDumped()){
+                   if(temp[j].getType() == "Dump"){
                        dump[dumpNum] = temp[j];
                        dumpNum++;
                    }
                }
                for(int j = 0; j<index; j++){
-                   if(temp[j].getTui()){
+                   if(temp[j].getType() == "Tui"){
                        tui[tuiNum] = temp[j];
                        tuiNum++;
                    }
                }
                for(int j = 0; j<index; j++){
-                   if(!temp[j].getCustomer().compare("\t") && !temp[j].getReturned()
-                           && !temp[j].getDumped()){
+                   if(temp[j].getType() == "Buy"){
                        buy[buyNum] = temp[j];
                        buyNum++;
                    }
@@ -1052,13 +1038,13 @@ void Dialog::printH(QPrinter * printer){
                         }else{
                             lineCount = 0;
                             column = 0;
-                            painter.drawText(20,40+lineHeight,380,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                            painter.drawText(460,40+lineHeight,380,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                            painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                            painter.drawText(510, topMargin, 490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                             leftText= "";
                             rightText="";
                             printer->newPage();
-                            painter.drawLine(450,40,450,1250);
-                            painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, dayComp.c_str() );
+                            painter.drawLine(500,topMargin,500,1250);
+                            painter.drawText(850, lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, dayComp.c_str() );
                             currentText = &leftText;
                         }
                     }
@@ -1074,22 +1060,53 @@ void Dialog::printH(QPrinter * printer){
 
 
                 if(buyNum){
-                    painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                    painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                     *currentText = *currentText + "   買:\n";
                     lineCount++;
-                    painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                    painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                     for(int j =0; j < buyNum; j++){
                         *currentText = *currentText + QString(buy[j].printFormat().c_str()) +"\n";
                         lineCount++;
                     }
 
                 }
+                if(sellNum){
+                    if( lineHeight * (lineCount + sellNum) + 20 >1250  ){
+                        if(currentText == &leftText){
+                            currentText = &rightText;
+                            lineCount = 0;
+                            column = 1;
+                        }else{
+                            lineCount = 0;
+                            column = 0;
+                            painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                            painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                            leftText= "";
+                            rightText="";
+                            printer->newPage();
+
+                            painter.drawLine(500,topMargin,500,1250);
+                            painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
+                            currentText = &leftText;
+                        }
+                    }
+                    painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * ( lineCount) + topMargin);
+                    *currentText = *currentText + "   賣:\n";
+                    lineCount++;
+                    painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * ( lineCount) + topMargin);
+                    for(int j =0; j < sellNum; j++){
+                        *currentText = *currentText + QString(sell[j].printFormat().c_str()) +"\n";
+                        lineCount++;
+                    }
+                }
 
                 if(returnNum){
 
-                    if( lineHeight * (lineCount + 1 + returnNum) + 20 >1090  ){
+                    if( lineHeight * (lineCount + returnNum) + 20 >1090  ){
                         if(currentText == &leftText){
                             column = 1;
                             currentText = &rightText;
@@ -1097,33 +1114,32 @@ void Dialog::printH(QPrinter * printer){
                         }else{
                             lineCount = 0;
                             column = 0;
-                            painter.drawText(20,40,400,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                            painter.drawText(460,40,380,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                            painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                            painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                             leftText= "";
                             rightText="";
                             printer->newPage();
 
-                            painter.drawLine(450,40,450,1250);
-                            painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
+                            painter.drawLine(500,topMargin,500,1250);
+                            painter.drawText(850,lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
                             currentText = &leftText;
                         }
                     }
-                    painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                    painter.drawLine(510 * column + 60,lineHeight *( lineCount) + topMargin,
+                                510 *(column + 1),lineHeight * ( lineCount) + topMargin);
                     *currentText = *currentText + "   退給公司 :\n";
                     lineCount++;
-                    painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                    painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                     for(int j =0; j < returnNum; j++){
                         *currentText = *currentText + QString(returnn[j].printFormat().c_str()) +"\n";
                         lineCount++;
-
                     }
 
 
                 }
                 if(dumpNum){
-                    if( lineHeight * (lineCount + 1 + dumpNum) + 20 >1090  ){
+                    if( lineHeight * (lineCount + dumpNum) + 20 >1090  ){
                         if(currentText == &leftText){
                             column = 1;
                             currentText = &rightText;
@@ -1131,23 +1147,23 @@ void Dialog::printH(QPrinter * printer){
                         }else{
                             lineCount = 0;
                             column = 0;
-                            painter.drawText(20,40,400,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                            painter.drawText(460,40,380,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                            painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                            painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
                             leftText= "";
                             rightText="";
                             printer->newPage();
 
-                            painter.drawLine(450,40,450,1250);
-                            painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
+                            painter.drawLine(500,topMargin,500,1250);
+                            painter.drawText(510,topMargin,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
                             currentText = &leftText;
                         }
                     }
-                        painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                        painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                         *currentText = *currentText + "   倒:\n";
                         lineCount++;
-                        painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                    450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                        painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                    500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                         for(int j =0; j < dumpNum; j++){
                             *currentText = *currentText + QString(dump[j].printFormat().c_str()) +"\n";
                             lineCount++;
@@ -1155,7 +1171,7 @@ void Dialog::printH(QPrinter * printer){
 
                }
                 if(tuiNum){
-                    if( lineHeight * (lineCount + 1 + tuiNum) + 20 >1090  ){
+                    if( lineHeight * (lineCount + tuiNum) + 20 >1090  ){
                         if(currentText == &leftText){
                             column = 1;
                             currentText = &rightText;
@@ -1163,24 +1179,24 @@ void Dialog::printH(QPrinter * printer){
                         }else{
                             lineCount = 0;
                             column = 0;
-                            painter.drawText(20,40,400,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-                            painter.drawText(460,40,380,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+                            painter.drawText(10,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+                            painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
 
                             leftText= "";
                             rightText="";
                             printer->newPage();
 
-                            painter.drawLine(450,40,450,1250);
-                            painter.drawText(600,40,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
+                            painter.drawLine(500,topMargin,500,1250);
+                            painter.drawText(850, lineHeight,100,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
                             currentText = &leftText;
                         }
                     }
-                        painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                    450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                        painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                    500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                         *currentText = *currentText + "   退給農場:\n";
                         lineCount++;
-                        painter.drawLine(450 * column + 60,lineHeight *( lineCount+1) + 40,
-                                    450 *(column + 1),lineHeight * ( lineCount+1) + 40);
+                        painter.drawLine(500 * column + 60,lineHeight *( lineCount) + topMargin,
+                                    500 *(column + 1),lineHeight * ( lineCount) + topMargin);
                         for(int j =0; j < tuiNum; j++){
                             *currentText = *currentText + QString(tui[j].printFormat().c_str()) +"\n";
                             lineCount++;
@@ -1188,13 +1204,13 @@ void Dialog::printH(QPrinter * printer){
 
 
                }
-                painter.drawLine(450 * column ,lineHeight * (1+lineCount) +40,
-                                450 *(column + 1),lineHeight * (lineCount+1)+40);
+                painter.drawLine(500 * column ,lineHeight * (lineCount) + topMargin,
+                                500 *(column + 1),lineHeight * (lineCount) + topMargin);
             }
         }
 
-        painter.drawText(20,40+lineHeight,380,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
-        painter.drawText(460,40+lineHeight,380,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
+        painter.drawText(10, topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, leftText );
+        painter.drawText(510,topMargin,490,1250,Qt::AlignLeft|Qt::AlignTop, rightText );
         painter.end();
 
     }

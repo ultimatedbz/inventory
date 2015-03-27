@@ -51,7 +51,7 @@ public:
   string formatTui(int i);
   string formatRemaining(int i);
   string formatRemaining2(int i);
-  string formatRemaining3(int i);
+  string formatRemaining3(int i, Abbreviation abb);
   string formatReturn(int i);
   const string getVegetablename() const;
   int returnExist(string company, string date);
@@ -71,8 +71,8 @@ public:
 
    /* Transaction Printing */
    string formatTransaction(Abbreviation abb);
-   void setUpTrans();
-   void transBuy();
+   void setUpTrans(Abbreviation abb);
+   void transBuy(Abbreviation abb);
    void transSell(int amount, string datePurchased, string company, string customer,
                   Abbreviation abb);
    void transTui(int amount, string datePurchased, string company);

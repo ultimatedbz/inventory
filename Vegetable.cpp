@@ -560,8 +560,8 @@ string Vegetable::formatRemaining2(int i){
     return remainingArray[i].formatRemaining2(unit);
 }
 
-string Vegetable::formatRemaining3(int i){
-    return remainingArray[i].formatRemaining3();
+string Vegetable::formatRemaining3(int i, Abbreviation abb){
+    return remainingArray[i].formatRemaining3(abb);
 }
 
 string Vegetable::formatReturn(int i){
@@ -833,20 +833,21 @@ void Vegetable::reTui(string dateS, int amount, string dP, string company){
 
 /* USED FOR TRANSACTION PRINTING ONLY */
 
-void Vegetable::setUpTrans(){
+void Vegetable::setUpTrans(Abbreviation abb){
   transactions = vector<vector<string> >();
   for( int i = 0; i < remainingNum; i++){
     transactions.push_back(vector<string>());
-    transactions[i].push_back(formatRemaining3(i) + " ");
+    transactions[i].push_back(formatRemaining3(i, abb) + " ");
   }
+  qDebug()<<transactions.size();
 }
 
 /* Need to push back another one */
-void Vegetable::transBuy(){
+void Vegetable::transBuy(Abbreviation abb){
   if(transactions.size() < remainingNum){
     transactions.push_back(vector<string>());
     transactions[transactions.size() - 1]
-        .push_back(formatRemaining3(remainingNum - 1) + " ");
+        .push_back(formatRemaining3(remainingNum - 1, abb) + " ");
   }
 }
 
@@ -930,16 +931,27 @@ vector<vector<string> > Vegetable::getTransactions(){
 
 string Vegetable::transByIndex(int index){
   string product = "";
+  /* Adds one transaction at a time */
   for(int i = 0; i < transactions[index].size(); i++){
+    /* If more than 3, continue on next line */
     if( i > 1 && !( (i - 1) % 3))
         product = product + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" +
-                                  "\t\t\t\t\t\t\t\t\t\t\t";
+                                  "\t\t\t\t\t\t\t\t\t\t";
 
     product = product + transactions[index][i];
 
+    /* If i is a factor of 3 */
     if( i > 0 && ! (i%3))
       product = product + "\n";
   }
+
+  /* If no transactions */
+  if(transactions[index].size() == 1)
+      product = product + "\n";
+
+  /* If not factor of 3 */
+  if((transactions[index].size() - 1 )%3)
+    product = product + "\n";
   return product;
 }
 
@@ -1006,7 +1018,7 @@ string Vegetable::formatTransaction(Abbreviation abb){
   }
 
   /* set up temp as yesterday */
-  temp.setUpTrans();
+  temp.setUpTrans(abb);
 
   /* Sell stuff, Add new if buy */
   for(int i = 0; i < historyNum; i++){
@@ -1043,9 +1055,8 @@ string Vegetable::formatTransaction(Abbreviation abb){
     }
   }
 
-
-  if(!mTransNum)
-    mTransNum++;
+  /* Tells how many lines to print for transactions */
+  mTransNum  = 0;
 
   string product = "";
   /* Go through temp's transactions vector and print out all transactions */
@@ -1053,17 +1064,18 @@ string Vegetable::formatTransaction(Abbreviation abb){
     product = product + temp.transByIndex(i);
   }
 
-  mTransNum  = 0;
+  /* Update mTransNum */
   vector<vector<string> > temp2 = temp.getTransactions();
   for(int i = 0; i < temp2.size(); i++){
     /* temp2[i] includes the initial formatremain3 */
-
     if(!((temp2[i].size() - 1) % 3))
       mTransNum += (temp2[i].size() - 1) / 3;
     else{
       mTransNum += (temp2[i].size() - 1) / 3 + 1;
-      product = product + "\n"; // Only add new line if not divisible by 3
+      //product = product + "\n"; // Only add new line if not divisible by 3
     }
+    if(temp2[i].size() == 1)
+      mTransNum++;
   }
 
   return product;
