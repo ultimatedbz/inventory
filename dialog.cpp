@@ -687,7 +687,7 @@ void Dialog::printT(QPrinter* printer){
 
       font.setPixelSize(amount);
       painter.setFont(font);
-      double lineHeight = painter.fontMetrics().height()+.65;
+      double lineHeight = painter.fontMetrics().height()+.5;
       int topMargin = 3 * lineHeight;
       QString leftText= "";
       QString rightText="";
