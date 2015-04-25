@@ -33,7 +33,7 @@ Translator::Translator(){
     translator.insert(pair<string, string>("清掉歷史", "Clear History" ));
     translator.insert(pair<string, string>("退給公司", "Return to Company" ));
     translator.insert(pair<string, string>("退給農場", "Customer Returned" ));
-
+    translator.insert(pair<string, string>("簡寫", "Abbreviation" ));
 
     /* Menu Popups */
     translator.insert(pair<string, string>("請輸入你要加的新公司名字?", "Company" ));

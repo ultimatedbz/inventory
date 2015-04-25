@@ -420,6 +420,7 @@ void Dialog::addCompany(){
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
     form->addRow(QString(mTranslator->translate("請輸入你要加的新公司名字?").c_str()), companyEdit);
+
     form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
 
     /* Button Box */
@@ -446,17 +447,20 @@ void Dialog::addCompany(){
 void Dialog::addPerson(){
 
     QDialog dialog(this);
+
+    qDebug()<<415;
     dialog.setWindowTitle( mTranslator
                            ->translate("加入新客戶").c_str());
-
+qDebug()<<424;
     QFormLayout* form = new QFormLayout(&dialog);
 
     QLineEdit* customerEdit = new QLineEdit(&dialog);
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
     form->addRow(QString( mTranslator ->translate("請輸入你要加的新客戶名字?").c_str()), customerEdit);
+    qDebug()<<426;
     form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
-
+qDebug()<<463;
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);
