@@ -24,6 +24,7 @@ Translator::Translator(){
     translator.insert(pair<string, string>("買", "Buy" ));
     translator.insert(pair<string, string>("賣", "Sell" ));
     translator.insert(pair<string, string>("菜名", "Vegetable List" ));
+    translator.insert(pair<string, string>("菜名子", "Vegetable" ));
     translator.insert(pair<string, string>("庫存表", "Breakdown" ));
     translator.insert(pair<string, string>("倒", "Dump" ));
     translator.insert(pair<string, string>("退貨", "Return" ));

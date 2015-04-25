@@ -128,7 +128,7 @@ void Dialog::on_Buy_clicked()
     return;
 
     QDialog dialog(this);
-    dialog.setWindowTitle("multiple buy");
+    dialog.setWindowTitle(mTranslator ->translate("買").c_str());
 
     //Add the viewport to the scroll area
     QScrollArea *scrollArea = new QScrollArea;
@@ -157,7 +157,7 @@ void Dialog::on_Buy_clicked()
 
     companyDrop->setFont(font);
 
-    QString label2 = QString("Company");
+    QString label2 = QString(mTranslator->translate("哪家公司的?").c_str());
     form->addRow(label2, companyDrop);
 
     /* Date */
@@ -167,12 +167,12 @@ void Dialog::on_Buy_clicked()
     char buffer[128];
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
     date -> setText(QString::fromUtf8(buffer));
-    QString label4 = QString("Date");
+    QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
     form->addRow(label4, date);
 
     MultiBuyController* multiBuyController = new MultiBuyController(
           inventory->getVegetableIndex(currentVege->getVegetablename()),
-          inventory, form, font, scrollArea, &dialog);
+          inventory, form, font, scrollArea, &dialog, mTranslator);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -190,6 +190,7 @@ void Dialog::on_Buy_clicked()
     hLay->addWidget(&buttonBox);
     dialog_layout->addRow(hLay);
 
+   // dialog_layout->set
     dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
 
     QObject::connect(tb, SIGNAL(clicked()),multiBuyController, SLOT(addElement()));
@@ -220,7 +221,7 @@ void Dialog::on_Sell_clicked()
 
   if(inventory->numberOfNonEmptyVeges()){
     QDialog dialog(this);
-    dialog.setWindowTitle("multiple sell");
+    dialog.setWindowTitle(mTranslator->translate("賣").c_str());
 
     //Add the viewport to the scroll area
     QScrollArea *scrollArea = new QScrollArea;
@@ -248,7 +249,7 @@ void Dialog::on_Sell_clicked()
 
     customerDrop->setFont(font);
 
-    QString label2 = QString("Customer");
+    QString label2 = QString(mTranslator->translate("賣给谁？").c_str());
     form->addRow(label2, customerDrop);
 
     /* Date */
@@ -258,11 +259,11 @@ void Dialog::on_Sell_clicked()
     char buffer[128];
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
     date -> setText(QString::fromUtf8(buffer));
-    QString label4 = QString("Date");
+    QString label4 = QString(mTranslator->translate("那天賣出").c_str());
     form->addRow(label4, date);
 
     MultiSellController* multiSellController = new MultiSellController(
-          inventory, form, font, scrollArea, &dialog);
+          inventory, form, font, scrollArea, &dialog, mTranslator);
 
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
@@ -420,7 +421,6 @@ void Dialog::addCompany(){
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
     form->addRow(QString(mTranslator->translate("請輸入你要加的新公司名字?").c_str()), companyEdit);
-
     form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
 
     /* Button Box */
@@ -447,20 +447,17 @@ void Dialog::addCompany(){
 void Dialog::addPerson(){
 
     QDialog dialog(this);
-
-    qDebug()<<415;
     dialog.setWindowTitle( mTranslator
                            ->translate("加入新客戶").c_str());
-qDebug()<<424;
+
     QFormLayout* form = new QFormLayout(&dialog);
 
     QLineEdit* customerEdit = new QLineEdit(&dialog);
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
     form->addRow(QString( mTranslator ->translate("請輸入你要加的新客戶名字?").c_str()), customerEdit);
-    qDebug()<<426;
     form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
-qDebug()<<463;
+
     /* Button Box */
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                            Qt::Horizontal, &dialog);

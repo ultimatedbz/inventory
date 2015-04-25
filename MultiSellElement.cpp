@@ -1,10 +1,12 @@
 #include "MultiSellElement.h"
+#include "translator.h"
 #include <QDebug>
 
 MultiSellElement::MultiSellElement(int index, MultiSellController* c,
                                    Inventory* i, QFont f,
                                    set<int>* selectedVeges,
-                                   vector<int>& vegeIndexToActual):
+                                   vector<int>& vegeIndexToActual,
+                                   Translator* mTranslator):
   mForm(new QFormLayout()),
   controller(c),
   mInventory(i),
@@ -38,7 +40,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
     }
   }
   vegeDrop->setFont(font);
-  mForm->addRow("Vegetable", vegeDrop);
+  mForm->addRow(QString(mTranslator->translate("菜名子").c_str()), vegeDrop);
 
   /* Line */
   QFrame* line2 = new QFrame();
@@ -49,7 +51,7 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
 
   /* Amount */
   amount = new QLineEdit();
-  QString label5 = QString("Amounts");
+  QString label5 = QString(mTranslator->translate("賣了多少?").c_str());
   mForm->addRow(label5, amount);
 
   /* In Stock */
@@ -77,12 +79,12 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
   hLay->addWidget(remainingDrop);
   hLay->addWidget(tb);
 
-  mForm->addRow("In Stock", hLay);
+  mForm->addRow(mTranslator->translate("你要賣那天的菜？").c_str(), hLay);
 
   /* Price */
   price = new QLineEdit();
 
-  QString label6 = QString("Price");
+  QString label6 = QString(mTranslator->translate("賣多少錢?").c_str());
   mForm->addRow(label6, price);
 }
 

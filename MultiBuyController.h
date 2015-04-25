@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 #include "Inventory.h"
+#include "translator.h"
 
 class MultiBuyElement;
 
@@ -16,7 +17,7 @@ class MultiBuyController : public QObject
   Q_OBJECT
 public:
     MultiBuyController(int currentVI, Inventory* inventory, QFormLayout* fo,
-                       QFont font, QScrollArea* sa, QDialog* d);
+                       QFont font, QScrollArea* sa, QDialog* d, Translator*);
     ~MultiBuyController();
     int getActualVegeIndex(int i);
     string getAmount(int i);
@@ -38,6 +39,7 @@ public:
     Inventory* mInventory;
     QScrollArea* scrollArea;
     QDialog* dialog;
+    Translator* mTranslator;
 
     /* Contains all the multiSellElements */
     vector<MultiBuyElement*>* formArray;

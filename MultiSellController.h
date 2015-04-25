@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 
+#include "translator.h"
 class MultiSellElement;
 class Inventory;
 
@@ -18,7 +19,7 @@ public:
   MultiSellController(Inventory* inventory,
                       QFormLayout* fo, QFont font,
                       QScrollArea* sa,
-                      QDialog* d);
+                      QDialog* d, Translator*);
   ~MultiSellController();
   int getActualVegeIndex(int i);
   string getAmounts(int i);
@@ -41,6 +42,7 @@ private:
   Inventory* mInventory;
   QScrollArea* scrollArea;
   QDialog* dialog;
+  Translator* mTranslator;
 
   /* Contains all the multiSellElements */
   vector<MultiSellElement*>* formArray;

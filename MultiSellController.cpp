@@ -1,9 +1,11 @@
 #include "MultiSellController.h"
 #include "MultiSellElement.h"
+#include "translator.h"
 
 MultiSellController::MultiSellController(Inventory* inventory,
                                          QFormLayout* fo,
-                              QFont f, QScrollArea* sa, QDialog* d):
+                              QFont f, QScrollArea* sa, QDialog* d,
+                                         Translator* t):
   mInventory(inventory),
   font(f),
   comboIndexToActual(new vector<vector<int> >()),
@@ -11,7 +13,8 @@ MultiSellController::MultiSellController(Inventory* inventory,
   selectedVeges(new set<int>()),
   scrollArea(sa),
   dialog(d),
-  formArray(new vector<MultiSellElement*>)
+  formArray(new vector<MultiSellElement*>),
+  mTranslator(t)
 {
   vector<int> tempv;
   comboIndexToActual->push_back(tempv);
@@ -23,7 +26,8 @@ MultiSellController::MultiSellController(Inventory* inventory,
       selectedVeges->insert(i);
       (*comboIndexToActual)[0].push_back(i);
       formArray->push_back(new MultiSellElement(i, this, inventory, font,
-                                           selectedVeges, (*comboIndexToActual)[0]));
+                                           selectedVeges, (*comboIndexToActual)[0],
+                           mTranslator));
       form->addRow((*formArray)[0]->getElement());
     }else
       temp++;
@@ -59,7 +63,7 @@ void MultiSellController::vegeDropChanged( int newIndex ){
 
   (*formArray)[vegeBoxNum] = new MultiSellElement(
         (*comboIndexToActual)[vegeBoxNum][0], this, mInventory,
-        font, selectedVeges, (*comboIndexToActual)[vegeBoxNum]);
+        font, selectedVeges, (*comboIndexToActual)[vegeBoxNum], mTranslator);
   form->insertRow(2 + vegeBoxNum, (*formArray)[vegeBoxNum]->getElement());
   updateVegeDrops();
 }
@@ -88,7 +92,8 @@ void MultiSellController::addElement(){
       if(selectedVeges->find(i) == selectedVeges->end() &&
           mInventory->getVegetableByIndex(i)->getTotalVeges()){
         formArray->push_back(new MultiSellElement(i, this, mInventory, font,
-                             selectedVeges, (*comboIndexToActual)[comboBoxNum]));
+                             selectedVeges, (*comboIndexToActual)[comboBoxNum],
+                                                  mTranslator));
         form->addRow((*formArray)[selectedVeges->size()]->getElement());
         selectedVeges->insert(i);
         break;

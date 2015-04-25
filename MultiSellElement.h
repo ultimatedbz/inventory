@@ -8,6 +8,7 @@
 #include "MultiSellController.h"
 #include "Inventory.h"
 #include "scrolleater.h"
+#include "translator.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ Q_OBJECT
 public:
     MultiSellElement(int index, MultiSellController* c, Inventory* i, QFont f,
                      set<int>* selectedVeges,
-                     vector<int>& vegeIndexToActual);
+                     vector<int>& vegeIndexToActual, Translator*);
     ~MultiSellElement();
     QFormLayout* getElement();
     QComboBox* getVegeDrop();
@@ -42,6 +43,7 @@ private:
     QLineEdit* amount;
     QLineEdit *price;
     ScrollEater* scrollEat;
+
 
     /* Contains all the remaining comboboxes*/
     vector<QComboBox*>* remainingDrops;

@@ -1,9 +1,11 @@
 #include "MultiBuyElement.h"
+#include "translator.h"
 #include <QDebug>
 
 MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
                                  QFont f, set<int>* selectedVeges,
-                                 vector<int>& vegeIndexToActual):
+                                 vector<int>& vegeIndexToActual,
+                                 Translator* mTranslator):
   mForm(new QFormLayout()),
   controller(c),
   mInventory(i),
@@ -29,17 +31,17 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
     }
   }
   vegeDrop->setFont(font);
-  mForm->addRow("Vegetable", vegeDrop);
+  mForm->addRow(QString(mTranslator->translate("菜名子").c_str()), vegeDrop);
 
   /* Amount */
   amount = new QLineEdit();
-  QString label5 = QString("Amounts");
+  QString label5 = QString(mTranslator->translate("買了多少?").c_str());
   mForm->addRow(label5, amount);
 
   /* Price */
   price = new QLineEdit();
 
-  QString label6 = QString("Price");
+  QString label6 = QString(mTranslator->translate("進價多少?").c_str());
   mForm->addRow(label6, price);
 
 }

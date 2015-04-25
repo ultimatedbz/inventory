@@ -8,6 +8,7 @@
 #include "MultiBuyController.h"
 #include "Inventory.h"
 #include "scrolleater.h"
+#include "translator.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class MultiBuyElement:public QObject
 public:
     MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
         QFont f, set<int>* selectedVeges,
-        vector<int>& vegeIndexToActual);
+        vector<int>& vegeIndexToActual, Translator*);
     ~MultiBuyElement();
     QFormLayout* getElement();
     QComboBox* getVegeDrop();

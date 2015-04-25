@@ -1,11 +1,13 @@
 #include "MultiBuyController.h"
 #include "MultiBuyElement.h"
+#include "translator.h"
 
 MultiBuyController::MultiBuyController(int currentVegeIndex,
                                        Inventory* inventory,
                                        QFormLayout* fo, QFont f,
                                        QScrollArea* sa,
-                                       QDialog* d):
+                                       QDialog* d,
+                                       Translator* mTranslator):
   mInventory(inventory),
   font(f),
   form(fo),
@@ -25,7 +27,7 @@ MultiBuyController::MultiBuyController(int currentVegeIndex,
   /* Make and add individual forms to big form */
 
       formArray->push_back(new MultiBuyElement(currentVegeIndex, this, inventory, font,
-                                   selectedVeges, (*comboIndexToActual)[0]));
+                                   selectedVeges, (*comboIndexToActual)[0], mTranslator));
       form->addRow((*formArray)[0]->getElement());
 }
 
@@ -60,7 +62,7 @@ void MultiBuyController::vegeDropChanged( int newIndex ){
   (*formArray)[vegeBoxNum] = new MultiBuyElement(
         (*comboIndexToActual)[vegeBoxNum][0],
         this, mInventory,
-        font, selectedVeges, (*comboIndexToActual)[vegeBoxNum]);
+        font, selectedVeges, (*comboIndexToActual)[vegeBoxNum], mTranslator);
 
   form->insertRow(2 + vegeBoxNum, (*formArray)[vegeBoxNum]->getElement());
   updateVegeDrops();
@@ -106,7 +108,8 @@ void MultiBuyController:: addElement(){
     for(int i = 0; i < mInventory->getVegNum(); i++){
       if(selectedVeges->find(i) == selectedVeges->end()){
         formArray->push_back(new MultiBuyElement(i, this, mInventory, font,
-                             selectedVeges, (*comboIndexToActual)[comboBoxNum]));
+                             selectedVeges, (*comboIndexToActual)[comboBoxNum],
+                             mTranslator));
         form->addRow((*formArray)[selectedVeges->size()]->getElement());
         selectedVeges->insert(i);
         break;
