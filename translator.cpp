@@ -37,9 +37,9 @@ Translator::Translator(){
     translator.insert(pair<string, string>("簡寫", "Abbreviation" ));
 
     /* Menu Popups */
-    translator.insert(pair<string, string>("請輸入你要加的新公司名字?", "Company" ));
-    translator.insert(pair<string, string>("請輸入你要加的新客戶名字?", "Customer" ));
-    translator.insert(pair<string, string>("請輸入你要加的單位?", "Unit" ));
+    translator.insert(pair<string, string>("請輸入你要加的新公司名字", "Company" ));
+    translator.insert(pair<string, string>("請輸入你要加的新客戶名字", "Customer" ));
+    translator.insert(pair<string, string>("請輸入你要加的單位", "Unit" ));
     translator.insert(pair<string, string>("請輸入你要加的菜名", "Vegetable" ));
 
     translator.insert(pair<string, string>("你要刪掉哪一個公司？", "Company" ));
