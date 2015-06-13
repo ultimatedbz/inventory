@@ -7,7 +7,7 @@ MultiBuyController::MultiBuyController(int currentVegeIndex,
                                        QFormLayout* fo, QFont f,
                                        QScrollArea* sa,
                                        QDialog* d,
-                                       Translator* mTranslator):
+                                       Translator* mt):
   mInventory(inventory),
   font(f),
   form(fo),
@@ -15,7 +15,8 @@ MultiBuyController::MultiBuyController(int currentVegeIndex,
   selectedVeges(new set<int>()),
   formArray(new vector<MultiBuyElement*>),
   scrollArea(sa),
-  dialog(d)
+  dialog(d),
+  mTranslator(mt)
 
 {
   vector<int> tempv;

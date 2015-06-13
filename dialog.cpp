@@ -420,7 +420,7 @@ void Dialog::addCompany(){
     QLineEdit* companyEdit = new QLineEdit(&dialog);
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
-    form->addRow(QString(mTranslator->translate("請輸入你要加的新公司名字?").c_str()), companyEdit);
+    form->addRow(QString(mTranslator->translate("請輸入你要加的新公司名字").c_str()), companyEdit);
     form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
 
     /* Button Box */
@@ -455,7 +455,7 @@ void Dialog::addPerson(){
     QLineEdit* customerEdit = new QLineEdit(&dialog);
     QLineEdit* abbreviationEdit = new QLineEdit(&dialog);
 
-    form->addRow(QString( mTranslator ->translate("請輸入你要加的新客戶名字?").c_str()), customerEdit);
+    form->addRow(QString( mTranslator ->translate("請輸入你要加的新客戶名字").c_str()), customerEdit);
     form->addRow(QString(mTranslator ->translate("簡寫").c_str()), abbreviationEdit);
 
     /* Button Box */
@@ -481,8 +481,8 @@ void Dialog::addPerson(){
 
 void Dialog::addUnit(){
     bool ok;
-    QString text = QInputDialog::getText(this, mTranslator ->translate("刪掉單位").c_str(),
-                      mTranslator ->translate("你要刪掉哪一個單位？").c_str(), QLineEdit::Normal,"", &ok);
+    QString text = QInputDialog::getText(this, mTranslator ->translate("加入單位").c_str(),
+                      mTranslator ->translate("請輸入你要加的單位").c_str(), QLineEdit::Normal,"", &ok);
     if(ok)
         inventory->addUnit(text.toUtf8().constData());
     needSave = 1;
