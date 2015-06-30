@@ -1,4 +1,5 @@
 #include "translator.h"
+#include <QDebug>
 
 Translator::Translator(){
     /* Menus */
@@ -61,7 +62,7 @@ Translator::Translator(){
 
     /* On Sell Click */
     translator.insert(pair<string, string>("輸入賣菜資料", "Selling Information" ));
-    translator.insert(pair<string, string>("賣了多少？", "Amount Sold" ));
+    translator.insert(pair<string, string>("賣了多少?", "Amount Sold" ));
     translator.insert(pair<string, string>("不夠賣!", "Not Enough to Sell!" ));
     translator.insert(pair<string, string>("賣给谁？", "Customer" ));
     translator.insert(pair<string, string>("那天賣出", "Date" ));
@@ -127,7 +128,7 @@ Translator::~Translator(){
 string Translator::translate(string input){
     if(currentLanguage == CHINESE)
         return input;
-
+    qDebug()<<input.c_str();
     return translator.find(input) -> second;
 }
 

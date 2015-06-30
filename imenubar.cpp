@@ -83,6 +83,7 @@ void IMenuBar:: changeLanguage(){
     removeUnitAction->setText(mTranslator ->translate("刪掉單位").c_str());
     printAction->setText(mTranslator ->translate("印 Inventory").c_str());
     printAction2->setText(mTranslator ->translate("印 History").c_str());
+    printAction3->setText(mTranslator ->translate("印記錄表").c_str());
 }
 
 /* File */
