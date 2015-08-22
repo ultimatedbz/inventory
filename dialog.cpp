@@ -58,6 +58,11 @@ Dialog::Dialog(QWidget *parent) :
   QFont vFont = font;
   vFont.setPixelSize(18);
   ui->vegeList->setFont(vFont);
+
+  if(mTranslator->currentLanguage == CHINESE){
+    changeToChinese();
+  }else
+    changeToEnglish();
 }
 
 Dialog::~Dialog()

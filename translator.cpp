@@ -118,7 +118,7 @@ Translator::Translator(){
 
     translator.insert(pair<string, string>("", "" ));
 
-    currentLanguage = CHINESE;
+    currentLanguage = ENGLISH;
 }
 
 Translator::~Translator(){

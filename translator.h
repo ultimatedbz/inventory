@@ -14,9 +14,9 @@ public:
     string translate(string input);
     void setLanguage();
     void changeLanguage(int i);
+    int currentLanguage;
 
 private:
-    int currentLanguage;
     map<string, string> translator;
 };
 
