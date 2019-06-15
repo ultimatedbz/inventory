@@ -5,7 +5,7 @@ Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog),
     inventory(new Inventory()),
-    currentVege(NULL),
+    currentVege(nullptr),
     needSave(0),
     font("Courier",-1,QFont::Bold,false),
     mTranslator(new Translator()),
@@ -167,7 +167,7 @@ void Dialog::on_Buy_clicked()
 
     /* Date */
     QLineEdit *date = new QLineEdit(&dialog);
-    time_t t = time(0);
+    time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -259,7 +259,7 @@ void Dialog::on_Sell_clicked()
 
         /* Date */
         QLineEdit *date = new QLineEdit(&dialog);
-        time_t t = time(0);
+        time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char buffer[128];
         sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -321,7 +321,7 @@ void Dialog::on_Sell_clicked()
                 vector<pair<int, int> > indexToPrice = vector<pair<int,int> >();
 
                 /* Link up remainindexes to amounts */
-                for(int j = 0; j < amounts.size(); j++){
+                for(unsigned long j = 0; j < amounts.size(); j++){
                     indexToPrice.push_back(
                                 make_pair(remainIndexes[amounts.size() - 1 - j],
                                 atoi(amounts[j].c_str())));
@@ -349,7 +349,7 @@ void Dialog::on_Sell_clicked()
 
     }else{
         QMessageBox messageBox;
-        messageBox.critical(0,"警告","No Vegetables to Sell");
+        messageBox.critical(nullptr,"警告","No Vegetables to Sell");
         messageBox.setFixedSize(500,200);
     }
 }
@@ -384,7 +384,7 @@ void Dialog::addVegetable(){
         if(!inventory->getUnitNum()){
 
             QMessageBox messageBox;
-            messageBox.critical(0,mTranslator ->translate("警告").c_str(),
+            messageBox.critical(nullptr,mTranslator ->translate("警告").c_str(),
                                 mTranslator ->translate("沒單位!").c_str());
             messageBox.setFixedSize(500,200);
         }else if(inventory->addVegetable(lineEdit->text().toUtf8().constData(),
@@ -624,7 +624,7 @@ void Dialog::removeVegetable(){
 
         delete removeThis[0];
         if(inventory->getVegNum() == 0){
-            currentVege = NULL;
+            currentVege = nullptr;
             ui->historyList->clear();
             ui->breakDown->clear();
             ui->returnList->clear();
@@ -660,17 +660,17 @@ void Dialog::printHistory(){
 }
 
 /// Print
-static double dateStartX = 600;
-static double dateWidth = 100;
-static double pageCenterX = 400;
-static double leftPageStartX = 10;
-static double rightPageStartX = pageCenterX + 10;
-static double textWidth = 380;
-static double pageHeight = 1000;
+static int dateStartX = 600;
+static int dateWidth = 100;
+static int pageCenterX = 400;
+static int leftPageStartX = 10;
+static int rightPageStartX = pageCenterX + 10;
+static int textWidth = 380;
+static int pageHeight = 1000;
 
 void Dialog::printT(QPrinter* printer){
     int amount;
-    time_t t = time(0);
+    time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -701,8 +701,8 @@ void Dialog::printT(QPrinter* printer){
 
         font.setPixelSize(amount);
         painter.setFont(font);
-        double lineHeight = painter.fontMetrics().height()+.5;
-        double topMargin = 3 * lineHeight;
+        int lineHeight = painter.fontMetrics().height();
+        int topMargin = 3 * lineHeight;
         QString leftText= "";
         QString rightText="";
         QString * currentText = &leftText;
@@ -796,7 +796,7 @@ void Dialog::printT(QPrinter* printer){
 
 void Dialog::printI(QPrinter* printer){
     int amount;
-    time_t t = time(0);
+    time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -828,7 +828,7 @@ void Dialog::printI(QPrinter* printer){
         font.setPixelSize(amount);
         painter.setFont(font);
         QFontMetrics metric(font);
-        double lineHeight = painter.fontMetrics().height();
+        int lineHeight = painter.fontMetrics().height();
         int topMargin = 3 * lineHeight;
         QString leftText= "";
         QString rightText="";
@@ -929,7 +929,7 @@ void Dialog::printH(QPrinter * printer){
 
     string dayComp;
     int amount;
-    time_t t = time(0);
+    time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -1276,7 +1276,7 @@ void Dialog::dumpVege(){
         int amount = lineEdit->text().toInt();
         int selection = remainingDrop->currentIndex();
 
-        time_t t = time(0);
+        time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char today[128];
         sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -1563,7 +1563,7 @@ void Dialog::on_Return_clicked()
         form.addRow(label3, customerDrop);
 
         QLineEdit * date = new QLineEdit(&dialog);
-        time_t t = time(0);
+        time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char buffer[128];
         sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -1605,7 +1605,7 @@ void Dialog::on_Return_clicked()
         if ( result == QDialog::Accepted) {
             if( amount <= 0 ){
                 QMessageBox messageBox;
-                messageBox.critical(0,"錯誤","Not Valid!");
+                messageBox.critical(nullptr,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
             }else{
                 currentVege->returnThis(dateReturned, amount, returner, company, dateBought);
@@ -1648,7 +1648,7 @@ void Dialog::on_Return_clicked()
                 int amount = lineEdit->text().toInt();
                 int selection = remainingDrop->currentIndex();
 
-                time_t t = time(0);
+                time_t t = time(nullptr);
                 struct tm * now = localtime(&t);
                 char today[128];
                 sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -1657,11 +1657,11 @@ void Dialog::on_Return_clicked()
                 if ( result == QDialog::Accepted) {
                     if( amount <= 0 ){
                         QMessageBox messageBox;
-                        messageBox.critical(0,"錯誤","Not Valid!");
+                        messageBox.critical(nullptr,"錯誤","Not Valid!");
                         messageBox.setFixedSize(500,200);
                     }else if(!currentVege->returnTo(amount,today,selection)){
                         QMessageBox error;
-                        error.critical(0,"警告",mTranslator
+                        error.critical(nullptr,"警告",mTranslator
                                        ->translate("不夠菜退!").c_str());
                         error.setFixedSize(500,200);
                     }
@@ -1674,14 +1674,14 @@ void Dialog::on_Return_clicked()
 }
 
 void Dialog::closeEvent(QCloseEvent *event) {
-    event = NULL;
+    event = nullptr;
     if (needSave)
         askSave();
 }
 
 void Dialog:: askSave(){
     QMessageBox error;
-    QMessageBox::StandardButton reply = error.critical(0,"警告",
+    QMessageBox::StandardButton reply = error.critical(nullptr,"警告",
                                                        mTranslator->translate("你要儲存嗎?").c_str(),
                                                        QMessageBox::No|QMessageBox::Yes);
     error.setFixedSize(500,200);
@@ -1731,7 +1731,7 @@ void Dialog::on_dumpButton_clicked()
         int amount = lineEdit->text().toInt();
         int selection = remainingDrop->currentIndex();
 
-        time_t t = time(0);
+        time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char today[128];
         sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
@@ -1740,13 +1740,13 @@ void Dialog::on_dumpButton_clicked()
         if ( result == QDialog::Accepted) {
             if( amount <= 0){
                 QMessageBox messageBox;
-                messageBox.critical(0,"錯誤","Not Valid!");
+                messageBox.critical(nullptr,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
             }
 
             else if(!currentVege->dumpVege(amount, today, selection)){
                 QMessageBox error;
-                error.critical(0,"警告",mTranslator->translate("不夠數量倒!").c_str());
+                error.critical(nullptr,"警告",mTranslator->translate("不夠數量倒!").c_str());
                 error.setFixedSize(500,200);
 
             }
@@ -1775,9 +1775,7 @@ void Dialog::on_dumpButton_clicked()
     }
 }
 
-void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditHint hint){
-
-
+void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditHint /* unused */){
     QString NewValue = reinterpret_cast<QLineEdit*>(editor)->text();
     currentVege->setVegetableName(NewValue.toUtf8().constData());
 
@@ -1813,7 +1811,7 @@ void Dialog:: deleteVege(){
 
 
     if(inventory->getVegNum() == 0){
-        currentVege = NULL;
+        currentVege = nullptr;
         ui->historyList->clear();
         ui->breakDown->clear();
         ui->returnList->clear();
@@ -1831,7 +1829,7 @@ void Dialog:: deleteHistory(){
              && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked()
              && ui->tuiCheck->isChecked())){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤",
+            messageBox.critical(nullptr,"錯誤",
                                 mTranslator->translate("你要打勾所有的選項才能undo!").c_str());
             messageBox.setFixedSize(500,200);
         }else{
@@ -1846,7 +1844,7 @@ void Dialog:: undoHistory(){
     if(currentVege&&currentVege->getHistoryNum()){
         if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked() && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked() && ui->tuiCheck->isChecked())){
             QMessageBox messageBox;
-            messageBox.critical(0,"錯誤",
+            messageBox.critical(nullptr,"錯誤",
                                 mTranslator->translate("你要打勾所有的選項才能undo!").c_str());
             messageBox.setFixedSize(500,200);
         }else{
@@ -1986,13 +1984,13 @@ void Dialog::on_clearHistoryButton_clicked()
         if ( result == QDialog::Accepted) {
             if( amount <= 0 ){
                 QMessageBox messageBox;
-                messageBox.critical(0,"錯誤","Not Valid!");
+                messageBox.critical(nullptr,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
             }
 
             else if(!currentVege->clearHist(amount)){
                 QMessageBox error;
-                error.critical(0,"警告",mTranslator->translate("不夠數量刪除!").c_str());
+                error.critical(nullptr,"警告",mTranslator->translate("不夠數量刪除!").c_str());
                 error.setFixedSize(500,200);
 
             }
@@ -2030,7 +2028,7 @@ void Dialog::on_clearReturnButton_clicked()
     }
 }
 
-void Dialog::on_vegeList_currentRowChanged(int currentRow)
+void Dialog::on_vegeList_currentRowChanged(int /* unused */)
 {
     on_vegeList_itemClicked(ui->vegeList->currentItem());
 }
