@@ -105,6 +105,19 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="CalculateSold">
+               <property name="minimumSize">
+                <size>
+                 <width>99</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Calculate</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="Buy">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -395,54 +408,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buyCheck</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>Dialog</receiver>
-   <slot>slot1()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>289</x>
-     <y>577</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>35</x>
-     <y>563</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sellCheck</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>slot1()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>366</x>
-     <y>577</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>137</x>
-     <y>579</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dumpCheck</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>slot1()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>439</x>
-     <y>575</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>72</x>
-     <y>576</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>returnCheck</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
@@ -471,6 +436,54 @@
     <hint type="destinationlabel">
      <x>258</x>
      <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buyCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>Dialog</receiver>
+   <slot>slot1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>289</x>
+     <y>577</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>35</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dumpCheck</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>slot1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>439</x>
+     <y>575</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>72</x>
+     <y>576</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sellCheck</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>slot1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>577</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>137</x>
+     <y>579</y>
     </hint>
    </hints>
   </connection>

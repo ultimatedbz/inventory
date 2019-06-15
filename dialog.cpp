@@ -1,5 +1,6 @@
 #include "dialog.h"
-
+#include <iostream>
+using namespace std;
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -1420,9 +1421,9 @@ void Dialog::loadFile(){
 
 void Dialog::save(){
 
-    if(!inventory->getFileName().compare("")){
+    if (!inventory->getFileName().compare("")) {
         saveAs();
-    }else{
+    } else {
         fstream* fio = new fstream (inventory->getFileName().c_str(),
                                     ios :: out |ios::binary);
         fio->seekp(0, ios::beg);
@@ -2039,7 +2040,7 @@ void Dialog::showPreferences() {
     //mPreferencesPanel->raise();
 }
 
-int Dialog::queryVeges(){
+int Dialog::queryVeges() {
     QDialog dialog(this);
     // Use a layout allowing to have a label next to each field
     QFormLayout form(&dialog);
@@ -2063,3 +2064,87 @@ int Dialog::queryVeges(){
 
 
 
+
+void Dialog::on_CalculateSold_clicked()
+{
+    QDialog dialog(this);
+    dialog.setWindowTitle(mTranslator ->translate("買").c_str());
+
+    //Add the viewport to the scroll area
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    //Create a widget and set its layout as your new layout created above
+    QWidget *viewport = new QWidget(&dialog);
+    //viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
+    scrollArea->setWidget(viewport);
+    scrollArea->setWidgetResizable(true);
+
+    QFormLayout* form = new QFormLayout(viewport);
+    viewport->setLayout(form);
+
+    QFormLayout *dialog_layout = new QFormLayout(&dialog);
+    dialog.setLayout(dialog_layout);
+    dialog.layout()->addWidget(scrollArea);
+
+    /* Company Drop */
+    QComboBox* companyDrop = new QComboBox(&dialog);
+    for(int i = 0; i< inventory->getCompanyNum(); i++){
+        companyDrop->addItem(inventory->getCompany(i).c_str());
+    }
+
+    companyDrop->setFont(font);
+
+    QString label2 = QString(mTranslator->translate("哪家公司的?").c_str());
+    form->addRow(label2, companyDrop);
+
+    /* Date */
+    QLineEdit *date = new QLineEdit(&dialog);
+    time_t t = time(nullptr);
+    struct tm * now = localtime(&t);
+    char buffer[128];
+    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    date -> setText(QString::fromUtf8(buffer));
+    QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
+    form->addRow(label4, date);
+
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                               Qt::Horizontal, &dialog);
+    form->addRow(&buttonBox);
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    if (dialog.exec() == QDialog::Accepted && currentVege) {
+        string datePurchased = date->text().toUtf8().constData();
+        string firstLine = "Date | " + datePurchased + "\n";
+
+        string company = companyDrop->currentText().toUtf8().constData();
+        string secondLine = "Company | " + company + "\n";
+
+        string breakdownLine = "\nBreakdown | ";
+        int revenue = 0;
+        int units = 0;
+        bool first = true;
+        for(int i = 0; i < currentVege -> getHistoryNum(); i++) {
+          History* temp = currentVege -> getHistoryObject(i);
+          if (temp -> getType() == "Sell" && temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
+              if(first) {
+                first = false;
+              } else {
+                breakdownLine += " + ";
+              }
+                  revenue += stoi(temp -> getPrice());
+                  units += temp -> getDifference() * -1;
+                  breakdownLine += "$" + temp -> getPrice() + " * " + to_string(temp -> getDifference() * -1);
+          }
+        }
+
+        breakdownLine += "\n";
+        string thirdLine = "Revenue | " + to_string(revenue) + "\n";
+        string fourthLine = "Units sold | " + to_string(units) + " "+ currentVege->getUnit() +"\n";
+
+        ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + thirdLine + fourthLine + breakdownLine));
+
+    }
+}

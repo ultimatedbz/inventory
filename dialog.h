@@ -112,8 +112,6 @@ public slots:
     void askSave();
 
     void on_vegeList_itemClicked(QListWidgetItem *item);
-
-
     void ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditHint hint);
 
 
@@ -128,6 +126,8 @@ private slots:
     void dumpVege();
 
     void on_vegeList_currentRowChanged(int currentRow);
+
+    void on_CalculateSold_clicked();
 
 private:
     Ui::Dialog *ui;

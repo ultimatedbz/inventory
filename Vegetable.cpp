@@ -158,7 +158,7 @@ int Vegetable::sellVege(int amount, string customer, string date,
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
 
-    if( historyArray==NULL){
+    if( historyArray==nullptr){
       historyArray = new History[10000];
     }
 
@@ -674,8 +674,7 @@ void Vegetable::load(fstream* fio){
     int tempNum3;
     fio->read((char *) &(tempNum3),sizeof(int));
 
-    if(tempNum3){
-
+    if(tempNum3) {
         fio->read(temp3, tempNum3);
         temp3[tempNum3]='\0';
         string str3(temp3);
