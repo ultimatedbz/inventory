@@ -120,13 +120,13 @@ int Vegetable::buyVege(int amount, string bc, string date, string price){
   if(amount < 1)
       return 0;
   if( historyArray==NULL){
-    historyArray = new History[100];
+    historyArray = new History[10000];
   }
   if( !remainingArray)
-      remainingArray = new Remaining[100];
+      remainingArray = new Remaining[10000];
 
 
-  if( historyNum == 100){
+  if( historyNum == 10000){
       for(int i = 0; i < historyNum -1; i++){
           historyArray[i] = historyArray[i+1];
       }
@@ -159,10 +159,10 @@ int Vegetable::sellVege(int amount, string customer, string date,
     string bc = remainingArray[selection].getCompany();
 
     if( historyArray==NULL){
-      historyArray = new History[100];
+      historyArray = new History[10000];
     }
 
-    if( historyNum == 100){
+    if( historyNum == 10000){
         for(int i = 0; i < historyNum -1; i++){
             historyArray[i] = historyArray[i+1];
         }
@@ -221,14 +221,14 @@ int Vegetable::sellVege(int amount, string customer, string date,
 void Vegetable::returnThis(string dateReturned, int amount, string returner,
                            string  company, string dateBought){
 
-    if( !remainingArray)
+    if (!remainingArray)
         remainingArray = new Remaining[10000];
 
-    if( historyArray==NULL){
+    if (historyArray==nullptr) {
       historyArray = new History[10000];
     }
 
-    if( historyNum == 100){
+    if (historyNum == 10000) {
         for(int i = 0; i < historyNum -1; i++){
             historyArray[i] = historyArray[i+1];
         }
@@ -279,10 +279,10 @@ int Vegetable::dumpVege(int amount, string date, int selection){
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
     if( historyArray==NULL){
-      historyArray = new History[100];
+      historyArray = new History[10000];
     }
 
-    if( historyNum == 100){
+    if( historyNum == 10000){
         for(int i = 0; i < historyNum -1; i++){
             historyArray[i] = historyArray[i+1];
         }
@@ -348,13 +348,13 @@ int Vegetable::returnTo(int amount, string date, int selection){
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
     if( historyArray==NULL){
-      historyArray = new History[100];
+      historyArray = new History[10000];
     }
 
     if(tuiArray == NULL)
-        tuiArray = new ReturnTo[100];
+        tuiArray = new ReturnTo[10000];
 
-    if( historyNum == 100){
+    if( historyNum == 10000){
         for(int i = 0; i < historyNum -1; i++){
             historyArray[i] = historyArray[i+1];
         }
@@ -608,16 +608,16 @@ void Vegetable::remove(){
 
         delete[] historyArray;
     }
-    historyArray = NULL;
+    historyArray = nullptr;
     if(remainingArray)
         delete[] remainingArray;
-    remainingArray = NULL;
+    remainingArray = nullptr;
     if(returnArray)
         delete[] returnArray;
-    returnArray = NULL;
+    returnArray = nullptr;
     if(tuiArray)
         delete[] tuiArray;
-    tuiArray = NULL;
+    tuiArray = nullptr;
 }
 
 int Vegetable::clearHist(int num){
@@ -643,7 +643,7 @@ void Vegetable::clearTui(){
         return;
     else{
         delete[]tuiArray;
-        tuiArray = NULL;
+        tuiArray = nullptr;
         tuiNum = 0;
     }
 }
@@ -683,14 +683,14 @@ void Vegetable::load(fstream* fio){
     }
 
     if(tuiNum)
-        tuiArray = new ReturnTo[100];
+        tuiArray = new ReturnTo[10000];
     for(int i = 0; i<tuiNum; i++){
         ReturnTo temp;
         temp.load(fio);
         tuiArray[i]=temp;
     }
     if(remainingNum)
-        remainingArray = new Remaining[100];
+        remainingArray = new Remaining[10000];
     for(int i = 0; i<remainingNum; i++){
         Remaining temp;
         temp.load(fio);
@@ -698,14 +698,14 @@ void Vegetable::load(fstream* fio){
     }
 
     if(returnNum)
-        returnArray = new Return[100];
+        returnArray = new Return[10000];
     for(int i = 0; i<returnNum; i++){
         Return temp;
         temp.load(fio);
         returnArray[i]=temp;
     }
     if(historyNum)
-        historyArray = new History[100];
+        historyArray = new History[10000];
     for(int i = 0; i<historyNum; i++){
         History temp;
         temp.load(fio);
@@ -728,10 +728,10 @@ int Vegetable::restock(int amount, string dP, string bc, int retNum){
         return 0;
     }
     if( !remainingArray)
-        remainingArray = new Remaining[100];
+        remainingArray = new Remaining[10000];
 
     if( !returnArray)
-        returnArray = new Return[100];
+        returnArray = new Return[10000];
 
     //checks if already in inventory breakdown
     int exist = remainExist(bc, dP);
