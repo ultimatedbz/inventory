@@ -1097,6 +1097,9 @@ int Vegetable::getMTransNum(){
   return mTransNum;
 }
 
+void Vegetable:: editHistoryPrice(int index, string newPrice) {
+    historyArray[index].price = newPrice;
+}
 
 
 

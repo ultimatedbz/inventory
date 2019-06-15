@@ -84,6 +84,7 @@ public:
    int getMTransNum();
    string padding(string word);
    vector<vector<string> > getTransactions();
+   void editHistoryPrice(int, string);
 private:
   string vegetableName;
   History* historyArray;

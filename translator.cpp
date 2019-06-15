@@ -108,8 +108,8 @@ Translator::Translator(){
     /* Delete/Undo History */
     translator.insert(pair<string, string>("你要打勾所有的選項才能undo!",
                                 "You Must Check All Boxes to Undo!" ));
-
-
+    translator.insert(pair<string, string>("你要打勾所有的選項才能edit!",
+                                "You Must Check All Boxes to Edit!" ));
     translator.insert(pair<string, string>("你確定你要刪掉全部嗎?",
                                            "Are You Sure You Want to Delete All?" ));
     translator.insert(pair<string, string>("刪掉歷史", "Delete History" ));

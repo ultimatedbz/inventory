@@ -38,6 +38,7 @@ public:
   int getChangeNum();
   void tui(int amount, string date, string bd, string comp, int change);
   int getTui();
+  string price;
 
 private:
   string type;
@@ -45,7 +46,6 @@ private:
   string dayPurchased;
   int difference;
   string customer;
-  string price;
   string company;
   int returned;
   int dumped;

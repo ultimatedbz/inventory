@@ -101,6 +101,7 @@ public slots:
     void printT(QPrinter* printer);
 
     void deleteHistory();
+    void editHistory();
     void undoHistory();
     void deleteVege();
 
@@ -114,10 +115,7 @@ public slots:
     void on_vegeList_itemClicked(QListWidgetItem *item);
     void ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditHint hint);
 
-
     void slot1();
-
-
 
 private slots:
     void on_clearHistoryButton_clicked();
@@ -142,6 +140,8 @@ private:
     QAction* deleteVegeAction;
     QAction* undoHistoryAction;
     QAction* deleteHistoryAction;
+    QAction* editHistoryAction;
+
     QAction* dumpVegeAction;
 
     Translator* mTranslator;

@@ -51,6 +51,11 @@ Dialog::Dialog(QWidget *parent) :
     connect(deleteHistoryAction, SIGNAL(triggered()), this, SLOT(deleteHistory()));
     ui->historyList->addAction(deleteHistoryAction);
 
+      editHistoryAction = new QAction(tr("&Edit"), this);
+      connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editHistory()));
+      ui->historyList->addAction(editHistoryAction);
+
+
     /*Edit Vegetable Name */
     connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
             this, SLOT(ListWidgetEditEnd(QWidget*, QAbstractItemDelegate::EndEditHint)));
@@ -1824,6 +1829,64 @@ void Dialog:: deleteVege(){
 
 }
 
+void Dialog:: editHistory(){
+    if(currentVege && currentVege->getHistoryNum()){
+        if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked()
+             && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked()
+             && ui->tuiCheck->isChecked())){
+            QMessageBox messageBox;
+            messageBox.critical(nullptr,"錯誤",
+                                mTranslator->translate("你要打勾所有的選項才能edit!").c_str());
+            messageBox.setFixedSize(500,200);
+        }else{
+            QDialog dialog(this);
+            dialog.setWindowTitle("Edit");
+
+            //Add the viewport to the scroll area
+            QScrollArea *scrollArea = new QScrollArea;
+            scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+            //Create a widget and set its layout as your new layout created above
+            QWidget *viewport = new QWidget(&dialog);
+            scrollArea->setWidget(viewport);
+            scrollArea->setWidgetResizable(true);
+
+            QFormLayout* form = new QFormLayout(viewport);
+            viewport->setLayout(form);
+
+            QFormLayout *dialog_layout = new QFormLayout(&dialog);
+            dialog.setLayout(dialog_layout);
+            dialog.layout()->addWidget(scrollArea);
+
+            History* historyTemp = currentVege->getHistoryObject(ui->historyList->currentRow());
+            string label =  "[Date Sold | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+            form -> addRow(new QLabel(QString::fromStdString(label)));
+            /* Price */
+            QLineEdit *priceLineEdit = new QLineEdit(&dialog);
+            string price = historyTemp -> getPrice();
+            priceLineEdit -> setText(QString::fromStdString(price));
+            QString label4 = QString("Price: ");
+            form->addRow(label4, priceLineEdit);
+
+            /* Button Box */
+            QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+                                       Qt::Horizontal, &dialog);
+            form->addRow(&buttonBox);
+
+            dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
+
+            QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+            QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+            if (dialog.exec() == QDialog::Accepted ) {
+                currentVege->editHistoryPrice(ui->historyList->currentRow(), priceLineEdit->text().toUtf8().constData());
+                needSave = 1;
+                on_vegeList_itemClicked(ui->vegeList->currentItem());
+            }
+        }
+    }
+}
+
 void Dialog:: deleteHistory(){
     if(currentVege && currentVege->getHistoryNum()){
         if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked()
@@ -2145,6 +2208,5 @@ void Dialog::on_CalculateSold_clicked()
         string fourthLine = "Units sold | " + to_string(units) + " "+ currentVege->getUnit() +"\n";
 
         ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + thirdLine + fourthLine + breakdownLine));
-
     }
 }
