@@ -222,10 +222,10 @@ void Vegetable::returnThis(string dateReturned, int amount, string returner,
                            string  company, string dateBought){
 
     if( !remainingArray)
-        remainingArray = new Remaining[100];
+        remainingArray = new Remaining[10000];
 
     if( historyArray==NULL){
-      historyArray = new History[100];
+      historyArray = new History[10000];
     }
 
     if( historyNum == 100){
@@ -237,7 +237,7 @@ void Vegetable::returnThis(string dateReturned, int amount, string returner,
 
 
     if( !returnArray)
-        returnArray = new Return[100];
+        returnArray = new Return[10000];
 
     //check if remaining already exists
 
