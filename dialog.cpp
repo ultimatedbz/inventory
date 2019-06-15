@@ -660,13 +660,13 @@ void Dialog::printHistory(){
 }
 
 /// Print
-static int dateStartX = 600;
-static int dateWidth = 100;
-static int pageCenterX = 300;
-static int leftPageStartX = 10;
-static int rightPageStartX = 350;
-static int textWidth = 280;
-static int pageHeight = 600;
+static double dateStartX = 600;
+static double dateWidth = 100;
+static double pageCenterX = 400;
+static double leftPageStartX = 10;
+static double rightPageStartX = pageCenterX + 10;
+static double textWidth = 380;
+static double pageHeight = 1000;
 
 void Dialog::printT(QPrinter* printer){
     int amount;
@@ -677,12 +677,12 @@ void Dialog::printT(QPrinter* printer){
     string today = buffer;
 
     QDialog dialog1(this);
-    dialog1.setWindowTitle("列印資料");
+    dialog1.setWindowTitle(mTranslator ->translate("印 記錄表").c_str());
     QFormLayout form(&dialog1);
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
     QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
-    lineEdit -> setText("16");
+    lineEdit -> setText("14");
     form.addRow(label, lineEdit);
 
 
@@ -702,7 +702,7 @@ void Dialog::printT(QPrinter* printer){
         font.setPixelSize(amount);
         painter.setFont(font);
         double lineHeight = painter.fontMetrics().height()+.5;
-        int topMargin = 3 * lineHeight;
+        double topMargin = 3 * lineHeight;
         QString leftText= "";
         QString rightText="";
         QString * currentText = &leftText;
@@ -750,9 +750,7 @@ void Dialog::printT(QPrinter* printer){
                 *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
                                                       ->formatTransaction(*mAbbreviator).c_str());
 
-                lineCount += 2; // For Vegetable name and Total
-                // int additionalLines = inventory->
-                //   getVegetableByIndex(i)->getMTransNum();
+                lineCount += 2;
                 lineCount += additionalLines; // Lines from transactions
                 painter.drawLine(pageCenterX * column,lineHeight * (lineCount) + topMargin,
                                  pageCenterX * (column + 1),lineHeight * (lineCount) + topMargin);
@@ -841,17 +839,18 @@ void Dialog::printI(QPrinter* printer){
         int column = 0;
         for(int i = 0; i<inventory->getVegNum(); i++){
             if(inventory->getVegetableByIndex(i)->getRemainingNum()){
-                if( lineHeight * (lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum())) + topMargin  > pageHeight  ){
+                int additionalLines = lineCount + (2 + inventory->getVegetableByIndex(i)->getRemainingNum());
+                if (lineHeight * additionalLines + topMargin  > pageHeight) {
                     if(currentText == &leftText){
                         currentText = &rightText;
                         lineCount = 0;
                         column = 1;
-                        painter.drawLine(pageCenterX, topMargin,pageCenterX,pageHeight);
+                        painter.drawLine(pageCenterX, topMargin,pageCenterX, pageHeight);
                     }else{
-                        painter.drawText(leftPageStartX,topMargin,390,pageHeight,Qt::AlignLeft|Qt::AlignTop, leftText );
-                        painter.drawText(rightPageStartX,topMargin,390,pageHeight,Qt::AlignLeft|Qt::AlignTop, rightText );
-                        leftText= "";
-                        rightText="";
+                        painter.drawText(leftPageStartX,topMargin,textWidth,pageHeight,Qt::AlignLeft|Qt::AlignTop, leftText );
+                        painter.drawText(rightPageStartX,topMargin,textWidth,pageHeight,Qt::AlignLeft|Qt::AlignTop, rightText );
+                        leftText = "";
+                        rightText = "";
                         printer->newPage();
 
                         painter.drawLine(pageCenterX,topMargin,pageCenterX,pageHeight);
@@ -862,6 +861,9 @@ void Dialog::printI(QPrinter* printer){
                         lineCount = 0;
                     }
                 }
+
+                painter.drawLine(pageCenterX * column, lineHeight * lineCount + topMargin,
+                                 pageCenterX *(column + 1), lineHeight * lineCount + topMargin);
 
                 *currentText = *currentText + QString(inventory->
                                                       getVegetableByIndex(i)->
@@ -877,9 +879,9 @@ void Dialog::printI(QPrinter* printer){
                 }
 
                 lineCount += 2;
-                painter.drawLine(pageCenterX * column,lineHeight * (lineCount +1) + topMargin,
-                                 pageCenterX *(column + 1),lineHeight * (1+lineCount) + topMargin);
-
+/*                painter.drawLine(pageCenterX * column, lineHeight * lineCount + topMargin,
+                                 pageCenterX *(column + 1), lineHeight * lineCount + topMargin);
+*/
             }else{
                 if( lineHeight * (lineCount + 1) + topMargin > pageHeight  ){
                     if(currentText == &leftText){
@@ -903,20 +905,19 @@ void Dialog::printI(QPrinter* printer){
                     }
                 }
 
+                painter.drawLine(pageCenterX * column,lineHeight * lineCount + topMargin,
+                                 pageCenterX * (column + 1),lineHeight * lineCount + topMargin);
                 *currentText = *currentText + QString(inventory->
                                                       getVegetableByIndex(i)->
                                                       getVegetablename().c_str()) + ":  "+ QString::number(inventory->getVegetableByIndex(i)
                                                                                                            ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
                                                                                                                                              getUnit().c_str()) +"\n";
                 lineCount += 1;
-                painter.drawLine(pageCenterX * column,lineHeight * (lineCount + 1) + topMargin,
-                                 pageCenterX * (column + 1),lineHeight * (lineCount + 1) + topMargin);
-
             }
 
         }
-        painter.drawText(leftPageStartX, topMargin + lineHeight,rightPageStartX,pageHeight,Qt::AlignLeft|Qt::AlignTop, leftText );
-        painter.drawText(rightPageStartX, topMargin + lineHeight,rightPageStartX,pageHeight,Qt::AlignLeft|Qt::AlignTop, rightText );
+        painter.drawText(leftPageStartX, topMargin, rightPageStartX,pageHeight,Qt::AlignLeft|Qt::AlignTop, leftText );
+        painter.drawText(rightPageStartX, topMargin, rightPageStartX,pageHeight,Qt::AlignLeft|Qt::AlignTop, rightText );
         painter.end();
     }
 }
@@ -945,7 +946,7 @@ void Dialog::printH(QPrinter * printer){
 
     QLineEdit *lineEdit = new QLineEdit(&dialog1);
     QString label = QString(mTranslator ->translate("請輸入字體大小").c_str());
-    lineEdit -> setText("18");
+    lineEdit -> setText("12");
     form.addRow(label, lineEdit);
 
 

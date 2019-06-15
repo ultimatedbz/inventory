@@ -24,8 +24,8 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     saveAsAction = fileMenu->addAction(mTranslator ->translate("另存新檔").c_str());
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     printAction = fileMenu->addAction(mTranslator ->translate("印 Inventory").c_str());
-    printAction3 = fileMenu->addAction(mTranslator ->translate("印記錄表").c_str());
     printAction2 = fileMenu->addAction(mTranslator ->translate("印 History").c_str());
+    printAction3 = fileMenu->addAction(mTranslator ->translate("印 記錄表").c_str());
 
 
     fileMenu->addSeparator();
@@ -83,7 +83,7 @@ void IMenuBar:: changeLanguage(){
     removeUnitAction->setText(mTranslator ->translate("刪掉單位").c_str());
     printAction->setText(mTranslator ->translate("印 Inventory").c_str());
     printAction2->setText(mTranslator ->translate("印 History").c_str());
-    printAction3->setText(mTranslator ->translate("印記錄表").c_str());
+    printAction3->setText(mTranslator ->translate("印 記錄表").c_str());
 }
 
 /* File */

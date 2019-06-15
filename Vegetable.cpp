@@ -1038,20 +1038,14 @@ string Vegetable::formatTransaction(Abbreviation abb){
       string type = historyArray[i].getType();
       int selection = temp.returnExist(company, dP);
       if (type == "Dump"){
-        //temp.dumpVege(amount, "",selection);
         temp.transDump(amount, dP, company);
       }else if (type == "Tui"){
-        //temp.returnTo(amount, "", selection);
         temp.transTui(amount, dP, company);
       }else if (type == "Return"){
-        //temp.returnThis(dP, amount, );
         temp.transReturn(amount, dP, company);
       }else if (type == "Sell"){
-        //temp.sellVege(amount, "", "", "", selection);
         temp.transSell(amount, dP, company, customer, abb);
       }else if(type == "Buy"){
-        //temp.buyVege(amount,company, dP, price);
-        //temp.transBuy();
       }
     }
   }
