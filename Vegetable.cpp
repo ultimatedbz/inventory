@@ -180,10 +180,6 @@ int Vegetable::sellVege(int amount, string customer, string date,
   }
   else
       remainingArray[selection].updateRemaining((-1) * amount);
-
-  //if (remainingArray[selection].getReturn()){
-      /* Change returns */
-   //   returnChange = min(amount,remainingArray[selection].getReturn());
       while(returnChange){
           int temp = returnExistCompany( remainingArray[selection].getCompany(),
                                   remainingArray[selection].getDate());

@@ -931,8 +931,6 @@ void Dialog::printI(QPrinter* printer){
 void Dialog::printH(QPrinter * printer){
 
     //qdialog what day do you want to print? have a drop down box with all the available days
-
-
     string dayComp;
     int amount;
     time_t t = time(nullptr);
@@ -981,8 +979,6 @@ void Dialog::printH(QPrinter * printer){
         int topMargin = 3 * lineHeight;
         int column = 0;
         painter.drawLine(pageCenterX,topMargin,pageCenterX,pageHeight);
-        //painter.drawLine(900,topMargin,pageCenterX,pageHeight);
-        //painter.drawLine(1000,topMargin,pageCenterX,pageHeight);
         painter.drawText(dateStartX,lineHeight,dateWidth,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
 
         for(int i = 0; i<inventory->getVegNum(); i++){
@@ -1042,6 +1038,7 @@ void Dialog::printH(QPrinter * printer){
                     //sort by company
                     qsort(buy, buyNum, sizeof(History), compareCompany);
                 }
+
                 if(sellNum || buyNum || returnNum || dumpNum ||tuiNum){
                     //checks if the next block to print fits on the page
                     int first = 0;
@@ -1164,6 +1161,7 @@ void Dialog::printH(QPrinter * printer){
 
 
                 }
+
                 if(dumpNum){
                     if( lineHeight * (lineCount + dumpNum) + topMargin > pageHeight  ){
                         if(currentText == &leftText){
@@ -1196,13 +1194,14 @@ void Dialog::printH(QPrinter * printer){
                     }
 
                 }
-                if(tuiNum){
-                    if( lineHeight * (lineCount + tuiNum) + topMargin > pageHeight  ){
-                        if(currentText == &leftText){
+
+                if (tuiNum){
+                    if (lineHeight * (lineCount + tuiNum) + topMargin > pageHeight  ){
+                        if (currentText == &leftText){
                             column = 1;
                             currentText = &rightText;
                             lineCount = 0;
-                        }else{
+                        } else {
                             lineCount = 0;
                             column = 0;
                             painter.drawText(leftPageStartX,topMargin,rightPageStartX,pageHeight,Qt::AlignLeft|Qt::AlignTop, leftText );
@@ -1217,19 +1216,19 @@ void Dialog::printH(QPrinter * printer){
                             currentText = &leftText;
                         }
                     }
+
                     painter.drawLine(pageCenterX * column + 60,lineHeight *( lineCount) + topMargin,
                                      pageCenterX *(column + 1),lineHeight * ( lineCount) + topMargin);
                     *currentText = *currentText + "   退給農場:\n";
                     lineCount++;
                     painter.drawLine(pageCenterX * column + 60,lineHeight *( lineCount) + topMargin,
                                      pageCenterX *(column + 1),lineHeight * ( lineCount) + topMargin);
-                    for(int j =0; j < tuiNum; j++){
+                    for (int j =0; j < tuiNum; j++) {
                         *currentText = *currentText + QString(tui[j].printFormat().c_str()) +"\n";
                         lineCount++;
                     }
-
-
                 }
+
                 painter.drawLine(pageCenterX * column ,lineHeight * (lineCount) + topMargin,
                                  pageCenterX *(column + 1),lineHeight * (lineCount) + topMargin);
             }
@@ -1826,7 +1825,6 @@ void Dialog:: deleteVege(){
     }else{
         on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
-
 }
 
 void Dialog:: editHistory(){
@@ -2125,9 +2123,6 @@ int Dialog::queryVeges() {
         return -1;
 }
 
-
-
-
 void Dialog::on_CalculateSold_clicked()
 {
     QDialog dialog(this);
@@ -2139,7 +2134,6 @@ void Dialog::on_CalculateSold_clicked()
 
     //Create a widget and set its layout as your new layout created above
     QWidget *viewport = new QWidget(&dialog);
-    //viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
 
@@ -2189,24 +2183,87 @@ void Dialog::on_CalculateSold_clicked()
         int revenue = 0;
         int units = 0;
         bool first = true;
+        string noPrices = "";
+        string returnedLine = "";
+
+        int dumpCount = 0;
+        int tuiCount = 0;
+        int totalBoxes = 0;
+        int totalSold = 0;
         for(int i = 0; i < currentVege -> getHistoryNum(); i++) {
           History* temp = currentVege -> getHistoryObject(i);
-          if (temp -> getType() == "Sell" && temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
-              if(first) {
-                first = false;
-              } else {
-                breakdownLine += " + ";
-              }
-                  revenue += stoi(temp -> getPrice());
+          if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
+              if (temp -> getType() == "Sell") {
+                  if (temp -> getPrice() == "--") {
+                      noPrices += "No Price: " + to_string(temp -> getDifference() * -1) + " " + temp->getPrice() + "  " + temp->getCustomer() + "\n";
+                      totalSold += temp -> getDifference() * -1;
+                      continue;
+                  }
+
+                  if (first) {
+                    first = false;
+                  } else {
+                    breakdownLine += " + ";
+                  }
+
                   units += temp -> getDifference() * -1;
+                  totalSold += temp -> getDifference() * -1;
+                  revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
                   breakdownLine += "$" + temp -> getPrice() + " * " + to_string(temp -> getDifference() * -1);
+              } else if (temp -> getType() == "Tui") {
+                  tuiCount += temp -> getDifference() * -1;
+                  totalSold += temp -> getDifference() * -1;
+              } else if (temp -> getType() == "Dump") {
+                  dumpCount += temp -> getDifference() * -1;
+                  totalSold += temp -> getDifference() * -1;
+              } else if (temp -> getType() == "Buy") {
+                  totalBoxes += temp -> getDifference();
+              } else if (temp -> getType() == "Return") {
+                  // No access to original price here.
+                  //units += temp -> getDifference() * -1;
+                  //revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
+                  totalSold -= temp -> getDifference();
+                  returnedLine += "    " + to_string(temp -> getDifference()) + " " + currentVege -> getUnit() + " " + temp -> getCustomer() + "\n";
+              }
           }
         }
 
         breakdownLine += "\n";
-        string thirdLine = "Revenue | " + to_string(revenue) + "\n";
+        string boxesLine = "Total Boxes (Buy needs to be in history) | " + to_string(totalBoxes) + "\n";
+        string thirdLine = "Revenue | $" + to_string(revenue) + "\n";
         string fourthLine = "Units sold | " + to_string(units) + " "+ currentVege->getUnit() +"\n";
 
-        ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + thirdLine + fourthLine + breakdownLine));
+
+        int remaining = 0;
+
+        for (int i = 0; i < currentVege -> getRemainingNum(); i++) {
+            Remaining* temp = currentVege -> getRemainingObject(i);
+            if (temp -> getDate() == datePurchased && temp -> getCompany() == company) {
+                remaining = temp -> getRemaining();
+                break;
+            }
+        }
+
+        string fifthLine = "Boxes remaining | " + to_string(remaining) + "\n";
+
+
+        string dumps = "";
+        if (dumpCount) {
+            dumps = "Dumped: " + to_string(dumpCount) + " " + currentVege->getUnit() + "\n";
+        }
+
+        string tuis = "";
+        if (tuiCount) {
+            tuis = "RT to farm: " + to_string(tuiCount) + " " + currentVege->getUnit() + "\n";
+        }
+
+        if (returnedLine != "") {
+            returnedLine = "\nManual Deduction: \n\nCustomer RT| \n" + returnedLine;
+        }
+
+
+        string totalSoldLine = "Total sold | " + to_string(totalSold) + " "+ currentVege->getUnit() +"\n";
+
+        ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + boxesLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
     }
 }

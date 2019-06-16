@@ -46,10 +46,10 @@ public:
     QHBoxLayout *horizontalLayout_8;
     QLabel *Inventory;
     QLabel *changeTotal;
-    QPushButton *CalculateSold;
     QPushButton *Buy;
     QPushButton *Sell;
     QPushButton *dumpButton;
+    QPushButton *CalculateSold;
     QGridLayout *gridLayout_2;
     QListWidget *breakDown;
     QWidget *layoutWidget3;
@@ -185,12 +185,6 @@ public:
 
         horizontalLayout_8->addWidget(changeTotal);
 
-        CalculateSold = new QPushButton(layoutWidget2);
-        CalculateSold->setObjectName(QString::fromUtf8("CalculateSold"));
-        CalculateSold->setMinimumSize(QSize(99, 0));
-
-        horizontalLayout_8->addWidget(CalculateSold);
-
         Buy = new QPushButton(layoutWidget2);
         Buy->setObjectName(QString::fromUtf8("Buy"));
         sizePolicy1.setHeightForWidth(Buy->sizePolicy().hasHeightForWidth());
@@ -211,6 +205,12 @@ public:
         dumpButton->setSizePolicy(sizePolicy1);
 
         horizontalLayout_8->addWidget(dumpButton);
+
+        CalculateSold = new QPushButton(layoutWidget2);
+        CalculateSold->setObjectName(QString::fromUtf8("CalculateSold"));
+        CalculateSold->setMinimumSize(QSize(99, 0));
+
+        horizontalLayout_8->addWidget(CalculateSold);
 
 
         verticalLayout_2->addLayout(horizontalLayout_8);
@@ -441,10 +441,10 @@ public:
         multiSellButton->setText(QApplication::translate("Dialog", "Multiple Sell/ \345\277\253\351\200\237\345\215\226", nullptr));
         Inventory->setText(QApplication::translate("Dialog", "\345\272\253\345\255\230\350\241\250\357\274\232", nullptr));
         changeTotal->setText(QString());
-        CalculateSold->setText(QApplication::translate("Dialog", "Calculate", nullptr));
         Buy->setText(QApplication::translate("Dialog", "\350\262\267", nullptr));
         Sell->setText(QApplication::translate("Dialog", "\350\263\243", nullptr));
         dumpButton->setText(QApplication::translate("Dialog", "\345\200\222", nullptr));
+        CalculateSold->setText(QApplication::translate("Dialog", "Calculate", nullptr));
         Returns->setText(QApplication::translate("Dialog", "\351\200\200\350\262\250\345\226\256\357\274\232", nullptr));
         label->setText(QString());
         label_2->setText(QString());

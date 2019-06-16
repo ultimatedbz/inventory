@@ -9,6 +9,7 @@
 #include "MultiSellElement.h"
 #include "MultiSellController.h"
 #include "MultiBuyElement.h"
+#include "Printer.h"
 #include "ui_dialog.h"
 #include "IConst.h"
 #include "abbreviation.h"

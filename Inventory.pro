@@ -15,6 +15,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
+    Printer.cpp \
     Remaining.cpp \
     Return.cpp \
     returnto.cpp \
@@ -29,6 +30,7 @@ SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
     abbreviation.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
+    Printer.h \
     Remaining.h \
     Return.h \
     returnto.h \
