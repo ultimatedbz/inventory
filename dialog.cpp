@@ -221,6 +221,7 @@ void Dialog::on_Buy_clicked()
                         atoi(amount.c_str()), company, date->text().toStdString(),
                         price);
         }
+
         on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }

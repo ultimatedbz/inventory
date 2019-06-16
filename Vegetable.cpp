@@ -53,7 +53,7 @@ Vegetable::Vegetable(string name, string u)
     tuiNum(0),
     tuiArray(NULL)
       {
-      } 
+      }
 Vegetable::~Vegetable(){
 }
 
@@ -117,14 +117,15 @@ ReturnTo* Vegetable::getTuiObject(int index){
 /* 5 Transactions */
 int Vegetable::buyVege(int amount, string bc, string date, string price){
 
-  if(amount < 1)
+  if (amount < 1)
       return 0;
-  if( historyArray==NULL){
+
+  if ( historyArray == nullptr){
     historyArray = new History[10000];
   }
+
   if( !remainingArray)
       remainingArray = new Remaining[10000];
-
 
   if( historyNum == 10000){
       for(int i = 0; i < historyNum -1; i++){
@@ -138,16 +139,17 @@ int Vegetable::buyVege(int amount, string bc, string date, string price){
   historyArray[historyNum] = newHist;
   historyNum++;
   int exist = remainExist(bc, date);
-  if(exist > -1)
+  if (exist > -1) {
       updateRemaining(exist, amount);
-  else{
+  } else {
     Remaining newRem;
     newRem.buy(amount, bc, date, price);
     remainingArray[remainingNum] = newRem;
     remainingNum++;
   }
+
   totalVeges += newHist.getDifference();
-  qsort(remainingArray, remainingNum, sizeof(Remaining), compareR);
+  sort(remainingArray, remainingArray + remainingNum, compareR);
   return 1;
 }
 
@@ -267,7 +269,7 @@ void Vegetable::returnThis(string dateReturned, int amount, string returner,
     }
   totalVeges += newHist. getDifference();
     qsort(returnArray, returnNum, sizeof(Return), compareRet);
-    qsort(remainingArray, remainingNum, sizeof(Remaining), compareR);
+    sort(remainingArray, remainingArray + remainingNum, compareR);
 }
 
 int Vegetable::dumpVege(int amount, string date, int selection){
@@ -465,16 +467,16 @@ int Vegetable::compareH(const void * a, const void * b){
     return 0;
 }
 
-int Vegetable::compareR(const void * a, const void *b){
-    Remaining* A = (Remaining*)a;
-    Remaining* B= (Remaining *)b;
+// true if a is smaller than b
+bool Vegetable::compareR(Remaining a, Remaining b) {
+    if (a.getCompany() == b.getCompany()) {
+        const int result = strcmp(a.getCompany().c_str(), b.getCompany().c_str());
+        if(result)
+            return result < 0;
+    }
 
-    const int result = strcmp(A->getCompany().c_str(),B->getCompany().c_str());
-    if(result)
-       return result;
-
-    const char* date1 = ((Remaining *)a)->getDate().c_str();
-    const char* date2 = ((Remaining *)b)->getDate().c_str();
+    const char* date1 = a.getDate().c_str();
+    const char* date2 = b.getDate().c_str();
     int day1,month1;
     int day2,month2;
 
@@ -488,18 +490,12 @@ int Vegetable::compareR(const void * a, const void *b){
     }
 
     if (month1 == month2 ){
-        if(day1 > day2)
-            return 1;
-        else if(day1 < day2)
-            return -1;
-        else
-            return 0;
-    } else if (month1 > month2){
-        return 1;
-    } else
-        return -1;
+        return day1 < day2;
+    } else {
+        return month1 < month2;
+    }
 
-    return 0;
+    return false;
 }
 
 int Vegetable::compareRet(const void * a, const void *b){
@@ -719,20 +715,21 @@ void Vegetable::deleteHistory(int index){
 }
 
 int Vegetable::restock(int amount, string dP, string bc, int retNum){
-    if(totalVeges + (-1)*amount < 0){
+    if (totalVeges + (-1)*amount < 0){
         return 0;
     }
-    if( !remainingArray)
+
+    if (!remainingArray)
         remainingArray = new Remaining[10000];
 
-    if( !returnArray)
+    if (!returnArray)
         returnArray = new Return[10000];
 
     //checks if already in inventory breakdown
     int exist = remainExist(bc, dP);
-    if(exist > -1)
+    if (exist > -1)
         updateRemaining(exist,(-1)* amount);
-    else{
+    else {
       Remaining newRem;
       newRem.buy((-1)*amount - retNum, bc, dP, "\t");
       if(retNum)
@@ -740,6 +737,7 @@ int Vegetable::restock(int amount, string dP, string bc, int retNum){
       remainingArray[remainingNum] = newRem;
       remainingNum++;
     }
+
     //check if return exists yet
 
     if(retNum){
@@ -753,9 +751,10 @@ int Vegetable::restock(int amount, string dP, string bc, int retNum){
             returnNum++;
         }
     }
+
     totalVeges += (-1)*amount;
-    qsort(remainingArray, remainingNum, sizeof(Remaining), compareR);
-return 1;
+    sort(remainingArray, remainingArray + remainingNum, compareR);
+    return 1;
 }
 
 int Vegetable::undoRetOrBuy(int amount, string dP,string company,string dR,string customer){

@@ -56,7 +56,7 @@ public:
   const string getVegetablename() const;
   int returnExist(string company, string date);
   static int compareH(const void *a, const void *b);
-  static int compareR(const void *a, const void *b);
+  static bool compareR(Remaining a, Remaining b);
   static int compareRet(const void *a, const void *b);
   void load(fstream* fio);
   int clearHist(int num);
