@@ -24,54 +24,51 @@ using namespace std;
 
 Inventory::Inventory()
     :vegetableNum(0),
-     companyNum(0),
-     personNum(0),
-     unitNum(0),
-     vegeArray(NULL),
-     companyArray(NULL),
-     unitArray(NULL),
-     personArray(NULL),
+      companyNum(0),
+      personNum(0),
+      unitNum(0),
+      vegeArray(NULL),
+      companyArray(NULL),
+      unitArray(NULL),
+      personArray(NULL),
 
-     fileName("")
-      {
-      
-      } 
+      fileName("")
+{
+
+}
 Inventory:: ~Inventory(void){
 
 }
 int Inventory::addVegetable(string name, string unit){
-    for( int i = 0; i < vegetableNum; i++){
-        if(!vegeArray[i].getVegetablename().compare(name)){
+    for (int i = 0; i < vegetableNum; i++){
+        if (!vegeArray[i].getVegetablename().compare(name)){
             return 0;
         }
     }
-  Vegetable newVege(name, unit);
-  if( !vegeArray )
-      vegeArray = new Vegetable[100];
-  vegeArray[vegetableNum] = newVege;
-  vegetableNum++;
-  qsort(vegeArray,vegetableNum, sizeof(Vegetable), compareV);
-  return 1;
+
+    Vegetable newVege(name, unit);
+    if( !vegeArray )
+        vegeArray = new Vegetable[100];
+    vegeArray[vegetableNum] = newVege;
+    vegetableNum++;
+    sort(vegeArray, vegeArray + vegetableNum, compareV);
+    return 1;
 }
 
 void Inventory::sortVeges(){
-      qsort(vegeArray,vegetableNum, sizeof(Vegetable), compareV);
+    sort(vegeArray, vegeArray + vegetableNum, compareV);
 }
 
-int Inventory::compareV(const void * a, const void *b){
-    Vegetable* A = (Vegetable *)a;
-    Vegetable* B = (Vegetable *)b;
-
-    const int result = strcmp(A->getVegetablename().c_str(),B->getVegetablename().c_str());
-    return result;
+bool Inventory::compareV(Vegetable a, Vegetable b) {
+    const int result = strcmp(a.getVegetablename().c_str(), b.getVegetablename().c_str());
+    return result < 0;
 }
-int Inventory::compareS(const void * a, const void *b){
-    string* A = (string *)a;
-    string* B = (string *)b;
 
-    const int result = strcmp(A->c_str(),B->c_str());
-    return result;
+bool Inventory::compareS(string a, string b) {
+    const int result = strcmp(a.c_str(), b.c_str());
+    return result < 0;
 }
+
 int Inventory::addCompany(string name){
 
     for( int i = 0; i < companyNum; i++){
@@ -80,13 +77,13 @@ int Inventory::addCompany(string name){
         }
     }
 
-  string newString = name;
-  if( !companyArray )
-      companyArray = new string[100];
-  companyArray[companyNum] = newString;
-  companyNum++;
-  qsort(companyArray, companyNum, sizeof(string), compareS);
-  return 1;
+    string newString = name;
+    if( !companyArray )
+        companyArray = new string[100];
+    companyArray[companyNum] = newString;
+    companyNum++;
+    sort(companyArray, companyArray + companyNum, compareS);
+    return 1;
 }
 
 int Inventory::addUnit(string name){
@@ -97,12 +94,12 @@ int Inventory::addUnit(string name){
         }
     }
 
-  string newString = name;
-  if( !unitArray )
-      unitArray = new string[100];
-  unitArray[unitNum] = newString;
-  unitNum++;
-  return 1;
+    string newString = name;
+    if( !unitArray )
+        unitArray = new string[100];
+    unitArray[unitNum] = newString;
+    unitNum++;
+    return 1;
 }
 
 int Inventory::addPerson(string name){
@@ -116,47 +113,47 @@ int Inventory::addPerson(string name){
         personArray = new string[100];
     personArray[personNum] = newString;
     personNum++;
-    qsort(personArray, personNum, sizeof(string), compareS);
+    sort(personArray, personArray + personNum, compareS);
     return 1;
 }
 
 int Inventory::getVegNum(){
-  return vegetableNum;
+    return vegetableNum;
 }
 
 int Inventory::getPersonNum(){
-  return personNum;
+    return personNum;
 }
 
 int Inventory::getCompanyNum(){
-  return companyNum;
+    return companyNum;
 }
 
 int Inventory::getUnitNum(){
-  return unitNum;
+    return unitNum;
 }
 
 Vegetable* Inventory::getVegetable(string name){
-  for( int i = 0; i < vegetableNum; i++){
-    if(!vegeArray[i].getVegetablename().compare(name)){
-      return &vegeArray[i];
+    for( int i = 0; i < vegetableNum; i++){
+        if(!vegeArray[i].getVegetablename().compare(name)){
+            return &vegeArray[i];
+        }
     }
-  }
-  return NULL;
+    return NULL;
 }
 
 int Inventory::getVegetableIndex(string name){
-  for( int i = 0; i < vegetableNum; i++){
-    if(!vegeArray[i].getVegetablename().compare(name)){
-      return i;
+    for( int i = 0; i < vegetableNum; i++){
+        if(!vegeArray[i].getVegetablename().compare(name)){
+            return i;
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
 Vegetable* Inventory::getVegetableByIndex(int index){
 
-      return &vegeArray[index];
+    return &vegeArray[index];
 
 }
 
@@ -177,77 +174,79 @@ string Inventory::getUnit(int index){
 
 
 int Inventory::checkIfInInventory(string name){
-  for( int i = 0; i < vegetableNum; i++){
-    if(!vegeArray[i].getVegetablename().compare(name))
-      return 1;
-  }
-  return 0;
+    for( int i = 0; i < vegetableNum; i++){
+        if(!vegeArray[i].getVegetablename().compare(name))
+            return 1;
+    }
+    return 0;
 }
 
 void Inventory::viewHistory(string name){
-  for( int i = 0; i < vegetableNum; i++){
-    if(!vegeArray[i].getVegetablename().compare(name)){
+    for( int i = 0; i < vegetableNum; i++){
+        if(!vegeArray[i].getVegetablename().compare(name)){
 
+        }
     }
-  }
 }
 
 void Inventory::removeCompany(string name){
-  for( int i = 0; i < companyNum; i++){
-    if(!companyArray[i].compare(name)){
-      for( int j = i; j < companyNum - 1; j++){
-        companyArray[j] = companyArray[j+1];
-      }
-      companyArray[companyNum - 1] = "\t";
-      companyNum--;
+    for (int i = 0; i < companyNum; i++){
+        if(!companyArray[i].compare(name)){
+            for( int j = i; j < companyNum - 1; j++){
+                companyArray[j] = companyArray[j+1];
+            }
+            companyArray[companyNum - 1] = "\t";
+            companyNum--;
+        }
     }
-  }
-  if(!companyNum)
-      companyArray = NULL;
+
+    if(!companyNum)
+        companyArray = nullptr;
 }
 
 void Inventory::removePerson(string name){
-  for( int i = 0; i < personNum; i++){
-    if(!personArray[i].compare(name)){
-      for( int j = i; j < personNum - 1; j++){
-        personArray[j] = personArray[j+1];
-      }
-      personArray[personNum - 1] = "\t";
-      personNum--;
+    for (int i = 0; i < personNum; i++){
+        if (!personArray[i].compare(name)){
+            for (int j = i; j < personNum - 1; j++){
+                personArray[j] = personArray[j+1];
+            }
+
+            personArray[personNum - 1] = "\t";
+            personNum--;
+        }
     }
-  }
-  if(!personNum)
-      personArray = NULL;
+    if(!personNum)
+        personArray = nullptr;
 }
 
 void Inventory::removeVegetable(string name){
-  for( int i = 0; i < vegetableNum; i++){
-    if(!vegeArray[i].getVegetablename().compare(name)){
-      for( int j = i; j < vegetableNum - 1; j++){
-        vegeArray[j] = vegeArray[j + 1];
-      }
-      //vegeArray[vegetableNum - 1] = NULL;
-      vegetableNum--;
+    for( int i = 0; i < vegetableNum; i++){
+        if(!vegeArray[i].getVegetablename().compare(name)){
+            for( int j = i; j < vegetableNum - 1; j++){
+                vegeArray[j] = vegeArray[j + 1];
+            }
+
+            vegetableNum--;
+        }
     }
-  }
 
 
-  if(!vegetableNum)
-      vegeArray = NULL;
+    if(!vegetableNum)
+        vegeArray = nullptr;
 }
 
 void Inventory::removeUnit(string name){
-  for( int i = 0; i < unitNum; i++){
-    if(!unitArray[i].compare(name)){
-      for( int j = i; j < unitNum - 1; j++){
-        unitArray[j] = unitArray[j + 1];
-      }
-      unitArray[unitNum - 1 ] = "\t";
-      unitNum--;
+    for( int i = 0; i < unitNum; i++){
+        if(!unitArray[i].compare(name)){
+            for( int j = i; j < unitNum - 1; j++){
+                unitArray[j] = unitArray[j + 1];
+            }
+            unitArray[unitNum - 1 ] = "\t";
+            unitNum--;
+        }
     }
-  }
-  if(!unitNum)
-      unitArray = NULL;
+    if(!unitNum)
+        unitArray = nullptr;
 }
 
 string Inventory::getFileName(){
@@ -261,27 +260,27 @@ void Inventory::setFileName(string name){
 void Inventory::remove(){
     if(companyArray){
         delete[] companyArray;
-        companyArray = NULL;
+        companyArray = nullptr;
     }
     if(unitArray){
 
         delete[] unitArray;
-        unitArray = NULL;
+        unitArray = nullptr;
     }
     if(personArray){
 
         delete[] personArray;
-        personArray = NULL;
+        personArray = nullptr;
     }
-   for(int i = 0; i< vegetableNum; i++){
+    for(int i = 0; i< vegetableNum; i++){
         vegeArray[i].remove();
 
     }
-   if(vegeArray)
+    if(vegeArray)
         delete[] vegeArray;
-   vegeArray = NULL;
-   vegetableNum = companyNum = personNum = unitNum = 0;
-  // delete this;
+    vegeArray = nullptr;
+    vegetableNum = companyNum = personNum = unitNum = 0;
+    // delete this;
 }
 
 
@@ -294,7 +293,8 @@ void Inventory::load(fstream* fio){
 
     if(companyNum)
         companyArray = new string[100];
-    for(int i = 0; i < companyNum; i++){
+
+    for (int i = 0; i < companyNum; i++){
         char temp2[200];
         int tempNum2;
         fio->read((char *) &(tempNum2),sizeof(int));
@@ -303,10 +303,11 @@ void Inventory::load(fstream* fio){
         string str(temp2);
         companyArray[i] = str;
     }
-    if(personNum)
+
+    if (personNum)
         personArray = new string[100];
 
-    for(int i = 0; i < personNum ; i++){
+    for (int i = 0; i < personNum ; i++){
         char temp2[200];
         int tempNum2;
         fio->read((char *) &(tempNum2),sizeof(int));
@@ -317,10 +318,10 @@ void Inventory::load(fstream* fio){
 
     }
 
-    if(unitNum)
+    if (unitNum)
         unitArray = new string[100];
 
-    for(int i = 0; i < unitNum ; i++){
+    for (int i = 0; i < unitNum ; i++){
         char temp2[200];
         int tempNum2;
         fio->read((char *) &(tempNum2),sizeof(int));
@@ -330,9 +331,10 @@ void Inventory::load(fstream* fio){
         string str(temp2);
         unitArray[i] = str;
     }
-    if(vegetableNum)
+    if (vegetableNum)
         vegeArray = new Vegetable[100];
-    for(int i = 0; i < vegetableNum; i++){
+
+    for (int i = 0; i < vegetableNum; i++){
         Vegetable temp;
         temp.load(fio);
         vegeArray[i] = temp;
@@ -340,12 +342,13 @@ void Inventory::load(fstream* fio){
 }
 
 int Inventory::numberOfNonEmptyVeges(){
-  int counter = 0;
-  for(int i = 0; i < getVegNum(); i++){
-      if(getVegetableByIndex(i)->getTotalVeges())
-        counter++;
-  }
-  return counter;
+    int counter = 0;
+    for (int i = 0; i < getVegNum(); i++){
+        if (getVegetableByIndex(i)->getTotalVeges())
+            counter++;
+    }
+
+    return counter;
 }
 
 

@@ -80,8 +80,8 @@ public:
   int numberOfNonEmptyVeges();
 
   void load(fstream* fio);
-  static int compareV(const void * a, const void *b);
-  static int compareS(const void * a, const void *b);
+  static bool compareV(Vegetable a, Vegetable b) ;
+  static bool compareS(string a, string b);
 
 
 

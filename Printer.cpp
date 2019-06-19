@@ -332,7 +332,7 @@ void Printer::printHistory(QPrinter * printer){
                         sellNum++;
                     }
                     //sort by customer
-                    qsort(sell, sellNum, sizeof(History), compareCustomer);
+                    sort(sell, sell + sellNum, compareCompany);
                 }
 
                 for(int j = 0; j<index; j++){
@@ -359,8 +359,9 @@ void Printer::printHistory(QPrinter * printer){
                         buyNum++;
                     }
                     //sort by company
-                    qsort(buy, buyNum, sizeof(History), compareCompany);
+                    sort(buy, buy + buyNum, compareCompany);
                 }
+
                 if(sellNum || buyNum || returnNum || dumpNum ||tuiNum){
                     //checks if the next block to print fits on the page
                     int first = 0;

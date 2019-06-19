@@ -57,7 +57,7 @@ public:
   int returnExist(string company, string date);
   static int compareH(const void *a, const void *b);
   static bool compareR(Remaining a, Remaining b);
-  static int compareRet(const void *a, const void *b);
+  static bool compareRet(Return a, Return b);
   void load(fstream* fio);
   int clearHist(int num);
    void setVegetableName(string name);

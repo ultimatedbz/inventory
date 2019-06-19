@@ -107,8 +107,8 @@ public slots:
     void deleteVege();
 
     void on_Memo_2_textChanged();
-    static int compareCompany(const void *a, const void *b);
-    static int compareCustomer(const void *a, const void *b);
+    static int compareCompany(History a, History b);
+    static int compareCustomer(History a, History b);
     void on_Return_clicked();
     void closeEvent(QCloseEvent *event);
     void askSave();

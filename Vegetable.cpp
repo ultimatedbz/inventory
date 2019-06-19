@@ -268,7 +268,7 @@ void Vegetable::returnThis(string dateReturned, int amount, string returner,
 
     }
   totalVeges += newHist. getDifference();
-    qsort(returnArray, returnNum, sizeof(Return), compareRet);
+    sort(returnArray, returnArray + returnNum, compareRet);
     sort(remainingArray, remainingArray + remainingNum, compareR);
 }
 
@@ -469,7 +469,7 @@ int Vegetable::compareH(const void * a, const void * b){
 
 // true if a is smaller than b
 bool Vegetable::compareR(Remaining a, Remaining b) {
-    if (a.getCompany() == b.getCompany()) {
+    if (a.getCompany() != b.getCompany()) {
         const int result = strcmp(a.getCompany().c_str(), b.getCompany().c_str());
         if(result)
             return result < 0;
@@ -498,16 +498,13 @@ bool Vegetable::compareR(Remaining a, Remaining b) {
     return false;
 }
 
-int Vegetable::compareRet(const void * a, const void *b){
-    Return* A = (Return*)a;
-    Return* B = (Return *)b;
-
-    const int result = strcmp(A->getCompany().c_str(),B->getCompany().c_str());
+bool Vegetable::compareRet(Return a, Return b) {
+    const int result = strcmp(a.getCompany().c_str(), b.getCompany().c_str());
     if(result)
        return result;
 
-    const char* date1 = ((Return *)a)->getDatePurchased().c_str();
-    const char* date2 = ((Return *)b)->getDatePurchased().c_str();
+    const char* date1 = a.getDatePurchased().c_str();
+    const char* date2 = b.getDatePurchased().c_str();
     int day1,month1;
     int day2,month2;
 

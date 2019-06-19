@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Dialog_t {
     QByteArrayData data[40];
-    char stringdata0[534];
+    char stringdata0[530];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,43 +46,42 @@ QT_MOC_LITERAL(11, 104, 11), // "undoHistory"
 QT_MOC_LITERAL(12, 116, 10), // "deleteVege"
 QT_MOC_LITERAL(13, 127, 21), // "on_Memo_2_textChanged"
 QT_MOC_LITERAL(14, 149, 14), // "compareCompany"
-QT_MOC_LITERAL(15, 164, 11), // "const void*"
-QT_MOC_LITERAL(16, 176, 1), // "a"
-QT_MOC_LITERAL(17, 178, 1), // "b"
-QT_MOC_LITERAL(18, 180, 15), // "compareCustomer"
-QT_MOC_LITERAL(19, 196, 17), // "on_Return_clicked"
-QT_MOC_LITERAL(20, 214, 10), // "closeEvent"
-QT_MOC_LITERAL(21, 225, 12), // "QCloseEvent*"
-QT_MOC_LITERAL(22, 238, 5), // "event"
-QT_MOC_LITERAL(23, 244, 7), // "askSave"
-QT_MOC_LITERAL(24, 252, 23), // "on_vegeList_itemClicked"
-QT_MOC_LITERAL(25, 276, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(26, 293, 4), // "item"
-QT_MOC_LITERAL(27, 298, 17), // "ListWidgetEditEnd"
-QT_MOC_LITERAL(28, 316, 8), // "QWidget*"
-QT_MOC_LITERAL(29, 325, 6), // "editor"
-QT_MOC_LITERAL(30, 332, 34), // "QAbstractItemDelegate::EndEdi..."
-QT_MOC_LITERAL(31, 367, 4), // "hint"
-QT_MOC_LITERAL(32, 372, 5), // "slot1"
-QT_MOC_LITERAL(33, 378, 29), // "on_clearHistoryButton_clicked"
-QT_MOC_LITERAL(34, 408, 21), // "on_dumpButton_clicked"
-QT_MOC_LITERAL(35, 430, 28), // "on_clearReturnButton_clicked"
-QT_MOC_LITERAL(36, 459, 8), // "dumpVege"
-QT_MOC_LITERAL(37, 468, 29), // "on_vegeList_currentRowChanged"
-QT_MOC_LITERAL(38, 498, 10), // "currentRow"
-QT_MOC_LITERAL(39, 509, 24) // "on_CalculateSold_clicked"
+QT_MOC_LITERAL(15, 164, 7), // "History"
+QT_MOC_LITERAL(16, 172, 1), // "a"
+QT_MOC_LITERAL(17, 174, 1), // "b"
+QT_MOC_LITERAL(18, 176, 15), // "compareCustomer"
+QT_MOC_LITERAL(19, 192, 17), // "on_Return_clicked"
+QT_MOC_LITERAL(20, 210, 10), // "closeEvent"
+QT_MOC_LITERAL(21, 221, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(22, 234, 5), // "event"
+QT_MOC_LITERAL(23, 240, 7), // "askSave"
+QT_MOC_LITERAL(24, 248, 23), // "on_vegeList_itemClicked"
+QT_MOC_LITERAL(25, 272, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(26, 289, 4), // "item"
+QT_MOC_LITERAL(27, 294, 17), // "ListWidgetEditEnd"
+QT_MOC_LITERAL(28, 312, 8), // "QWidget*"
+QT_MOC_LITERAL(29, 321, 6), // "editor"
+QT_MOC_LITERAL(30, 328, 34), // "QAbstractItemDelegate::EndEdi..."
+QT_MOC_LITERAL(31, 363, 4), // "hint"
+QT_MOC_LITERAL(32, 368, 5), // "slot1"
+QT_MOC_LITERAL(33, 374, 29), // "on_clearHistoryButton_clicked"
+QT_MOC_LITERAL(34, 404, 21), // "on_dumpButton_clicked"
+QT_MOC_LITERAL(35, 426, 28), // "on_clearReturnButton_clicked"
+QT_MOC_LITERAL(36, 455, 8), // "dumpVege"
+QT_MOC_LITERAL(37, 464, 29), // "on_vegeList_currentRowChanged"
+QT_MOC_LITERAL(38, 494, 10), // "currentRow"
+QT_MOC_LITERAL(39, 505, 24) // "on_CalculateSold_clicked"
 
     },
     "Dialog\0on_Buy_clicked\0\0on_Sell_clicked\0"
     "printI\0QPrinter*\0printer\0printH\0printT\0"
     "deleteHistory\0editHistory\0undoHistory\0"
     "deleteVege\0on_Memo_2_textChanged\0"
-    "compareCompany\0const void*\0a\0b\0"
-    "compareCustomer\0on_Return_clicked\0"
-    "closeEvent\0QCloseEvent*\0event\0askSave\0"
-    "on_vegeList_itemClicked\0QListWidgetItem*\0"
-    "item\0ListWidgetEditEnd\0QWidget*\0editor\0"
-    "QAbstractItemDelegate::EndEditHint\0"
+    "compareCompany\0History\0a\0b\0compareCustomer\0"
+    "on_Return_clicked\0closeEvent\0QCloseEvent*\0"
+    "event\0askSave\0on_vegeList_itemClicked\0"
+    "QListWidgetItem*\0item\0ListWidgetEditEnd\0"
+    "QWidget*\0editor\0QAbstractItemDelegate::EndEditHint\0"
     "hint\0slot1\0on_clearHistoryButton_clicked\0"
     "on_dumpButton_clicked\0"
     "on_clearReturnButton_clicked\0dumpVege\0"
@@ -175,9 +174,9 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 7: _t->undoHistory(); break;
         case 8: _t->deleteVege(); break;
         case 9: _t->on_Memo_2_textChanged(); break;
-        case 10: { int _r = _t->compareCompany((*reinterpret_cast< const void*(*)>(_a[1])),(*reinterpret_cast< const void*(*)>(_a[2])));
+        case 10: { int _r = _t->compareCompany((*reinterpret_cast< History(*)>(_a[1])),(*reinterpret_cast< History(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 11: { int _r = _t->compareCustomer((*reinterpret_cast< const void*(*)>(_a[1])),(*reinterpret_cast< const void*(*)>(_a[2])));
+        case 11: { int _r = _t->compareCustomer((*reinterpret_cast< History(*)>(_a[1])),(*reinterpret_cast< History(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 12: _t->on_Return_clicked(); break;
         case 13: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;

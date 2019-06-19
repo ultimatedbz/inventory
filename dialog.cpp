@@ -1004,40 +1004,45 @@ void Dialog::printH(QPrinter * printer){
                 History* dump = new History [historyNum];
                 History* tui = new History [historyNum];
 
-                for(int j = 0; j<index; j++){
+                for (int j = 0; j<index; j++){
                     if(temp[j].getType() == "Sell"){
                         sell[sellNum] = temp[j];
                         sellNum++;
                     }
                     //sort by customer
-                    qsort(sell, sellNum, sizeof(History), compareCustomer);
+                    sort(sell, sell + sellNum, compareCustomer);
                 }
 
-                for(int j = 0; j<index; j++){
-                    if(temp[j].getType() == "Return"){
+                for (int j = 0; j<index; j++){
+                    if (temp[j].getType() == "Return"){
                         returnn[returnNum] = temp[j];
                         returnNum++;
                     }
                 }
-                for(int j = 0; j<index; j++){
-                    if(temp[j].getType() == "Dump"){
+
+                for (int j = 0; j<index; j++){
+                    if (temp[j].getType() == "Dump"){
                         dump[dumpNum] = temp[j];
                         dumpNum++;
                     }
                 }
-                for(int j = 0; j<index; j++){
-                    if(temp[j].getType() == "Tui"){
+
+                for (int j = 0; j<index; j++){
+                    if (temp[j].getType() == "Tui"){
                         tui[tuiNum] = temp[j];
                         tuiNum++;
                     }
                 }
-                for(int j = 0; j<index; j++){
-                    if(temp[j].getType() == "Buy"){
+
+                for (int j = 0; j<index; j++){
+                    if (temp[j].getType() == "Buy"){
                         buy[buyNum] = temp[j];
                         buyNum++;
                     }
+
                     //sort by company
-                    qsort(buy, buyNum, sizeof(History), compareCompany);
+                    sort(buy, buy + buyNum, compareCompany);
+
                 }
 
                 if(sellNum || buyNum || returnNum || dumpNum ||tuiNum){
@@ -1326,24 +1331,12 @@ void Dialog::dumpVege(){
     }
 }
 
-int Dialog::compareCompany(const void * a, const void * b){
-
-    History* A = (History *)a;
-    History* B= (History *)b;
-    const char* cus1 = A->getCompany().c_str();
-    const char* cus2 = B->getCompany().c_str();
-
-    return strcmp(cus1,cus2);
+int Dialog::compareCompany(History a, History b) {
+    return strcmp(a.getCompany().c_str(), b.getCompany().c_str()) < 0;
 }
 
-int Dialog::compareCustomer(const void * a, const void * b){
-
-    History* A = (History *)a;
-    History* B= (History *)b;
-    const char* cus1 = A->getCustomer().c_str();
-    const char* cus2 = B->getCustomer().c_str();
-
-    return strcmp(cus1,cus2);
+int Dialog::compareCustomer(History a, History b) {
+    return strcmp(a.getCustomer().c_str(), b.getCustomer().c_str()) < 0;
 }
 
 
@@ -2127,7 +2120,7 @@ int Dialog::queryVeges() {
 void Dialog::on_CalculateSold_clicked()
 {
     QDialog dialog(this);
-    dialog.setWindowTitle(mTranslator ->translate("買").c_str());
+    dialog.setWindowTitle("Calculate");
 
     //Add the viewport to the scroll area
     QScrollArea *scrollArea = new QScrollArea;
