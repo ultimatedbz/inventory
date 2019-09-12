@@ -48,7 +48,7 @@ int Inventory::addVegetable(string name, string unit){
 
     Vegetable newVege(name, unit);
     if( !vegeArray )
-        vegeArray = new Vegetable[100];
+        vegeArray = new Vegetable[1000];
     vegeArray[vegetableNum] = newVege;
     vegetableNum++;
     sort(vegeArray, vegeArray + vegetableNum, compareV);
@@ -79,7 +79,7 @@ int Inventory::addCompany(string name){
 
     string newString = name;
     if( !companyArray )
-        companyArray = new string[100];
+        companyArray = new string[1000];
     companyArray[companyNum] = newString;
     companyNum++;
     sort(companyArray, companyArray + companyNum, compareS);
@@ -96,7 +96,7 @@ int Inventory::addUnit(string name){
 
     string newString = name;
     if( !unitArray )
-        unitArray = new string[100];
+        unitArray = new string[1000];
     unitArray[unitNum] = newString;
     unitNum++;
     return 1;
@@ -110,7 +110,7 @@ int Inventory::addPerson(string name){
     }
     string newString = name;
     if( !personArray )
-        personArray = new string[100];
+        personArray = new string[1000];
     personArray[personNum] = newString;
     personNum++;
     sort(personArray, personArray + personNum, compareS);
@@ -292,7 +292,7 @@ void Inventory::load(fstream* fio){
 
 
     if(companyNum)
-        companyArray = new string[100];
+        companyArray = new string[1000];
 
     for (int i = 0; i < companyNum; i++){
         char temp2[200];
@@ -305,7 +305,7 @@ void Inventory::load(fstream* fio){
     }
 
     if (personNum)
-        personArray = new string[100];
+        personArray = new string[1000];
 
     for (int i = 0; i < personNum ; i++){
         char temp2[200];
@@ -319,7 +319,7 @@ void Inventory::load(fstream* fio){
     }
 
     if (unitNum)
-        unitArray = new string[100];
+        unitArray = new string[1000];
 
     for (int i = 0; i < unitNum ; i++){
         char temp2[200];
@@ -332,7 +332,7 @@ void Inventory::load(fstream* fio){
         unitArray[i] = str;
     }
     if (vegetableNum)
-        vegeArray = new Vegetable[100];
+        vegeArray = new Vegetable[1000];
 
     for (int i = 0; i < vegetableNum; i++){
         Vegetable temp;
