@@ -1,3 +1,5 @@
 *.o
 .DS_Store
 Inventory.pro.user.*
+Inventory.pro.user
+
