@@ -6,7 +6,7 @@
 
 QT       += core gui printsupport
 
-QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13.6
+#QMAKE_MACOSX_DEPLOYMENT_TARGET += 10.14.6
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

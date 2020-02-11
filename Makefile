@@ -15,9 +15,9 @@ EQ            = =
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 DEFINES       = -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13.6 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13.6 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I. -I../../Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I../../Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers/ -I. -I../../Qt/5.12.2/clang_64/mkspecs/macx-clang -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib
+CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
+INCPATH       = -I. -I../../Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I../../Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/Applications/Xcode10.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers/ -I. -I../../Qt/5.12.2/clang_64/mkspecs/macx-clang -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib
 QMAKE         = /Users/ultimatedbz/Qt/5.12.2/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,9 +37,9 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Inventory1.0.0
-DISTDIR = /Users/ultimatedbz/Desktop/inventory/.tmp/Inventory1.0.0
+DISTDIR = /Users/ultimatedbz/Documents/inventory/.tmp/Inventory1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13.6 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/ultimatedbz/Qt/5.12.2/clang_64/lib
+LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/ultimatedbz/Qt/5.12.2/clang_64/lib
 LIBS          = $(SUBLIBS) -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib -framework QtPrintSupport -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
@@ -242,7 +242,6 @@ DIST          = ../../Qt/5.12.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/qt_config.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../Qt/5.12.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/toolchain.prf \
@@ -311,12 +310,12 @@ TARGET        = Inventory.app/Contents/MacOS/Inventory
 
 ####### Custom Variables
 EXPORT_QMAKE_MAC_SDK = macosx
-EXPORT_QMAKE_MAC_SDK_VERSION = 10.14
+EXPORT_QMAKE_MAC_SDK_VERSION = 10.15
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
 EXPORT_VALID_ARCHS = x86_64
 EXPORT_ACTIVE_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(ARCHS))
 EXPORT_ARCH_ARGS = $(foreach arch, $(if $(EXPORT_ACTIVE_ARCHS), $(EXPORT_ACTIVE_ARCHS), $(EXPORT_VALID_ARCHS)), -arch $(arch))
-EXPORT__PRO_FILE_ = /Users/ultimatedbz/Desktop/inventory/Inventory.pro
+EXPORT__PRO_FILE_ = /Users/ultimatedbz/Documents/inventory/Inventory.pro
 
 
 include /Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/features/mac/sdk.mk
@@ -470,7 +469,6 @@ Makefile: Inventory.pro ../../Qt/5.12.2/clang_64/mkspecs/macx-clang/qmake.conf .
 		../../Qt/5.12.2/clang_64/mkspecs/features/qt_config.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../Qt/5.12.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../Qt/5.12.2/clang_64/mkspecs/features/toolchain.prf \
@@ -647,7 +645,6 @@ Makefile: Inventory.pro ../../Qt/5.12.2/clang_64/mkspecs/macx-clang/qmake.conf .
 ../../Qt/5.12.2/clang_64/mkspecs/features/qt_config.prf:
 ../../Qt/5.12.2/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../Qt/5.12.2/clang_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 ../../Qt/5.12.2/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../Qt/5.12.2/clang_64/mkspecs/features/mac/sdk.prf:
 ../../Qt/5.12.2/clang_64/mkspecs/features/toolchain.prf:
@@ -696,7 +693,7 @@ Inventory.app/Contents/Resources/empty.lproj:
 Inventory.app/Contents/Info.plist: 
 	@test -d Inventory.app/Contents || mkdir -p Inventory.app/Contents
 	@$(DEL_FILE) Inventory.app/Contents/Info.plist
-	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,\$${QMAKE_SHORT_VERSION},1.0,g" -e "s,@FULL_VERSION@,1.0.0,g" -e "s,\$${QMAKE_FULL_VERSION},1.0.0,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.Inventory,g" -e "s,\$${PRODUCT_BUNDLE_IDENTIFIER},com.yourcompany.Inventory,g" -e "s,\$${MACOSX_DEPLOYMENT_TARGET},10.13.6,g" -e "s,\$${IPHONEOS_DEPLOYMENT_TARGET},,g" -e "s,\$${TVOS_DEPLOYMENT_TARGET},,g" -e "s,\$${WATCHOS_DEPLOYMENT_TARGET},,g" -e "s,@ICON@,,g" -e "s,\$${ASSETCATALOG_COMPILER_APPICON_NAME},,g" -e "s,@EXECUTABLE@,Inventory,g" -e "s,@LIBRARY@,Inventory,g" -e "s,\$${EXECUTABLE_NAME},Inventory,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" ../../Qt/5.12.2/clang_64/mkspecs/macx-clang/Info.plist.app >Inventory.app/Contents/Info.plist
+	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,\$${QMAKE_SHORT_VERSION},1.0,g" -e "s,@FULL_VERSION@,1.0.0,g" -e "s,\$${QMAKE_FULL_VERSION},1.0.0,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.Inventory,g" -e "s,\$${PRODUCT_BUNDLE_IDENTIFIER},com.yourcompany.Inventory,g" -e "s,\$${MACOSX_DEPLOYMENT_TARGET},10.12,g" -e "s,\$${IPHONEOS_DEPLOYMENT_TARGET},,g" -e "s,\$${TVOS_DEPLOYMENT_TARGET},,g" -e "s,\$${WATCHOS_DEPLOYMENT_TARGET},,g" -e "s,@ICON@,,g" -e "s,\$${ASSETCATALOG_COMPILER_APPICON_NAME},,g" -e "s,@EXECUTABLE@,Inventory,g" -e "s,@LIBRARY@,Inventory,g" -e "s,\$${EXECUTABLE_NAME},Inventory,g" -e "s,@TYPEINFO@,????,g" -e "s,\$${QMAKE_PKGINFO_TYPEINFO},????,g" ../../Qt/5.12.2/clang_64/mkspecs/macx-clang/Info.plist.app >Inventory.app/Contents/Info.plist
 
 all: Makefile \
 		Inventory.app/Contents/PkgInfo \
@@ -722,7 +719,6 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r Inventory.app
-	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -750,7 +746,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: ../../Qt/5.12.2/clang_64/mkspecs/features/data/dummy.cpp
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13.6 -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.2/clang_64/mkspecs/features/data/dummy.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.2/clang_64/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_dialog.cpp moc_imenubar.cpp moc_MultiSellElement.cpp moc_MultiSellController.cpp moc_MultiBuyController.cpp moc_scrolleater.cpp
 compiler_moc_header_clean:
@@ -1208,7 +1204,7 @@ moc_dialog.cpp: dialog.h \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QSplitter \
 		moc_predefs.h \
 		../../Qt/5.12.2/clang_64/bin/moc
-	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Desktop/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Desktop/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib dialog.h -o moc_dialog.cpp
+	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Documents/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Documents/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib dialog.h -o moc_dialog.cpp
 
 moc_imenubar.cpp: imenubar.h \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QMenuBar \
@@ -1217,7 +1213,7 @@ moc_imenubar.cpp: imenubar.h \
 		IConst.h \
 		moc_predefs.h \
 		../../Qt/5.12.2/clang_64/bin/moc
-	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Desktop/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Desktop/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib imenubar.h -o moc_imenubar.cpp
+	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Documents/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Documents/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib imenubar.h -o moc_imenubar.cpp
 
 moc_MultiSellElement.cpp: MultiSellElement.h \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QtWidgets \
@@ -1364,7 +1360,7 @@ moc_MultiSellElement.cpp: MultiSellElement.h \
 		scrolleater.h \
 		moc_predefs.h \
 		../../Qt/5.12.2/clang_64/bin/moc
-	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Desktop/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Desktop/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib MultiSellElement.h -o moc_MultiSellElement.cpp
+	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Documents/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Documents/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib MultiSellElement.h -o moc_MultiSellElement.cpp
 
 moc_MultiSellController.cpp: MultiSellController.h \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QObject \
@@ -1502,7 +1498,7 @@ moc_MultiSellController.cpp: MultiSellController.h \
 		IConst.h \
 		moc_predefs.h \
 		../../Qt/5.12.2/clang_64/bin/moc
-	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Desktop/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Desktop/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib MultiSellController.h -o moc_MultiSellController.cpp
+	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Documents/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Documents/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib MultiSellController.h -o moc_MultiSellController.cpp
 
 moc_MultiBuyController.cpp: MultiBuyController.h \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QObject \
@@ -1647,14 +1643,14 @@ moc_MultiBuyController.cpp: MultiBuyController.h \
 		IConst.h \
 		moc_predefs.h \
 		../../Qt/5.12.2/clang_64/bin/moc
-	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Desktop/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Desktop/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib MultiBuyController.h -o moc_MultiBuyController.cpp
+	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Documents/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Documents/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib MultiBuyController.h -o moc_MultiBuyController.cpp
 
 moc_scrolleater.cpp: scrolleater.h \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		moc_predefs.h \
 		../../Qt/5.12.2/clang_64/bin/moc
-	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Desktop/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Desktop/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib scrolleater.h -o moc_scrolleater.cpp
+	/Users/ultimatedbz/Qt/5.12.2/clang_64/bin/moc $(DEFINES) --include /Users/ultimatedbz/Documents/inventory/moc_predefs.h -I/Users/ultimatedbz/Qt/5.12.2/clang_64/mkspecs/macx-clang -I/Users/ultimatedbz/Documents/inventory -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtPrintSupport.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtGui.framework/Headers -I/Users/ultimatedbz/Qt/5.12.2/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/Users/ultimatedbz/Qt/5.12.2/clang_64/lib scrolleater.h -o moc_scrolleater.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

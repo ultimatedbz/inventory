@@ -2,4 +2,5 @@
 .DS_Store
 Inventory.pro.user.*
 Inventory.pro.user
+.qmake.stash
 
