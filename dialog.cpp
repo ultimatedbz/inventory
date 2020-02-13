@@ -176,7 +176,7 @@ void Dialog::on_Buy_clicked()
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
-    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
     form->addRow(label4, date);
