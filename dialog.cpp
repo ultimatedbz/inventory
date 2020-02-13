@@ -96,7 +96,7 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
                 ((currentVege->getHistoryObject(i)->getCustomer().compare("\t") &&ui->sellCheck->isChecked())
                  &&
                  !(currentVege->getHistoryObject(i)->getTui() || currentVege->getHistoryObject(i)->getDumped()||
-                   currentVege->getHistoryObject(i)->getReturned())     )       ||
+                   currentVege->getHistoryObject(i)->getReturned()))       ||
                 (ui->buyCheck->isChecked() && !(currentVege->getHistoryObject(i)->getTui() ||
                                                 currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
                                                 || currentVege->getHistoryObject(i)->getDumped()))     ){

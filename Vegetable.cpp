@@ -474,28 +474,18 @@ bool Vegetable::compareR(Remaining a, Remaining b) {
         if(result)
             return result < 0;
     }
+    int day1,month1, year1;
+    int day2,month2, year2;
 
-    const char* date1 = a.getDate().c_str();
-    const char* date2 = b.getDate().c_str();
-    int day1,month1;
-    int day2,month2;
-
-    sscanf(date1, "%d/%d", &month1, &day1);
-    sscanf(date2, "%d/%d", &month2, &day2);
-
-    if(month1 - month2 > 5){
-        month2 += 12;
-    }else if (month2 - month1 > 5){
-        month1 += 12;
-    }
-
-    if (month1 == month2 ){
-        return day1 < day2;
-    } else {
+    sscanf(a.getDate().c_str(), "%d/%d/%d", &month1, &day1, &year1);
+    sscanf(b.getDate().c_str(), "%d/%d/%d", &month2, &day2, &year2);
+    if (year1 != year2) {
+        return year1 < year2;
+    } else if (month1 != month2 ){
         return month1 < month2;
+    } else {
+        return day1 < day2;
     }
-
-    return false;
 }
 
 bool Vegetable::compareRet(Return a, Return b) {
