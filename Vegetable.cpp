@@ -479,6 +479,7 @@ bool Vegetable::compareR(Remaining a, Remaining b) {
 
     sscanf(a.getDate().c_str(), "%d/%d/%d", &month1, &day1, &year1);
     sscanf(b.getDate().c_str(), "%d/%d/%d", &month2, &day2, &year2);
+
     if (year1 != year2) {
         return year1 < year2;
     } else if (month1 != month2 ){

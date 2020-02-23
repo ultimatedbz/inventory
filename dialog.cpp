@@ -269,7 +269,7 @@ void Dialog::on_Sell_clicked()
         time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char buffer[128];
-        sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+        sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
         date -> setText(QString::fromUtf8(buffer));
         QString label4 = QString(mTranslator->translate("那天賣出").c_str());
         form->addRow(label4, date);
@@ -680,7 +680,7 @@ void Dialog::printT(QPrinter* printer){
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
-    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
     string today = buffer;
 
     QDialog dialog1(this);
@@ -806,7 +806,7 @@ void Dialog::printI(QPrinter* printer){
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
-    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
     string today = buffer;
 
     QDialog dialog1(this);
@@ -937,7 +937,7 @@ void Dialog::printH(QPrinter * printer){
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
-    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
     string today = buffer;
 
     QDialog dialog1(this);
@@ -1290,7 +1290,7 @@ void Dialog::dumpVege(){
         time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char today[128];
-        sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
+        sprintf(today, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
 
         // Show the dialog as modal
         if ( result == QDialog::Accepted) {
@@ -1565,7 +1565,7 @@ void Dialog::on_Return_clicked()
         time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char buffer[128];
-        sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+        sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
         date -> setText(QString::fromUtf8(buffer));
         QString label4 = QString(mTranslator->translate("这是哪天退回來的").c_str());
         form.addRow(label4, date);
@@ -1650,7 +1650,7 @@ void Dialog::on_Return_clicked()
                 time_t t = time(nullptr);
                 struct tm * now = localtime(&t);
                 char today[128];
-                sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
+                sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
 
                 // Show the dialog as modal
                 if ( result == QDialog::Accepted) {
@@ -1733,7 +1733,7 @@ void Dialog::on_dumpButton_clicked()
         time_t t = time(nullptr);
         struct tm * now = localtime(&t);
         char today[128];
-        sprintf(today, "%d/%d", now->tm_mon+1, now->tm_mday);
+        sprintf(today, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
 
         // Show the dialog as modal
         if ( result == QDialog::Accepted) {
@@ -2154,7 +2154,7 @@ void Dialog::on_CalculateSold_clicked()
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
-    sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
+    sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
     form->addRow(label4, date);
