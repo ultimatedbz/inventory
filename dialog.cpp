@@ -2179,6 +2179,7 @@ void Dialog::on_CalculateSold_clicked()
         bool first = true;
         string noPrices = "";
         string returnedLine = "";
+        string tuiDate = "";
 
         int dumpCount = 0;
         int tuiCount = 0;
@@ -2189,7 +2190,7 @@ void Dialog::on_CalculateSold_clicked()
           if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
               if (temp -> getType() == "Sell") {
                   if (temp -> getPrice() == "--") {
-                      noPrices += "No Price: " + to_string(temp -> getDifference() * -1) + " " + temp->getPrice() + "  " + temp->getCustomer() + "\n";
+                      noPrices += "No Price: " + to_string(temp -> getDifference() * -1) + " " + temp->getPrice() + "  " + temp->getCustomer() + " " + temp -> getDateSold() + "\n";
                       totalSold += temp -> getDifference() * -1;
                       continue;
                   }
@@ -2207,6 +2208,7 @@ void Dialog::on_CalculateSold_clicked()
               } else if (temp -> getType() == "Tui") {
                   tuiCount += temp -> getDifference() * -1;
                   totalSold += temp -> getDifference() * -1;
+                  tuiDate = temp -> getDateSold();
               } else if (temp -> getType() == "Dump") {
                   dumpCount += temp -> getDifference() * -1;
                   totalSold += temp -> getDifference() * -1;
@@ -2217,7 +2219,7 @@ void Dialog::on_CalculateSold_clicked()
                   //units += temp -> getDifference() * -1;
                   //revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
                   totalSold -= temp -> getDifference();
-                  returnedLine += "    " + to_string(temp -> getDifference()) + " " + currentVege -> getUnit() + " " + temp -> getCustomer() + "\n";
+                  returnedLine += "    " + to_string(temp -> getDifference()) + " " + currentVege -> getUnit() + " " + temp -> getCustomer() + " " + temp -> getDateSold() + "\n";
               }
           }
         }
@@ -2248,7 +2250,7 @@ void Dialog::on_CalculateSold_clicked()
 
         string tuis = "";
         if (tuiCount) {
-            tuis = "RT to farm: " + to_string(tuiCount) + " " + currentVege->getUnit() + "\n";
+            tuis = "RT to farm: " + to_string(tuiCount) + " " + currentVege->getUnit() + " " + tuiDate +"\n";
         }
 
         if (returnedLine != "") {

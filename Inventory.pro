@@ -14,18 +14,20 @@ TARGET = Inventory
 TEMPLATE = app
 
 
-SOURCES += main.cpp dialog.cpp Vegetable.cpp Inventory.cpp History.cpp \
+SOURCES += main.cpp dialog.cpp Inventory.cpp \
     Printer.cpp \
-    Remaining.cpp \
-    Return.cpp \
-    returnto.cpp \
+    controllers/MultiBuyController.cpp \
+    controllers/MultiBuyElement.cpp \
+    controllers/MultiSellController.cpp \
+    controllers/MultiSellElement.cpp \
+    models/History.cpp \
+    models/Remaining.cpp \
+    models/Return.cpp \
+    models/Vegetable.cpp \
+    models/returnto.cpp \
     translator.cpp \
     imenubar.cpp \
     ipreferencespanel.cpp \
-    MultiSellElement.cpp \
-    MultiSellController.cpp \
-    MultiBuyController.cpp \
-    MultiBuyElement.cpp \
     scrolleater.cpp \
     abbreviation.cpp
 
