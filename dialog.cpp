@@ -110,6 +110,7 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
                 ui->historyList->item(index)->setFont(font);
                 font.setItalic(false);
             }
+
             index++;
         }
     }
@@ -120,17 +121,19 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
         ui->breakDown->addItem(currentVege->formatRemaining2(i).c_str());
         ui->breakDown->item(i)->setFont(font);
     }
+
     ui ->Memo_2->setText(currentVege->getMemo().c_str());
     for(int i = 0; i< currentVege->getReturnNum(); i++){
         ui->returnList->addItem(currentVege->formatReturn(i).c_str());
         ui->returnList->item(i)->setFont(font);
     }
+
     for(int i = 0; i< currentVege->getTuiNum(); i++){
         ui->returnToFarm->addItem(currentVege->formatTui(i).c_str());
         ui->returnToFarm->item(i)->setFont(font);
     }
-    needSave = 1;
 
+    needSave = 1;
 }
 
 void Dialog::on_Buy_clicked()

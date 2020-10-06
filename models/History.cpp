@@ -55,7 +55,7 @@ string History::getHistory(string unit){
   string day = daySold.compare("\t") ? daySold : dayPurchased;
   if (returned){
       string temp2 = "退給公司";
-      sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%s%15s%7s",
+      sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%s%15s%10s",
                     daySold.c_str(),
                     difference,
                     unit.c_str(),
@@ -68,7 +68,7 @@ string History::getHistory(string unit){
                     dayPurchased.c_str());
   }else if (dumped){
       string temp2 = "倒";
-      sprintf(buffer,"%5s%7d%6s%13s%s%13s%s%15s%7s",
+      sprintf(buffer,"%5s%7d%6s%13s%s%13s%s%15s%10s",
                     daySold.c_str(),
                     difference,
                     unit.c_str(),
@@ -80,7 +80,7 @@ string History::getHistory(string unit){
                     dayPurchased.c_str());
   }else if (mTui){
       string temp2 = "退給農場";
-      sprintf(buffer,"%5s%7d%6s%13s%s%13s%s%15s%7s",
+      sprintf(buffer,"%5s%7d%6s%13s%s%13s%s%15s%10s",
                     daySold.c_str(),
                     difference,
                     unit.c_str(),
@@ -91,7 +91,7 @@ string History::getHistory(string unit){
                     temp2.c_str(),
                     dayPurchased.c_str());
   }else if(customer.compare("\t"))
-    sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%15s%7s",
+    sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%15s%10s",
           day.c_str(),
           difference,
           unit.c_str(),
