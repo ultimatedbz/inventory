@@ -65,9 +65,9 @@ MultiSellElement::MultiSellElement(int index, MultiSellController* c,
     remainingDrop->addItem(mInventory->getVegetableByIndex(index)->formatRemaining(i).c_str());
     comboIndexToActual[0][i] = i;
   }
+
   remainingDrops->push_back(remainingDrop);
   selectedRemains->insert(0);
-
 
   remainingDrop->setFont(font);
 

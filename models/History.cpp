@@ -150,7 +150,8 @@ string History::printFormat(){
                 padding(company).c_str(),
                 company.c_str(),
                 dayPurchased.c_str());
-    }else if(customer.compare("\t")){
+    // Buy and Sell
+    } else if(customer.compare("\t")) {
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
         string Price = "$" + price;
