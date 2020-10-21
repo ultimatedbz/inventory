@@ -53,6 +53,7 @@ private:
   int changeNum;
   int mTui;
   string padding(string word);
+  string removeYear(string word);
 };
 
 #endif // History_H

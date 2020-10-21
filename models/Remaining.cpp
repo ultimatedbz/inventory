@@ -77,7 +77,7 @@ string Remaining::formatRemaining(){
 
 
       char buffer [128];
-    sprintf(buffer,"%9s %s%12s%5d",
+    sprintf(buffer,"%8s %s%12s%5d",
             dayPurchased.c_str(),
             padding(company).c_str(),
             company.c_str(),

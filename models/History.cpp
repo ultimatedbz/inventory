@@ -133,7 +133,7 @@ string History::printFormat(){
                 customer.c_str(),
                 padding(company).c_str(),
                 company.c_str(),
-                dayPurchased.c_str());
+                removeYear(dayPurchased).c_str());
     }else if (dumped){
         sprintf(buffer,"%4d%s%12s%s%12s%5s",
                       difference,
@@ -141,7 +141,7 @@ string History::printFormat(){
                       customer.c_str(),
                       padding(company).c_str(),
                       company.c_str(),
-                      dayPurchased.c_str());
+                      removeYear(dayPurchased).c_str());
     }else if(mTui){
         sprintf(buffer,"%4d%s%12s%s%12s%5s",
                 difference,
@@ -149,7 +149,7 @@ string History::printFormat(){
                 customer.c_str(),
                 padding(company).c_str(),
                 company.c_str(),
-                dayPurchased.c_str());
+                removeYear(dayPurchased).c_str());
     // Buy and Sell
     } else if(customer.compare("\t")) {
         if(!price.compare("") || !price.compare("\t"))
@@ -161,9 +161,9 @@ string History::printFormat(){
             customer.c_str(),
             padding(company).c_str(),
             company.c_str(),
-            dayPurchased.c_str(),
+            removeYear(dayPurchased).c_str(),
             Price.c_str());
-    }else{
+    } else {
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
         string Price = "$" + price;
@@ -369,4 +369,21 @@ string History:: padding( string word){
         }
     }
     return product;
+}
+
+string History:: removeYear(string word) {
+    int slashCount = 0;
+    string ret = "";
+    for(int i = 0; i < word.size(); i ++) {
+        if (word[i] == '/') {
+          slashCount++;
+          if (slashCount == 2) {
+              break;
+          }
+        }
+
+        ret += word[i];
+    }
+
+    return ret;
 }
