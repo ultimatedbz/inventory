@@ -104,7 +104,7 @@ string Remaining::formatRemaining3(Abbreviation abb){
         price = "--";
     string Price = "$" + price;
     char buffer [128];
-    sprintf(buffer,"%5s%5d%s%10s%4s",
+    sprintf(buffer,"%5s%5d%s%15s%4s",
            removeYear(dayPurchased).c_str(),
            remaining,
            padding(abb.shrink(company)).c_str(),
