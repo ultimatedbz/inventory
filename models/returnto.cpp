@@ -57,8 +57,6 @@ string ReturnTo::getDateReturned(){
     return dayReturned;
 }
 
-
-
 int ReturnTo::getReturn(){
     return returnNum;
 }
@@ -70,7 +68,7 @@ string ReturnTo::formatReturn(string unit){
     for(int i = abs(returnNum); i > 0; i/=10){
         temp++;
     }
-      sprintf(buffer,"%5s%7d%6s%s%13s%7s",
+      sprintf(buffer,"%5s%7d%6s%s%13s%9s",
             dayReturned.c_str(),
             returnNum,
             unit.c_str(),

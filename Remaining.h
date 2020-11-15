@@ -37,6 +37,7 @@ private:
   int returnNum;
   string price;
   string padding(string word);
+  string removeYear(string word);
 };
 
 

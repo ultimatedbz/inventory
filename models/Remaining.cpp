@@ -74,8 +74,6 @@ int Remaining:: getReturn(){
 }
 
 string Remaining::formatRemaining(){
-
-
       char buffer [128];
     sprintf(buffer,"%8s %s%12s%5d",
             dayPurchased.c_str(),
@@ -100,13 +98,14 @@ string Remaining::formatRemaining2(string unit){
  return buffer;
 }
 
+// Used to format remaining for printing
 string Remaining::formatRemaining3(Abbreviation abb){
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
     string Price = "$" + price;
     char buffer [128];
     sprintf(buffer,"%5s%5d%s%10s%4s",
-           dayPurchased.c_str(),
+           removeYear(dayPurchased).c_str(),
            remaining,
            padding(abb.shrink(company)).c_str(),
            abb.shrink(company).c_str(),
@@ -169,4 +168,21 @@ string Remaining:: padding( string word){
         }
     }
     return product;
+}
+
+string Remaining:: removeYear(string word) {
+    int slashCount = 0;
+    string ret = "";
+    for(int i = 0; i < word.size(); i ++) {
+        if (word[i] == '/') {
+          slashCount++;
+          if (slashCount == 2) {
+              break;
+          }
+        }
+
+        ret += word[i];
+    }
+
+    return ret;
 }

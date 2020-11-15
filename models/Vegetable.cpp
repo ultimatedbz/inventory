@@ -63,10 +63,11 @@ const std::string Vegetable:: getVegetablename() const{
   return vegetableName;
 }
 
-string Vegetable::viewHistory(int i ){
+// Returns the string for the history line item in the bottom middle window
+string Vegetable::viewHistory(int i) {
     return historyArray[i].getHistory(unit);
-
 }
+
 int Vegetable::getTuiNum(){
     return tuiNum;
 }
@@ -536,10 +537,12 @@ string Vegetable::formatRemaining(int i){
     return remainingArray[i].formatRemaining();
 }
 
+// Format remaining for middle top window
 string Vegetable::formatRemaining2(int i){
     return remainingArray[i].formatRemaining2(unit);
 }
 
+// Format remaining for printing inventory
 string Vegetable::formatRemaining3(int i, Abbreviation abb){
     return remainingArray[i].formatRemaining3(abb);
 }
@@ -1084,14 +1087,6 @@ int Vegetable::getMTransNum(){
 void Vegetable:: editHistoryPrice(int index, string newPrice) {
     historyArray[index].price = newPrice;
 }
-
-
-
-
-
-
-
-
 
 
 
