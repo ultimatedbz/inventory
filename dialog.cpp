@@ -92,18 +92,17 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
 
     // Add items to history. All these checks are for filtering
     for(int i = 0; i < historyNum; i++){
-        if((currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked())              ||
-                (currentVege->getHistoryObject(i)->getDumped() && ui->dumpCheck->isChecked())     ||
-                (currentVege->getHistoryObject(i)->getReturned() && ui->returnCheck->isChecked())   ||
-                ((currentVege->getHistoryObject(i)->getCustomer().compare("\t") &&ui->sellCheck->isChecked())
-                 &&
-                 !(currentVege->getHistoryObject(i)->getTui() || currentVege->getHistoryObject(i)->getDumped()||
-                   currentVege->getHistoryObject(i)->getReturned()))       ||
-                (ui->buyCheck->isChecked() && !(currentVege->getHistoryObject(i)->getTui() ||
-                                                currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
-                                                || currentVege->getHistoryObject(i)->getDumped()))     ){
-
-
+        bool hasTui = (currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked());
+        bool hasDump = (currentVege->getHistoryObject(i)->getDumped() && ui->dumpCheck->isChecked());
+        bool hasHistory = (currentVege->getHistoryObject(i)->getReturned() && ui->returnCheck->isChecked());
+        bool hasSell = ((currentVege->getHistoryObject(i)->getCustomer().compare("\t") && ui->sellCheck->isChecked())
+                        &&
+                        !(currentVege->getHistoryObject(i)->getTui() || currentVege->getHistoryObject(i)->getDumped()||
+                          currentVege->getHistoryObject(i)->getReturned()));
+        bool hasBuy = (ui->buyCheck->isChecked() && !(currentVege->getHistoryObject(i)->getTui() ||
+                                                      currentVege->getHistoryObject(i)->getReturned() || currentVege->getHistoryObject(i)->getCustomer().compare("\t")
+                                                      || currentVege->getHistoryObject(i)->getDumped()));
+        if (hasTui || hasDump || hasHistory || hasSell || hasBuy) {
             ui->historyList->addItem(QString::fromStdString(currentVege->viewHistory(i)));
             ui->historyList->item(index)->setFont(font);
             if(currentVege->getHistoryObject(i)->getReturned() ||
