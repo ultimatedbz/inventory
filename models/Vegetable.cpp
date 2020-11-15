@@ -544,6 +544,7 @@ string Vegetable::formatRemaining3(int i, Abbreviation abb){
     return remainingArray[i].formatRemaining3(abb);
 }
 
+// Formats string for Return in the top right window
 string Vegetable::formatReturn(int i){
     return returnArray[i].formatReturn(unit);
 }

@@ -89,6 +89,8 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
     currentVege = inventory->getVegetable(vegeName);
     int historyNum = currentVege->getHistoryNum();
     int index = 0;
+
+    // Add items to history. All these checks are for filtering
     for(int i = 0; i < historyNum; i++){
         if((currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked())              ||
                 (currentVege->getHistoryObject(i)->getDumped() && ui->dumpCheck->isChecked())     ||
@@ -115,19 +117,26 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
         }
     }
 
+    // Change text of total units. i.e. 32 Boxes
     ui ->changeTotal->setText(QString::number(currentVege->getTotalVeges()) +
                               " " + QString::fromStdString(currentVege->getUnit()));
+
+    // The remaining count of this vegetable, broken down by seller
     for(int i = 0; i< currentVege -> getRemainingNum() ; i++){
         ui->breakDown->addItem(currentVege->formatRemaining2(i).c_str());
         ui->breakDown->item(i)->setFont(font);
     }
 
+    // The memo for this vegetable
     ui ->Memo_2->setText(currentVege->getMemo().c_str());
+
+    // Lays out the vegetables that have been returned by customers
     for(int i = 0; i< currentVege->getReturnNum(); i++){
         ui->returnList->addItem(currentVege->formatReturn(i).c_str());
         ui->returnList->item(i)->setFont(font);
     }
 
+    // Lays out the vegetables that will be returned to the farm
     for(int i = 0; i< currentVege->getTuiNum(); i++){
         ui->returnToFarm->addItem(currentVege->formatTui(i).c_str());
         ui->returnToFarm->item(i)->setFont(font);
