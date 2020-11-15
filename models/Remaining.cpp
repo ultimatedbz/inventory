@@ -90,7 +90,7 @@ string Remaining::formatRemaining2(string unit){
         price = "--";
     string Price = "$" + price;
       char buffer [128];
-    sprintf(buffer,"%5s%11d%6s%s%20s%7s",
+    sprintf(buffer,"%9s%11d%6s%s%20s%7s",
             dayPurchased.c_str(),
             remaining,
             unit.c_str(),
