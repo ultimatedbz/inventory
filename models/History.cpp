@@ -128,7 +128,7 @@ string History::printFormat(){
         char d [200];
         sprintf(d,"+%d",difference);
 
-        sprintf(buffer,"%4s%s%12s%s%12s%5s",
+        sprintf(buffer,"%4s%s%15s%s%15s%5s",
                 d,
                 padding(customer).c_str(),
                 customer.c_str(),
@@ -136,7 +136,7 @@ string History::printFormat(){
                 company.c_str(),
                removeYear(dayPurchased).c_str());
     }else if (dumped){
-        sprintf(buffer,"%4d%s%12s%s%12s%5s",
+        sprintf(buffer,"%4d%s%15s%s%15s%5s",
                       difference,
                       padding(customer).c_str(),
                       customer.c_str(),
@@ -144,7 +144,7 @@ string History::printFormat(){
                       company.c_str(),
                       removeYear(dayPurchased).c_str());
     }else if(mTui){
-        sprintf(buffer,"%4d%s%12s%s%12s%5s",
+        sprintf(buffer,"%4d%s%15s%s%15s%5s",
                 difference,
                 padding(customer).c_str(),
                 customer.c_str(),
@@ -156,7 +156,7 @@ string History::printFormat(){
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
         string Price = "$" + price;
-        sprintf(buffer,"%4d%s%12s%s%12s%5s%4s",
+        sprintf(buffer,"%4d%s%15s%s%15s%5s%4s",
             difference,
             padding(customer).c_str(),
             customer.c_str(),

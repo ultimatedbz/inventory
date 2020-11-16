@@ -351,13 +351,15 @@ int Vegetable::returnTo(int amount, string date, int selection) {
       historyArray = new History[10000];
     }
 
-    if (tuiArray == NULL)
+    if (tuiArray == NULL) {
         tuiArray = new ReturnTo[10000];
+    }
 
     if ( historyNum == 10000) {
-        for(int i = 0; i < historyNum -1; i++){
+        for(int i = 0; i < historyNum -1; i++) {
             historyArray[i] = historyArray[i+1];
         }
+
         historyNum--;
     }
 
