@@ -121,7 +121,7 @@ void Printer::printTransactions(QPrinter* printer){
 
 void Printer::printInventory(QPrinter* printer){
     /*
-    double amount;
+    int amount;
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
@@ -253,7 +253,7 @@ void Printer::printHistory(QPrinter * printer){
 
 
     string dayComp;
-    double amount;
+    int amount;
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];

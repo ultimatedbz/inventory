@@ -5,6 +5,7 @@
  */
 
 #include <string>
+#include "utils.h"
 using namespace std;
 
 class History {
@@ -17,7 +18,7 @@ public:
   void buy(int amount, string bc, string date, string price);
   void sell(int amount, string customer, string date, string price, string db, string company, int change);
   void dump(int amount, string date, string bd, string company, int change);
-  void returnn (string dR , double amount, string returner, string company,string dB);
+  void returnn (string dR , int amount, string returner, string company,string dB);
   void updateCompany(string company);
   void updateCompany(int victim, int source);
   int getDifference();
@@ -53,6 +54,7 @@ private:
   string dateToCompare;
   int changeNum;
   int mTui;
+  Utils* utils;
   string padding(string word);
   string removeYear(string word);
 };

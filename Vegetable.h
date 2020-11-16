@@ -25,7 +25,7 @@ public:
   int sellVege(int amount, string costumer, string date, string price, int selection);
   int dumpVege(int amount, string date, int selection);
   int returnTo(int amount, string date, int selection);
-  void returnThis(string dateReturned, double amount,
+  void returnThis(string dateReturned, int amount,
                   string returner, string company, string dateBought);
 
   int getHistoryNum();
@@ -42,8 +42,8 @@ public:
   string getUnit();
 
   int remainExist(string company, string date);
-  void updateRemaining(int i, double amount);
-  void updateReturnInRemaining(int exist, double amount);
+  void updateRemaining(int i, int amount);
+  void updateReturnInRemaining(int exist, int amount);
   void updateMemo(string m);
   void addReturnToRemaining(int amount);
 
@@ -65,7 +65,7 @@ public:
    int restock(int amount, string dp, string company, int retNum);
    int undoRetOrBuy(int amount, string dP,string company,string dS,string customer);
    int returnExistCompany(string company, string date);
-   void reTui(string dS, double amount, string dP, string company);
+   void reTui(string dS, int amount, string dP, string company);
    ReturnTo* getTuiObject(int index);
    void clearTui();
 

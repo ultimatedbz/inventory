@@ -40,7 +40,7 @@ string Return::getCompany(){
     return company;
 }
 
-void Return::add(string dateRet, double amount, string ret, string bc, string dateB){
+void Return::add(string dateRet, int amount, string ret, string bc, string dateB){
 
   company = bc;
   dayPurchased = dateB;

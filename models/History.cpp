@@ -34,7 +34,8 @@ History::History()
     dateToCompare("\t"),
     changeNum(0),
     mTui(0),
-    type("")
+    type(""),
+    utils(new Utils())
     
       {
       
@@ -122,6 +123,7 @@ string History::printFormat(){
         temp++;
     }
 
+    // Checks if there is a price
     if (!price.compare("") || !price.compare("\t"))
         price = "--";
 
@@ -205,7 +207,11 @@ int History::getTui() {
 }
 
 string History::getPrice() {
-    return price;
+    if (!price.compare("") || !price.compare("\t")) {
+        return utils -> twoDecimals(price);
+    } else {
+        return price;
+    }
 }
 
 string History::getDatePurchased() {
@@ -230,7 +236,7 @@ void History::buy(int amount, string bc, string date, string p){
   type = "Buy";
 }
 
-void History::sell(int amount, string b, string date, string p, string dp,string c , int change){
+void History::sell(int amount, string b, string date, string p, string dp,string c , int change) {
 
   difference = amount *(-1);
   customer = b;
@@ -243,7 +249,7 @@ void History::sell(int amount, string b, string date, string p, string dp,string
   type = "Sell";
 }
 
-void History::dump(int amount, string date, string bd, string comp, int change){
+void History::dump(int amount, string date, string bd, string comp, int change) {
     difference = amount *(-1);
     daySold = date;
     dumped = 1;
@@ -255,7 +261,7 @@ void History::dump(int amount, string date, string bd, string comp, int change){
 }
 
 // Customer returned to Sam
-void History::returnn(string dR, double amount, string returner, string c, string dB){
+void History::returnn(string dR, int amount, string returner, string c, string dB) {
     //day Purchased is day vegetables were bought
     dayPurchased = dB;
     //day Sold is day vegetables were returned

@@ -20,7 +20,7 @@ public:
   void updateRemaining(int amount);
   void updateRemainingWithRet(int amount);
   int getRemaining();
-  double getReturn();
+  int getReturn();
   string getPrice();
   string getDate();
   string getCompany();

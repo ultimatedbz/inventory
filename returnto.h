@@ -16,7 +16,7 @@ public:
 
   ~ReturnTo();
 
-  void tui(string dr, double amount, string bc, string dB);
+  void tui(string dr, int amount, string bc, string dB);
   void updateReturn(int amount, string c);
   int getReturn();
   string getDatePurchased();

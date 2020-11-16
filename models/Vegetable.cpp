@@ -180,7 +180,7 @@ int Vegetable::sellVege(int amount, string customer, string date,
     /* Update the Breakdown. Update returning if needed. */
     if (remainingArray[selection].getReturn()) {
         // For the selection in remaining (top middle), get Return gives back how much of it is a return from customer. Return Change is how much we reduce the return for this selection by.
-        returnChange = min(amount,remainingArray[selection].getReturn());
+        returnChange = min(amount, remainingArray[selection].getReturn());
         remainingArray[selection].updateRemainingWithRet((-1) * amount);
         while (returnChange) {
             int temp = returnExistCompany( remainingArray[selection].getCompany(),
@@ -222,7 +222,7 @@ int Vegetable::sellVege(int amount, string customer, string date,
 }
 
 // A customer returns to Sam
-void Vegetable::returnThis(string dateReturned, double amount, string returner,
+void Vegetable::returnThis(string dateReturned, int amount, string returner,
                            string  company, string dateBought){
 
     if (!remainingArray)
@@ -559,11 +559,11 @@ string Vegetable::formatReturn(int i) {
     return returnArray[i].formatReturn(unit);
 }
 
-void Vegetable::updateRemaining(int i, double amount) {
+void Vegetable::updateRemaining(int i, int amount) {
     remainingArray[i].updateRemaining(amount);
 }
 
-void Vegetable::updateReturnInRemaining(int i, double amount) {
+void Vegetable::updateReturnInRemaining(int i, int amount) {
     remainingArray[i].updateRemainingWithRet(amount);
 }
 
@@ -808,7 +808,7 @@ int Vegetable::undoRetOrBuy(int amount, string dP,string company,string dR,strin
     return 1;
 }
 
-void Vegetable::reTui(string dateS, double amount, string dP, string company){
+void Vegetable::reTui(string dateS, int amount, string dP, string company){
 
     for(int i=0; i<tuiNum; i++){
         if(tuiArray[i].getCompany()==company &&  tuiArray[i].getDatePurchased()==dP){
@@ -987,7 +987,7 @@ string Vegetable::formatTransaction(Abbreviation abb){
     for(int i = historyNum - 1; i >= 0; i--){
         if(historyArray[i].getDateToCompare() == today){
 
-            double amount = 0;
+            int amount = 0;
             string dP, company, customer, dS;
             amount = historyArray[i].getDifference();
             dP =  historyArray[i].getDatePurchased();
@@ -1019,7 +1019,7 @@ string Vegetable::formatTransaction(Abbreviation abb){
     for(int i = 0; i < historyNum; i++){
         if(historyArray[i].getDateToCompare() == today){
 
-            double amount = 0;
+            int amount = 0;
             string dP, company, customer, dS, price;
             amount = historyArray[i].getDifference();
             dP =  historyArray[i].getDatePurchased();

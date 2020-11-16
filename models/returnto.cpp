@@ -39,7 +39,7 @@ string ReturnTo::getCompany(){
     return company;
 }
 
-void ReturnTo::tui(string dateRet, double amount, string bc, string dateB){
+void ReturnTo::tui(string dateRet, int amount, string bc, string dateB){
   company = bc;
   dayPurchased = dateB;
   returnNum = amount;
