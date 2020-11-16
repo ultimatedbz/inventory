@@ -75,7 +75,7 @@ string Return::formatReturn(string unit){
     for(int i = abs(returnNum); i > 0; i/=10){
         temp++;
     }
-      sprintf(buffer,"%5s%7d%6s%s%13s%s%13s%9s",
+      sprintf(buffer,"%8s%7d%6s%s%13s%s%13s%9s",
             dayReturned.c_str(),
             returnNum,
             unit.c_str(),

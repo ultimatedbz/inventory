@@ -21,7 +21,7 @@ using namespace std;
  * @param     cfg                 Data set configuration.
  */
 
-
+// This is Return to farm, or Tui. Basically when he returns the vegetable back to the farm.
 ReturnTo::ReturnTo()
   :
     dayPurchased("\t"),
@@ -40,7 +40,6 @@ string ReturnTo::getCompany(){
 }
 
 void ReturnTo::tui(string dateRet, int amount, string bc, string dateB){
-
   company = bc;
   dayPurchased = dateB;
   returnNum = amount;
@@ -62,13 +61,9 @@ int ReturnTo::getReturn(){
 }
 
 
-string ReturnTo::formatReturn(string unit){
+string ReturnTo::formatReturn(string unit) {
     char buffer [128];
-    int temp = 0;
-    for(int i = abs(returnNum); i > 0; i/=10){
-        temp++;
-    }
-      sprintf(buffer,"%5s%7d%6s%s%13s%9s",
+      sprintf(buffer,"%8s%7d%6s%s%13s%9s",
             dayReturned.c_str(),
             returnNum,
             unit.c_str(),

@@ -1622,7 +1622,8 @@ void Dialog::on_Return_clicked()
                 currentVege->returnThis(dateReturned, amount, returner, company, dateBought);
             }
 
-        }else if (result == QDialog::Rejected){
+        } else if (result == QDialog::Rejected){
+            // If checked, this means we are returning to farm
             if(checkBox.isChecked()){
 
                 QDialog dialog(this);
@@ -1635,7 +1636,7 @@ void Dialog::on_Return_clicked()
 
 
                 QComboBox* remainingDrop = new QComboBox(&dialog);
-                for(int i = 0; i< currentVege -> getRemainingNum(); i++){
+                for (int i = 0; i< currentVege -> getRemainingNum(); i++){
                     remainingDrop->addItem(currentVege->formatRemaining(i).c_str());
                 }
                 remainingDrop->setFont(font);
@@ -1662,15 +1663,15 @@ void Dialog::on_Return_clicked()
                 time_t t = time(nullptr);
                 struct tm * now = localtime(&t);
                 char today[128];
-                sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
+                sprintf(today, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
 
                 // Show the dialog as modal
                 if ( result == QDialog::Accepted) {
-                    if( amount <= 0 ){
+                    if ( amount <= 0 ) {
                         QMessageBox messageBox;
                         messageBox.critical(nullptr,"錯誤","Not Valid!");
                         messageBox.setFixedSize(500,200);
-                    }else if(!currentVege->returnTo(amount,today,selection)){
+                    } else if(!currentVege->returnTo(amount,today,selection)) {
                         QMessageBox error;
                         error.critical(nullptr,"警告",mTranslator
                                        ->translate("不夠菜退!").c_str());

@@ -134,7 +134,7 @@ string History::printFormat(){
                 customer.c_str(),
                 padding(company).c_str(),
                 company.c_str(),
-                removeYear(dayPurchased).c_str());
+               removeYear(dayPurchased).c_str());
     }else if (dumped){
         sprintf(buffer,"%4d%s%12s%s%12s%5s",
                       difference,
@@ -252,6 +252,7 @@ void History::dump(int amount, string date, string bd, string comp, int change){
     type = "Dump";
 }
 
+// Customer returned to Sam
 void History::returnn(string dR, int amount, string returner, string c, string dB){
     //day Purchased is day vegetables were bought
     dayPurchased = dB;
@@ -265,6 +266,18 @@ void History::returnn(string dR, int amount, string returner, string c, string d
     type = "Return";
 }
 
+// Return to farm
+// - paramenter date: The day that the "tui" happened
+void History::tui(int amount, string date, string dayPurchased, string comp, int change){
+    difference = amount *(-1);
+    daySold = date;
+    mTui = 1;
+    dayPurchased = dayPurchased;
+    dateToCompare = date;
+    company = comp;
+    changeNum = change;
+    type = "Tui";
+}
 
 
 void History::load(fstream* fio){
@@ -338,17 +351,6 @@ void History::deleteHistory(){
 
 int History::getChangeNum(){
     return changeNum;
-}
-
-void History::tui(int amount, string date, string bd, string comp, int change){
-    difference = amount *(-1);
-    daySold = date;
-    mTui = 1;
-    dayPurchased=bd;
-    dateToCompare = date;
-    company = comp;
-    changeNum = change;
-    type = "Tui";
 }
 
 string History:: getType(){

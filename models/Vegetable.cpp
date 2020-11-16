@@ -277,12 +277,12 @@ int Vegetable::dumpVege(int amount, string date, int selection){
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
-    if( historyArray==NULL){
+    if (historyArray == NULL) {
       historyArray = new History[10000];
     }
 
-    if( historyNum == 10000){
-        for(int i = 0; i < historyNum -1; i++){
+    if (historyNum == 10000) {
+        for (int i = 0; i < historyNum -1; i++) {
             historyArray[i] = historyArray[i+1];
         }
         historyNum--;
@@ -313,18 +313,19 @@ int Vegetable::dumpVege(int amount, string date, int selection){
       int deduct = min(portion, left);
       returnArray[temp].updateReturn((-1)*deduct,remainingArray[selection].getCompany());
 
-      if(temp >-1 && returnArray[temp].getReturn() == 0){
+      if (temp >-1 && returnArray[temp].getReturn() == 0) {
             for(int i=temp; i < returnNum; i++){
                 returnArray[temp]= returnArray[temp+1];
             }
+
             returnNum--;
       }
-      left -= deduct;
 
+      left -= deduct;
   }
 
 
-//needs to be last or else selection will get messed up
+  //needs to be last or else selection will get messed up
   if(remainingArray[selection].getRemaining() == 0){
       for(int i=selection; i < remainingNum; i++){
           remainingArray[i]= remainingArray[i+1];
@@ -342,18 +343,19 @@ int Vegetable::dumpVege(int amount, string date, int selection){
   return 1;
 }
 
-int Vegetable::returnTo(int amount, string date, int selection){
+int Vegetable::returnTo(int amount, string date, int selection) {
+    qInfo() << QString(date.c_str());
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
-    if( historyArray==NULL){
+    if (historyArray == NULL) {
       historyArray = new History[10000];
     }
 
-    if(tuiArray == NULL)
+    if (tuiArray == NULL)
         tuiArray = new ReturnTo[10000];
 
-    if( historyNum == 10000){
+    if ( historyNum == 10000) {
         for(int i = 0; i < historyNum -1; i++){
             historyArray[i] = historyArray[i+1];
         }
@@ -364,20 +366,17 @@ int Vegetable::returnTo(int amount, string date, int selection){
       return 0;
 
 
-  if (remainingArray[selection].getReturn()){
-
+  if (remainingArray[selection].getReturn()) {
       returnChange = min(amount,remainingArray[selection].getReturn());
       remainingArray[selection].updateRemainingWithRet((-1) * amount);
-
-  }
-  else
+  } else {
       remainingArray[selection].updateRemaining((-1) * amount);
+  }
 
   //change individual returns
   int left = returnChange;
 
-  while(left){
-
+  while (left) {
       int temp = returnExistCompany(remainingArray[selection].getCompany(),
                               remainingArray[selection].getDate());
       int portion = returnArray[temp].getReturn();
@@ -385,18 +384,18 @@ int Vegetable::returnTo(int amount, string date, int selection){
       int deduct = min(portion, left);
       returnArray[temp].updateReturn((-1)*deduct,remainingArray[selection].getCompany());
 
-      if(temp >-1 && returnArray[temp].getReturn() == 0){
-            for(int i=temp; i < returnNum; i++){
+      if (temp >-1 && returnArray[temp].getReturn() == 0) {
+            for (int i=temp; i < returnNum; i++) {
                 returnArray[temp]= returnArray[temp+1];
             }
             returnNum--;
       }
-      left -= deduct;
 
+      left -= deduct;
   }
 
 
-//needs to be last or else selection will get messed up
+  //needs to be last or else selection will get messed up
   if(remainingArray[selection].getRemaining() == 0){
       for(int i=selection; i < remainingNum; i++){
           remainingArray[i]= remainingArray[i+1];
@@ -405,21 +404,23 @@ int Vegetable::returnTo(int amount, string date, int selection){
   }
 
   History newHist;
-  newHist.tui(amount, date,dp,
+  newHist.tui(amount, date, dp,
                bc, returnChange);
   historyArray[historyNum] = newHist;
   historyNum++;
   totalVeges += newHist.getDifference();
 
-  for(int i=0; i<tuiNum; i++){
+  for (int i = 0; i < tuiNum; i++) {
       if(tuiArray[i].getCompany()==remainingArray[i].getCompany() &&
                         tuiArray[i].getDatePurchased()==remainingArray[selection].getDate()){
           tuiArray[i].updateReturn(amount, date);
           return 1;
       }
   }
+
    ReturnTo newTui;
    newTui.tui(date,amount,bc,dp);
+   qInfo() << QString(date.c_str());
    tuiArray[tuiNum] = newTui;
    tuiNum++;
 
@@ -529,6 +530,7 @@ void Vegetable::setVegetableName(string name){
     vegetableName = name;
 }
 
+// Format Tui for top right window
 string Vegetable::formatTui(int i){
     return tuiArray[i].formatReturn(unit);
 }

@@ -36,12 +36,13 @@ public:
   string printFormat();
   void deleteHistory();
   int getChangeNum();
-  void tui(int amount, string date, string bd, string comp, int change);
+  void tui(int amount, string date, string dayPurchased, string comp, int change);
   int getTui();
   string price;
 
 private:
   string type;
+  // The date sold. For tui, it's the day "tui'd"
   string daySold;
   string dayPurchased;
   int difference;
