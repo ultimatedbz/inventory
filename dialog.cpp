@@ -2266,7 +2266,6 @@ void Dialog::on_CalculateSold_clicked()
             returnedLine = "\nManual Deduction: \n\nCustomer RT| \n" + returnedLine;
         }
 
-
         string totalSoldLine = "Total sold | " + to_string(totalSold) + " "+ currentVege->getUnit() +"\n";
 
         ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + boxesLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));

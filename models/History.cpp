@@ -51,6 +51,7 @@ string History::getHistory(string unit){
       temp++;
   }
 
+  // 0 means they're equal lol. If the price is either equal to empty or tab, then use "--"
   if(!price.compare("") || !price.compare("\t"))
       price = "--";
   string Price = "$" + price;
@@ -207,11 +208,7 @@ int History::getTui() {
 }
 
 string History::getPrice() {
-    if (!price.compare("") || !price.compare("\t")) {
-        return utils -> twoDecimals(price);
-    } else {
-        return price;
-    }
+    return price;
 }
 
 string History::getDatePurchased() {
@@ -231,9 +228,14 @@ void History::buy(int amount, string bc, string date, string p){
   difference = amount;
   company = bc;
   dayPurchased = date;
-  price = p;
   dateToCompare = date;
   type = "Buy";
+
+  if (p.compare("") && p.compare("\t")) {
+      price = utils -> twoDecimals(p);
+  } else {
+      price = p;
+  }
 }
 
 void History::sell(int amount, string b, string date, string p, string dp,string c , int change) {
@@ -241,12 +243,17 @@ void History::sell(int amount, string b, string date, string p, string dp,string
   difference = amount *(-1);
   customer = b;
   daySold = date;
-  price = p;
   dateToCompare = date;
   dayPurchased = dp;
   company = c;
   changeNum = change;
   type = "Sell";
+
+  if (p.compare("") && p.compare("\t")) {
+      price = utils -> twoDecimals(p);
+  } else {
+      price = p;
+  }
 }
 
 void History::dump(int amount, string date, string bd, string comp, int change) {
