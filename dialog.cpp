@@ -108,7 +108,7 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
         if (hasTui || hasDump || hasHistory || hasSell || hasBuy) {
             ui->historyList->addItem(QString::fromStdString(currentVege->viewHistory(i)));
             ui->historyList->item(index)->setFont(font);
-            if(currentVege->getHistoryObject(i)->getReturned() ||
+            if (currentVege->getHistoryObject(i)->getReturned() ||
                     currentVege->getHistoryObject(i)->getDumped()||currentVege->getHistoryObject(i)->getTui()){
                 font.setItalic(true);
                 ui->historyList->item(index)->setFont(font);
@@ -118,6 +118,9 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
             index++;
         }
     }
+
+    // Scroll history list down
+    ui->historyList->verticalScrollBar() ->setValue(ui -> historyList -> verticalScrollBar() -> maximum());
 
     // Change text of total units. i.e. 32 Boxes
     ui ->changeTotal->setText(QString::number(currentVege->getTotalVeges()) +
@@ -1396,7 +1399,7 @@ void Dialog::loadFile(){
     QWidget *activeWindow = QApplication::activeWindow();
     QString filename = QFileDialog::getOpenFileName(activeWindow,
                                                     "Load File", "", "Datafile files (*.datafile);;All files (*)");
-    if(filename != NULL){
+    if (filename != NULL) {
         needSave = 0;
         newFile();
         setWindowTitle(filename.section("/",-1,-1));
