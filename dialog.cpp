@@ -890,9 +890,10 @@ void Dialog::printI(QPrinter* printer){
                                                                          ->getTotalVeges())+ " " + QString(inventory->getVegetableByIndex(i)->
                                                                                                            getUnit().c_str()) +"\n";
                 for(int j =0; j < inventory->getVegetableByIndex(i)
-                    ->getRemainingNum(); j++){
+                    ->getRemainingNum(); j++) {
+                    // This prints the line item
                     *currentText = *currentText + QString(inventory->getVegetableByIndex(i)
-                                                          ->formatRemaining3(j, *mAbbreviator).c_str()) +"\n";
+                                                          -> formatRemaining3(j, *mAbbreviator).c_str()) +"\n";
                     lineCount++;
                 }
 
@@ -2187,15 +2188,16 @@ void Dialog::on_CalculateSold_clicked()
         string breakdownLine = "\nBreakdown | ";
         int revenue = 0;
         int units = 0;
-        bool first = true;
+        bool firstBreakDown = true;
         string noPrices = "";
         string returnedLine = "";
         string tuiDate = "";
 
-        int dumpCount = 0;
-        int tuiCount = 0;
         int totalBoxes = 0;
         int totalSold = 0;
+
+        string dumps = "";
+        string tuis = "";
         for(int i = 0; i < currentVege -> getHistoryNum(); i++) {
           History* temp = currentVege -> getHistoryObject(i);
           if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
@@ -2206,8 +2208,8 @@ void Dialog::on_CalculateSold_clicked()
                       continue;
                   }
 
-                  if (first) {
-                    first = false;
+                  if (firstBreakDown) {
+                    firstBreakDown = false;
                   } else {
                     breakdownLine += " + ";
                   }
@@ -2217,11 +2219,10 @@ void Dialog::on_CalculateSold_clicked()
                   revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
                   breakdownLine += "$" + temp -> getPrice() + " * " + to_string(temp -> getDifference() * -1);
               } else if (temp -> getType() == "Tui") {
-                  tuiCount += temp -> getDifference() * -1;
+                  tuis += "RT to farm: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
                   totalSold += temp -> getDifference() * -1;
-                  tuiDate = temp -> getDateSold();
               } else if (temp -> getType() == "Dump") {
-                  dumpCount += temp -> getDifference() * -1;
+                  dumps += "Dumped: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
                   totalSold += temp -> getDifference() * -1;
               } else if (temp -> getType() == "Buy") {
                   totalBoxes += temp -> getDifference();
@@ -2252,17 +2253,6 @@ void Dialog::on_CalculateSold_clicked()
         }
 
         string fifthLine = "Boxes remaining | " + to_string(remaining) + "\n";
-
-
-        string dumps = "";
-        if (dumpCount) {
-            dumps = "Dumped: " + to_string(dumpCount) + " " + currentVege->getUnit() + "\n";
-        }
-
-        string tuis = "";
-        if (tuiCount) {
-            tuis = "RT to farm: " + to_string(tuiCount) + " " + currentVege->getUnit() + " " + tuiDate +"\n";
-        }
 
         if (returnedLine != "") {
             returnedLine = "\nManual Deduction: \n\nCustomer RT| \n" + returnedLine;
