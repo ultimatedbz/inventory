@@ -69,7 +69,7 @@ int Remaining::getRemaining(){
    return remaining;
 }
 
-int Remaining:: getReturn(){
+double Remaining:: getReturn(){
     return returnNum;
 }
 
