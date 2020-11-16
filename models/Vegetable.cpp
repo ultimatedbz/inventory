@@ -344,7 +344,6 @@ int Vegetable::dumpVege(int amount, string date, int selection){
 }
 
 int Vegetable::returnTo(int amount, string date, int selection) {
-    qInfo() << QString(date.c_str());
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
@@ -420,7 +419,6 @@ int Vegetable::returnTo(int amount, string date, int selection) {
 
    ReturnTo newTui;
    newTui.tui(date,amount,bc,dp);
-   qInfo() << QString(date.c_str());
    tuiArray[tuiNum] = newTui;
    tuiNum++;
 
@@ -428,11 +426,12 @@ int Vegetable::returnTo(int amount, string date, int selection) {
 }
 
 int Vegetable::remainExist(string company, string date){
-    for(int i = 0; i < remainingNum; i++){
-        if(company == remainingArray[i].getCompany() &&
-                date == remainingArray[i].getDate())
+    for (int i = 0; i < remainingNum; i++) {
+        if (company == remainingArray[i].getCompany() && date == remainingArray[i].getDate()) {
             return i;
+        }
     }
+
     return -1;
 }
 
@@ -461,10 +460,11 @@ int Vegetable::compareH(const void * a, const void * b){
             return -1;
         else
             return 0;
-    } else if (month1 > month2){
+    } else if (month1 > month2) {
         return 1;
-    } else
+    } else {
         return -1;
+    }
 
     return 0;
 }
@@ -473,8 +473,9 @@ int Vegetable::compareH(const void * a, const void * b){
 bool Vegetable::compareR(Remaining a, Remaining b) {
     if (a.getCompany() != b.getCompany()) {
         const int result = strcmp(a.getCompany().c_str(), b.getCompany().c_str());
-        if(result)
+        if (result) {
             return result < 0;
+        }
     }
     int day1,month1, year1;
     int day2,month2, year2;
@@ -484,7 +485,7 @@ bool Vegetable::compareR(Remaining a, Remaining b) {
 
     if (year1 != year2) {
         return year1 < year2;
-    } else if (month1 != month2 ){
+    } else if (month1 != month2 ) {
         return month1 < month2;
     } else {
         return day1 < day2;
@@ -493,7 +494,7 @@ bool Vegetable::compareR(Remaining a, Remaining b) {
 
 bool Vegetable::compareRet(Return a, Return b) {
     const int result = strcmp(a.getCompany().c_str(), b.getCompany().c_str());
-    if(result)
+    if (result)
        return result;
 
     const char* date1 = a.getDatePurchased().c_str();
@@ -531,39 +532,39 @@ void Vegetable::setVegetableName(string name){
 }
 
 // Format Tui for top right window
-string Vegetable::formatTui(int i){
+string Vegetable::formatTui(int i) {
     return tuiArray[i].formatReturn(unit);
 }
 
-string Vegetable::formatRemaining(int i){
+string Vegetable::formatRemaining(int i) {
     return remainingArray[i].formatRemaining();
 }
 
 // Format remaining for middle top window
-string Vegetable::formatRemaining2(int i){
+string Vegetable::formatRemaining2(int i) {
     return remainingArray[i].formatRemaining2(unit);
 }
 
 // Format remaining for printing inventory
-string Vegetable::formatRemaining3(int i, Abbreviation abb){
+string Vegetable::formatRemaining3(int i, Abbreviation abb) {
     return remainingArray[i].formatRemaining3(abb);
 }
 
 // Formats string for Return in the top right window
-string Vegetable::formatReturn(int i){
+string Vegetable::formatReturn(int i) {
     return returnArray[i].formatReturn(unit);
 }
 
-void Vegetable::updateRemaining(int i, int amount){
+void Vegetable::updateRemaining(int i, int amount) {
     remainingArray[i].updateRemaining(amount);
 }
 
-void Vegetable::updateReturnInRemaining(int i, int amount){
+void Vegetable::updateReturnInRemaining(int i, int amount) {
     remainingArray[i].updateRemainingWithRet(amount);
 }
 
-int Vegetable::returnExist(string returner, string date){
-    for(int i = 0; i < returnNum; i++){
+int Vegetable::returnExist(string returner, string date) {
+    for(int i = 0; i < returnNum; i++) {
         if(returner == returnArray[i].getReturner() &&
                 date == returnArray[i].getDatePurchased())
             return i;
