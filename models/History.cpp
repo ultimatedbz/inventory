@@ -121,10 +121,11 @@ string History::printFormat(){
     for(int i = abs(difference); i > 0; i/=10){
         temp++;
     }
-    if(!price.compare("") || !price.compare("\t"))
+
+    if (!price.compare("") || !price.compare("\t"))
         price = "--";
 
-   if (returned){
+   if (returned) {
         char d [200];
         sprintf(d,"+%d",difference);
 
@@ -135,7 +136,7 @@ string History::printFormat(){
                 padding(company).c_str(),
                 company.c_str(),
                removeYear(dayPurchased).c_str());
-    }else if (dumped){
+    } else if (dumped) {
         sprintf(buffer,"%4d%s%15s%s%15s%6s",
                       difference,
                       padding(customer).c_str(),
@@ -143,7 +144,7 @@ string History::printFormat(){
                       padding(company).c_str(),
                       company.c_str(),
                       removeYear(dayPurchased).c_str());
-    }else if(mTui){
+    } else if(mTui) {
         sprintf(buffer,"%4d%s%15s%s%15s%6s",
                 difference,
                 padding(customer).c_str(),
@@ -268,12 +269,12 @@ void History::returnn(string dR, int amount, string returner, string c, string d
 
 // Return to farm
 // - paramenter date: The day that the "tui" happened
-void History::tui(int amount, string date, string dayPurchased, string comp, int change){
+void History::tui(int amount, string dateTui, string datePurchased, string comp, int change) {
     difference = amount *(-1);
-    daySold = date;
+    daySold = dateTui;
     mTui = 1;
-    dayPurchased = dayPurchased;
-    dateToCompare = date;
+    dayPurchased = datePurchased;
+    dateToCompare = dateTui;
     company = comp;
     changeNum = change;
     type = "Tui";
