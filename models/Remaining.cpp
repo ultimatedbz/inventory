@@ -117,10 +117,10 @@ void Remaining:: updateRemaining(int amount){
     remaining += amount;
 }
 
-void Remaining:: updateRemainingWithRet(int amount){
+// Updates the remaining amount, and change the return number too
+void Remaining:: updateRemainingWithRet(int amount) {
     remaining += amount;
-    returnNum = ((returnNum + amount) < 0)? 0 : returnNum + amount;
-
+    returnNum = ((returnNum + amount) < 0) ? 0 : returnNum + amount;
 }
 
 

@@ -15,7 +15,7 @@ public:
   ~Return();
 
   void add(string dr, int amount, string returner, string bc, string dB);
-  void updateReturn(int amount, string c);
+  void updateReturn(int amount, string newDateReturned);
   int getReturn();
   string getDatePurchased();
   string getCompany();

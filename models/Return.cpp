@@ -69,7 +69,7 @@ int Return::getReturn(){
 }
 
 
-string Return::formatReturn(string unit){
+string Return::formatReturn(string unit) {
     char buffer [128];
     int temp = 0;
     for(int i = abs(returnNum); i > 0; i/=10){
@@ -88,9 +88,11 @@ string Return::formatReturn(string unit){
 
 }
 
-void Return:: updateReturn(int amount, string c){
+void Return:: updateReturn(int amount, string newDateReturned) {
     returnNum = ((returnNum + amount) < 0)? 0 : returnNum + amount;
-    dayReturned = c;
+    if (newDateReturned != "") {
+        dayReturned = newDateReturned;
+    }
 }
 
 void Return::load(fstream* fio){

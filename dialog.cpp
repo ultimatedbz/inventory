@@ -1021,6 +1021,7 @@ void Dialog::printH(QPrinter * printer){
                         sell[sellNum] = temp[j];
                         sellNum++;
                     }
+
                     //sort by customer
                     sort(sell, sell + sellNum, compareCustomer);
                 }
@@ -1681,6 +1682,7 @@ void Dialog::on_Return_clicked()
                 }
             }
         }
+
         on_vegeList_itemClicked(ui->vegeList->currentItem());
     }
 }
