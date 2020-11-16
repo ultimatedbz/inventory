@@ -1,4 +1,5 @@
 #include "dialog.h"
+#include "utils.h"
 #include <iostream>
 using namespace std;
 
@@ -11,7 +12,8 @@ Dialog::Dialog(QWidget *parent) :
     font("Courier",-1,QFont::Bold,false),
     mTranslator(new Translator()),
     mAbbreviator(new Abbreviation()),
-    menuBar(new IMenuBar(this,mTranslator))
+    menuBar(new IMenuBar(this,mTranslator)),
+    utils(new Utils())
 {
     ui->setupUi(this);
 
@@ -65,10 +67,11 @@ Dialog::Dialog(QWidget *parent) :
     vFont.setPixelSize(18);
     ui->vegeList->setFont(vFont);
 
-    if(mTranslator->currentLanguage == CHINESE){
+    if(mTranslator->currentLanguage == CHINESE) {
         changeToChinese();
-    }else
+    } else {
         changeToEnglish();
+    }
 }
 
 Dialog::~Dialog()
@@ -1752,7 +1755,7 @@ void Dialog::on_dumpButton_clicked()
 
         // Show the dialog as modal
         if ( result == QDialog::Accepted) {
-            if( amount <= 0){
+            if( amount <= 0) {
                 QMessageBox messageBox;
                 messageBox.critical(nullptr,"錯誤","Not Valid!");
                 messageBox.setFixedSize(500,200);
@@ -2189,7 +2192,7 @@ void Dialog::on_CalculateSold_clicked()
         string secondLine = "Company | " + company + "\n";
 
         string breakdownLine = "\nBreakdown | ";
-        int revenue = 0;
+        double revenue = 0;
         int units = 0;
         bool firstBreakDown = true;
         string noPrices = "";
@@ -2201,7 +2204,9 @@ void Dialog::on_CalculateSold_clicked()
 
         string dumps = "";
         string tuis = "";
-        for(int i = 0; i < currentVege -> getHistoryNum(); i++) {
+
+        Utils* utils = new Utils();
+        for (int i = 0; i < currentVege -> getHistoryNum(); i++) {
           History* temp = currentVege -> getHistoryObject(i);
           if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
               if (temp -> getType() == "Sell") {
@@ -2219,7 +2224,7 @@ void Dialog::on_CalculateSold_clicked()
 
                   units += temp -> getDifference() * -1;
                   totalSold += temp -> getDifference() * -1;
-                  revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
+                  revenue += stod(temp -> getPrice()) * temp -> getDifference() * -1;
                   breakdownLine += "$" + temp -> getPrice() + " * " + to_string(temp -> getDifference() * -1);
               } else if (temp -> getType() == "Tui") {
                   tuis += "RT to farm: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
@@ -2241,7 +2246,7 @@ void Dialog::on_CalculateSold_clicked()
 
         breakdownLine += "\n";
         string boxesLine = "Total Boxes (Buy needs to be in history) | " + to_string(totalBoxes) + "\n";
-        string thirdLine = "Revenue | $" + to_string(revenue) + "\n";
+        string thirdLine = "Revenue | $" + utils -> doubleToString(revenue) + "\n";
         string fourthLine = "Units sold | " + to_string(units) + " "+ currentVege->getUnit() +"\n";
 
 

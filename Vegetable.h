@@ -21,10 +21,10 @@ public:
    * Deallocates scientific data set.
    */
   void remove();
-  int buyVege(double amount, string bc, string date, string price);
-  int sellVege(double amount, string costumer, string date, string price, int selection);
-  int dumpVege(double amount, string date, int selection);
-  int returnTo(double amount, string date, int selection);
+  int buyVege(int amount, string bc, string date, string price);
+  int sellVege(int amount, string costumer, string date, string price, int selection);
+  int dumpVege(int amount, string date, int selection);
+  int returnTo(int amount, string date, int selection);
   void returnThis(string dateReturned, double amount,
                   string returner, string company, string dateBought);
 
@@ -45,7 +45,7 @@ public:
   void updateRemaining(int i, double amount);
   void updateReturnInRemaining(int exist, double amount);
   void updateMemo(string m);
-  void addReturnToRemaining(double amount);
+  void addReturnToRemaining(int amount);
 
   string viewHistory(int i);
   string formatTui(int i);
@@ -62,8 +62,8 @@ public:
   int clearHist(int num);
    void setVegetableName(string name);
    void deleteHistory (int index);
-   int restock(double amount, string dp, string company, int retNum);
-   int undoRetOrBuy(double amount, string dP,string company,string dS,string customer);
+   int restock(int amount, string dp, string company, int retNum);
+   int undoRetOrBuy(int amount, string dP,string company,string dS,string customer);
    int returnExistCompany(string company, string date);
    void reTui(string dS, double amount, string dP, string company);
    ReturnTo* getTuiObject(int index);
@@ -73,11 +73,11 @@ public:
    string formatTransaction(Abbreviation abb);
    void setUpTrans(Abbreviation abb);
    void transBuy(Abbreviation abb);
-   void transSell(double amount, string datePurchased, string company, string customer,
+   void transSell(int amount, string datePurchased, string company, string customer,
                   Abbreviation abb);
-   void transTui(double amount, string datePurchased, string company);
-   void transReturn(double amount, string datePurchased, string company);
-   void transDump(double amount, string datePurachased, string company);
+   void transTui(int amount, string datePurchased, string company);
+   void transReturn(int amount, string datePurchased, string company);
+   void transDump(int amount, string datePurachased, string company);
    string transByIndex(int index);
    bool hasInteraction();
    int getTransNum();

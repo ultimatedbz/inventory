@@ -74,7 +74,7 @@ string ReturnTo::formatReturn(string unit) {
 
 }
 
-void ReturnTo:: updateReturn(double amount, string c){
+void ReturnTo:: updateReturn(int amount, string c){
     returnNum = ((returnNum + amount) < 0)? 0 : returnNum + amount;
     dayReturned = c;
 }

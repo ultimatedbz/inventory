@@ -88,7 +88,7 @@ string Return::formatReturn(string unit) {
 
 }
 
-void Return:: updateReturn(double amount, string newDateReturned) {
+void Return:: updateReturn(int amount, string newDateReturned) {
     returnNum = ((returnNum + amount) < 0)? 0 : returnNum + amount;
     if (newDateReturned != "") {
         dayReturned = newDateReturned;

@@ -29,7 +29,8 @@ SOURCES += main.cpp dialog.cpp Inventory.cpp \
     imenubar.cpp \
     ipreferencespanel.cpp \
     scrolleater.cpp \
-    abbreviation.cpp
+    abbreviation.cpp \
+    utils.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Printer.h \
@@ -45,7 +46,8 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     MultiBuyController.h \
     MultiBuyElement.h \
     scrolleater.h \
-    abbreviation.h
+    abbreviation.h \
+    utils.h
 
 
 FORMS    += dialog.ui

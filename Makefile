@@ -69,7 +69,8 @@ SOURCES       = main.cpp \
 		imenubar.cpp \
 		ipreferencespanel.cpp \
 		scrolleater.cpp \
-		abbreviation.cpp moc_dialog.cpp \
+		abbreviation.cpp \
+		utils.cpp moc_dialog.cpp \
 		moc_imenubar.cpp \
 		moc_MultiSellElement.cpp \
 		moc_MultiSellController.cpp \
@@ -93,6 +94,7 @@ OBJECTS       = main.o \
 		ipreferencespanel.o \
 		scrolleater.o \
 		abbreviation.o \
+		utils.o \
 		moc_dialog.o \
 		moc_imenubar.o \
 		moc_MultiSellElement.o \
@@ -287,7 +289,8 @@ DIST          = ../../Qt/5.12.2/clang_64/mkspecs/features/spec_pre.prf \
 		MultiBuyController.h \
 		MultiBuyElement.h \
 		scrolleater.h \
-		abbreviation.h main.cpp \
+		abbreviation.h \
+		utils.h main.cpp \
 		dialog.cpp \
 		Inventory.cpp \
 		Printer.cpp \
@@ -304,7 +307,8 @@ DIST          = ../../Qt/5.12.2/clang_64/mkspecs/features/spec_pre.prf \
 		imenubar.cpp \
 		ipreferencespanel.cpp \
 		scrolleater.cpp \
-		abbreviation.cpp
+		abbreviation.cpp \
+		utils.cpp
 QMAKE_TARGET  = Inventory
 DESTDIR       = 
 TARGET        = Inventory.app/Contents/MacOS/Inventory
@@ -710,8 +714,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.12.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Printer.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h ipreferencespanel.h MultiSellElement.h MultiSellController.h MultiBuyController.h MultiBuyElement.h scrolleater.h abbreviation.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp dialog.cpp Inventory.cpp Printer.cpp controllers/MultiBuyController.cpp controllers/MultiBuyElement.cpp controllers/MultiSellController.cpp controllers/MultiSellElement.cpp models/History.cpp models/Remaining.cpp models/Return.cpp models/Vegetable.cpp models/returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp scrolleater.cpp abbreviation.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Printer.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h ipreferencespanel.h MultiSellElement.h MultiSellController.h MultiBuyController.h MultiBuyElement.h scrolleater.h abbreviation.h utils.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp dialog.cpp Inventory.cpp Printer.cpp controllers/MultiBuyController.cpp controllers/MultiBuyElement.cpp controllers/MultiSellController.cpp controllers/MultiSellElement.cpp models/History.cpp models/Remaining.cpp models/Return.cpp models/Vegetable.cpp models/returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp scrolleater.cpp abbreviation.cpp utils.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog.ui $(DISTDIR)/
 
 
@@ -2584,7 +2588,8 @@ dialog.o: dialog.cpp dialog.h \
 		../../Qt/5.12.2/clang_64/lib/QtGui.framework/Headers/QFontMetrics \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QAbstractItemDelegate \
 		../../Qt/5.12.2/clang_64/lib/QtGui.framework/Headers/QContextMenuEvent \
-		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QSplitter
+		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QSplitter \
+		utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o dialog.cpp
 
 Inventory.o: Inventory.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QDebug \
@@ -4140,6 +4145,9 @@ scrolleater.o: scrolleater.cpp scrolleater.h \
 
 abbreviation.o: abbreviation.cpp abbreviation.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o abbreviation.o abbreviation.cpp
+
+utils.o: utils.cpp utils.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utils.o utils.cpp
 
 moc_dialog.o: moc_dialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialog.o moc_dialog.cpp

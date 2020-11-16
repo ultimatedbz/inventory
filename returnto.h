@@ -17,7 +17,7 @@ public:
   ~ReturnTo();
 
   void tui(string dr, double amount, string bc, string dB);
-  void updateReturn(double amount, string c);
+  void updateReturn(int amount, string c);
   int getReturn();
   string getDatePurchased();
   string getCompany();

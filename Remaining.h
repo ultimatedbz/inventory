@@ -16,9 +16,9 @@ public:
   ~Remaining();
 
   void removeRemaining();
-  void buy(double amount, string bc, string date, string p);
-  void updateRemaining(double amount);
-  void updateRemainingWithRet(double amount);
+  void buy(int amount, string bc, string date, string p);
+  void updateRemaining(int amount);
+  void updateRemainingWithRet(int amount);
   int getRemaining();
   double getReturn();
   string getPrice();
@@ -27,7 +27,7 @@ public:
   string formatRemaining();
   string formatRemaining2(string unit);
   string formatRemaining3(Abbreviation abb);
-  void returned(double amount, string bc, string date);
+  void returned(int amount, string bc, string date);
   void load(fstream* fio);
 
 private:

@@ -38,6 +38,7 @@
 #include <iostream>
 #include <QPrinter>
 #include <sstream>
+#include "utils.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -148,6 +149,7 @@ private:
     Translator* mTranslator;
     Abbreviation* mAbbreviator;
     IMenuBar *menuBar;
+    Utils* utils;
 
     int queryVeges();
     struct myclass {

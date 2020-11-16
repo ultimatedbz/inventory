@@ -14,9 +14,9 @@ public:
   ~History();
 
   void removeHist();
-  void buy(double amount, string bc, string date, string price);
-  void sell(double amount, string customer, string date, string price, string db, string company, int change);
-  void dump(double amount, string date, string bd, string company, int change);
+  void buy(int amount, string bc, string date, string price);
+  void sell(int amount, string customer, string date, string price, string db, string company, int change);
+  void dump(int amount, string date, string bd, string company, int change);
   void returnn (string dR , double amount, string returner, string company,string dB);
   void updateCompany(string company);
   void updateCompany(int victim, int source);
@@ -36,7 +36,7 @@ public:
   string printFormat();
   void deleteHistory();
   int getChangeNum();
-  void tui(double amount, string date, string dayPurchased, string comp, int change);
+  void tui(int amount, string date, string dayPurchased, string comp, int change);
   int getTui();
   string price;
 
