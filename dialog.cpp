@@ -229,7 +229,7 @@ void Dialog::on_Buy_clicked()
                     getAmount(i);
             string price = multiBuyController->getPrice(i);
             inventory->getVegetableByIndex(vegeIndex)->buyVege(
-                        atoi(amount.c_str()), company, date->text().toStdString(),
+                        stod(amount), company, date->text().toStdString(),
                         price);
         }
 
@@ -687,7 +687,7 @@ static int textWidth = 380;
 static int pageHeight = 1000;
 
 void Dialog::printT(QPrinter* printer){
-    int amount;
+    double amount;
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
@@ -813,7 +813,7 @@ void Dialog::printT(QPrinter* printer){
 }
 
 void Dialog::printI(QPrinter* printer){
-    int amount;
+    double amount;
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
@@ -945,7 +945,7 @@ void Dialog::printH(QPrinter * printer){
 
     //qdialog what day do you want to print? have a drop down box with all the available days
     string dayComp;
-    int amount;
+    double amount;
     time_t t = time(nullptr);
     struct tm * now = localtime(&t);
     char buffer[128];
@@ -1297,7 +1297,7 @@ void Dialog::dumpVege(){
         QObject::connect(&checkBox,SIGNAL(toggled(bool)), &dialog, SLOT(reject()));
 
         int result = dialog.exec();
-        int amount = lineEdit->text().toInt();
+        double amount = lineEdit->text().toInt();
         int selection = remainingDrop->currentIndex();
 
         time_t t = time(nullptr);
@@ -1608,7 +1608,7 @@ void Dialog::on_Return_clicked()
         QObject::connect(&checkBox,SIGNAL(toggled(bool)), &dialog, SLOT(reject()));
 
         int result = dialog.exec();
-        int amount = lineEdit->text().toInt();
+        double amount = lineEdit->text().toInt();
         string dateBought = lineEdit2->text().toUtf8().constData();
         string returner = customerDrop->currentText().toUtf8().constData();
         string company = companyDrop->currentText().toUtf8().constData();
@@ -1658,7 +1658,7 @@ void Dialog::on_Return_clicked()
                 QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
                 int result = dialog.exec();
-                int amount = lineEdit->text().toInt();
+                double amount = lineEdit->text().toInt();
                 int selection = remainingDrop->currentIndex();
 
                 time_t t = time(nullptr);
@@ -1742,7 +1742,7 @@ void Dialog::on_dumpButton_clicked()
         QObject::connect(&checkBox,SIGNAL(toggled(bool)), &dialog, SLOT(reject()));
 
         int result = dialog.exec();
-        int amount = lineEdit->text().toInt();
+        double amount = lineEdit->text().toInt();
         int selection = remainingDrop->currentIndex();
 
         time_t t = time(nullptr);
@@ -1919,7 +1919,7 @@ void Dialog:: undoHistory(){
                                 mTranslator->translate("你要打勾所有的選項才能undo!").c_str());
             messageBox.setFixedSize(500,200);
         }else{
-            int amount = 0;
+            double amount = 0;
             string dP, company, customer, dS;
             amount = currentVege->getHistoryObject(ui->historyList->currentRow())->getDifference();
             dP =  currentVege->getHistoryObject(ui->historyList->currentRow())->getDatePurchased();
@@ -2048,7 +2048,7 @@ void Dialog::on_clearHistoryButton_clicked()
         QObject::connect(&checkBox,SIGNAL(toggled(bool)), &dialog, SLOT(reject()));
 
         int result = dialog.exec();
-        int amount = lineEdit->text().toInt();
+        double amount = lineEdit->text().toInt();
 
 
         // Show the dialog as modal

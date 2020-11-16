@@ -40,7 +40,7 @@ string Return::getCompany(){
     return company;
 }
 
-void Return::add(string dateRet, int amount, string ret, string bc, string dateB){
+void Return::add(string dateRet, double amount, string ret, string bc, string dateB){
 
   company = bc;
   dayPurchased = dateB;
@@ -88,7 +88,7 @@ string Return::formatReturn(string unit) {
 
 }
 
-void Return:: updateReturn(int amount, string newDateReturned) {
+void Return:: updateReturn(double amount, string newDateReturned) {
     returnNum = ((returnNum + amount) < 0)? 0 : returnNum + amount;
     if (newDateReturned != "") {
         dayReturned = newDateReturned;

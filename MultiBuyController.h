@@ -20,7 +20,7 @@ public:
                        QFont font, QScrollArea* sa, QDialog* d, Translator*);
     ~MultiBuyController();
     int getActualVegeIndex(int i);
-    string getAmount(int i);
+    string getAmount(double i);
     string getPrice(int i);
     int getElementNum();
   signals:

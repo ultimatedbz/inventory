@@ -219,7 +219,7 @@ string History::getDateToCompare(){
     return dateToCompare;
 }
 
-void History::buy(int amount, string bc, string date, string p){
+void History::buy(double amount, string bc, string date, string p){
 
   difference = amount;
   company = bc;
@@ -229,7 +229,7 @@ void History::buy(int amount, string bc, string date, string p){
   type = "Buy";
 }
 
-void History::sell(int amount, string b, string date, string p, string dp,string c , int change){
+void History::sell(double amount, string b, string date, string p, string dp,string c , int change){
 
   difference = amount *(-1);
   customer = b;
@@ -242,7 +242,7 @@ void History::sell(int amount, string b, string date, string p, string dp,string
   type = "Sell";
 }
 
-void History::dump(int amount, string date, string bd, string comp, int change){
+void History::dump(double amount, string date, string bd, string comp, int change){
     difference = amount *(-1);
     daySold = date;
     dumped = 1;
@@ -254,7 +254,7 @@ void History::dump(int amount, string date, string bd, string comp, int change){
 }
 
 // Customer returned to Sam
-void History::returnn(string dR, int amount, string returner, string c, string dB){
+void History::returnn(string dR, double amount, string returner, string c, string dB){
     //day Purchased is day vegetables were bought
     dayPurchased = dB;
     //day Sold is day vegetables were returned
@@ -269,7 +269,7 @@ void History::returnn(string dR, int amount, string returner, string c, string d
 
 // Return to farm
 // - paramenter date: The day that the "tui" happened
-void History::tui(int amount, string dateTui, string datePurchased, string comp, int change) {
+void History::tui(double amount, string dateTui, string datePurchased, string comp, int change) {
     difference = amount *(-1);
     daySold = dateTui;
     mTui = 1;

@@ -116,7 +116,7 @@ ReturnTo* Vegetable::getTuiObject(int index){
 }
 
 /* 5 Transactions */
-int Vegetable::buyVege(int amount, string bc, string date, string price){
+int Vegetable::buyVege(double amount, string bc, string date, string price){
 
     if (amount < 1)
         return 0;
@@ -154,7 +154,7 @@ int Vegetable::buyVege(int amount, string bc, string date, string price){
     return 1;
 }
 
-int Vegetable::sellVege(int amount, string customer, string date,
+int Vegetable::sellVege(double amount, string customer, string date,
                         string price, int selection) {
 
     int returnChange = 0;
@@ -222,7 +222,7 @@ int Vegetable::sellVege(int amount, string customer, string date,
 }
 
 // A customer returns to Sam
-void Vegetable::returnThis(string dateReturned, int amount, string returner,
+void Vegetable::returnThis(string dateReturned, double amount, string returner,
                            string  company, string dateBought){
 
     if (!remainingArray)
@@ -277,7 +277,7 @@ void Vegetable::returnThis(string dateReturned, int amount, string returner,
     sort(remainingArray, remainingArray + remainingNum, compareR);
 }
 
-int Vegetable::dumpVege(int amount, string date, int selection){
+int Vegetable::dumpVege(double amount, string date, int selection){
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
@@ -344,7 +344,7 @@ int Vegetable::dumpVege(int amount, string date, int selection){
     return 1;
 }
 
-int Vegetable::returnTo(int amount, string date, int selection) {
+int Vegetable::returnTo(double amount, string date, int selection) {
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
@@ -559,11 +559,11 @@ string Vegetable::formatReturn(int i) {
     return returnArray[i].formatReturn(unit);
 }
 
-void Vegetable::updateRemaining(int i, int amount) {
+void Vegetable::updateRemaining(int i, double amount) {
     remainingArray[i].updateRemaining(amount);
 }
 
-void Vegetable::updateReturnInRemaining(int i, int amount) {
+void Vegetable::updateReturnInRemaining(int i, double amount) {
     remainingArray[i].updateRemainingWithRet(amount);
 }
 
@@ -714,7 +714,7 @@ void Vegetable::deleteHistory(int index){
     historyNum--;
 }
 
-int Vegetable::restock(int amount, string dP, string bc, int retNum){
+int Vegetable::restock(double amount, string dP, string bc, int retNum){
     if (totalVeges + (-1)*amount < 0){
         return 0;
     }
@@ -757,7 +757,7 @@ int Vegetable::restock(int amount, string dP, string bc, int retNum){
     return 1;
 }
 
-int Vegetable::undoRetOrBuy(int amount, string dP,string company,string dR,string customer){
+int Vegetable::undoRetOrBuy(double amount, string dP,string company,string dR,string customer){
     if(totalVeges + (-1)*amount < 0){
         return 0;
     }
@@ -808,7 +808,7 @@ int Vegetable::undoRetOrBuy(int amount, string dP,string company,string dR,strin
     return 1;
 }
 
-void Vegetable::reTui(string dateS, int amount, string dP, string company){
+void Vegetable::reTui(string dateS, double amount, string dP, string company){
 
     for(int i=0; i<tuiNum; i++){
         if(tuiArray[i].getCompany()==company &&  tuiArray[i].getDatePurchased()==dP){
@@ -845,7 +845,7 @@ void Vegetable::transBuy(Abbreviation abb){
     }
 }
 
-void Vegetable::transSell(int amount, string dP, string company, string customer,
+void Vegetable::transSell(double amount, string dP, string company, string customer,
                           Abbreviation abb){
     string result;
 
@@ -860,7 +860,7 @@ void Vegetable::transSell(int amount, string dP, string company, string customer
     transactions[selection].push_back(result + "(" + abb.shrink(customer) + ")");
 }
 
-void Vegetable::transTui(int amount, string dP, string company){
+void Vegetable::transTui(double amount, string dP, string company){
     string result;
 
     ostringstream convert;
@@ -875,7 +875,7 @@ void Vegetable::transTui(int amount, string dP, string company){
 
 }
 
-void Vegetable::transReturn(int amount, string dP, string company){
+void Vegetable::transReturn(double amount, string dP, string company){
     string result;
 
     ostringstream convert;
@@ -905,7 +905,7 @@ void Vegetable::transReturn(int amount, string dP, string company){
         transactions[selection].push_back("+" + result + "(RT)");
 }
 
-void Vegetable::transDump(int amount, string dP, string company){
+void Vegetable::transDump(double amount, string dP, string company){
     string result;
 
     ostringstream convert;
@@ -987,7 +987,7 @@ string Vegetable::formatTransaction(Abbreviation abb){
     for(int i = historyNum - 1; i >= 0; i--){
         if(historyArray[i].getDateToCompare() == today){
 
-            int amount = 0;
+            double amount = 0;
             string dP, company, customer, dS;
             amount = historyArray[i].getDifference();
             dP =  historyArray[i].getDatePurchased();
@@ -1019,7 +1019,7 @@ string Vegetable::formatTransaction(Abbreviation abb){
     for(int i = 0; i < historyNum; i++){
         if(historyArray[i].getDateToCompare() == today){
 
-            int amount = 0;
+            double amount = 0;
             string dP, company, customer, dS, price;
             amount = historyArray[i].getDifference();
             dP =  historyArray[i].getDatePurchased();

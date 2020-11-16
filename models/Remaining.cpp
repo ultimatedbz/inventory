@@ -41,7 +41,7 @@ string Remaining::getCompany(){
     return company;
 }
 
-void Remaining::buy(int amount, string bc, string date, string p){
+void Remaining::buy(double amount, string bc, string date, string p){
 
   company = bc;
   dayPurchased = date;
@@ -50,7 +50,7 @@ void Remaining::buy(int amount, string bc, string date, string p){
 
 }
 
-void Remaining::returned(int amount, string bc, string date){
+void Remaining::returned(double amount, string bc, string date){
     company = bc;
     dayPurchased = date;
     remaining = amount;
@@ -113,12 +113,12 @@ string Remaining::formatRemaining3(Abbreviation abb){
  return buffer;
 }
 
-void Remaining:: updateRemaining(int amount){
+void Remaining:: updateRemaining(double amount){
     remaining += amount;
 }
 
 // Updates the remaining amount, and change the return number too
-void Remaining:: updateRemainingWithRet(int amount) {
+void Remaining:: updateRemainingWithRet(double amount) {
     remaining += amount;
     returnNum = ((returnNum + amount) < 0) ? 0 : returnNum + amount;
 }
