@@ -162,7 +162,6 @@ private:
     } myobject;
 
     void showSearchResults(string date, string company, string customer);
-    void editSearchHistory();
 };
 
 #endif // DIALOG_H

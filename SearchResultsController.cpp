@@ -30,13 +30,13 @@ void SearchResultsController:: showSearchResults() {
 
     if (date == "" || (company == "" && customer == "")) {
         QMessageBox messageBox;
-        messageBox.critical(nullptr,"Error","You need to set date, and company / customer");
+        messageBox.critical(nullptr,"Error","You need to set company or customer!");
         messageBox.setFixedSize(500,200);
         return;
     }
 
-    QDialog* dialog = new QDialog;
-    dialog->setWindowTitle("Search results");
+    //QDialog* dialog = new QDialog;
+    //dialog->setWindowTitle("Search results");
 
     //Add the viewport to the scroll area
     QScrollArea *scrollArea = new QScrollArea;
@@ -50,8 +50,8 @@ void SearchResultsController:: showSearchResults() {
     QFormLayout* form = new QFormLayout(viewport);
     viewport->setLayout(form);
 
-    QFormLayout *dialog_layout = new QFormLayout(dialog);
-    dialog->setLayout(dialog_layout);
+    //QFormLayout *dialog_layout = new QFormLayout(dialog);
+    //dialog->setLayout(dialog_layout);
     dialog->layout()->addWidget(scrollArea);
 
     bool hasResults = false;
@@ -113,7 +113,7 @@ void SearchResultsController:: showSearchResults() {
         historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
 
         QAction* editHistoryAction = new QAction(tr("&Edit"), this);
-        connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editHistory()));
+        connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editSearchHistory()));
         historyList->addAction(editHistoryAction);
     }
 
@@ -126,3 +126,52 @@ void SearchResultsController:: showSearchResults() {
 
     dialog->show();
 }
+
+
+void SearchResultsController:: editSearchHistory() {
+//    QDialog dialog(this);
+//    dialog.setWindowTitle("Edit");
+
+//    //Add the viewport to the scroll area
+//    QScrollArea *scrollArea = new QScrollArea;
+//    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+//    //Create a widget and set its layout as your new layout created above
+//    QWidget *viewport = new QWidget(&dialog);
+//    scrollArea->setWidget(viewport);
+//    scrollArea->setWidgetResizable(true);
+
+//    QFormLayout* form = new QFormLayout(viewport);
+//    viewport->setLayout(form);
+
+//    QFormLayout *dialog_layout = new QFormLayout(&dialog);
+//    dialog.setLayout(dialog_layout);
+//    dialog.layout()->addWidget(scrollArea);
+
+//    History* historyTemp = currentVege->getHistoryObject(ui->historyList->currentRow());
+//    string label =  "[Date Sold | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+//    form -> addRow(new QLabel(QString::fromStdString(label)));
+//    /* Price */
+//    QLineEdit *priceLineEdit = new QLineEdit(&dialog);
+//    string price = historyTemp -> getPrice();
+//    priceLineEdit -> setText(QString::fromStdString(price));
+//    QString label4 = QString("Price: ");
+//    form->addRow(label4, priceLineEdit);
+
+//    /* Button Box */
+//    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+//                               Qt::Horizontal, &dialog);
+//    form->addRow(&buttonBox);
+
+//    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
+
+//    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+//    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+//    if (dialog.exec() == QDialog::Accepted ) {
+//        currentVege->editHistoryPrice(ui->historyList->currentRow(), priceLineEdit->text().toUtf8().constData());
+//        needSave = 1;
+//        on_vegeList_itemClicked(ui->vegeList->currentItem());
+//    }
+}
+
