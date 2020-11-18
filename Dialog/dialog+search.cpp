@@ -19,7 +19,7 @@ void Dialog::on_searchButton_clicked() {
 
     //Create a widget and set its layout as your new layout created above
     QWidget *viewport = new QWidget(&dialog);
-    //viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
+    viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
 

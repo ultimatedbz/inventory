@@ -39,20 +39,21 @@ void SearchResultsController:: showSearchResults() {
     //dialog->setWindowTitle("Search results");
 
     //Add the viewport to the scroll area
-    QScrollArea *scrollArea = new QScrollArea;
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+   // QScrollArea *scrollArea = new QScrollArea;
+    //scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     //Create a widget and set its layout as your new layout created above
-    QWidget *viewport = new QWidget(dialog);
-    scrollArea->setWidget(viewport);
-    scrollArea->setWidgetResizable(true);
+    //QWidget *viewport = new QWidget(dialog);
+    //scrollArea->setWidget(viewport);
+    //viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
+    //scrollArea->setWidgetResizable(true);
 
-    QFormLayout* form = new QFormLayout(viewport);
-    viewport->setLayout(form);
+   // QFormLayout* form = new QFormLayout(viewport);
+   // viewport->setLayout(form);
 
     //QFormLayout *dialog_layout = new QFormLayout(dialog);
     //dialog->setLayout(dialog_layout);
-    dialog->layout()->addWidget(scrollArea);
+   // dialog->layout()->addWidget(scrollArea);
 
     bool hasResults = false;
     for (int i = 0; i < mInventory->getVegNum(); i++) {
@@ -108,6 +109,17 @@ void SearchResultsController:: showSearchResults() {
         CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, nullptr);
         collapsibleSection->setContentLayout(*anyLayout);
         form->addRow(collapsibleSection);
+        /*
+        int h = (selectedVeges->size() > 5)?
+              scrollArea->sizeHint().height() + 4
+                         * ((*formArray)[0]->getElement()->sizeHint().height() +
+                         .5 * temp->sizeHint().height())
+            :
+            form->sizeHint().height()+ 2.5 *
+            temp->sizeHint().height();
+
+        scrollArea->setMinimumHeight(h);
+        */
         dialog->adjustSize();
 
         historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -124,7 +136,7 @@ void SearchResultsController:: showSearchResults() {
         return;
     }
 
-    dialog->show();
+    //dialog->show();
 }
 
 
