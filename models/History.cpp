@@ -157,7 +157,7 @@ string History::printFormat() {
     } else if (customer.compare("\t")) {
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
-        string Price = utils->hasEnding(price, ".00") ? price.substr(0, price.size() - 3) :  "$" + price;
+        string Price = utils->hasEnding(price, ".00") ? "$" + price.substr(0, price.size() - 3) :  "$" + price;
         sprintf(buffer,"%4d%s%15s%s%15s%6s%4s",
             difference,
             padding(customer).c_str(),
@@ -169,7 +169,7 @@ string History::printFormat() {
     } else {
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
-        string Price = utils->hasEnding(price, ".00") ? price.substr(0, price.size() - 3) :  "$" + price;
+        string Price = utils->hasEnding(price, ".00") ? "$" + price.substr(0, price.size() - 3) :  "$" + price;
         char d [200];
         sprintf(d,"+%d",difference);
         sprintf(buffer,"%4s%24s%9s",
