@@ -22,7 +22,7 @@ MultiSellController::MultiSellController(Inventory* inventory,
   /* Add first vegetable in stock */
   int temp = 1;
   for(int i = 0; i < temp; i++){
-    if( inventory->getVegetableByIndex(i)->getTotalVeges() ){
+    if( inventory->getVegetableByIndex(i)->getTotalVeges() ) {
       selectedVeges->insert(i);
       (*comboIndexToActual)[0].push_back(i);
       formArray->push_back(new MultiSellElement(i, this, inventory, font,
@@ -39,9 +39,9 @@ MultiSellController::~MultiSellController()
 
 }
 
-void MultiSellController::vegeDropChanged( int newIndex ){
+void MultiSellController::vegeDropChanged( int newIndex ) {
   int vegeBoxNum = -1;
-  for( int i = 0; i < selectedVeges->size(); i++){
+  for (unsigned int i = 0; i < selectedVeges->size(); i++){
     if ((*formArray)[i]->getVegeDrop() ==
         dynamic_cast <QComboBox*>(QObject::sender()))
       vegeBoxNum = i;
@@ -61,7 +61,7 @@ void MultiSellController::vegeDropChanged( int newIndex ){
   form->update();
   delete (*formArray)[vegeBoxNum];
 
-  (*formArray)[vegeBoxNum] = new MultiSellElement(
+  (*formArray)[vegeBoxNum] = new MultiSellElement (
         (*comboIndexToActual)[vegeBoxNum][0], this, mInventory,
         font, selectedVeges, (*comboIndexToActual)[vegeBoxNum], mTranslator);
   form->insertRow(2 + vegeBoxNum, (*formArray)[vegeBoxNum]->getElement());
@@ -69,18 +69,17 @@ void MultiSellController::vegeDropChanged( int newIndex ){
 }
 
 
-void MultiSellController::updateVegeDrops(){
+void MultiSellController::updateVegeDrops() {
 
-  for( int z = 0; z < selectedVeges->size(); z++){
+  for( int z = 0; z < selectedVeges->size(); z++) {
     (*formArray)[z]->updateVegeDrops(*selectedVeges, (*comboIndexToActual)[z]);
   }
 
 }
 
-void MultiSellController::addElement(){
+void MultiSellController::addElement() {
 
-  if(selectedVeges->size() < mInventory->numberOfNonEmptyVeges()){
-
+  if(selectedVeges->size() < mInventory->numberOfNonEmptyVeges()) {
     vector<int> tempv;
     comboIndexToActual->push_back(tempv);
     QComboBox* temp = (*formArray)[0]->getVegeDrop();
@@ -99,6 +98,7 @@ void MultiSellController::addElement(){
         break;
       }
     }
+
     updateVegeDrops();
     int h = (selectedVeges->size() > 5)?
           scrollArea->sizeHint().height() + 4
@@ -112,7 +112,7 @@ void MultiSellController::addElement(){
   }
 }
 
-void MultiSellController::subtractElement(){
+void MultiSellController::subtractElement() {
   if(selectedVeges->size() > 1){
     int vegeBoxNum = selectedVeges->size() - 1;
 
@@ -141,22 +141,22 @@ void MultiSellController::subtractElement(){
   }
 }
 
-int MultiSellController::getActualVegeIndex(int i){
+int MultiSellController::getActualVegeIndex(int i) {
   return (*comboIndexToActual)[i][0];
 }
 
-string MultiSellController::getAmounts(int i){
+string MultiSellController::getAmounts(int i) {
   return (*formArray)[i]->getAmounts();
 }
 
-vector<int> MultiSellController::getActualRemainingIndexes(int i){
+vector<int> MultiSellController::getActualRemainingIndexes(int i) {
   return (*formArray)[i]->getRemainingIndexes();
 }
 
-string MultiSellController:: getPrice(int i){
+string MultiSellController:: getPrice(int i) {
   return (*formArray)[i]->getPrice();
 }
 
-int MultiSellController:: getElementNum(){
+int MultiSellController:: getElementNum() {
   return selectedVeges->size();
 }

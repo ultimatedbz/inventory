@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include<QDebug>
 #include "Inventory.h"
 #include "translator.h"
 #include "imenubar.h"
@@ -159,6 +160,8 @@ private:
         return (i.first>j.first);
       }
     } myobject;
+
+    void showSearchResults(string date, string company, string customer);
 
 
 };

@@ -100,7 +100,7 @@ string Remaining::formatRemaining2(string unit) {
 string Remaining::formatRemaining3(Abbreviation abb) {
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
-    string Price = utils->hasEnding(price, ".00") ? "$" + price.substr(0, price.size() - 3) :  "$" + price;
+    string Price = "$" + price;
 
     char buffer [128];
     sprintf(buffer,"%5s%5d%s%15s%4s",

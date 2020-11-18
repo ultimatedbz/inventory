@@ -15,8 +15,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp Inventory.cpp \
+    Dialog/dialog+buy.cpp \
+    Dialog/dialog+print.cpp \
+    Dialog/dialog+search.cpp \
+    Dialog/dialog+sell.cpp \
     Dialog/dialog.cpp \
     Printer.cpp \
+    collapsiblesection.cpp \
     controllers/MultiBuyController.cpp \
     controllers/MultiBuyElement.cpp \
     controllers/MultiSellController.cpp \
@@ -37,6 +42,7 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Printer.h \
     Remaining.h \
     Return.h \
+    collapsiblesection.h \
     returnto.h \
     IConst.h \
     translator.h \
