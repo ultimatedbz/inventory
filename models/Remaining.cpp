@@ -45,12 +45,7 @@ void Remaining::buy(int amount, string bc, string date, string p) {
   company = bc;
   dayPurchased = date;
   remaining = amount;
-
-  if (p.compare("") && p.compare("\t")) {
-      price = utils -> twoDecimals(p);
-  } else {
-      price = p;
-  }
+  price = p;
 }
 
 void Remaining::returned(int amount, string bc, string date) {
@@ -105,7 +100,7 @@ string Remaining::formatRemaining2(string unit) {
 string Remaining::formatRemaining3(Abbreviation abb) {
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
-    string Price = utils->hasEnding(price, ".00") ? price.substr(0, price.size() - 3) :  "$" + price;
+    string Price = utils->hasEnding(price, ".00") ? "$" + price.substr(0, price.size() - 3) :  "$" + price;
 
     char buffer [128];
     sprintf(buffer,"%5s%5d%s%15s%4s",
