@@ -833,7 +833,6 @@ void Vegetable::setUpTrans(Abbreviation abb){
         transactions.push_back(vector<string>());
         transactions[i].push_back(formatRemaining3(i, abb) + " ");
     }
-    qDebug()<<transactions.size();
 }
 
 /* Need to push back another one */
