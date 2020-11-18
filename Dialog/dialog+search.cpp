@@ -93,15 +93,15 @@ void Dialog:: showSearchResults(string date, string company, string customer) {
         return;
     }
 
-    QDialog dialog(this);
-    dialog.setWindowTitle("Search results");
+    QDialog* dialog = new QDialog;
+    dialog->setWindowTitle("Search results");
 
     //Add the viewport to the scroll area
     QScrollArea *scrollArea = new QScrollArea;
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     //Create a widget and set its layout as your new layout created above
-    QWidget *viewport = new QWidget(&dialog);
+    QWidget *viewport = new QWidget(dialog);
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
 
@@ -135,15 +135,16 @@ void Dialog:: showSearchResults(string date, string company, string customer) {
             }
         }
 
-        qDebug() << matchingCustomer.size();
-
         auto * anyLayout = new QVBoxLayout();
         QToolButton *testButton = new QToolButton();
         testButton->setText("test");
         anyLayout->addWidget(testButton);
 
-        CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, 0);
+        CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, nullptr);
         collapsibleSection->setContentLayout(*anyLayout);
         form->addRow(collapsibleSection);
     }
+
+    qDebug() << "hit";
+    dialog->show();
 }
