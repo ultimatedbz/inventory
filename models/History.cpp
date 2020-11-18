@@ -181,11 +181,11 @@ string History::printFormat() {
     return buffer;
 }
 
-string History::getCustomer(){
+string History::getCustomer() {
     return customer;
 }
 
-string History::getCompany(){
+string History::getCompany() {
     return company;
 }
 
@@ -194,7 +194,7 @@ int History::getDifference() {
   return difference;
 }
 
-int History::getDumped(){
+int History::getDumped() {
   return dumped;
 }
 
@@ -292,7 +292,7 @@ void History::tui(int amount, string dateTui, string datePurchased, string comp,
 }
 
 
-void History::load(fstream* fio){
+void History::load(fstream* fio) {
     char temp[200];
     int tempNum;
     fio->read((char *) &(tempNum),sizeof(int));
@@ -358,10 +358,10 @@ void History::load(fstream* fio){
     type = str7;
 }
 
-void History::deleteHistory(){
+void History::deleteHistory() {
 }
 
-int History::getChangeNum(){
+int History::getChangeNum() {
     return changeNum;
 }
 
@@ -369,7 +369,7 @@ string History:: getType(){
   return type;
 }
 
-string History:: padding( string word){
+string History:: padding( string word) {
     string product = "";
     int num = 0;
     for(int i = 0; i < word.size(); i ++){

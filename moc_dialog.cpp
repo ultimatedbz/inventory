@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Dialog_t {
-    QByteArrayData data[40];
-    char stringdata0[530];
+    QByteArrayData data[41];
+    char stringdata0[554];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -70,7 +70,8 @@ QT_MOC_LITERAL(35, 426, 28), // "on_clearReturnButton_clicked"
 QT_MOC_LITERAL(36, 455, 8), // "dumpVege"
 QT_MOC_LITERAL(37, 464, 29), // "on_vegeList_currentRowChanged"
 QT_MOC_LITERAL(38, 494, 10), // "currentRow"
-QT_MOC_LITERAL(39, 505, 24) // "on_CalculateSold_clicked"
+QT_MOC_LITERAL(39, 505, 24), // "on_CalculateSold_clicked"
+QT_MOC_LITERAL(40, 530, 23) // "on_searchButton_clicked"
 
     },
     "Dialog\0on_Buy_clicked\0\0on_Sell_clicked\0"
@@ -86,7 +87,8 @@ QT_MOC_LITERAL(39, 505, 24) // "on_CalculateSold_clicked"
     "on_dumpButton_clicked\0"
     "on_clearReturnButton_clicked\0dumpVege\0"
     "on_vegeList_currentRowChanged\0currentRow\0"
-    "on_CalculateSold_clicked"
+    "on_CalculateSold_clicked\0"
+    "on_searchButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -96,7 +98,7 @@ static const uint qt_meta_data_Dialog[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      24,   14, // methods
+      25,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -104,30 +106,31 @@ static const uint qt_meta_data_Dialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  134,    2, 0x0a /* Public */,
-       3,    0,  135,    2, 0x0a /* Public */,
-       4,    1,  136,    2, 0x0a /* Public */,
-       7,    1,  139,    2, 0x0a /* Public */,
-       8,    1,  142,    2, 0x0a /* Public */,
-       9,    0,  145,    2, 0x0a /* Public */,
-      10,    0,  146,    2, 0x0a /* Public */,
-      11,    0,  147,    2, 0x0a /* Public */,
-      12,    0,  148,    2, 0x0a /* Public */,
-      13,    0,  149,    2, 0x0a /* Public */,
-      14,    2,  150,    2, 0x0a /* Public */,
-      18,    2,  155,    2, 0x0a /* Public */,
-      19,    0,  160,    2, 0x0a /* Public */,
-      20,    1,  161,    2, 0x0a /* Public */,
-      23,    0,  164,    2, 0x0a /* Public */,
-      24,    1,  165,    2, 0x0a /* Public */,
-      27,    2,  168,    2, 0x0a /* Public */,
-      32,    0,  173,    2, 0x0a /* Public */,
-      33,    0,  174,    2, 0x08 /* Private */,
-      34,    0,  175,    2, 0x08 /* Private */,
-      35,    0,  176,    2, 0x08 /* Private */,
-      36,    0,  177,    2, 0x08 /* Private */,
-      37,    1,  178,    2, 0x08 /* Private */,
-      39,    0,  181,    2, 0x08 /* Private */,
+       1,    0,  139,    2, 0x0a /* Public */,
+       3,    0,  140,    2, 0x0a /* Public */,
+       4,    1,  141,    2, 0x0a /* Public */,
+       7,    1,  144,    2, 0x0a /* Public */,
+       8,    1,  147,    2, 0x0a /* Public */,
+       9,    0,  150,    2, 0x0a /* Public */,
+      10,    0,  151,    2, 0x0a /* Public */,
+      11,    0,  152,    2, 0x0a /* Public */,
+      12,    0,  153,    2, 0x0a /* Public */,
+      13,    0,  154,    2, 0x0a /* Public */,
+      14,    2,  155,    2, 0x0a /* Public */,
+      18,    2,  160,    2, 0x0a /* Public */,
+      19,    0,  165,    2, 0x0a /* Public */,
+      20,    1,  166,    2, 0x0a /* Public */,
+      23,    0,  169,    2, 0x0a /* Public */,
+      24,    1,  170,    2, 0x0a /* Public */,
+      27,    2,  173,    2, 0x0a /* Public */,
+      32,    0,  178,    2, 0x0a /* Public */,
+      33,    0,  179,    2, 0x08 /* Private */,
+      34,    0,  180,    2, 0x08 /* Private */,
+      35,    0,  181,    2, 0x08 /* Private */,
+      36,    0,  182,    2, 0x08 /* Private */,
+      37,    1,  183,    2, 0x08 /* Private */,
+      39,    0,  186,    2, 0x08 /* Private */,
+      40,    0,  187,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -153,6 +156,7 @@ static const uint qt_meta_data_Dialog[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   38,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -190,6 +194,7 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 21: _t->dumpVege(); break;
         case 22: _t->on_vegeList_currentRowChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 23: _t->on_CalculateSold_clicked(); break;
+        case 24: _t->on_searchButton_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -235,13 +240,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 24)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 24;
+        _id -= 25;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 24)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 24;
+        _id -= 25;
     }
     return _id;
 }

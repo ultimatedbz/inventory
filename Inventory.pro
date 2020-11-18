@@ -14,7 +14,8 @@ TARGET = Inventory
 TEMPLATE = app
 
 
-SOURCES += main.cpp dialog.cpp Inventory.cpp \
+SOURCES += main.cpp Inventory.cpp \
+    Dialog/dialog.cpp \
     Printer.cpp \
     controllers/MultiBuyController.cpp \
     controllers/MultiBuyElement.cpp \

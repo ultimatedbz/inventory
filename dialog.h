@@ -129,6 +129,8 @@ private slots:
 
     void on_CalculateSold_clicked();
 
+    void on_searchButton_clicked();
+
 private:
     Ui::Dialog *ui;
     Inventory* inventory;

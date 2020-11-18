@@ -128,7 +128,6 @@ Translator::~Translator(){
 string Translator::translate(string input){
     if(currentLanguage == CHINESE)
         return input;
-    qDebug()<<input.c_str();
     return translator.find(input) -> second;
 }
 

@@ -53,8 +53,8 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		dialog.cpp \
 		Inventory.cpp \
+		Dialog/dialog.cpp \
 		Printer.cpp \
 		controllers/MultiBuyController.cpp \
 		controllers/MultiBuyElement.cpp \
@@ -77,8 +77,8 @@ SOURCES       = main.cpp \
 		moc_MultiBuyController.cpp \
 		moc_scrolleater.cpp
 OBJECTS       = main.o \
-		dialog.o \
 		Inventory.o \
+		dialog.o \
 		Printer.o \
 		MultiBuyController.o \
 		MultiBuyElement.o \
@@ -291,8 +291,8 @@ DIST          = ../../Qt/5.12.2/clang_64/mkspecs/features/spec_pre.prf \
 		scrolleater.h \
 		abbreviation.h \
 		utils.h main.cpp \
-		dialog.cpp \
 		Inventory.cpp \
+		Dialog/dialog.cpp \
 		Printer.cpp \
 		controllers/MultiBuyController.cpp \
 		controllers/MultiBuyElement.cpp \
@@ -715,7 +715,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.12.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog.h Vegetable.h Inventory.h History.h Printer.h Remaining.h Return.h returnto.h IConst.h translator.h imenubar.h ipreferencespanel.h MultiSellElement.h MultiSellController.h MultiBuyController.h MultiBuyElement.h scrolleater.h abbreviation.h utils.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp dialog.cpp Inventory.cpp Printer.cpp controllers/MultiBuyController.cpp controllers/MultiBuyElement.cpp controllers/MultiSellController.cpp controllers/MultiSellElement.cpp models/History.cpp models/Remaining.cpp models/Return.cpp models/Vegetable.cpp models/returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp scrolleater.cpp abbreviation.cpp utils.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp Inventory.cpp Dialog/dialog.cpp Printer.cpp controllers/MultiBuyController.cpp controllers/MultiBuyElement.cpp controllers/MultiSellController.cpp controllers/MultiSellElement.cpp models/History.cpp models/Remaining.cpp models/Return.cpp models/Vegetable.cpp models/returnto.cpp translator.cpp imenubar.cpp ipreferencespanel.cpp scrolleater.cpp abbreviation.cpp utils.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog.ui $(DISTDIR)/
 
 
@@ -766,6 +766,7 @@ moc_dialog.cpp: dialog.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -1362,6 +1363,7 @@ moc_MultiSellElement.cpp: MultiSellElement.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -1644,6 +1646,7 @@ moc_MultiBuyController.cpp: MultiBuyController.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -1690,6 +1693,7 @@ main.o: main.cpp dialog.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -2138,13 +2142,26 @@ main.o: main.cpp dialog.h \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-dialog.o: dialog.cpp dialog.h \
+Inventory.o: Inventory.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		Return.h \
+		returnto.h \
+		History.h \
+		utils.h \
+		Remaining.h \
+		abbreviation.h \
+		Vegetable.h \
+		Inventory.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Inventory.o Inventory.cpp
+
+dialog.o: Dialog/dialog.cpp dialog.h \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		Inventory.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -2588,20 +2605,8 @@ dialog.o: dialog.cpp dialog.h \
 		../../Qt/5.12.2/clang_64/lib/QtGui.framework/Headers/QFontMetrics \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QAbstractItemDelegate \
 		../../Qt/5.12.2/clang_64/lib/QtGui.framework/Headers/QContextMenuEvent \
-		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QSplitter \
-		utils.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o dialog.cpp
-
-Inventory.o: Inventory.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		Return.h \
-		returnto.h \
-		History.h \
-		Remaining.h \
-		abbreviation.h \
-		Vegetable.h \
-		Inventory.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Inventory.o Inventory.cpp
+		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QSplitter
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o Dialog/dialog.cpp
 
 Printer.o: Printer.cpp Printer.h \
 		../../Qt/5.12.2/clang_64/lib/QtWidgets.framework/Headers/QDialog \
@@ -2610,6 +2615,7 @@ Printer.o: Printer.cpp Printer.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -3191,6 +3197,7 @@ MultiBuyController.o: controllers/MultiBuyController.cpp MultiBuyController.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -3337,6 +3344,7 @@ MultiBuyElement.o: controllers/MultiBuyElement.cpp MultiBuyElement.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -3486,6 +3494,7 @@ MultiSellController.o: controllers/MultiSellController.cpp MultiSellController.h
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -3631,6 +3640,7 @@ MultiSellElement.o: controllers/MultiSellElement.cpp MultiSellElement.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \
@@ -3641,13 +3651,15 @@ MultiSellElement.o: controllers/MultiSellElement.cpp MultiSellElement.h \
 
 History.o: models/History.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		History.h
+		History.h \
+		utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o History.o models/History.cpp
 
 Remaining.o: models/Remaining.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		Remaining.h \
-		abbreviation.h
+		abbreviation.h \
+		utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Remaining.o models/Remaining.cpp
 
 Return.o: models/Return.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/Headers/qDebug \
@@ -3660,6 +3672,7 @@ Vegetable.o: models/Vegetable.cpp ../../Qt/5.12.2/clang_64/lib/QtCore.framework/
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h
@@ -3692,6 +3705,7 @@ imenubar.o: imenubar.cpp imenubar.h \
 		returnto.h \
 		Return.h \
 		History.h \
+		utils.h \
 		Remaining.h \
 		abbreviation.h \
 		Vegetable.h \

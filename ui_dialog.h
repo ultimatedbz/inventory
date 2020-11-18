@@ -67,7 +67,7 @@ public:
     QVBoxLayout *verticalLayout_4;
     QHBoxLayout *horizontalLayout_5;
     QLabel *Total;
-    QPushButton *pushButton;
+    QPushButton *searchButton;
     QGridLayout *gridLayout_3;
     QListWidget *historyList;
     QHBoxLayout *horizontalLayout_4;
@@ -296,12 +296,12 @@ public:
 
         horizontalLayout_5->addWidget(Total);
 
-        pushButton = new QPushButton(layoutWidget4);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        sizePolicy1.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy1);
+        searchButton = new QPushButton(layoutWidget4);
+        searchButton->setObjectName(QString::fromUtf8("searchButton"));
+        sizePolicy1.setHeightForWidth(searchButton->sizePolicy().hasHeightForWidth());
+        searchButton->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_5->addWidget(pushButton);
+        horizontalLayout_5->addWidget(searchButton);
 
 
         verticalLayout_4->addLayout(horizontalLayout_5);
@@ -450,7 +450,7 @@ public:
         label_2->setText(QString());
         Return->setText(QApplication::translate("Dialog", "\351\200\200\350\262\250", nullptr));
         Total->setText(QApplication::translate("Dialog", "\346\255\267\345\217\262:", nullptr));
-        pushButton->setText(QApplication::translate("Dialog", "PushButton", nullptr));
+        searchButton->setText(QApplication::translate("Dialog", "Search", nullptr));
         buyCheck->setText(QApplication::translate("Dialog", "\350\262\267", nullptr));
         sellCheck->setText(QApplication::translate("Dialog", "\350\263\243", nullptr));
         dumpCheck->setText(QApplication::translate("Dialog", "\345\200\222", nullptr));
