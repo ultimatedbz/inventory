@@ -18,3 +18,11 @@ string Utils::twoDecimals(string theString) {
     stream << fixed << setprecision(2) << stod(theString);
     return stream.str();
 }
+
+bool Utils:: hasEnding (string const &fullString, string const &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}

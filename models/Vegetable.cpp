@@ -1031,15 +1031,15 @@ string Vegetable::formatTransaction(Abbreviation abb){
 
             string type = historyArray[i].getType();
             int selection = temp.returnExist(company, dP);
-            if (type == "Dump"){
+            if (type == "Dump") {
                 temp.transDump(amount, dP, company);
-            }else if (type == "Tui"){
+            }else if (type == "Tui") {
                 temp.transTui(amount, dP, company);
-            }else if (type == "Return"){
+            }else if (type == "Return") {
                 temp.transReturn(amount, dP, company);
             }else if (type == "Sell"){
                 temp.transSell(amount, dP, company, customer, abb);
-            }else if(type == "Buy"){
+            }else if (type == "Buy") {
             }
         }
     }

@@ -116,8 +116,7 @@ string History::getHistory(string unit){
   return buffer;
 }
 
-string History::printFormat(){
-
+string History::printFormat() {
     char buffer [128];
     int temp = 0;
     for(int i = abs(difference); i > 0; i/=10){
@@ -131,7 +130,6 @@ string History::printFormat(){
    if (returned) {
         char d [200];
         sprintf(d,"+%d",difference);
-
         sprintf(buffer,"%4s%s%15s%s%15s%6s",
                 d,
                 padding(customer).c_str(),
@@ -147,7 +145,7 @@ string History::printFormat(){
                       padding(company).c_str(),
                       company.c_str(),
                       removeYear(dayPurchased).c_str());
-    } else if(mTui) {
+    } else if (mTui) {
         sprintf(buffer,"%4d%s%15s%s%15s%6s",
                 difference,
                 padding(customer).c_str(),
@@ -156,10 +154,10 @@ string History::printFormat(){
                 company.c_str(),
                 removeYear(dayPurchased).c_str());
     // Buy and Sell
-    } else if(customer.compare("\t")) {
+    } else if (customer.compare("\t")) {
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
-        string Price = "$" + price;
+        string Price = utils->hasEnding(price, ".00") ? price.substr(0, price.size() - 3) :  "$" + price;
         sprintf(buffer,"%4d%s%15s%s%15s%6s%4s",
             difference,
             padding(customer).c_str(),
@@ -171,7 +169,7 @@ string History::printFormat(){
     } else {
         if(!price.compare("") || !price.compare("\t"))
             price = "--";
-        string Price = "$" + price;
+        string Price = utils->hasEnding(price, ".00") ? price.substr(0, price.size() - 3) :  "$" + price;
         char d [200];
         sprintf(d,"+%d",difference);
         sprintf(buffer,"%4s%24s%9s",
@@ -179,6 +177,7 @@ string History::printFormat(){
               company.c_str(),
               Price.c_str());
     }
+
     return buffer;
 }
 
@@ -223,8 +222,7 @@ string History::getDateToCompare() {
     return dateToCompare;
 }
 
-void History::buy(int amount, string bc, string date, string p){
-
+void History::buy(int amount, string bc, string date, string p) {
   difference = amount;
   company = bc;
   dayPurchased = date;
@@ -239,7 +237,6 @@ void History::buy(int amount, string bc, string date, string p){
 }
 
 void History::sell(int amount, string b, string date, string p, string dp,string c , int change) {
-
   difference = amount *(-1);
   customer = b;
   daySold = date;

@@ -11,6 +11,7 @@ public:
     Utils();
     string doubleToString(double theDouble);
     string twoDecimals(string theString);
+    bool hasEnding (string const &fullString, string const &ending);
 };
 
 #endif // UTILS_H

@@ -28,8 +28,8 @@ Remaining::Remaining()
     company("\t"),
     remaining(0),
     returnNum(0),
-    price("\t")
-
+    price("\t"),
+    utils(new Utils())
       {
 
       }
@@ -41,39 +41,42 @@ string Remaining::getCompany(){
     return company;
 }
 
-void Remaining::buy(int amount, string bc, string date, string p){
-
+void Remaining::buy(int amount, string bc, string date, string p) {
   company = bc;
   dayPurchased = date;
   remaining = amount;
-  price = p;
 
+  if (p.compare("") && p.compare("\t")) {
+      price = utils -> twoDecimals(p);
+  } else {
+      price = p;
+  }
 }
 
-void Remaining::returned(int amount, string bc, string date){
+void Remaining::returned(int amount, string bc, string date) {
     company = bc;
     dayPurchased = date;
     remaining = amount;
     returnNum = amount;
 }
 
-string Remaining::getDate(){
+string Remaining::getDate() {
     return dayPurchased;
 }
 
-string Remaining::getPrice(){
+string Remaining::getPrice() {
     return price;
 }
 
-int Remaining::getRemaining(){
+int Remaining::getRemaining() {
    return remaining;
 }
 
-int Remaining:: getReturn(){
+int Remaining:: getReturn() {
     return returnNum;
 }
 
-string Remaining::formatRemaining(){
+string Remaining::formatRemaining() {
       char buffer [128];
     sprintf(buffer,"%8s %s%12s%5d",
             dayPurchased.c_str(),
@@ -83,7 +86,7 @@ string Remaining::formatRemaining(){
  return buffer;
 }
 
-string Remaining::formatRemaining2(string unit){
+string Remaining::formatRemaining2(string unit) {
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
     string Price = "$" + price;
@@ -99,10 +102,11 @@ string Remaining::formatRemaining2(string unit){
 }
 
 // Used to format remaining for printing
-string Remaining::formatRemaining3(Abbreviation abb){
+string Remaining::formatRemaining3(Abbreviation abb) {
     if(!price.compare("") || !price.compare("\t"))
         price = "--";
-    string Price = "$" + price;
+    string Price = utils->hasEnding(price, ".00") ? price.substr(0, price.size() - 3) :  "$" + price;
+
     char buffer [128];
     sprintf(buffer,"%5s%5d%s%15s%4s",
            removeYear(dayPurchased).c_str(),
@@ -113,7 +117,7 @@ string Remaining::formatRemaining3(Abbreviation abb){
  return buffer;
 }
 
-void Remaining:: updateRemaining(int amount){
+void Remaining:: updateRemaining(int amount) {
     remaining += amount;
 }
 
@@ -124,7 +128,7 @@ void Remaining:: updateRemainingWithRet(int amount) {
 }
 
 
-void Remaining::load(fstream* fio){
+void Remaining::load(fstream* fio) {
     char temp[200];
     int tempNum;
     fio->read((char *) &(tempNum),sizeof(int));
@@ -153,7 +157,7 @@ void Remaining::load(fstream* fio){
     fio->read(( char *) &(returnNum), sizeof(int));
 }
 
-string Remaining:: padding( string word){
+string Remaining:: padding( string word) {
     string product = "";
     int num = 0;
     for(int i = 0; i < word.size(); i ++){

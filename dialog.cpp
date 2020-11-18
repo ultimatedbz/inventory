@@ -94,7 +94,7 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
     int index = 0;
 
     // Add items to history. All these checks are for filtering
-    for(int i = 0; i < historyNum; i++){
+    for(int i = 0; i < historyNum; i++) {
         bool hasTui = (currentVege->getHistoryObject(i)->getTui() && ui->tuiCheck->isChecked());
         bool hasDump = (currentVege->getHistoryObject(i)->getDumped() && ui->dumpCheck->isChecked());
         bool hasHistory = (currentVege->getHistoryObject(i)->getReturned() && ui->returnCheck->isChecked());
@@ -136,13 +136,13 @@ void Dialog::on_vegeList_itemClicked(QListWidgetItem *item)
     ui ->Memo_2->setText(currentVege->getMemo().c_str());
 
     // Lays out the vegetables that have been returned by customers
-    for(int i = 0; i< currentVege->getReturnNum(); i++){
+    for(int i = 0; i< currentVege->getReturnNum(); i++) {
         ui->returnList->addItem(currentVege->formatReturn(i).c_str());
         ui->returnList->item(i)->setFont(font);
     }
 
     // Lays out the vegetables that will be returned to the farm
-    for(int i = 0; i< currentVege->getTuiNum(); i++){
+    for(int i = 0; i< currentVege->getTuiNum(); i++) {
         ui->returnToFarm->addItem(currentVege->formatTui(i).c_str());
         ui->returnToFarm->item(i)->setFont(font);
     }

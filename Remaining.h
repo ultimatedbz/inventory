@@ -7,6 +7,7 @@
 
 #include <string>
 #include "abbreviation.h"
+#include "utils.h"
 using namespace std;
 
 class Remaining {
@@ -38,6 +39,7 @@ private:
   string price;
   string padding(string word);
   string removeYear(string word);
+  Utils* utils;
 };
 
 
