@@ -21,6 +21,7 @@ SOURCES += main.cpp Inventory.cpp \
     Dialog/dialog+sell.cpp \
     Dialog/dialog.cpp \
     Printer.cpp \
+    SearchResultsController.cpp \
     collapsiblesection.cpp \
     controllers/MultiBuyController.cpp \
     controllers/MultiBuyElement.cpp \
@@ -42,6 +43,7 @@ HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
     Printer.h \
     Remaining.h \
     Return.h \
+    SearchResultsController.h \
     collapsiblesection.h \
     returnto.h \
     IConst.h \

@@ -11,7 +11,6 @@ using namespace std;
 #include "History.h"
 #include "Remaining.h"
 #include "Vegetable.h"
-#include "Inventory.h"
 
 class Inventory {
 public:

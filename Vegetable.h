@@ -2,8 +2,13 @@
 #define VEGETABLE_H
 
 #include "abbreviation.h"
+#include "Remaining.h"
+#include "Return.h"
+#include "History.h"
+#include "returnto.h"
 
 #include <string>
+#include <vector>
 using namespace std;
 
 class Vegetable {

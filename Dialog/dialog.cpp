@@ -52,9 +52,9 @@ Dialog::Dialog(QWidget *parent) :
     connect(deleteHistoryAction, SIGNAL(triggered()), this, SLOT(deleteHistory()));
     ui->historyList->addAction(deleteHistoryAction);
 
-      editHistoryAction = new QAction(tr("&Edit"), this);
-      connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editHistory()));
-      ui->historyList->addAction(editHistoryAction);
+    editHistoryAction = new QAction(tr("&Edit"), this);
+    connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editHistory()));
+    ui->historyList->addAction(editHistoryAction);
 
 
     /*Edit Vegetable Name */
@@ -589,10 +589,11 @@ void Dialog::loadFile(){
 
         inventory->setFileName(filename.toUtf8().constData() );
         if (inventory->getVegNum()) {
-            for(int i = 0; i<inventory->getVegNum(); i++){
+            for(int i = 0; i<inventory->getVegNum(); i++) {
                 ui->vegeList->addItem(QString::fromStdString(inventory->getVegetableByIndex(i)->getVegetablename()));
                 ui->vegeList->item(i)->setFlags (ui->vegeList->item(i)->flags()| Qt::ItemIsEditable);
             }
+
             QFont vFont = font;
             vFont.setPixelSize(18);
             ui->vegeList->setFont(vFont);
@@ -1020,7 +1021,7 @@ void Dialog:: editHistory(){
             messageBox.critical(nullptr,"錯誤",
                                 mTranslator->translate("你要打勾所有的選項才能edit!").c_str());
             messageBox.setFixedSize(500,200);
-        }else{
+        } else {
             QDialog dialog(this);
             dialog.setWindowTitle("Edit");
 
@@ -1379,41 +1380,41 @@ void Dialog::on_CalculateSold_clicked()
 
         Utils* utils = new Utils();
         for (int i = 0; i < currentVege -> getHistoryNum(); i++) {
-          History* temp = currentVege -> getHistoryObject(i);
-          if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
-              if (temp -> getType() == "Sell") {
-                  if (temp -> getPrice() == "--") {
-                      noPrices += "No Price: " + to_string(temp -> getDifference() * -1) + " " + temp->getPrice() + "  " + temp->getCustomer() + " " + temp -> getDateSold() + "\n";
-                      totalSold += temp -> getDifference() * -1;
-                      continue;
-                  }
+            History* temp = currentVege -> getHistoryObject(i);
+            if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
+                if (temp -> getType() == "Sell") {
+                    if (temp -> getPrice() == "--") {
+                        noPrices += "No Price: " + to_string(temp -> getDifference() * -1) + " " + temp->getPrice() + "  " + temp->getCustomer() + " " + temp -> getDateSold() + "\n";
+                        totalSold += temp -> getDifference() * -1;
+                        continue;
+                    }
 
-                  if (firstBreakDown) {
-                    firstBreakDown = false;
-                  } else {
-                    breakdownLine += " + ";
-                  }
+                    if (firstBreakDown) {
+                        firstBreakDown = false;
+                    } else {
+                        breakdownLine += " + ";
+                    }
 
-                  units += temp -> getDifference() * -1;
-                  totalSold += temp -> getDifference() * -1;
-                  revenue += stod(temp -> getPrice()) * temp -> getDifference() * -1;
-                  breakdownLine += "$" + temp -> getPrice() + " * " + to_string(temp -> getDifference() * -1);
-              } else if (temp -> getType() == "Tui") {
-                  tuis += "RT to farm: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
-                  totalSold += temp -> getDifference() * -1;
-              } else if (temp -> getType() == "Dump") {
-                  dumps += "Dumped: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
-                  totalSold += temp -> getDifference() * -1;
-              } else if (temp -> getType() == "Buy") {
-                  totalBoxes += temp -> getDifference();
-              } else if (temp -> getType() == "Return") {
-                  // No access to original price here.
-                  //units += temp -> getDifference() * -1;
-                  //revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
-                  totalSold -= temp -> getDifference();
-                  returnedLine += "    " + to_string(temp -> getDifference()) + " " + currentVege -> getUnit() + " " + temp -> getCustomer() + " " + temp -> getDateSold() + "\n";
-              }
-          }
+                    units += temp -> getDifference() * -1;
+                    totalSold += temp -> getDifference() * -1;
+                    revenue += stod(temp -> getPrice()) * temp -> getDifference() * -1;
+                    breakdownLine += "$" + temp -> getPrice() + " * " + to_string(temp -> getDifference() * -1);
+                } else if (temp -> getType() == "Tui") {
+                    tuis += "RT to farm: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
+                    totalSold += temp -> getDifference() * -1;
+                } else if (temp -> getType() == "Dump") {
+                    dumps += "Dumped: " + to_string(temp -> getDifference() * -1) + " " + currentVege->getUnit() + " " + temp -> getDateSold() + "\n";
+                    totalSold += temp -> getDifference() * -1;
+                } else if (temp -> getType() == "Buy") {
+                    totalBoxes += temp -> getDifference();
+                } else if (temp -> getType() == "Return") {
+                    // No access to original price here.
+                    //units += temp -> getDifference() * -1;
+                    //revenue += stoi(temp -> getPrice()) * temp -> getDifference() * -1;
+                    totalSold -= temp -> getDifference();
+                    returnedLine += "    " + to_string(temp -> getDifference()) + " " + currentVege -> getUnit() + " " + temp -> getCustomer() + " " + temp -> getDateSold() + "\n";
+                }
+            }
         }
 
         breakdownLine += "\n";
