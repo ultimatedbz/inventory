@@ -100,7 +100,8 @@ void SearchResultsController:: showSearchResults() {
         // Adds the history item here
         auto * anyLayout = new QVBoxLayout();
         QListWidget* historyList = new QListWidget();
-        historyList->setFixedWidth(1000);
+        historyList->resize(500, 100);
+        historyList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         anyLayout->addWidget(historyList);
         for (unsigned int i = 0; i < matchingCustomer.size(); i++) {
             historyList->addItem(QString::fromStdString(matchingCustomer[i]->getHistory(vegetable->getUnit())));

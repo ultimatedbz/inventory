@@ -4,8 +4,7 @@
 #include <iostream>
 using namespace std;
 
-void Dialog::on_Sell_clicked()
-{
+void Dialog::on_Sell_clicked() {
     if(!currentVege)
         return;
 

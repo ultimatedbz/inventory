@@ -8,7 +8,7 @@ CollapsibleSection::CollapsibleSection(const QString & title, const int animatio
     toggleButton.setArrowType(Qt::ArrowType::RightArrow);
     toggleButton.setText(title);
     toggleButton.setCheckable(true);
-    toggleButton.setChecked(false);
+    toggleButton.setChecked(true);
 
     headerLine.setFrameShape(QFrame::HLine);
     headerLine.setFrameShadow(QFrame::Sunken);
@@ -17,8 +17,8 @@ CollapsibleSection::CollapsibleSection(const QString & title, const int animatio
     contentArea.setStyleSheet("QScrollArea { background-color: white; border: none; }");
     contentArea.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     // start out collapsed
-    contentArea.setMaximumHeight(0);
-    contentArea.setMinimumHeight(0);
+//    contentArea.setMaximumHeight(0);
+//    contentArea.setMinimumHeight(0);
     // let the entire widget grow and shrink with its content
     toggleAnimation.addAnimation(new QPropertyAnimation(this, "minimumHeight"));
     toggleAnimation.addAnimation(new QPropertyAnimation(this, "maximumHeight"));
@@ -41,16 +41,20 @@ CollapsibleSection::CollapsibleSection(const QString & title, const int animatio
 void CollapsibleSection::setContentLayout(QLayout & contentLayout) {
     delete contentArea.layout();
     contentArea.setLayout(&contentLayout);
-    const auto collapsedHeight = sizeHint().height() - contentArea.maximumHeight();
+
     auto contentHeight = contentLayout.sizeHint().height();
+    contentArea.setMaximumHeight(contentHeight);
+    contentArea.setMinimumHeight(contentHeight);
+    const auto collapsedHeight = sizeHint().height() - contentArea.maximumHeight();
+
     for (int i = 0; i < toggleAnimation.animationCount() - 1; ++i) {
         QPropertyAnimation * spoilerAnimation = static_cast<QPropertyAnimation *>(toggleAnimation.animationAt(i));
         spoilerAnimation->setDuration(animationDuration);
-        spoilerAnimation->setStartValue(collapsedHeight);
-        spoilerAnimation->setEndValue(collapsedHeight + contentHeight);
+        spoilerAnimation->setStartValue(collapsedHeight + contentHeight);
+        spoilerAnimation->setEndValue(collapsedHeight);
     }
     QPropertyAnimation * contentAnimation = static_cast<QPropertyAnimation *>(toggleAnimation.animationAt(toggleAnimation.animationCount() - 1));
     contentAnimation->setDuration(animationDuration);
-    contentAnimation->setStartValue(0);
-    contentAnimation->setEndValue(contentHeight);
+    contentAnimation->setStartValue(contentHeight);
+    contentAnimation->setEndValue(0);
 }
