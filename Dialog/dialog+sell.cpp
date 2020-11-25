@@ -131,7 +131,7 @@ void Dialog::on_Sell_clicked() {
         }
         /* Deallocate memory*/
 
-    }else{
+    } else {
         QMessageBox messageBox;
         messageBox.critical(nullptr,"警告","No Vegetables to Sell");
         messageBox.setFixedSize(500,200);

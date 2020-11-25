@@ -79,7 +79,16 @@ void Dialog::on_Buy_clicked() {
     QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
 
     if (dialog.exec() == QDialog::Accepted ) {
-        for( int i = 0; i < multiBuyController->getElementNum(); i++){
+        for( int i = 0; i < multiBuyController->getElementNum(); i++) {
+            if (multiBuyController-> getAmount(i) == "" ) {
+                QMessageBox messageBox;
+                messageBox.critical(nullptr,"警告","Fill out amount!");
+                messageBox.setFixedSize(500,200);
+                return;
+            }
+        }
+
+        for( int i = 0; i < multiBuyController->getElementNum(); i++) {
             int vegeIndex = multiBuyController->
                     getActualVegeIndex(i);
             string company = companyDrop->currentText().toUtf8().constData();

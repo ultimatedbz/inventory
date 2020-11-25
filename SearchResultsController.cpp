@@ -35,26 +35,6 @@ void SearchResultsController:: showSearchResults() {
         return;
     }
 
-    //QDialog* dialog = new QDialog;
-    //dialog->setWindowTitle("Search results");
-
-    //Add the viewport to the scroll area
-   // QScrollArea *scrollArea = new QScrollArea;
-    //scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-    //Create a widget and set its layout as your new layout created above
-    //QWidget *viewport = new QWidget(dialog);
-    //scrollArea->setWidget(viewport);
-    //viewport->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy ::Expanding);
-    //scrollArea->setWidgetResizable(true);
-
-   // QFormLayout* form = new QFormLayout(viewport);
-   // viewport->setLayout(form);
-
-    //QFormLayout *dialog_layout = new QFormLayout(dialog);
-    //dialog->setLayout(dialog_layout);
-   // dialog->layout()->addWidget(scrollArea);
-
     bool hasResults = false;
     for (int i = 0; i < mInventory->getVegNum(); i++) {
         Vegetable* vegetable = mInventory->getVegetableByIndex(i);
@@ -100,7 +80,7 @@ void SearchResultsController:: showSearchResults() {
         // Adds the history item here
         auto * anyLayout = new QVBoxLayout();
         QListWidget* historyList = new QListWidget();
-        historyList->resize(500, 100);
+        historyList->resize(200, 100);
         historyList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         anyLayout->addWidget(historyList);
         for (unsigned int i = 0; i < matchingCustomer.size(); i++) {

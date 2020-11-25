@@ -51,12 +51,12 @@ MultiBuyElement::~MultiBuyElement()
   QLayoutItem* item;
 
   int i = 0;
-  while ( ( item = mForm->takeAt( 0 ) ) != NULL )
-  {
+  while ( ( item = mForm->takeAt( 0 ) ) != NULL ) {
 
      if(i != 2 ){
         delete item->widget();
      }
+
      delete item;
      i++;
   }

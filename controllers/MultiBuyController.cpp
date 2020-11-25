@@ -116,6 +116,7 @@ void MultiBuyController:: addElement(){
         break;
       }
     }
+
     updateVegeDrops();
     int h = (selectedVeges->size() > 5)?
           scrollArea->sizeHint().height() + 4

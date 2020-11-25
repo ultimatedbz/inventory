@@ -24,7 +24,7 @@ void Dialog::on_searchButton_clicked() {
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
 //    scrollArea->resize(1500,800);
-    scrollArea->setFixedSize(1500, 800);
+    scrollArea->setFixedSize(1000, 800);
 
     QFormLayout* form = new QFormLayout(viewport);
     //viewport->setLayout(form);
@@ -94,12 +94,9 @@ void Dialog::on_searchButton_clicked() {
 
     SearchResultsController* searchResults = new SearchResultsController(inventory, form, font, scrollArea, &dialog, dateTextField, companyDrop, customerDrop);
 
-    dialog.window()->setFixedSize(1500,800);
+    dialog.window()->setFixedSize(1100,800);
     QObject::connect(searchButton, SIGNAL(clicked()),searchResults, SLOT(showSearchResults()));
 
-
-    qDebug() << viewport->size();
-    qDebug() << scrollArea->size();
     dialog.exec();
 }
 
