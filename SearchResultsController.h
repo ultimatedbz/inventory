@@ -5,8 +5,8 @@
 #include <QtWidgets>
 #include <set>
 #include <vector>
+#include "dialog.h"
 
-class MultiSellElement;
 class Inventory;
 
 using namespace std;
@@ -18,13 +18,13 @@ public:
   SearchResultsController(Inventory* inventory,
                       QFormLayout* fo, QFont font,
                       QScrollArea* sa,
-                      QDialog* d, QLineEdit* dateTextField, QComboBox* companyDrop, QComboBox* customerDrop);
+                      QDialog* d, QLineEdit* dateTextField, QComboBox* companyDrop, QComboBox* customerDrop, Dialog* md);
+
   ~SearchResultsController();
 signals:
 
 public slots:
   void showSearchResults();
-  void editSearchHistory();
 
 private:
 
@@ -38,6 +38,7 @@ private:
   QLineEdit* dateTextField;
   QComboBox* companyDrop;
   QComboBox* customerDrop;
+  Dialog* mainDialog;
 };
 
 

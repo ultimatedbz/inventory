@@ -10,12 +10,11 @@
 #include "MultiSellElement.h"
 #include "MultiSellController.h"
 #include "MultiBuyElement.h"
-#include "Printer.h"
 #include "ui_dialog.h"
 #include "IConst.h"
 #include "abbreviation.h"
 #include <qlistwidget.h>
-#include <Qtcore>
+#include <QtCore>
 #include <QtGui>
 #include <QMessageBox>
 #include <QInputDialog>
@@ -93,6 +92,8 @@ public:
 
     void changeLanguage();
 
+    Ui::Dialog *ui;
+    int needSave;
 
 
 public slots:
@@ -133,12 +134,11 @@ private slots:
     void on_searchButton_clicked();
 
 private:
-    Ui::Dialog *ui;
+
     Inventory* inventory;
     IPreferencesPanel *mPreferencesPanel;
 
     Vegetable *currentVege;
-    int needSave;
     QFont font;
     int refresh;
 

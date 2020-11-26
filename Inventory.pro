@@ -20,7 +20,6 @@ SOURCES += main.cpp Inventory.cpp \
     Dialog/dialog+search.cpp \
     Dialog/dialog+sell.cpp \
     Dialog/dialog.cpp \
-    Printer.cpp \
     SearchResultsController.cpp \
     collapsiblesection.cpp \
     controllers/MultiBuyController.cpp \
@@ -32,6 +31,7 @@ SOURCES += main.cpp Inventory.cpp \
     models/Return.cpp \
     models/Vegetable.cpp \
     models/returnto.cpp \
+    searchhistorylist.cpp \
     translator.cpp \
     imenubar.cpp \
     ipreferencespanel.cpp \
@@ -40,13 +40,13 @@ SOURCES += main.cpp Inventory.cpp \
     utils.cpp
 
 HEADERS  += dialog.h Vegetable.h Inventory.h History.h \
-    Printer.h \
     Remaining.h \
     Return.h \
     SearchResultsController.h \
     collapsiblesection.h \
     returnto.h \
     IConst.h \
+    searchhistorylist.h \
     translator.h \
     imenubar.h \
     ipreferencespanel.h \

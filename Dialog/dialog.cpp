@@ -6,9 +6,9 @@ using namespace std;
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog),
+    needSave(0),
     inventory(new Inventory()),
     currentVege(nullptr),
-    needSave(0),
     font("Courier",-1,QFont::Bold,false),
     mTranslator(new Translator()),
     mAbbreviator(new Abbreviation()),

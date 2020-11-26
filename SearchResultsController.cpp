@@ -1,19 +1,22 @@
 #include "dialog.h"
 #include "utils.h"
 #include "collapsiblesection.h"
-#include "SearchResultsController.h"
+#include "searchResultsController.h"
+#include "searchhistorylist.h"
 
 SearchResultsController::SearchResultsController(Inventory* inventory,
-                                         QFormLayout* fo,
-                              QFont f, QScrollArea* sa, QDialog* d, QLineEdit* dateTextFieldd, QComboBox* companyDropp, QComboBox* customerDropp):
-  mInventory(inventory),
+                                                 QFormLayout* fo, QFont f,
+                                                 QScrollArea* sa,
+                                                 QDialog* d, QLineEdit* dateTextFieldd, QComboBox* companyDropp, QComboBox* customerDropp, Dialog* md):
   font(f),
   form(fo),
+  mInventory(inventory),
   scrollArea(sa),
   dialog(d),
   dateTextField(dateTextFieldd),
   companyDrop(companyDropp),
-  customerDrop(customerDropp)
+  customerDrop(customerDropp),
+  mainDialog(md)
 {
 
 }
@@ -44,19 +47,19 @@ void SearchResultsController:: showSearchResults() {
     for (int i = 0; i < mInventory->getVegNum(); i++) {
         Vegetable* vegetable = mInventory->getVegetableByIndex(i);
 
-        vector<History*> matchingDates = vector<History*>();
+        vector<pair<History*, int>> matchingDates = vector<pair<History*, int>>();
         for (int j = 0; j < vegetable->getHistoryNum(); j++) {
             History* history = vegetable->getHistoryObject(j);
             if (history->getDateToCompare() == date) {
-                matchingDates.push_back(history);
+                matchingDates.push_back(make_pair(history, j));
             }
         }
 
-        vector<History*> matchingCompany = vector<History*>();
+        vector<pair<History*, int>> matchingCompany = vector<pair<History*, int>>();
         if (company != "") {
             for (unsigned int j = 0; j < matchingDates.size(); j++) {
-                History* history = matchingDates[j];
-                if (company != "" && company == history->getCompany()) {
+                pair<History*, int> history = matchingDates[j];
+                if (company != "" && company == history.first->getCompany()) {
                     matchingCompany.push_back(history);
                 }
             }
@@ -64,11 +67,11 @@ void SearchResultsController:: showSearchResults() {
             matchingCompany = matchingDates;
         }
 
-        vector<History*> matchingCustomer = vector<History*>();
+        vector<pair<History*, int>> matchingCustomer = vector<pair<History*, int>>();
         if (customer != "") {
             for (unsigned int j = 0; j < matchingCompany.size(); j++) {
-                History* history = matchingCompany[j];
-                if (customer != "" && customer == history->getCustomer()) {
+                pair<History*, int> history = matchingCompany[j];
+                if (customer != "" && customer == history.first->getCustomer()) {
                     matchingCustomer.push_back(history);
                 }
             }
@@ -84,13 +87,11 @@ void SearchResultsController:: showSearchResults() {
 
         // Adds the history item here
         auto * anyLayout = new QVBoxLayout();
-        QListWidget* historyList = new QListWidget();
-        historyList->resize(200, 100);
+        SearchHistoryList* historyList = new SearchHistoryList(vegetable, mainDialog, matchingCustomer);
+        historyList->resize(100, 60);
         historyList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         anyLayout->addWidget(historyList);
-        for (unsigned int i = 0; i < matchingCustomer.size(); i++) {
-            historyList->addItem(QString::fromStdString(matchingCustomer[i]->getHistory(vegetable->getUnit())));
-        }
+
 
         CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, nullptr);
         collapsibleSection->setContentLayout(*anyLayout);
@@ -101,7 +102,7 @@ void SearchResultsController:: showSearchResults() {
         historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
 
         QAction* editHistoryAction = new QAction(tr("&Edit"), this);
-        connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editSearchHistory()));
+        connect(editHistoryAction, SIGNAL(triggered()), historyList, SLOT(editSearchHistory()));
         historyList->addAction(editHistoryAction);
     }
 
@@ -111,56 +112,4 @@ void SearchResultsController:: showSearchResults() {
         messageBox.setFixedSize(500,200);
         return;
     }
-
-    //dialog->show();
 }
-
-
-void SearchResultsController:: editSearchHistory() {
-//    QDialog dialog;
-//    dialog.setWindowTitle("Edit");
-
-//    //Add the viewport to the scroll area
-//    QScrollArea *scrollArea = new QScrollArea;
-//    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-//    //Create a widget and set its layout as your new layout created above
-//    QWidget *viewport = new QWidget(&dialog);
-//    scrollArea->setWidget(viewport);
-//    scrollArea->setWidgetResizable(true);
-
-//    QFormLayout* form = new QFormLayout(viewport);
-//    viewport->setLayout(form);
-
-//    QFormLayout *dialog_layout = new QFormLayout(&dialog);
-//    dialog.setLayout(dialog_layout);
-//    dialog.layout()->addWidget(scrollArea);
-
-//    History* historyTemp = currentVege->getHistoryObject(ui->historyList->currentRow());
-//    string label =  "[Date Sold | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
-//    form -> addRow(new QLabel(QString::fromStdString(label)));
-
-//    // Price
-//    QLineEdit *priceLineEdit = new QLineEdit(&dialog);
-//    string price = historyTemp -> getPrice();
-//    priceLineEdit -> setText(QString::fromStdString(price));
-//    QString label4 = QString("Price: ");
-//    form->addRow(label4, priceLineEdit);
-
-//    // Button Box
-//    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-//                               Qt::Horizontal, &dialog);
-//    form->addRow(&buttonBox);
-
-//    dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
-
-//    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-//    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-
-//    if (dialog.exec() == QDialog::Accepted ) {
-//        currentVege->editHistoryPrice(ui->historyList->currentRow(), priceLineEdit->text().toUtf8().constData());
-//        needSave = 1;
-//        on_vegeList_itemClicked(ui->vegeList->currentItem());
-//    }
-}
-
