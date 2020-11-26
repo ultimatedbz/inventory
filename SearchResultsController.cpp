@@ -80,8 +80,8 @@ void SearchResultsController:: showSearchResults() {
 
         // Filter by Date, but choose date based on transaction type
         vector<pair<History*, int>> matchingDates = vector<pair<History*, int>>();
-        for (unsigned int j = 0; j < matchingCustomer.size(); j++) {
-            pair<History*, int> history = matchingCustomer[j];
+        for (unsigned int j = 0; j < matchingCompany.size(); j++) {
+            pair<History*, int> history = matchingCompany[j];
 
             if (history.first->getType() == "Buy") {
                 if (date == history.first->getDatePurchased()) {
