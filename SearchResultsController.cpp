@@ -88,16 +88,15 @@ void SearchResultsController:: showSearchResults() {
         // Adds the history item here
         auto * anyLayout = new QVBoxLayout();
         SearchHistoryList* historyList = new SearchHistoryList(vegetable, mainDialog, matchingCustomer);
-        historyList->resize(100, 60);
+        historyList->setBaseSize(700, 100);
         historyList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         anyLayout->addWidget(historyList);
 
 
         CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, nullptr);
         collapsibleSection->setContentLayout(*anyLayout);
+        collapsibleSection->setBaseSize(700,100);
         form->addRow(collapsibleSection);
-
-        dialog->adjustSize();
 
         historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
 

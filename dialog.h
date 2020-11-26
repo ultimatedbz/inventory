@@ -95,7 +95,6 @@ public:
     Ui::Dialog *ui;
     int needSave;
 
-
 public slots:
 
     void on_Buy_clicked();

@@ -3,6 +3,9 @@
 #include "collapsiblesection.h"
 #include "searchResultsController.h"
 #include <iostream>
+#include <QShortcut>
+#include <QKeySequence>
+
 using namespace std;
 
 void Dialog::on_searchButton_clicked() {
@@ -23,8 +26,7 @@ void Dialog::on_searchButton_clicked() {
 
     scrollArea->setWidget(viewport);
     scrollArea->setWidgetResizable(true);
-//    scrollArea->resize(1500,800);
-    scrollArea->setFixedSize(700, 800);
+    //sscrollArea->setBaseSize(700, 800);
 
     QFormLayout* form = new QFormLayout(viewport);
     //viewport->setLayout(form);
@@ -87,15 +89,22 @@ void Dialog::on_searchButton_clicked() {
     hLay->addWidget(searchButton);
     form->addRow(hLay);
 
-
     dialog.setLayout(new QVBoxLayout);
     dialog.layout()->addWidget(scrollArea);
-
+    dialog.layout()->setMargin(0);
 
     SearchResultsController* searchResults = new SearchResultsController(inventory, form, font, scrollArea, &dialog, dateTextField, companyDrop, customerDrop, this);
+    dialog.window()->setBaseSize(720,800);
 
-    dialog.window()->setFixedSize(720,800);
+
     QObject::connect(searchButton, SIGNAL(clicked()),searchResults, SLOT(showSearchResults()));
+    QObject::connect(dateTextField, SIGNAL(returnPressed()),searchResults, SLOT(showSearchResults()));
+
+    QShortcut *shortcut = new QShortcut(Qt::Key_Return, &dialog);
+    QObject::connect(shortcut, SIGNAL(activated()), searchResults, SLOT(showSearchResults()));
+
+    QShortcut *shortcut2 = new QShortcut(Qt::Key_Enter, &dialog);
+    QObject::connect(shortcut2, SIGNAL(activated()), searchResults, SLOT(showSearchResults()));
 
     dialog.exec();
 }

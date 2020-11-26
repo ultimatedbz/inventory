@@ -561,10 +561,11 @@ void Dialog::newFile(){
     currentVege = NULL;
 }
 
-void Dialog::loadFile(){
-
-    if(needSave)
+void Dialog::loadFile() {
+    if (needSave) {
         askSave();
+    }
+
     QWidget *activeWindow = QApplication::activeWindow();
     QString filename = QFileDialog::getOpenFileName(activeWindow,
                                                     "Load File", "", "Datafile files (*.datafile);;All files (*)");
@@ -989,6 +990,7 @@ void Dialog:: ListWidgetEditEnd(QWidget *editor, QAbstractItemDelegate::EndEditH
         ui->vegeList->setCurrentRow(temp);
         on_vegeList_itemClicked(ui->vegeList->item(temp));
     }
+
     ui->vegeList->blockSignals(false);
 }
 
