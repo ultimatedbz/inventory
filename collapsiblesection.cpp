@@ -5,7 +5,7 @@
 CollapsibleSection::CollapsibleSection(const QString & title, const int animationDuration, QWidget *parent) : QWidget(parent), animationDuration(animationDuration) {
     toggleButton.setStyleSheet("QToolButton { border: none; }");
     toggleButton.setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toggleButton.setArrowType(Qt::ArrowType::RightArrow);
+    toggleButton.setArrowType(Qt::ArrowType::DownArrow);
     toggleButton.setText(title);
     toggleButton.setCheckable(true);
     toggleButton.setChecked(true);
@@ -33,7 +33,7 @@ CollapsibleSection::CollapsibleSection(const QString & title, const int animatio
     setLayout(&mainLayout);
     QObject::connect(&toggleButton, &QToolButton::clicked, [this](const bool checked) {
         toggleButton.setArrowType(checked ? Qt::ArrowType::DownArrow : Qt::ArrowType::RightArrow);
-        toggleAnimation.setDirection(checked ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
+        toggleAnimation.setDirection(checked ? QAbstractAnimation::Backward : QAbstractAnimation::Forward);
         toggleAnimation.start();
     });
 }
@@ -53,6 +53,7 @@ void CollapsibleSection::setContentLayout(QLayout & contentLayout) {
         spoilerAnimation->setStartValue(collapsedHeight + contentHeight);
         spoilerAnimation->setEndValue(collapsedHeight);
     }
+
     QPropertyAnimation * contentAnimation = static_cast<QPropertyAnimation *>(toggleAnimation.animationAt(toggleAnimation.animationCount() - 1));
     contentAnimation->setDuration(animationDuration);
     contentAnimation->setStartValue(contentHeight);
