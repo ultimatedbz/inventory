@@ -48,7 +48,6 @@ void SearchResultsController:: showSearchResults() {
         Vegetable* vegetable = mInventory->getVegetableByIndex(i);
         vector<pair<History*, int>> histories = vector<pair<History*, int>>();
 
-
         for (int j = 0; j < vegetable->getHistoryNum(); j++) {
             histories.push_back(make_pair(vegetable->getHistoryObject(j), j));
         }
@@ -103,7 +102,7 @@ void SearchResultsController:: showSearchResults() {
 
         // Adds the history item here
         auto * anyLayout = new QVBoxLayout();
-        SearchHistoryList* historyList = new SearchHistoryList(vegetable, mainDialog, matchingCustomer);
+        SearchHistoryList* historyList = new SearchHistoryList(vegetable, mainDialog, matchingDates);
         historyList->setBaseSize(700, 100);
         historyList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         anyLayout->addWidget(historyList);
