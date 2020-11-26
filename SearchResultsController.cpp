@@ -35,6 +35,11 @@ void SearchResultsController:: showSearchResults() {
         return;
     }
 
+    // Clear all results
+    while (form->rowCount() > 4) {
+        form->removeRow(4);
+    }
+
     bool hasResults = false;
     for (int i = 0; i < mInventory->getVegNum(); i++) {
         Vegetable* vegetable = mInventory->getVegetableByIndex(i);
@@ -90,17 +95,7 @@ void SearchResultsController:: showSearchResults() {
         CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, nullptr);
         collapsibleSection->setContentLayout(*anyLayout);
         form->addRow(collapsibleSection);
-        /*
-        int h = (selectedVeges->size() > 5)?
-              scrollArea->sizeHint().height() + 4
-                         * ((*formArray)[0]->getElement()->sizeHint().height() +
-                         .5 * temp->sizeHint().height())
-            :
-            form->sizeHint().height()+ 2.5 *
-            temp->sizeHint().height();
 
-        scrollArea->setMinimumHeight(h);
-        */
         dialog->adjustSize();
 
         historyList->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -122,7 +117,7 @@ void SearchResultsController:: showSearchResults() {
 
 
 void SearchResultsController:: editSearchHistory() {
-//    QDialog dialog(this);
+//    QDialog dialog;
 //    dialog.setWindowTitle("Edit");
 
 //    //Add the viewport to the scroll area
@@ -144,14 +139,15 @@ void SearchResultsController:: editSearchHistory() {
 //    History* historyTemp = currentVege->getHistoryObject(ui->historyList->currentRow());
 //    string label =  "[Date Sold | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
 //    form -> addRow(new QLabel(QString::fromStdString(label)));
-//    /* Price */
+
+//    // Price
 //    QLineEdit *priceLineEdit = new QLineEdit(&dialog);
 //    string price = historyTemp -> getPrice();
 //    priceLineEdit -> setText(QString::fromStdString(price));
 //    QString label4 = QString("Price: ");
 //    form->addRow(label4, priceLineEdit);
 
-//    /* Button Box */
+//    // Button Box
 //    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
 //                               Qt::Horizontal, &dialog);
 //    form->addRow(&buttonBox);
