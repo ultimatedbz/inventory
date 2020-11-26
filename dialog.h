@@ -94,6 +94,7 @@ public:
 
     Ui::Dialog *ui;
     int needSave;
+    QFont font;
 
 public slots:
 
@@ -138,7 +139,6 @@ private:
     IPreferencesPanel *mPreferencesPanel;
 
     Vegetable *currentVege;
-    QFont font;
     int refresh;
 
     QAction* deleteVegeAction;

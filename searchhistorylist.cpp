@@ -16,6 +16,7 @@ SearchHistoryList::SearchHistoryList(Vegetable* v, Dialog* d, vector<pair<Histor
 
     for (unsigned int i = 0; i < historyPairs.size(); i++) {
         this->addItem(QString::fromStdString(historyPairs[i].first->getHistory(vegetable->getUnit())));
+        this->item(i)->setFont(d->font);
     }
 }
 
