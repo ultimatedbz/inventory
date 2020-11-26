@@ -46,40 +46,56 @@ void SearchResultsController:: showSearchResults() {
     bool hasResults = false;
     for (int i = 0; i < mInventory->getVegNum(); i++) {
         Vegetable* vegetable = mInventory->getVegetableByIndex(i);
+        vector<pair<History*, int>> histories = vector<pair<History*, int>>();
 
-        vector<pair<History*, int>> matchingDates = vector<pair<History*, int>>();
+
         for (int j = 0; j < vegetable->getHistoryNum(); j++) {
-            History* history = vegetable->getHistoryObject(j);
-            if (history->getDateToCompare() == date) {
-                matchingDates.push_back(make_pair(history, j));
-            }
+            histories.push_back(make_pair(vegetable->getHistoryObject(j), j));
         }
 
-        vector<pair<History*, int>> matchingCompany = vector<pair<History*, int>>();
-        if (company != "") {
-            for (unsigned int j = 0; j < matchingDates.size(); j++) {
-                pair<History*, int> history = matchingDates[j];
-                if (company != "" && company == history.first->getCompany()) {
-                    matchingCompany.push_back(history);
-                }
-            }
-        } else {
-            matchingCompany = matchingDates;
-        }
-
+        // Filter by Customer first
         vector<pair<History*, int>> matchingCustomer = vector<pair<History*, int>>();
         if (customer != "") {
-            for (unsigned int j = 0; j < matchingCompany.size(); j++) {
-                pair<History*, int> history = matchingCompany[j];
+            for (unsigned int j = 0; j < histories.size(); j++) {
+                pair<History*, int> history = histories[j];
                 if (customer != "" && customer == history.first->getCustomer()) {
                     matchingCustomer.push_back(history);
                 }
             }
         } else {
-            matchingCustomer = matchingCompany;
+            matchingCustomer = histories;
         }
 
-        if (matchingCustomer.size() == 0) {
+        // Filter by Company
+        vector<pair<History*, int>> matchingCompany = vector<pair<History*, int>>();
+        if (company != "") {
+            for (unsigned int j = 0; j < matchingCustomer.size(); j++) {
+                pair<History*, int> history = matchingCustomer[j];
+                if (company != "" && company == history.first->getCompany()) {
+                    matchingCompany.push_back(history);
+                }
+            }
+        } else {
+            matchingCompany = matchingCustomer;
+        }
+
+        // Filter by Date, but choose date based on transaction type
+        vector<pair<History*, int>> matchingDates = vector<pair<History*, int>>();
+        for (unsigned int j = 0; j < matchingCustomer.size(); j++) {
+            pair<History*, int> history = matchingCustomer[j];
+
+            if (history.first->getType() == "Buy") {
+                if (date == history.first->getDatePurchased()) {
+                    matchingDates.push_back(history);
+                }
+            } else if (history.first->getType() == "Sell" || history.first->getType() == "Tui" || history.first->getType() == "Return" || history.first->getType() == "Dump") {
+                if (date == history.first->getDateSold()) {
+                    matchingDates.push_back(history);
+                }
+            }
+        }
+
+        if (matchingDates.size() == 0) {
             continue;
         } else {
             hasResults = true;

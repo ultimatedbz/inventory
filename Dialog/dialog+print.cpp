@@ -342,8 +342,8 @@ void Dialog::printH(QPrinter * printer){
         painter.drawLine(pageCenterX,topMargin,pageCenterX,pageHeight);
         painter.drawText(dateStartX,lineHeight,dateWidth,lineHeight,Qt::AlignRight|Qt::AlignTop, QString(dayComp.c_str()) );
 
-        for(int i = 0; i<inventory->getVegNum(); i++){
-            if(inventory->getVegetableByIndex(i)->getHistoryNum()){
+        for (int i = 0; i<inventory->getVegNum(); i++) {
+            if (inventory->getVegetableByIndex(i)->getHistoryNum()) {
 
                 //make array of all histories that were from today using date to compare
                 int historyNum = inventory->getVegetableByIndex(i)->getHistoryNum();
@@ -462,13 +462,13 @@ void Dialog::printH(QPrinter * printer){
                     }
 
                 }
-                if(sellNum){
-                    if( lineHeight * (lineCount + sellNum) + topMargin > pageHeight  ){
+                if (sellNum) {
+                    if (lineHeight * (lineCount + sellNum) + topMargin > pageHeight) {
                         if(currentText == &leftText){
                             currentText = &rightText;
                             lineCount = 0;
                             column = 1;
-                        }else{
+                        } else {
                             lineCount = 0;
                             column = 0;
                             painter.drawText(leftPageStartX,topMargin,rightPageStartX,pageHeight,Qt::AlignLeft|Qt::AlignTop, leftText );
