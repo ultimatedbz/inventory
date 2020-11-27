@@ -93,7 +93,7 @@ string History::getHistory(string unit){
                     padding(temp2).c_str(),
                     temp2.c_str(),
                     dayPurchased.c_str());
-  }else if(customer.compare("\t"))
+  } else if(customer.compare("\t")) {
     sprintf(buffer,"%8s%7d%6s%s%13s%s%13s%15s%10s",
           day.c_str(),
           difference,
@@ -104,7 +104,7 @@ string History::getHistory(string unit){
           company.c_str(),
           Price.c_str(),
           dayPurchased.c_str());
-  else
+  } else {
     sprintf(buffer,"%8s%7d%6s%s%26s%15s",
            day.c_str(),
             difference,
@@ -112,6 +112,7 @@ string History::getHistory(string unit){
             padding(company).c_str(),
             company.c_str(),
             Price.c_str());
+  }
 
   return buffer;
 }

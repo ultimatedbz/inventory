@@ -88,7 +88,10 @@ void SearchResultsController:: showSearchResults() {
                     matchingDates.push_back(history);
                 }
             } else if (history.first->getType() == "Sell" || history.first->getType() == "Tui" || history.first->getType() == "Return" || history.first->getType() == "Dump") {
-                if (date == history.first->getDateSold()) {
+                // need to check if customer or if company. and add more dates
+                if (date == history.first->getDateSold() && customer != "") {
+                    matchingDates.push_back(history);
+                } else if (date == history.first->getDatePurchased() && company != "") {
                     matchingDates.push_back(history);
                 }
             }

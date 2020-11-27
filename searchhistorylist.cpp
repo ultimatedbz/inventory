@@ -23,7 +23,6 @@ SearchHistoryList::SearchHistoryList(Vegetable* v, Dialog* d, vector<pair<Histor
 
         this->item(i)->setFont(d->font);
         d->font.setItalic(false);
-
     }
 }
 

@@ -72,15 +72,6 @@ void Dialog::on_searchButton_clicked() {
     QString label4 = QString("Date");
     form->addRow(label4, dateTextField);
 
-    /* Button Box
-    QDialogButtonBox buttonBox(QDialogButtonBox::Ok, Qt::Horizontal, &dialog);
-
-    dialog_layout->addRow(&buttonBox);
-
-    QHBoxLayout* hLay = new QHBoxLayout();
-    hLay->addWidget(&buttonBox);
-    dialog_layout->addRow(hLay);
-*/
     /* Button Box */
     QToolButton *searchButton = new QToolButton();
     searchButton->setText("Search");
