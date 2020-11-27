@@ -56,7 +56,7 @@ string History::getHistory(string unit){
       price = "--";
   string Price = "$" + price;
   string day = daySold.compare("\t") ? daySold : dayPurchased;
-  if (returned){
+  if (returned) {
       string temp2 = "退給公司";
       sprintf(buffer,"%8s%7d%6s%s%13s%s%13s%s%15s%10s",
                     daySold.c_str(),
@@ -69,7 +69,7 @@ string History::getHistory(string unit){
                     padding(temp2).c_str(),
                     temp2.c_str(),
                     dayPurchased.c_str());
-  }else if (dumped){
+  }else if (dumped) {
       string temp2 = "倒";
       sprintf(buffer,"%8s%7d%6s%13s%s%13s%s%15s%10s",
                     daySold.c_str(),
@@ -81,7 +81,7 @@ string History::getHistory(string unit){
                     padding(temp2).c_str(),
                     temp2.c_str(),
                     dayPurchased.c_str());
-  }else if (mTui){
+  } else if (mTui) {
       string temp2 = "退給農場";
       sprintf(buffer,"%8s%7d%6s%13s%s%13s%s%15s%10s",
                     daySold.c_str(),
@@ -94,6 +94,9 @@ string History::getHistory(string unit){
                     temp2.c_str(),
                     dayPurchased.c_str());
   } else if(customer.compare("\t")) {
+    // This is for sell (compare == 1 means not equal)
+
+      // but why for buy, is daypurchased not shown at the end?
     sprintf(buffer,"%8s%7d%6s%s%13s%s%13s%15s%10s",
           day.c_str(),
           difference,
@@ -105,6 +108,7 @@ string History::getHistory(string unit){
           Price.c_str(),
           dayPurchased.c_str());
   } else {
+      // This is for buy. Day is day purchased, and we don't have a second date.
     sprintf(buffer,"%8s%7d%6s%s%26s%15s",
            day.c_str(),
             difference,

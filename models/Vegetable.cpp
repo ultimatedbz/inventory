@@ -121,17 +121,18 @@ int Vegetable::buyVege(int amount, string bc, string date, string price){
     if (amount < 1)
         return 0;
 
-    if ( historyArray == nullptr){
+    if (historyArray == nullptr) {
         historyArray = new History[10000];
     }
 
-    if( !remainingArray)
+    if ( !remainingArray)
         remainingArray = new Remaining[10000];
 
-    if( historyNum == 10000){
+    if (historyNum == 10000) {
         for(int i = 0; i < historyNum -1; i++){
             historyArray[i] = historyArray[i+1];
         }
+
         historyNum--;
     }
 
@@ -165,7 +166,7 @@ int Vegetable::sellVege(int amount, string customer, string date,
         historyArray = new History[10000];
     }
 
-    if ( historyNum == 10000) {
+    if (historyNum == 10000) {
         for(int i = 0; i < historyNum -1; i++) {
             historyArray[i] = historyArray[i+1];
         }

@@ -47,7 +47,20 @@ void SearchHistoryList:: editSearchHistory() {
     popup.layout()->addWidget(scrollArea);
 
     History* historyTemp = vegetable->getHistoryObject(historyPairs[this->currentRow()].second);
-    string label =  "[Date Sold | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+    string label =  "";
+
+    if (historyTemp->getType() == "Buy") {
+        label = "[Date Purchased | " + historyTemp->getDatePurchased() + "] [company | " + historyTemp -> getCompany() + "]";
+    } else if (historyTemp->getType() == "Sell") {
+        label = "[Date Sold | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+    } else if (historyTemp->getType() == "Dump") {
+        label = "[Date Dumped | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+    } else if (historyTemp->getType() == "Return") {
+        label = "[Date Returned | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+    } else if (historyTemp->getType() == "Tui") {
+        label = "[Date RT to Company | " + historyTemp->getDateSold() + "] [company | " + historyTemp -> getCompany() + "]";
+    }
+
     form -> addRow(new QLabel(QString::fromStdString(label)));
 
     // Price
