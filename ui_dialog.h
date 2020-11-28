@@ -90,7 +90,7 @@ public:
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
-        Dialog->resize(1197, 612);
+        Dialog->resize(1514, 612);
         verticalLayout_7 = new QVBoxLayout(Dialog);
         verticalLayout_7->setSpacing(6);
         verticalLayout_7->setContentsMargins(11, 11, 11, 11);

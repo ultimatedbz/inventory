@@ -9,7 +9,7 @@ Dialog::Dialog(QWidget *parent) :
     needSave(0),
     inventory(new Inventory()),
     currentVege(nullptr),
-    font("Courier",-1,QFont::Bold,false),
+    font("Courier",18,QFont::Bold,false),
     mTranslator(new Translator()),
     mAbbreviator(new Abbreviation()),
     menuBar(new IMenuBar(this,mTranslator)),
@@ -23,13 +23,13 @@ Dialog::Dialog(QWidget *parent) :
 
     ui->multiSellButton->hide();
     QList<int> sizes = ui->splitter_4->sizes();
-    sizes.replace(0,this->width() * 1/4);
-    sizes.replace(1,this->width() * 3/4);
+    sizes.replace(0,this->width() * 1/5);
+    sizes.replace(1,this->width() * 4/5);
     ui->splitter_4->setSizes(sizes);
 
     QList<int> sizes2 = ui->splitter_4->sizes();
-    sizes2.replace(0,this->width() * 3/4 * 5/8);
-    sizes2.replace(1,this->width() * 3/4 * 3/8);
+    sizes2.replace(0,this->width() * 4/5 * 11/16);
+    sizes2.replace(1,this->width() * 4/5 * 5/16);
     ui->splitter_3->setSizes(sizes2);
 
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
