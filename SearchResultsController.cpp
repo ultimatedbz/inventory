@@ -58,7 +58,7 @@ void SearchResultsController:: showSearchResults() {
         if (customer != "") {
             for (unsigned int j = 0; j < histories.size(); j++) {
                 pair<History*, int> history = histories[j];
-                if (customer != "" && customer == history.first->getCustomer()) {
+                if (customer == history.first->getCustomer()) {
                     matchingCustomer.push_back(history);
                 }
             }
@@ -71,7 +71,7 @@ void SearchResultsController:: showSearchResults() {
         if (company != "") {
             for (unsigned int j = 0; j < matchingCustomer.size(); j++) {
                 pair<History*, int> history = matchingCustomer[j];
-                if (company != "" && company == history.first->getCompany()) {
+                if (company == history.first->getCompany()) {
                     matchingCompany.push_back(history);
                 }
             }
@@ -140,6 +140,15 @@ void SearchResultsController:: showSearchResults() {
 }
 
 void SearchResultsController:: calculateHistory() {
+    string company = companyDrop->currentText().toUtf8().constData();
+    string customer = customerDrop->currentText().toUtf8().constData();
+    if (company != "" && customer != "") {
+        QMessageBox messageBox;
+        messageBox.critical(nullptr,"Error","Cannot calculate if you search both company and customer!");
+        messageBox.setFixedSize(500,200);
+        return;
+    }
+
     QPushButton* buttonSender = qobject_cast<QPushButton*>(sender()); // retrieve the button you have clicked
     for (int i = 0; i < calculateButtons.size(); i++) {
         if (buttonSender == calculateButtons[i]) {
