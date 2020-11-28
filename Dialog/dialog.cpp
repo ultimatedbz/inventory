@@ -74,8 +74,9 @@ Dialog::Dialog(QWidget *parent) :
 
     // Dark / Light mode
     lightPalette = qApp->palette();
-    lightStyleSheet = qApp->styleSheet();
-    lightStyle = qApp->style();
+    // This doesn't really work, idk why. It doesn't play well with darkstylesheet
+    //lightStyleSheet = qApp->styleSheet();
+    lightStyle = qApp->style()->objectName();
 
     darkPalette = QPalette();
     darkPalette.setColor(QPalette::Window, QColor(53,53,53));
@@ -89,10 +90,12 @@ Dialog::Dialog(QWidget *parent) :
     darkPalette.setColor(QPalette::ButtonText, Qt::white);
     darkPalette.setColor(QPalette::BrightText, Qt::red);
     darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+
     darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
 
-    darkStyleSheet = "QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }";
+    // Dark style sheet doesn't play well when switching between light and dark mode
+    //darkStyleSheet = "QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }";
     darkStyle = QStyleFactory::create("Fusion");
 
     QSettings settings("Company", "Inventory");
@@ -101,6 +104,8 @@ Dialog::Dialog(QWidget *parent) :
     } else {
         changeToDarkMode();
     }
+
+   // changeToDarkMode();
 }
 
 Dialog::~Dialog()
@@ -1516,21 +1521,19 @@ void Dialog::on_CalculateSold_clicked()
 }
 
 void Dialog::changeToDarkMode() {
-     QSettings settings("Company", "Inventory");
-     settings.setValue("Appearance", "Dark");
-     settings.sync();
-
-     qApp->setStyleSheet(darkStyleSheet);
-     qApp->setStyle(darkStyle);
-     qApp->setPalette(darkPalette);
+    QSettings settings("Company", "Inventory");
+    settings.setValue("Appearance", "Dark");
+    settings.sync();
+    //qApp->setStyleSheet(darkStyleSheet);
+    qApp->setStyle("Fusion");
+    qApp->setPalette(darkPalette);
 }
 
 void Dialog::changeToLightMode() {
-     QSettings settings("Company", "Inventory");
-     settings.setValue("Appearance", "Light");
-     settings.sync();
-
-     qApp->setStyleSheet(lightStyleSheet);
-     qApp->setStyle(lightStyle);
-     qApp->setPalette(lightPalette);
+    QSettings settings("Company", "Inventory");
+    settings.setValue("Appearance", "Light");
+    settings.sync();
+    //qApp->setStyleSheet(lightStyleSheet);
+    qApp->setStyle(lightStyle);
+    qApp->setPalette(lightPalette);
 }

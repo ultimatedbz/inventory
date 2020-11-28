@@ -99,9 +99,9 @@ public:
     QFont font;
     QPalette lightPalette;
     QPalette darkPalette;
-    QString lightStyleSheet;
-    QString darkStyleSheet;
-    QStyle* lightStyle;
+    //QString lightStyleSheet;
+    //QString darkStyleSheet;
+    QString lightStyle;
     QStyle* darkStyle;
 
 public slots:
