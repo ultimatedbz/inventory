@@ -117,7 +117,8 @@ void SearchHistoryList::calculateHistory()
     string dumps = "";
     string tuis = "";
 
-    string buyPrice = "--";
+    string buyPrice = "";
+    bool oneBuyPrice = true;
 
     Utils* utils = new Utils();
     for (int i = 0; i < historyPairs.size(); i++) {
@@ -148,7 +149,12 @@ void SearchHistoryList::calculateHistory()
                 totalSold += temp -> getDifference() * -1;
             } else if (temp -> getType() == "Buy") {
                 totalBoxes += temp -> getDifference();
-                buyPrice = temp->getPrice();
+                if (buyPrice == "" || buyPrice == temp->getPrice()) {
+                    buyPrice = temp->getPrice();
+                } else {
+                    oneBuyPrice = false;
+                    buyPrice = "Multiple: $" + buyPrice +" and $" + temp->getPrice();
+                }
             } else if (temp -> getType() == "Return") {
                 // No access to original price here.
                 //units += temp -> getDifference() * -1;
@@ -161,7 +167,21 @@ void SearchHistoryList::calculateHistory()
 
     breakdownLine += "\n";
     string boxesLine = "Total Boxes (Buy needs to be in history) | " + to_string(totalBoxes) + "\n";
-    string companyPriceLine = "Company Price | $" + buyPrice +"\n";
+
+    string totalPaidToCompany = "";
+    if (oneBuyPrice) {
+        if (buyPrice == "--") {
+            totalPaidToCompany = "--";
+        } else {
+            string companyPriceBreakdown = "    <---    " + to_string(totalBoxes) + " " + "Boxes X $" + buyPrice;
+            totalPaidToCompany = utils->doubleToString(stod(buyPrice) * totalBoxes) + companyPriceBreakdown;
+        }
+    } else {
+        totalPaidToCompany = buyPrice;
+    }
+
+    string companyPriceLine = "Company Price | $" + totalPaidToCompany +"\n";
+
     string thirdLine = "Revenue | $" + utils -> doubleToString(revenue) + "\n";
     string fourthLine = "Units sold | " + to_string(units) + " "+ vegetable->getUnit() +"\n";
 
@@ -195,6 +215,7 @@ void SearchHistoryList::calculateHistory()
     popup.layout()->addWidget(memo);
     popup.layout()->setMargin(0);
     memo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    popup.setBaseSize(400, 400);
 
     popup.exec();
 }

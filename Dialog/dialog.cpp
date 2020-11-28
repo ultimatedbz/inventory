@@ -1393,7 +1393,9 @@ void Dialog::on_CalculateSold_clicked()
 
         string dumps = "";
         string tuis = "";
-        string buyPrice = "--";
+
+        string buyPrice = "";
+        bool oneBuyPrice = true;
 
         Utils* utils = new Utils();
         for (int i = 0; i < currentVege -> getHistoryNum(); i++) {
@@ -1424,7 +1426,12 @@ void Dialog::on_CalculateSold_clicked()
                     totalSold += temp -> getDifference() * -1;
                 } else if (temp -> getType() == "Buy") {
                     totalBoxes += temp -> getDifference();
-                    buyPrice = temp->getPrice();
+                    if (buyPrice == "" || buyPrice == temp->getPrice()) {
+                        buyPrice = temp->getPrice();
+                    } else {
+                        oneBuyPrice = false;
+                        buyPrice = "Multiple: $" + buyPrice +" and $" + temp->getPrice();
+                    }
                 } else if (temp -> getType() == "Return") {
                     // No access to original price here.
                     //units += temp -> getDifference() * -1;
@@ -1437,7 +1444,21 @@ void Dialog::on_CalculateSold_clicked()
 
         breakdownLine += "\n";
         string boxesLine = "Total Boxes (Buy needs to be in history) | " + to_string(totalBoxes) + "\n";
-        string companyPriceLine = "Company Price | $" + buyPrice +"\n";
+
+        string totalPaidToCompany = "";
+        if (oneBuyPrice) {
+            if (buyPrice == "--") {
+                totalPaidToCompany = "--";
+            } else {
+                string companyPriceBreakdown = "    <---    " + to_string(totalBoxes) + " " + "Boxes X $" + buyPrice;
+                totalPaidToCompany = utils->doubleToString(stod(buyPrice) * totalBoxes) + companyPriceBreakdown;
+            }
+        } else {
+            totalPaidToCompany = buyPrice;
+        }
+
+        string companyPriceLine = "Company Price | $" + totalPaidToCompany +"\n";
+
         string thirdLine = "Revenue | $" + utils -> doubleToString(revenue) + "\n";
         string fourthLine = "Units sold | " + to_string(units) + " "+ currentVege->getUnit() +"\n";
 
