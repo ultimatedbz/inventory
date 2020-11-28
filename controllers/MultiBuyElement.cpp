@@ -30,6 +30,7 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
       vegeIndexToActual.push_back(i);
     }
   }
+
   vegeDrop->setFont(font);
   mForm->addRow(QString(mTranslator->translate("菜名子").c_str()), vegeDrop);
 

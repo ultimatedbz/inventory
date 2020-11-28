@@ -217,7 +217,6 @@ void Dialog::addVegetable(){
     if (dialog.exec() ==QDialog::Accepted) {
 
         if(!inventory->getUnitNum()){
-
             QMessageBox messageBox;
             messageBox.critical(nullptr,mTranslator ->translate("警告").c_str(),
                                 mTranslator ->translate("沒單位!").c_str());
@@ -1437,11 +1436,13 @@ void Dialog::on_CalculateSold_clicked()
 
         string buyPrice = "";
         bool oneBuyPrice = true;
+        bool hasResults = false;
 
         Utils* utils = new Utils();
         for (int i = 0; i < currentVege -> getHistoryNum(); i++) {
             History* temp = currentVege -> getHistoryObject(i);
             if (temp -> getDatePurchased() == datePurchased && temp -> getCompany() == company) {
+                hasResults = true;
                 if (temp -> getType() == "Sell") {
                     if (temp -> getPrice() == "--") {
                         noPrices += "No Price: " + to_string(temp -> getDifference() * -1) + " " + temp->getPrice() + "  " + temp->getCustomer() + " " + temp -> getDateSold() + "\n";
@@ -1481,6 +1482,13 @@ void Dialog::on_CalculateSold_clicked()
                     returnedLine += "    " + to_string(temp -> getDifference()) + " " + currentVege -> getUnit() + " " + temp -> getCustomer() + " " + temp -> getDateSold() + "\n";
                 }
             }
+        }
+
+        if (!hasResults) {
+            QMessageBox messageBox;
+            messageBox.critical(nullptr,mTranslator ->translate("警告").c_str(), "No results!");
+            messageBox.setFixedSize(500,200);
+            return;
         }
 
         breakdownLine += "\n";
