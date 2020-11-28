@@ -66,7 +66,10 @@ Dialog::Dialog(QWidget *parent) :
     vFont.setPixelSize(18);
     ui->vegeList->setFont(vFont);
 
-    if(mTranslator->currentLanguage == CHINESE) {
+    QSettings settings("Company", "Inventory");
+
+    // Set language
+    if (settings.value("Language", "Chinese") == "Chinese") {
         changeToChinese();
     } else {
         changeToEnglish();
@@ -98,7 +101,7 @@ Dialog::Dialog(QWidget *parent) :
     //darkStyleSheet = "QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }";
     darkStyle = QStyleFactory::create("Fusion");
 
-    QSettings settings("Company", "Inventory");
+
     if (settings.value("Appearance", "Light") == "Light") {
         changeToLightMode();
     } else {
@@ -1181,18 +1184,21 @@ void Dialog:: undoHistory(){
     }
 }
 
-void Dialog::changeToEnglish(){
+void Dialog::changeToEnglish() {
+    QSettings settings("Company", "Inventory");
+    settings.setValue("Language", "English");
     mTranslator ->changeLanguage(ENGLISH);
     changeLanguage();
 }
 
-void Dialog::changeToChinese(){
+void Dialog::changeToChinese() {
+    QSettings settings("Company", "Inventory");
+    settings.setValue("Language", "Chinese");
     mTranslator ->changeLanguage(CHINESE);
     changeLanguage();
 }
 
-void Dialog::changeLanguage(){
-
+void Dialog::changeLanguage() {
     menuBar->changeLanguage();
 
     ui->Buy->setText((mTranslator ->translate("買")).c_str());
