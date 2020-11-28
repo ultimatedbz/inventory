@@ -27,34 +27,35 @@ using namespace std;
 
 Vegetable::Vegetable()  :
     vegetableName(""),
-    historyArray(NULL),
+    historyArray(nullptr),
     totalVeges(0),
     historyNum(0),
     unit(""),
-    remainingArray(NULL),
+    remainingArray(nullptr),
     remainingNum(0),
-    returnArray(NULL),
+    returnArray(nullptr),
     returnNum(0),
     memo(""),
     tuiNum(0),
-    tuiArray(NULL){}
+    tuiArray(nullptr){}
 
 Vegetable::Vegetable(string name, string u)
     : vegetableName(name),
-      historyArray(NULL),
+      historyArray(nullptr),
       totalVeges(0),
       historyNum(0),
       unit(u),
-      remainingArray(NULL),
+      remainingArray(nullptr),
       remainingNum(0),
-      returnArray(NULL),
+      returnArray(nullptr),
       returnNum(0),
       memo(""),
       tuiNum(0),
-      tuiArray(NULL)
+      tuiArray(nullptr)
 {
 }
-Vegetable::~Vegetable(){
+
+Vegetable::~Vegetable() {
 }
 
 /* Getters*/
@@ -349,11 +350,11 @@ int Vegetable::returnTo(int amount, string date, int selection) {
     string dp = remainingArray[selection].getDate();
     string bc = remainingArray[selection].getCompany();
     int returnChange = 0;
-    if (historyArray == NULL) {
+    if (historyArray == nullptr) {
         historyArray = new History[10000];
     }
 
-    if (tuiArray == NULL) {
+    if (tuiArray == nullptr) {
         tuiArray = new ReturnTo[10000];
     }
 
@@ -838,7 +839,7 @@ void Vegetable::setUpTrans(Abbreviation abb){
 
 /* Need to push back another one */
 void Vegetable::transBuy(Abbreviation abb){
-    if(transactions.size() < remainingNum){
+    if (transactions.size() < remainingNum){
         transactions.push_back(vector<string>());
         transactions[transactions.size() - 1]
                 .push_back(formatRemaining3(remainingNum - 1, abb) + " ");
@@ -923,10 +924,10 @@ vector<vector<string> > Vegetable::getTransactions(){
     return transactions;
 }
 
-string Vegetable::transByIndex(int index){
+string Vegetable::transByIndex(int index) {
     string product = "";
     /* Adds one transaction at a time */
-    for(int i = 0; i < transactions[index].size(); i++){
+    for (unsigned int i = 0; i < transactions[index].size(); i++) {
         /* If one more than a factor of 3, add tabs */
         if( i > 1 && !( (i - 1) % 3))
             product = product + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" +
@@ -977,13 +978,13 @@ string Vegetable::formatTransaction(Abbreviation abb){
     sprintf(buffer, "%d/%d", now->tm_mon+1, now->tm_mday);
     string today = buffer;
 
-    /* Copy the remaining array over */
+    // Copy the remaining array over
     for(int i = 0; i < remainingNum; i++){
         temp.buyVege(remainingArray[i].getRemaining(), remainingArray[i].getCompany(),
                      remainingArray[i].getDate(),remainingArray[i].getPrice());
     }
 
-    /* Revert to yesterday's */
+    // Revert to yesterday's
     for(int i = historyNum - 1; i >= 0; i--){
         if(historyArray[i].getDateToCompare() == today){
 
@@ -1012,10 +1013,10 @@ string Vegetable::formatTransaction(Abbreviation abb){
         }
     }
 
-    /* set up temp as yesterday */
+    // set up temp as yesterday
     temp.setUpTrans(abb);
 
-    /* Sell stuff, Add new if buy */
+    // Sell stuff, Add new if buy
     for(int i = 0; i < historyNum; i++){
         if(historyArray[i].getDateToCompare() == today){
 
@@ -1044,36 +1045,37 @@ string Vegetable::formatTransaction(Abbreviation abb){
         }
     }
 
-    /* Tells how many lines to print for transactions */
+    // Tells how many lines to print for transactions
     mTransNum  = 0;
 
     string product = "";
-    /* Go through temp's transactions vector and print out all transactions */
+    // Go through temp's transactions vector and print out all transactions
     for(int i = 0; i < temp.getTransNum(); i++){
         product = product + temp.transByIndex(i);
     }
 
-    /* Update mTransNum */
+    // Update mTransNum
     vector<vector<string> > temp2 = temp.getTransactions();
-    for(int i = 0; i < temp2.size(); i++){
-        /* temp2[i] includes the initial formatremain3 */
-        if(!((temp2[i].size() - 1) % 3))
+    for(int i = 0; i < temp2.size(); i++) {
+        // temp2[i] includes the initial formatremain3
+        if (!((temp2[i].size() - 1) % 3))
             mTransNum += (temp2[i].size() - 1) / 3;
-        else{
+        else {
             mTransNum += (temp2[i].size() - 1) / 3 + 1;
             //product = product + "\n"; // Only add new line if not divisible by 3
         }
-        if(temp2[i].size() == 1)
+
+        if (temp2[i].size() == 1)
             mTransNum++;
     }
 
     return product;
 }
 
-string Vegetable:: padding( string word){
+string Vegetable:: padding( string word) {
     string product = "";
     int num = 0;
-    for(int i = 0; i < word.size(); i ++){
+    for (int i = 0; i < word.size(); i ++) {
         char x = word[i];
         if( x < 0 && (x & 0x40)){
             product = product + " ";
@@ -1087,8 +1089,8 @@ string Vegetable:: padding( string word){
     return product;
 }
 
-/* Called on actual vegetable object, used by dialog */
-int Vegetable::getMTransNum(){
+// Called on actual vegetable object, used by dialog
+int Vegetable::getMTransNum() {
     return mTransNum;
 }
 

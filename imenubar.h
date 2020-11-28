@@ -22,6 +22,8 @@ public slots:
     void printTransactions();
     void changeToEnglish();
     void changeToChinese();
+    void changeToDarkMode();
+    void changeToLightMode();
     void showPreferences();
 
     void addVegetable();
@@ -61,6 +63,8 @@ private:
     QAction *changeToChineseAction;
     QAction *changeToEnglishAction;
     QAction *mShowPreferencesAction;
+    QAction *changeToDarkModeAction;
+    QAction *changeToLightModeAction;
     QWidget* parent;
 };
 

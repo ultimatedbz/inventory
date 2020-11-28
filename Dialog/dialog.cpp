@@ -71,6 +71,36 @@ Dialog::Dialog(QWidget *parent) :
     } else {
         changeToEnglish();
     }
+
+    // Dark / Light mode
+    lightPalette = qApp->palette();
+    lightStyleSheet = qApp->styleSheet();
+    lightStyle = qApp->style();
+
+    darkPalette = QPalette();
+    darkPalette.setColor(QPalette::Window, QColor(53,53,53));
+    darkPalette.setColor(QPalette::WindowText, Qt::white);
+    darkPalette.setColor(QPalette::Base, QColor(25,25,25));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+    darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+    darkPalette.setColor(QPalette::Text, Qt::white);
+    darkPalette.setColor(QPalette::Button, QColor(53,53,53));
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);
+    darkPalette.setColor(QPalette::BrightText, Qt::red);
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+    darkStyleSheet = "QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }";
+    darkStyle = QStyleFactory::create("Fusion");
+
+    QSettings settings("Company", "Inventory");
+    if (settings.value("Appearance", "Light") == "Light") {
+        changeToLightMode();
+    } else {
+        changeToDarkMode();
+    }
 }
 
 Dialog::~Dialog()
@@ -1483,4 +1513,24 @@ void Dialog::on_CalculateSold_clicked()
 
         ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + boxesLine + companyPriceLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
     }
+}
+
+void Dialog::changeToDarkMode() {
+     QSettings settings("Company", "Inventory");
+     settings.setValue("Appearance", "Dark");
+     settings.sync();
+
+     qApp->setStyleSheet(darkStyleSheet);
+     qApp->setStyle(darkStyle);
+     qApp->setPalette(darkPalette);
+}
+
+void Dialog::changeToLightMode() {
+     QSettings settings("Company", "Inventory");
+     settings.setValue("Appearance", "Light");
+     settings.sync();
+
+     qApp->setStyleSheet(lightStyleSheet);
+     qApp->setStyle(lightStyle);
+     qApp->setPalette(lightPalette);
 }

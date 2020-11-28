@@ -72,6 +72,8 @@ public:
     void saveAs();
     void changeToEnglish();
     void changeToChinese();
+    void changeToDarkMode();
+    void changeToLightMode();
     void showPreferences();
 
     void addVegetable();
@@ -95,6 +97,12 @@ public:
     Ui::Dialog *ui;
     int needSave;
     QFont font;
+    QPalette lightPalette;
+    QPalette darkPalette;
+    QString lightStyleSheet;
+    QString darkStyleSheet;
+    QStyle* lightStyle;
+    QStyle* darkStyle;
 
 public slots:
 

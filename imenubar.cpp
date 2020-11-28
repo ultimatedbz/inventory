@@ -12,7 +12,6 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     setFixedHeight(25);
     setFixedWidth(2000);
     QMenu* fileMenu = addMenu("File");
-
     QMenu* editMenu = addMenu("Edit");
 
     newAction = fileMenu->addAction(mTranslator ->translate("開新檔案").c_str());
@@ -30,6 +29,7 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
 
     fileMenu->addSeparator();
     QMenu* translateMenu = fileMenu->addMenu(tr("Translate"));
+    QMenu* appearanceMenu = fileMenu->addMenu(tr("Appearance"));
 
     addPersonAction = editMenu->addAction(mTranslator ->translate("加入新客戶").c_str());
     addCompanyAction = editMenu->addAction(mTranslator ->translate("加入新公司").c_str());
@@ -41,6 +41,8 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     removeUnitAction = editMenu->addAction(mTranslator ->translate("刪掉單位").c_str());
     changeToEnglishAction = translateMenu->addAction("English");
     changeToChineseAction = translateMenu->addAction("中文");
+    changeToDarkModeAction = appearanceMenu->addAction("Dark Mode");
+    changeToLightModeAction = appearanceMenu->addAction("Light Mode");
 
     mShowPreferencesAction = new QAction(tr("&Preferences"), this);
     mShowPreferencesAction->setShortcuts(QKeySequence::Preferences);
@@ -57,6 +59,8 @@ IMenuBar::IMenuBar(QWidget* p, Translator* trans):
     connect(printAction3, SIGNAL(triggered()), this, SLOT(printTransactions()));
     connect(changeToEnglishAction, SIGNAL(triggered()), this, SLOT(changeToEnglish()));
     connect(changeToChineseAction, SIGNAL(triggered()), this, SLOT(changeToChinese()));
+    connect(changeToDarkModeAction, SIGNAL(triggered()), this, SLOT(changeToDarkMode()));
+    connect(changeToLightModeAction, SIGNAL(triggered()), this, SLOT(changeToLightMode()));
 
     connect(addVegetableAction, SIGNAL(triggered()), this, SLOT(addVegetable()));
     connect(addPersonAction, SIGNAL(triggered()), this, SLOT(addPerson()));
@@ -122,6 +126,14 @@ void IMenuBar:: changeToEnglish(){
 
 void IMenuBar:: changeToChinese(){
     ((Dialog* ) parent) -> changeToChinese();
+}
+
+void IMenuBar:: changeToDarkMode(){
+    ((Dialog* ) parent) -> changeToDarkMode();
+}
+
+void IMenuBar:: changeToLightMode(){
+    ((Dialog* ) parent) -> changeToLightMode();
 }
 
 void IMenuBar::showPreferences(){
