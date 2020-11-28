@@ -215,7 +215,7 @@ void SearchHistoryList::calculateHistory()
     popup.layout()->addWidget(memo);
     popup.layout()->setMargin(0);
     memo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    popup.setBaseSize(400, 400);
+    popup.setBaseSize(500, 500);
 
     popup.exec();
 }
