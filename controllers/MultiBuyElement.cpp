@@ -32,18 +32,25 @@ MultiBuyElement::MultiBuyElement(int index, MultiBuyController* c, Inventory* i,
   }
 
   vegeDrop->setFont(font);
-  mForm->addRow(QString(mTranslator->translate("菜名子").c_str()), vegeDrop);
+  QString vegeLabel = QString(mTranslator->translate("菜名子").c_str());
+  QLabel* qVegeLabel = new QLabel(vegeLabel);
+  qVegeLabel->setFont(font);
+  mForm->addRow(qVegeLabel, vegeDrop);
 
   /* Amount */
   amount = new QLineEdit();
   QString label5 = QString(mTranslator->translate("買了多少?").c_str());
-  mForm->addRow(label5, amount);
+  QLabel* qlabel5 = new QLabel(label5);
+  qlabel5->setFont(font);
+  mForm->addRow(qlabel5, amount);
 
   /* Price */
   price = new QLineEdit();
 
   QString label6 = QString(mTranslator->translate("進價多少?").c_str());
-  mForm->addRow(label6, price);
+  QLabel* qlabel6 = new QLabel(label6);
+  qlabel6->setFont(font);
+  mForm->addRow(qlabel6, price);
 
 }
 

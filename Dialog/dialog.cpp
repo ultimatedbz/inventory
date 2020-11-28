@@ -9,7 +9,7 @@ Dialog::Dialog(QWidget *parent) :
     needSave(0),
     inventory(new Inventory()),
     currentVege(nullptr),
-    font("Courier",18,QFont::Bold,false),
+    font("Courier",16,QFont::Bold,false),
     mTranslator(new Translator()),
     mAbbreviator(new Abbreviation()),
     menuBar(new IMenuBar(this,mTranslator)),
@@ -28,8 +28,8 @@ Dialog::Dialog(QWidget *parent) :
     ui->splitter_4->setSizes(sizes);
 
     QList<int> sizes2 = ui->splitter_4->sizes();
-    sizes2.replace(0,this->width() * 4/5 * 11/16);
-    sizes2.replace(1,this->width() * 4/5 * 5/16);
+    sizes2.replace(0,this->width() * 4/5 * 10/16);
+    sizes2.replace(1,this->width() * 4/5 * 6/16);
     ui->splitter_3->setSizes(sizes2);
 
     ui->vegeList->setContextMenuPolicy(Qt::ActionsContextMenu);
