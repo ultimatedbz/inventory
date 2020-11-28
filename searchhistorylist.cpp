@@ -117,6 +117,8 @@ void SearchHistoryList::calculateHistory()
     string dumps = "";
     string tuis = "";
 
+    string buyPrice = "--";
+
     Utils* utils = new Utils();
     for (int i = 0; i < historyPairs.size(); i++) {
         History* temp = historyPairs[i].first;
@@ -146,6 +148,7 @@ void SearchHistoryList::calculateHistory()
                 totalSold += temp -> getDifference() * -1;
             } else if (temp -> getType() == "Buy") {
                 totalBoxes += temp -> getDifference();
+                buyPrice = temp->getPrice();
             } else if (temp -> getType() == "Return") {
                 // No access to original price here.
                 //units += temp -> getDifference() * -1;
@@ -158,6 +161,7 @@ void SearchHistoryList::calculateHistory()
 
     breakdownLine += "\n";
     string boxesLine = "Total Boxes (Buy needs to be in history) | " + to_string(totalBoxes) + "\n";
+    string companyPriceLine = "Company Price | $" + buyPrice +"\n";
     string thirdLine = "Revenue | $" + utils -> doubleToString(revenue) + "\n";
     string fourthLine = "Units sold | " + to_string(units) + " "+ vegetable->getUnit() +"\n";
 
@@ -185,8 +189,7 @@ void SearchHistoryList::calculateHistory()
     popup.setWindowTitle("Calculate");
 
     QTextEdit* memo = new QTextEdit();
-    memo->setText(QString::fromStdString(firstLine + secondLine + boxesLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
-    qDebug() << QString::fromStdString(firstLine + secondLine + boxesLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine);
+    memo->setText(QString::fromStdString(firstLine + secondLine + boxesLine + companyPriceLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
 
     QFormLayout *dialog_layout = new QFormLayout(&popup);
     popup.setLayout(dialog_layout);

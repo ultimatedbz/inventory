@@ -1393,6 +1393,7 @@ void Dialog::on_CalculateSold_clicked()
 
         string dumps = "";
         string tuis = "";
+        string buyPrice = "--";
 
         Utils* utils = new Utils();
         for (int i = 0; i < currentVege -> getHistoryNum(); i++) {
@@ -1423,6 +1424,7 @@ void Dialog::on_CalculateSold_clicked()
                     totalSold += temp -> getDifference() * -1;
                 } else if (temp -> getType() == "Buy") {
                     totalBoxes += temp -> getDifference();
+                    buyPrice = temp->getPrice();
                 } else if (temp -> getType() == "Return") {
                     // No access to original price here.
                     //units += temp -> getDifference() * -1;
@@ -1435,6 +1437,7 @@ void Dialog::on_CalculateSold_clicked()
 
         breakdownLine += "\n";
         string boxesLine = "Total Boxes (Buy needs to be in history) | " + to_string(totalBoxes) + "\n";
+        string companyPriceLine = "Company Price | $" + buyPrice +"\n";
         string thirdLine = "Revenue | $" + utils -> doubleToString(revenue) + "\n";
         string fourthLine = "Units sold | " + to_string(units) + " "+ currentVege->getUnit() +"\n";
 
@@ -1457,6 +1460,6 @@ void Dialog::on_CalculateSold_clicked()
 
         string totalSoldLine = "Total sold | " + to_string(totalSold) + " "+ currentVege->getUnit() +"\n";
 
-        ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + boxesLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
+        ui ->Memo_2->setText(QString::fromStdString(firstLine + secondLine + boxesLine + companyPriceLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
     }
 }
