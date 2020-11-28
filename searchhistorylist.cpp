@@ -165,7 +165,6 @@ void SearchHistoryList::calculateHistory()
     string thirdLine = "Revenue | $" + utils -> doubleToString(revenue) + "\n";
     string fourthLine = "Units sold | " + to_string(units) + " "+ vegetable->getUnit() +"\n";
 
-
     int remaining = 0;
 
     for (int i = 0; i < vegetable -> getRemainingNum(); i++) {
@@ -191,10 +190,11 @@ void SearchHistoryList::calculateHistory()
     QTextEdit* memo = new QTextEdit();
     memo->setText(QString::fromStdString(firstLine + secondLine + boxesLine + companyPriceLine + thirdLine + fourthLine + totalSoldLine + fifthLine + breakdownLine + "\n" + noPrices + dumps + tuis + returnedLine));
 
-    QFormLayout *dialog_layout = new QFormLayout(&popup);
+    QVBoxLayout *dialog_layout = new QVBoxLayout(&popup);
     popup.setLayout(dialog_layout);
     popup.layout()->addWidget(memo);
+    popup.layout()->setMargin(0);
+    memo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-//    popup.show();
     popup.exec();
 }
