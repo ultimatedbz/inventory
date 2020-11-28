@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 #include "dialog.h"
+#include "searchhistorylist.h"
 
 class Inventory;
 
@@ -25,6 +26,7 @@ signals:
 
 public slots:
   void showSearchResults();
+  void calculateHistory();
 
 private:
 
@@ -39,6 +41,8 @@ private:
   QComboBox* companyDrop;
   QComboBox* customerDrop;
   Dialog* mainDialog;
+  vector<QPushButton*> calculateButtons;
+  vector<SearchHistoryList*> searchHistoryLists;
 };
 
 

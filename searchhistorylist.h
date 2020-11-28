@@ -14,10 +14,14 @@ class SearchHistoryList : public QListWidget
 {
     Q_OBJECT
 public:
-    SearchHistoryList(Vegetable* v, Dialog* d, vector<pair<History*, int>> hp);
+    SearchHistoryList(Vegetable* v, Dialog* d, vector<pair<History*, int>> hp, string dayPurchased, string company);
     Vegetable* vegetable;
     Dialog* dialog;
     vector<pair<History*, int>> historyPairs;
+    void calculateHistory();
+    // Used for calculate
+    string datePurchased;
+    string company;
 
 public slots:
     void editSearchHistory();

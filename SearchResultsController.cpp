@@ -18,7 +18,8 @@ SearchResultsController::SearchResultsController(Inventory* inventory,
   customerDrop(customerDropp),
   mainDialog(md)
 {
-
+    calculateButtons = vector<QPushButton*>();
+    searchHistoryLists = vector<SearchHistoryList*>();
 }
 
 SearchResultsController::~SearchResultsController()
@@ -88,9 +89,10 @@ void SearchResultsController:: showSearchResults() {
                     matchingDates.push_back(history);
                 }
             } else if (history.first->getType() == "Sell" || history.first->getType() == "Tui" || history.first->getType() == "Return" || history.first->getType() == "Dump") {
-                // need to check if customer or if company. and add more dates
+                // If searched a customer, check against date sold
                 if (date == history.first->getDateSold() && customer != "") {
                     matchingDates.push_back(history);
+                // If searched a company, check against date purchased
                 } else if (date == history.first->getDatePurchased() && company != "") {
                     matchingDates.push_back(history);
                 }
@@ -105,11 +107,17 @@ void SearchResultsController:: showSearchResults() {
 
         // Adds the history item here
         auto * anyLayout = new QVBoxLayout();
-        SearchHistoryList* historyList = new SearchHistoryList(vegetable, mainDialog, matchingDates);
+        SearchHistoryList* historyList = new SearchHistoryList(vegetable, mainDialog, matchingDates, date, company);
         historyList->setBaseSize(700, 100);
         historyList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         anyLayout->addWidget(historyList);
+        searchHistoryLists.push_back(historyList);
 
+        QPushButton* calculateButton = new QPushButton();
+        calculateButton->setText("Calculate");
+        anyLayout->addWidget(calculateButton);
+        calculateButtons.push_back(calculateButton);
+        QObject::connect(calculateButton, SIGNAL(clicked()),this, SLOT(calculateHistory()));
 
         CollapsibleSection* collapsibleSection = new CollapsibleSection(QString(vegetable->getVegetablename().c_str()), 300, nullptr);
         collapsibleSection->setContentLayout(*anyLayout);
@@ -128,5 +136,14 @@ void SearchResultsController:: showSearchResults() {
         messageBox.critical(nullptr,"Error","No results!");
         messageBox.setFixedSize(500,200);
         return;
+    }
+}
+
+void SearchResultsController:: calculateHistory() {
+    QPushButton* buttonSender = qobject_cast<QPushButton*>(sender()); // retrieve the button you have clicked
+    for (int i = 0; i < calculateButtons.size(); i++) {
+        if (buttonSender == calculateButtons[i]) {
+            searchHistoryLists[i]->calculateHistory();
+        }
     }
 }
