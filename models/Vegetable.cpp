@@ -1094,6 +1094,13 @@ int Vegetable::getMTransNum(){
 
 void Vegetable:: editHistoryPrice(int index, string newPrice) {
     historyArray[index].price = newPrice;
+    History historyTemp = historyArray[index];
+    for (int i = 0; i < remainingNum; i++) {
+        Remaining remainingTemp = remainingArray[i];
+        if (remainingTemp.getDate() == historyTemp.getDatePurchased() && remainingTemp.getCompany() == historyTemp.getCompany()) {
+            remainingArray[i].price = newPrice;
+        }
+    }
 }
 
 

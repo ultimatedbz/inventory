@@ -1015,7 +1015,7 @@ void Dialog:: deleteVege(){
 }
 
 void Dialog:: editHistory(){
-    if(currentVege && currentVege->getHistoryNum()){
+    if(currentVege && currentVege->getHistoryNum()) {
         if(!(ui->sellCheck->isChecked() && ui->buyCheck->isChecked()
              && ui->dumpCheck->isChecked() && ui->returnCheck->isChecked()
              && ui->tuiCheck->isChecked())){

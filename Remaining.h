@@ -30,13 +30,13 @@ public:
   string formatRemaining3(Abbreviation abb);
   void returned(int amount, string bc, string date);
   void load(fstream* fio);
+  string price;
 
 private:
   string dayPurchased;
   string company;
   int remaining;
   int returnNum;
-  string price;
   string padding(string word);
   string removeYear(string word);
   Utils* utils;
