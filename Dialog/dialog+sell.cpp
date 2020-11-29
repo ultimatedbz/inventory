@@ -77,6 +77,7 @@ void Dialog::on_Sell_clicked() {
         dialog_layout->addRow(hLay);
 
         dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
+        dialog.window()->setBaseSize(dialog.window()->sizeHint().width() + 100, dialog.window()->sizeHint().height() + 100);
 
         QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
         QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));

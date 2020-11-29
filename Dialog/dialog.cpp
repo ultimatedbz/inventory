@@ -1410,7 +1410,6 @@ void Dialog::on_CalculateSold_clicked()
 
     //Add the viewport to the scroll area
     QScrollArea *scrollArea = new QScrollArea;
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     //Create a widget and set its layout as your new layout created above
     QWidget *viewport = new QWidget(&dialog);
