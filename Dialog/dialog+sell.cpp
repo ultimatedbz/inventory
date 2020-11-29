@@ -15,7 +15,7 @@ void Dialog::on_Sell_clicked() {
         //Add the viewport to the scroll area
         QScrollArea *scrollArea = new QScrollArea;
         scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        scrollArea->setMinimumHeight(600);
+        scrollArea->setMinimumHeight(900);
 
         //Create a widget and set its layout as your new layout created above
         QWidget *viewport = new QWidget(&dialog);
