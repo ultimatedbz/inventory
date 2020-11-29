@@ -42,17 +42,29 @@ IMenuBar::IMenuBar(QFont f, QWidget* p, Translator* trans):
     QMenu* appearanceMenu = fileMenu->addMenu(tr("Appearance"));
 
     addPersonAction = editMenu->addAction(mTranslator ->translate("加入新客戶").c_str());
+    addPersonAction->setFont(font);
     addCompanyAction = editMenu->addAction(mTranslator ->translate("加入新公司").c_str());
+    addCompanyAction->setFont(font);
     addVegetableAction = editMenu->addAction(mTranslator ->translate("加入新的菜名").c_str());
+    addVegetableAction->setFont(font);
     addUnitAction = editMenu->addAction(mTranslator ->translate("加入單位").c_str());
+    addUnitAction->setFont(font);
     removePersonAction = editMenu->addAction(mTranslator ->translate("刪除客戶").c_str());
+    removePersonAction->setFont(font);
     removeCompanyAction = editMenu->addAction(mTranslator ->translate("刪除公司").c_str());
+    removeCompanyAction->setFont(font);
     removeVegetableAction = editMenu->addAction(mTranslator ->translate("刪掉菜名").c_str());
+    removeVegetableAction->setFont(font);
     removeUnitAction = editMenu->addAction(mTranslator ->translate("刪掉單位").c_str());
+    removeUnitAction->setFont(font);
     changeToEnglishAction = translateMenu->addAction("English");
+    changeToEnglishAction->setFont(font);
     changeToChineseAction = translateMenu->addAction("中文");
+    changeToChineseAction->setFont(font);
     changeToDarkModeAction = appearanceMenu->addAction("Dark Mode");
+    changeToDarkModeAction->setFont(font);
     changeToLightModeAction = appearanceMenu->addAction("Light Mode");
+    changeToLightModeAction->setFont(font);
 
     mShowPreferencesAction = new QAction(tr("&Preferences"), this);
     mShowPreferencesAction->setShortcuts(QKeySequence::Preferences);
