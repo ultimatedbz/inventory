@@ -15,9 +15,11 @@ void Dialog::on_Sell_clicked() {
         //Add the viewport to the scroll area
         QScrollArea *scrollArea = new QScrollArea;
         scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        scrollArea->setMinimumHeight(600);
 
         //Create a widget and set its layout as your new layout created above
         QWidget *viewport = new QWidget(&dialog);
+        viewport->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         scrollArea->setWidget(viewport);
         scrollArea->setWidgetResizable(true);
 
@@ -77,7 +79,7 @@ void Dialog::on_Sell_clicked() {
         dialog_layout->addRow(hLay);
 
         dialog.window()->setFixedWidth(dialog.window()->sizeHint().width() + 100);
-        dialog.window()->setBaseSize(dialog.window()->sizeHint().width() + 100, dialog.window()->sizeHint().height() + 100);
+        //dialog.window()->setBaseSize(dialog.window()->sizeHint().width() + 100, dialog.window()->sizeHint().height() + 100);
 
         QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
         QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
@@ -119,7 +121,7 @@ void Dialog::on_Sell_clicked() {
                 sort(indexToPrice.begin(),indexToPrice.end(),myobject);
 
                 /* Sell the remainIndexes, greatest to least */
-                for(vector<pair<int,int> >::iterator it = indexToPrice.begin(); it != indexToPrice.end(); it++){
+                for(vector<pair<int,int> >::iterator it = indexToPrice.begin(); it != indexToPrice.end(); it++) {
 
                     inventory->getVegetableByIndex(vegeIndex)->sellVege(
                                 (*it).second, customer, date->text().toStdString(),
