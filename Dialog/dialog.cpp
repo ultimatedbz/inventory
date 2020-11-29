@@ -935,10 +935,16 @@ void Dialog::on_dumpButton_clicked()
         }
         remainingDrop->setFont(font);
 
-        form.addRow(mTranslator->translate("你要倒那天的菜？").c_str(), remainingDrop);
+        QString label1 = QString(mTranslator->translate("你要倒那天的菜？").c_str());
+        QLabel* qlabel1 = new QLabel(label1);
+        qlabel1->setFont(font);
+        form.addRow(qlabel1, remainingDrop);
 
         QLineEdit *lineEdit = new QLineEdit(&dialog);
-        form.addRow(new QLabel(mTranslator->translate("倒幾箱？").c_str()));
+        QString label2 = QString(mTranslator->translate("倒幾箱？").c_str());
+        QLabel* qlabel2 = new QLabel(label2);
+        qlabel2->setFont(font);
+        form.addRow(qlabel2);
         form.addRow(lineEdit);
 
 
@@ -1393,7 +1399,9 @@ void Dialog::on_CalculateSold_clicked()
     companyDrop->setFont(font);
 
     QString label2 = QString(mTranslator->translate("哪家公司的?").c_str());
-    form->addRow(label2, companyDrop);
+    QLabel* qlabel2 = new QLabel(label2);
+    qlabel2->setFont(font);
+    form->addRow(qlabel2, companyDrop);
 
     /* Date */
     QLineEdit *date = new QLineEdit(&dialog);
@@ -1403,8 +1411,9 @@ void Dialog::on_CalculateSold_clicked()
     sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
     date -> setText(QString::fromUtf8(buffer));
     QString label4 = QString(mTranslator->translate("幾號來的菜?").c_str());
-    form->addRow(label4, date);
-
+    QLabel* qlabel4 = new QLabel(label4);
+    qlabel4->setFont(font);
+    form->addRow(qlabel4, date);
 
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
                                Qt::Horizontal, &dialog);
