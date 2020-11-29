@@ -61,10 +61,7 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
             this, SLOT(ListWidgetEditEnd(QWidget*, QAbstractItemDelegate::EndEditHint)));
 
-
-    QFont vFont = font;
-    vFont.setPixelSize(18);
-    ui->vegeList->setFont(vFont);
+    ui->vegeList->setFont(font);
 
     QSettings settings("Company", "Inventory");
 
@@ -632,9 +629,7 @@ void Dialog::loadFile() {
                 ui->vegeList->item(i)->setFlags (ui->vegeList->item(i)->flags()| Qt::ItemIsEditable);
             }
 
-            QFont vFont = font;
-            vFont.setPixelSize(18);
-            ui->vegeList->setFont(vFont);
+            ui->vegeList->setFont(font);
             ui->vegeList->item(0)->setSelected(true);
             ui->vegeList->setCurrentRow(0);
             on_vegeList_itemClicked(ui->vegeList->item(0));
