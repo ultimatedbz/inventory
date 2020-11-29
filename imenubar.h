@@ -5,12 +5,13 @@
 //#include "dialog.h"
 #include "translator.h"
 
-class IMenuBar : public QMenuBar{
+class IMenuBar : public QMenuBar {
     Q_OBJECT
 
 public:
-    explicit IMenuBar(QWidget* parent = NULL, Translator* trans = NULL);
+    explicit IMenuBar(QFont f, QWidget* parent = NULL, Translator* trans = NULL);
     Translator* mTranslator;
+    QFont font;
     void changeLanguage();
 public slots:
     void newFile();

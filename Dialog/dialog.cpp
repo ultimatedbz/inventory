@@ -12,7 +12,7 @@ Dialog::Dialog(QWidget *parent) :
     font("Courier",16,QFont::Bold,false),
     mTranslator(new Translator()),
     mAbbreviator(new Abbreviation()),
-    menuBar(new IMenuBar(this,mTranslator)),
+    menuBar(new IMenuBar(font, this,mTranslator)),
     utils(new Utils())
 {
     ui->setupUi(this);

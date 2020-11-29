@@ -4,15 +4,18 @@
 #include "dialog.h"
 
 
-IMenuBar::IMenuBar(QWidget* p, Translator* trans):
+IMenuBar::IMenuBar(QFont f, QWidget* p, Translator* trans):
         QMenuBar(p),
-        parent(p),
-        mTranslator(trans){
+        font(f),
+        mTranslator(trans),
+        parent(p) {
 
     setFixedHeight(40);
     setFixedWidth(2000);
     QMenu* fileMenu = addMenu("File");
+    fileMenu->setFont(font);
     QMenu* editMenu = addMenu("Edit");
+    editMenu->setFont(font);
 
     newAction = fileMenu->addAction(mTranslator ->translate("開新檔案").c_str());
     newAction->setShortcut(QKeySequence::New);
