@@ -19,15 +19,22 @@ IMenuBar::IMenuBar(QFont f, QWidget* p, Translator* trans):
 
     newAction = fileMenu->addAction(mTranslator ->translate("開新檔案").c_str());
     newAction->setShortcut(QKeySequence::New);
+    newAction->setFont(font);
     loadAction = fileMenu->addAction(mTranslator ->translate("開啟舊檔").c_str());
     loadAction->setShortcut(QKeySequence::Open);
+    loadAction->setFont(font);
     saveAction =fileMenu->addAction(mTranslator ->translate("儲存檔案").c_str());;
     saveAction->setShortcut(QKeySequence::Save);
+    saveAction->setFont(font);
     saveAsAction = fileMenu->addAction(mTranslator ->translate("另存新檔").c_str());
     saveAsAction->setShortcut(QKeySequence::SaveAs);
+    saveAsAction->setFont(font);
     printAction = fileMenu->addAction(mTranslator ->translate("印 Inventory").c_str());
+    printAction->setFont(font);
     printAction2 = fileMenu->addAction(mTranslator ->translate("印 History").c_str());
+    printAction2->setFont(font);
     printAction3 = fileMenu->addAction(mTranslator ->translate("印 記錄表").c_str());
+    printAction3->setFont(font);
 
 
     fileMenu->addSeparator();
