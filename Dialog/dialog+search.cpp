@@ -29,14 +29,6 @@ void Dialog::on_searchButton_clicked() {
     //sscrollArea->setBaseSize(700, 800);
 
     QFormLayout* form = new QFormLayout(viewport);
-    //viewport->setLayout(form);
-//    viewport->resize(1000,600);
-    //viewport -> setFixedSize(1000, 600);
-
-
-    //QFormLayout *dialog_layout = new QFormLayout(&dialog);
-    //dialog.setLayout(dialog_layout);
-    //dialog.layout()->addWidget(scrollArea);
 
     /* Generate form items that appear once*/
 

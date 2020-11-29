@@ -1420,7 +1420,7 @@ void Dialog::on_CalculateSold_clicked()
     QFormLayout* form = new QFormLayout(viewport);
     viewport->setLayout(form);
 
-    QFormLayout *dialog_layout = new QFormLayout(&dialog);
+    QVBoxLayout *dialog_layout = new QVBoxLayout(&dialog);
     dialog_layout->setMargin(0);
     dialog.setLayout(dialog_layout);
     dialog.layout()->addWidget(scrollArea);
