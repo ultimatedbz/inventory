@@ -56,6 +56,10 @@ Dialog::Dialog(QWidget *parent) :
     connect(editHistoryAction, SIGNAL(triggered()), this, SLOT(editHistory()));
     ui->historyList->addAction(editHistoryAction);
 
+    QFont memoFont = ui->Memo_2->font();
+    qDebug() << memoFont.pixelSize();
+    memoFont.setPixelSize(16);
+    ui->Memo_2->setFont(memoFont);
 
     /*Edit Vegetable Name */
     connect(ui->vegeList->itemDelegate(), SIGNAL(closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint)),
