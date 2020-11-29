@@ -770,13 +770,16 @@ void Dialog::on_Return_clicked()
         QFormLayout form(&dialog);
 
         // Add some text above the fields
-        form.addRow(new QLabel(mTranslator->translate("輸入退菜資料").c_str()));
-
-
+        QString label1 = QString(mTranslator->translate("輸入退菜資料").c_str());
+        QLabel* qlabel1 = new QLabel(label1);
+        qlabel1->setFont(font);
+        form.addRow(qlabel1);
 
         QLineEdit *lineEdit = new QLineEdit(&dialog);
-        QString label = QString( mTranslator->translate("退幾箱？").c_str());
-        form.addRow(label, lineEdit);
+        QString label2 = QString( mTranslator->translate("退幾箱？").c_str());
+        QLabel* qlabel2 = new QLabel(label2);
+        qlabel2->setFont(font);
+        form.addRow(qlabel2, lineEdit);
 
 
         QComboBox* customerDrop = new QComboBox(&dialog);
@@ -785,7 +788,9 @@ void Dialog::on_Return_clicked()
         }
         customerDrop->setFont(font);
         QString label3 = QString(mTranslator->translate("誰退回來的？").c_str());
-        form.addRow(label3, customerDrop);
+        QLabel* qlabel3 = new QLabel(label3);
+        qlabel3->setFont(font);
+        form.addRow(qlabel3, customerDrop);
 
         QLineEdit * date = new QLineEdit(&dialog);
         time_t t = time(nullptr);
@@ -794,7 +799,9 @@ void Dialog::on_Return_clicked()
         sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
         date -> setText(QString::fromUtf8(buffer));
         QString label4 = QString(mTranslator->translate("这是哪天退回來的").c_str());
-        form.addRow(label4, date);
+        QLabel* qlabel4 = new QLabel(label4);
+        qlabel4->setFont(font);
+        form.addRow(qlabel4, date);
 
         QComboBox* companyDrop = new QComboBox(&dialog);
         for(int i=0; i< inventory->getCompanyNum(); i++){
@@ -802,12 +809,17 @@ void Dialog::on_Return_clicked()
         }
         companyDrop->setFont(font);
 
-        form.addRow(mTranslator->translate("这是哪家公司的菜？").c_str(), companyDrop);
+        QString label5 = QString(mTranslator->translate("这是哪家公司的菜？").c_str());
+        QLabel* qlabel5 = new QLabel(label5);
+        qlabel5->setFont(font);
+        form.addRow(qlabel5, companyDrop);
 
 
         QLineEdit *lineEdit2 = new QLineEdit(&dialog);
-        QString label2 = QString(mTranslator->translate("这是哪天買的菜？").c_str());
-        form.addRow(label2, lineEdit2);
+        QString label6 = QString(mTranslator->translate("这是哪天買的菜？").c_str());
+        QLabel* qlabel6 = new QLabel(label6);
+        qlabel6->setFont(font);
+        form.addRow(qlabel6, lineEdit2);
 
         QCheckBox checkBox(mTranslator->translate("退還給農場的菜").c_str(),&dialog);
         form.addRow(&checkBox);
@@ -838,7 +850,7 @@ void Dialog::on_Return_clicked()
 
         } else if (result == QDialog::Rejected){
             // If checked, this means we are returning to farm
-            if(checkBox.isChecked()){
+            if(checkBox.isChecked()) {
 
                 QDialog dialog(this);
                 dialog.setWindowTitle(mTranslator->translate("退還給農場的菜").c_str());
@@ -846,7 +858,9 @@ void Dialog::on_Return_clicked()
                 QFormLayout form(&dialog);
 
                 // Add some text above the fields
-                form.addRow(new QLabel(mTranslator->translate("輸入退菜資料").c_str()));
+                QLabel* qlabel7 = new QLabel(mTranslator->translate("輸入退菜資料").c_str());
+                qlabel7->setFont(font);
+                form.addRow(qlabel7);
 
 
                 QComboBox* remainingDrop = new QComboBox(&dialog);
@@ -855,12 +869,16 @@ void Dialog::on_Return_clicked()
                 }
                 remainingDrop->setFont(font);
 
-                form.addRow(mTranslator->translate("你要退那天的菜？").c_str(), remainingDrop);
+                QString label8 = QString(mTranslator->translate("你要退那天的菜？").c_str());
+                QLabel* qlabel8 = new QLabel(label8);
+                qlabel8->setFont(font);
+                form.addRow(qlabel8, remainingDrop);
 
                 QLineEdit *lineEdit = new QLineEdit(&dialog);
-                QString label = QString(mTranslator->translate("退幾箱？").c_str());
-                form.addRow(label, lineEdit);
-
+                QString label9 = QString(mTranslator->translate("退幾箱？").c_str());
+                QLabel* qlabel9 = new QLabel(label9);
+                qlabel9->setFont(font);
+                form.addRow(qlabel9, lineEdit);
 
 
                 // Add some standard buttons (Cancel/Ok) at the bottom of the dialog
@@ -1372,6 +1390,7 @@ int Dialog::queryVeges() {
 void Dialog::on_CalculateSold_clicked()
 {
     QDialog dialog(this);
+    dialog.setBaseSize(300,200);
     dialog.setWindowTitle("Calculate");
 
     //Add the viewport to the scroll area
@@ -1387,8 +1406,10 @@ void Dialog::on_CalculateSold_clicked()
     viewport->setLayout(form);
 
     QFormLayout *dialog_layout = new QFormLayout(&dialog);
+    dialog_layout->setMargin(0);
     dialog.setLayout(dialog_layout);
     dialog.layout()->addWidget(scrollArea);
+    scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     /* Company Drop */
     QComboBox* companyDrop = new QComboBox(&dialog);
