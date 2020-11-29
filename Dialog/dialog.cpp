@@ -109,7 +109,22 @@ Dialog::Dialog(QWidget *parent) :
         changeToDarkMode();
     }
 
-   // changeToDarkMode();
+   // Set size of labels
+    ui->Buy->setFont(font);
+    ui->Sell->setFont(font);
+    ui->VegieList->setFont(font);
+
+    ui->Total->setFont(font);
+    ui->Inventory->setFont(font);
+    ui->Return->setFont(font);
+    ui->dumpButton->setFont(font);
+    ui->clearReturnButton->setFont(font);
+    ui->clearHistoryButton->setFont(font);
+    ui->Return->setFont(font);
+
+    ui->Returns->setFont(font);
+    ui->Memo->setFont(font);
+    dumpVegeAction->setFont(font);
 }
 
 Dialog::~Dialog()
