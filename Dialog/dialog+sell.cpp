@@ -39,7 +39,9 @@ void Dialog::on_Sell_clicked() {
         customerDrop->setFont(font);
 
         QString label2 = QString(mTranslator->translate("賣给谁？").c_str());
-        form->addRow(label2, customerDrop);
+        QLabel* qlabel2 = new QLabel(label2);
+        qlabel2->setFont(font);
+        form->addRow(qlabel2, customerDrop);
 
         /* Date */
         QLineEdit *date = new QLineEdit(&dialog);
@@ -49,7 +51,9 @@ void Dialog::on_Sell_clicked() {
         sprintf(buffer, "%d/%d/%d", now->tm_mon+1, now->tm_mday, now->tm_year - 100);
         date -> setText(QString::fromUtf8(buffer));
         QString label4 = QString(mTranslator->translate("那天賣出").c_str());
-        form->addRow(label4, date);
+        QLabel* qlabel4 = new QLabel(label4);
+        qlabel4->setFont(font);
+        form->addRow(qlabel4, date);
 
         MultiSellController* multiSellController = new MultiSellController(
                     inventory, form, font, scrollArea, &dialog, mTranslator);
